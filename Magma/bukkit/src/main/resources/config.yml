@@ -1,3 +1,8 @@
+properties:
+  name: 'Your Cool Network'
+  url: 'some.cool.site'
+  server: 'UNKNOWN'
+  location: 'The Moon'
 database:
   hostname: 'localhost'
   database: 'magma'
