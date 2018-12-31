@@ -1,13 +1,10 @@
 package net.avicus.magma;
 
+import com.lambdaworks.redis.RedisConnectionException;
 import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandNumberFormatException;
 import com.sk89q.minecraft.util.commands.CommandPermissionsException;
 import com.sk89q.minecraft.util.commands.CommandUsageException;
-import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Optional;
 import lombok.Getter;
 import net.avicus.compendium.AvicusCommandsManager;
 import net.avicus.compendium.commands.AvicusCommandsRegistration;
@@ -46,12 +43,19 @@ import net.avicus.magma.redis.Redis;
 import net.avicus.magma.restart.RestartMessageHandler;
 import net.avicus.magma.util.properties.BlockPropStore;
 import net.avicus.quest.database.DatabaseConfig;
+import net.avicus.quest.database.DatabaseException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.joda.time.Instant;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Optional;
 
 /**
  * This is Magma.
@@ -66,11 +70,30 @@ public final class Magma extends JavaPlugin {
    * The channel manager.
    */
   private ChannelManager channelManager;
+  /**
+   * Avicus stuff start
+   * TODO: Remove dependency
+   */
   @Getter
   private Redis redis;
   private Database database;
   @Getter
   private API apiClient;
+  /**
+   * Avicus stuff end
+   */
+  /**
+   * Pagoda start
+   */
+  @Getter
+  private boolean redisEnabled = true;
+  @Getter
+  private boolean databaseEnabled = true;
+  @Getter
+  private boolean apiEnabled = true;
+  /**
+   * Pagoda end
+   */
   private Server localServer;
   private ServerCategory localCategory;
   private AvicusCommandsManager commands;
@@ -110,7 +133,7 @@ public final class Magma extends JavaPlugin {
 
     this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     this.getServer().getMessenger()
-        .registerOutgoingPluginChannel(this, NetworkConstants.CONNECT_CHANNEL);
+            .registerOutgoingPluginChannel(this, NetworkConstants.CONNECT_CHANNEL);
 
     this.channelManager = new ChannelManager();
 
@@ -120,7 +143,7 @@ public final class Magma extends JavaPlugin {
 
     this.commands = new AvicusCommandsManager();
     final AvicusCommandsRegistration registrar = new AvicusCommandsRegistration(this,
-        this.commands);
+            this.commands);
     this.mm = new ModuleManager(this.getServer().getPluginManager(), this, registrar);
     registrar.register(GenericCommands.class);
     this.registerModules();
@@ -134,6 +157,25 @@ public final class Magma extends JavaPlugin {
 
     getRedis().register(new RestartMessageHandler());
     Users.init(registrar);
+
+    /*
+     * Start Config for NetworkIdentification
+     */
+    try {
+      NetworkIdentification.NAME = MagmaConfig.Properties.getName().equals("") ? "Your Cool Site" : MagmaConfig.Properties.getName();
+      NetworkIdentification.URL = MagmaConfig.Properties.getUrl().equals("") ? "some.cool.site" : MagmaConfig.Properties.getUrl();
+      NetworkIdentification.SERVER = MagmaConfig.Properties.getServer().equals("") ? "UNKNOWN" : MagmaConfig.Properties.getServer();
+      NetworkIdentification.LOCATION = MagmaConfig.Properties.getLocation().equals("") ? "The Moon" : MagmaConfig.Properties.getLocation();
+    } catch(Exception e) {
+      NetworkIdentification.NAME = "VectorMC";
+      NetworkIdentification.URL = "vectormc.net";
+      NetworkIdentification.SERVER = "Atlas";
+      NetworkIdentification.LOCATION = "The Moon";
+      e.printStackTrace();
+    }
+    /*
+     * End Config for NetworkIdentification
+     */
   }
 
   private void registerModules() {
@@ -147,60 +189,66 @@ public final class Magma extends JavaPlugin {
     }
     this.mm.register(Announce.class);
     this.mm.register(FreezeModule.class, MagmaConfig.Freeze.isEnabled());
-    this.database().getSeasons().findCurrentSeason().ifPresent(season -> {
-      this.currentSeason = season;
+    try {
+      this.database().getSeasons().findCurrentSeason().ifPresent(season -> {
+        this.currentSeason = season;
+        this.mm.register(PrestigeModule.class);
+      });
+    } catch(Exception e) {
+      // Db issues
+      this.currentSeason = new PrestigeSeason();
       this.mm.register(PrestigeModule.class);
-    });
+    }
     this.mm.register(Gadgets.class);
   }
 
   private void initServices() {
     final Configuration config = this.getConfig();
 
+    // Redis
     getLogger().info("Connecting to Redis...");
     final Redis.Builder builder = Redis.builder(config.getString("redis.hostname"))
-        .database(config.getInt("redis.database"));
+            .database(config.getInt("redis.database"));
     if (config.getBoolean("redis.auth.enabled")) {
       builder.password(config.getString("redis.auth.password"));
     }
-    this.redis = builder.build();
     try {
+      this.redis = builder.build();
       this.redis.enable();
-    } catch (IllegalStateException e) {
+      getLogger().info("Connected to Redis!");
+    } catch (IllegalStateException | RedisConnectionException e) {
+      getLogger().severe("Failed to connect to redis!");
       e.printStackTrace();
-      this.getServer().getPluginManager().disablePlugin(this);
-      Bukkit.shutdown();
-      return;
+      redisEnabled = false;
     }
-    getLogger().info("Connected to Redis!");
 
+    // API
     getLogger().info("Connecting to API...");
     try {
       this.apiClient = new API(new APIClient(MagmaConfig.API.getUrl(), MagmaConfig.API.getKey()));
-    } catch (Exception e) {
+      getLogger().info("Connected to API!");
+    } catch(IOException ioe) {
       getLogger().severe("Failed to connect to API!");
-      e.printStackTrace();
-      this.getPluginLoader().disablePlugin(this);
-      Bukkit.shutdown();
-      return;
+      ioe.printStackTrace();
+      apiEnabled = false;
     }
-    getLogger().info("Connected to API!");
 
+    // Database
     getLogger().info("Connecting to database...");
     this.database = new Database(DatabaseConfig.builder(
-        config.getString("database.hostname"),
-        config.getString("database.database"),
-        config.getString("database.auth.username"),
-        config.getString("database.auth.password")
+            config.getString("database.hostname"),
+            config.getString("database.database"),
+            config.getString("database.auth.username"),
+            config.getString("database.auth.password")
     ).reconnect(true).build());
     try {
       this.database.enable();
-    } catch (IllegalStateException e) {
+      getLogger().info("Connected to database!");
+    } catch (IllegalStateException | DatabaseException e) {
+      getLogger().info("Failed to connect to database!");
       e.printStackTrace();
-      this.getServer().getPluginManager().disablePlugin(this);
-      Bukkit.shutdown();
+      databaseEnabled = false;
     }
-    getLogger().info("Connected to database!");
   }
 
   @Override
@@ -215,10 +263,11 @@ public final class Magma extends JavaPlugin {
   }
 
   private void loadLocalServer() {
-    String folder = getDataFolder().getAbsoluteFile().getParentFile().getParentFile().getName();
-//            String name = HookConfig.Server.getName().orElse(folder);
-    // Todo
-    String name = folder;
+    File folder = getDataFolder().getAbsoluteFile().getParentFile().getParentFile();
+    String name = folder.getName();
+
+    // HOOK: String name = HookConfig.Server.getName().orElse(folder);
+
     final ServerTable servers = Magma.get().database().getServers();
     Optional<Server> server = servers.findByName(name);
 
@@ -226,8 +275,8 @@ public final class Magma extends JavaPlugin {
     int port = getServer().getPort();
 
     if (host == null || host.length() == 0 ||
-        host.startsWith("0.0" // localhost (need real IP)
-        )) {
+            host.startsWith("0.0" // localhost (need real IP)
+            )) {
       try {
         host = InetAddress.getLocalHost().getHostAddress();
       } catch (UnknownHostException e) {
@@ -243,7 +292,7 @@ public final class Magma extends JavaPlugin {
 
       // update ip/port
       servers.update().set("host", host).set("port", port).where("id", server.get().getId())
-          .execute();
+              .execute();
     } else {
       Server created = new Server(name, host, port, false);
       this.localServer = created;
@@ -284,8 +333,8 @@ public final class Magma extends JavaPlugin {
       sender.sendMessage(AbstractTranslatableCommandException.format(e));
     } catch (CommandNumberFormatException e) {
       sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
-              new UnlocalizedText(e.getActualText())));
+              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
+                      new UnlocalizedText(e.getActualText())));
     } catch (PremiumCommandPermissionsException e) {
       sender.sendMessage(e.asTranslatable());
     } catch (CommandPermissionsException e) {
@@ -293,15 +342,15 @@ public final class Magma extends JavaPlugin {
         sender.sendMessage(PremiumCommandPermissionsException.MESSAGE);
       } else {
         sender.sendMessage(AbstractTranslatableCommandException
-            .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
+                .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
       }
     } catch (CommandUsageException e) {
       sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
-              new UnlocalizedText(e.getUsage())));
+              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
+                      new UnlocalizedText(e.getUsage())));
     } catch (CommandException e) {
       sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
+              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
       e.printStackTrace();
     }
 

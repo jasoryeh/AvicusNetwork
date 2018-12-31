@@ -1,13 +1,41 @@
 package net.avicus.magma;
 
-import java.util.List;
 import lombok.Getter;
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
 import org.joda.time.Duration;
 
+import java.util.List;
+
 public final class MagmaConfig {
+
+  /**
+   * Pagoda Start
+   */
+
+  @ConfigPath("properties")
+  public static final class Properties {
+    @Getter
+    @ConfigKey
+    public static String name;
+
+    @Getter
+    @ConfigKey
+    public static String url;
+
+    @Getter
+    @ConfigKey
+    public static String server;
+
+    @Getter
+    @ConfigKey
+    public static String location;
+  }
+
+  /**
+   * Pagoda End
+   */
 
   @ConfigPath("channels")
   public static final class Channel {
