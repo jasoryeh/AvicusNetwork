@@ -12,6 +12,7 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
+import net.avicus.magma.NetworkIdentification;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.javalite.http.Get;
@@ -39,7 +40,7 @@ public interface AtlasBridge {
     @Nullable
     @Override
     public String getServerName() {
-      return null;
+      return NetworkIdentification.SERVER.equals("") || NetworkIdentification.SERVER == null ? null : NetworkIdentification.SERVER;
     }
 
     @Nonnull
