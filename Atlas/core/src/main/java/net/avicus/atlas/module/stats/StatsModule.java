@@ -151,7 +151,7 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
           } else {
             userName = Bukkit.getPlayer(mvp).getDisplayName();
           }
-          // Users.getTranslatableDisplayName(mvpUser, false) <- SCREW YOU TRYNA TRANSLATE A NAME
+          // Users.getTranslatableDisplayName(mvpUser, false) <- SCREW YOU TRYNA TRANSLATE A NAME TODO
           userName = ChatColor.DARK_AQUA + userName;
           Localizable name = Messages.UI_MVP_TITLE
                   .with(ChatColor.GREEN, userName);

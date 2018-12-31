@@ -32,6 +32,8 @@ public class UserListener implements Listener {
       query = Optional.of(created);
     }
 
+    Magma.get().getLogger().info("Player " + event.getName() + " with ID " + event.getUniqueId() + " logged in and registered.");
+
     User user = query.get();
 
     if (!user.getName().equals(event.getName())) {

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Nullable;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import net.avicus.atlas.AtlasConfig;
 import net.avicus.atlas.GameType;
@@ -59,13 +60,18 @@ public class AtlasMap implements Module, MinecraftMap {
   private final MapSource source;
   private final ClickEvent clickEvent;
   private final UnlocalizedText clickableNameVersion;
+
+  @Getter
+  @Setter
+  private boolean atlas = true;
+
   @Getter
   @Nullable
   private MapGenre genre;
 
   public AtlasMap(Set<TypeDetector> detectors, String slug, String name, Version specification,
-      Version version, @Nullable MapGenre genre, List<Author> authors, List<Author> contributors,
-      EnumSet<GameType> gameTypes, CountdownConfig countdownConfig, MapSource source) {
+                  Version version, @Nullable MapGenre genre, List<Author> authors, List<Author> contributors,
+                  EnumSet<GameType> gameTypes, CountdownConfig countdownConfig, MapSource source) {
     this.detectors = detectors;
     this.slug = slug;
     this.name = name;
@@ -78,10 +84,10 @@ public class AtlasMap implements Module, MinecraftMap {
     this.countdownConfig = countdownConfig;
     this.source = source;
     this.clickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL,
-        AtlasConfig.Website.resolvePath(this.slug));
+            AtlasConfig.Website.resolvePath(this.slug));
     this.clickableNameVersion = NAME_VERSION_FORMAT.with(new UnlocalizedText(this.name),
-        new UnlocalizedText(" (" + this.version.toString() + ')',
-            TextStyle.ofColor(ChatColor.GRAY).italic()));
+            new UnlocalizedText(" (" + this.version.toString() + ')',
+                    TextStyle.ofColor(ChatColor.GRAY).italic()));
   }
 
   static String slugify(String name) {
@@ -102,13 +108,13 @@ public class AtlasMap implements Module, MinecraftMap {
 
   public TextComponent getClickableName(Locale source, boolean withVersion) {
     return this.applyClickHover(source,
-        withVersion ? this.clickableNameVersion.translate(source) : new TextComponent(this.name));
+            withVersion ? this.clickableNameVersion.translate(source) : new TextComponent(this.name));
   }
 
   private TextComponent applyClickHover(Locale source, TextComponent component) {
     component.setClickEvent(this.clickEvent);
     component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-        new BaseComponent[]{Messages.UI_VIEW_MAP_ON_WEBSITE.with().translate(source)}));
+            new BaseComponent[]{Messages.UI_VIEW_MAP_ON_WEBSITE.with().translate(source)}));
     return component;
   }
 
@@ -125,7 +131,7 @@ public class AtlasMap implements Module, MinecraftMap {
       this.genre = detector.detectGenre(match).orElse(null);
     }
     match.getModule(EliminationModule.class)
-        .ifPresent(eliminationModule -> this.genre = MapGenre.ELIMINATION);
+            .ifPresent(eliminationModule -> this.genre = MapGenre.ELIMINATION);
 
     if (this.genre == null) {
       throw new RuntimeException("Unable to determine genre.");
@@ -142,7 +148,7 @@ public class AtlasMap implements Module, MinecraftMap {
     }
 
     match.getModule(EliminationModule.class)
-        .ifPresent(eliminationModule -> this.gameTypes.add(GameType.ELIMINATION));
+            .ifPresent(eliminationModule -> this.gameTypes.add(GameType.ELIMINATION));
   }
 
   public Document createDocument() throws MatchBuildException {
