@@ -11,4 +11,8 @@ public class NetworkIdentification {
 
   public static String NAME = "Your Cool Network";
   public static String URL = "some.cool.site";
+  public static String SERVER = "UNKNOWN";
+  public static String LOCATION = "The Moon";
+
 }
+
