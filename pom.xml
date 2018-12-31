@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.avicus</groupId>
   <artifactId>avicus-network</artifactId>
@@ -18,35 +18,60 @@
     <module>Mars</module>
   </modules>
   <scm>
-    <connection>scm:git://github.com/Avicus/AvicusNetwork.git</connection>
-    <developerConnection>scm:git:ssh://github.com/Avicus/AvicusNetwork.git</developerConnection>
-    <url>https://github.com/Avicus/AvicusNetwork</url>
+    <connection>scm:git://github.com/VectorMC/AvicusNetwork.git</connection>
+    <developerConnection>scm:git:ssh://github.com/VectorMC/AvicusNetwork.git</developerConnection>
+    <url>https://github.com/VectorMC/AvicusNetwork</url>
   </scm>
   <repositories>
     <repository>
-      <id>avicus-public</id>
-      <url>https://repo.avicus.net/content/groups/public/</url>
+      <id>viaversion-repo</id>
+      <url>https://repo.viaversion.com</url>
     </repository>
     <repository>
-      <id>avicus-repo</id>
-      <url>https://repo.avicus.net/content/groups/private/</url>
+      <id>jcenter</id>
+      <url>http://jcenter.bintray.com</url>
     </repository>
-    <!-- ProtoLib -->
+    <repository>
+      <id>vector-public</id>
+      <url>https://repo.vectormc.net/artifactory/public</url>
+    </repository>
     <repository>
       <id>dmulloy2</id>
       <url>http://repo.dmulloy2.net/content/groups/public/</url>
     </repository>
+    <!-- Tabbed -->
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+    <!-- Sk89q -->
+    <repository>
+      <id>sk89q-repo</id>
+      <url>http://maven.sk89q.com/repo/</url>
+    </repository>
+    <!-- LibsDisguises && md-5 -->
+    <repository>
+      <id>m5-5-repo</id>
+      <url>https://repo.md-5.net/content/groups/public/</url>
+    </repository>
+    <!-- Buycraft -->
+    <repository>
+      <id>vexsoftware-repo</id>
+      <url>https://dl.bintray.com/nuvotifier/maven/</url>
+    </repository>
   </repositories>
+
   <distributionManagement>
     <repository>
-      <id>avicus-repo</id>
-      <url>https://repo.avicus.net/content/repositories/releases-private/</url>
+      <id>vector-repo</id>
+      <url>https://repo.vectormc.net/artifactory/private</url>
     </repository>
     <snapshotRepository>
-      <id>avicus-repo</id>
-      <url>https://repo.avicus.net/content/repositories/snapshots-private/</url>
+      <id>vector-repo</id>
+      <url>https://repo.vectormc.net/artifactory/private</url>
     </snapshotRepository>
   </distributionManagement>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -121,7 +146,7 @@
       <dependency>
         <groupId>com.sk89q</groupId>
         <artifactId>command-framework-bungee</artifactId>
-        <version>0.6-SNAPSHOT</version>
+        <version>1.9-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>net.md-5</groupId>
@@ -141,7 +166,7 @@
       <dependency>
         <groupId>net.avicus</groupId>
         <artifactId>grave</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.8-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>net.avicus</groupId>
@@ -151,7 +176,7 @@
       <dependency>
         <groupId>com.comphenix.protocol</groupId>
         <artifactId>ProtocolLib</artifactId>
-        <version>4.3.0</version>
+        <version>4.4.0</version>
         <exclusions>
           <exclusion>
             <groupId>com.comphenix.executors</groupId>
@@ -160,9 +185,9 @@
         </exclusions>
       </dependency>
       <dependency>
-        <groupId>com.keenant</groupId>
-        <artifactId>tabbed</artifactId>
-        <version>1.7-SNAPSHOT</version>
+        <groupId>com.keenant.tabbed</groupId>
+        <artifactId>tabbed-core</artifactId>
+        <version>1.8-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -193,12 +218,12 @@
       <dependency>
         <groupId>com.sk89q</groupId>
         <artifactId>command-framework-bukkit</artifactId>
-        <version>0.6-SNAPSHOT</version>
+        <version>1.9-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>com.sk89q</groupId>
         <artifactId>command-framework-core</artifactId>
-        <version>0.6-SNAPSHOT</version>
+        <version>1.9-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>LibsDisguises</groupId>
@@ -223,6 +248,11 @@
         <groupId>net.avicus</groupId>
         <artifactId>minecraft-api</artifactId>
         <version>1.12-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>me.lucko.luckperms</groupId>
+        <artifactId>luckperms-api</artifactId>
+        <version>4.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
