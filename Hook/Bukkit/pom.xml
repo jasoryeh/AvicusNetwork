@@ -54,7 +54,7 @@
     <dependency>
       <groupId>net.buycraft</groupId>
       <artifactId>buycraftx-common</artifactId>
-      <version>10.2.2</version>
+      <version>10.6.2</version>
     </dependency>
     <dependency>
       <groupId>com.vexsoftware</groupId>
