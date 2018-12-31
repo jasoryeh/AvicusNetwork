@@ -5,11 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import me.lucko.luckperms.LuckPerms;
+import me.lucko.luckperms.api.Contexts;
+import me.lucko.luckperms.api.LuckPermsApi;
+import net.avicus.atlas.Atlas;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -123,6 +129,17 @@ public class ChannelsModule implements Module {
 
   @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
   public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+    // LP API for prefixes start
+    String fmat = Atlas.get().getConfig().getString("chat", "<%3$s%1$s> %2$s");
+    String prefix = "";
+    try {
+      LuckPermsApi api = LuckPerms.getApi();
+      prefix = api.getUser(event.getPlayer().getUniqueId()).getCachedData().getMetaData(Contexts.global()).getPrefix();
+    } catch(Exception e) { e.printStackTrace(); }
+    fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', prefix));
+    event.setFormat(fmat);
+    // LP API for prefixes end
+
     event.getRecipients().clear();
     event.getRecipients().addAll(recipients(event.getPlayer()));
 

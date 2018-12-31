@@ -1,15 +1,9 @@
 package net.avicus.atlas.module.stats;
 
 import com.google.common.collect.Maps;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+
+import java.util.*;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
@@ -68,7 +62,7 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
     Collections.sort(aList, new Comparator<Map.Entry<UUID, Double>>() {
       @Override
       public int compare(Map.Entry<UUID, Double> ele1,
-          Map.Entry<UUID, Double> ele2) {
+                         Map.Entry<UUID, Double> ele2) {
 
         return ele2.getValue().compareTo(ele1.getValue());
       }
@@ -98,19 +92,19 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
   @EventHandler
   public void showLifeRecap(PlayerDeathEvent event) {
     PlayerLifetime lifetime = this.store.getLifetimeStore()
-        .getCurrentLifetime(event.getPlayer(), false);
+            .getCurrentLifetime(event.getPlayer(), false);
     if (lifetime != null) {
       // Header
       BaseComponent name = Translations.STATS_RECAP_LIFE.with(ChatColor.GOLD)
-          .translate(event.getPlayer().getLocale());
+              .translate(event.getPlayer().getLocale());
 
       List<Localizable> melee = LifetimeDisplayUtils.getMeleeDisplay(lifetime);
       List<Localizable> objectives = LifetimeDisplayUtils
-          .getObjectiveDisplay(lifetime, event.getPlayer());
+              .getObjectiveDisplay(lifetime, event.getPlayer());
       if (melee.size() + objectives.size() > 0) {
         event.getPlayer().sendMessage(Strings
-            .padTextComponent(name, " ", ChatColor.DARK_AQUA.toString() + ChatColor.STRIKETHROUGH,
-                ChatColor.BLUE));
+                .padTextComponent(name, " ", ChatColor.DARK_AQUA.toString() + ChatColor.STRIKETHROUGH,
+                        ChatColor.BLUE));
         melee.forEach(event.getPlayer()::sendMessage);
         objectives.forEach(event.getPlayer()::sendMessage);
       }
@@ -129,7 +123,7 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
   @EventHandler
   public void showMatchRecap(PlayerChangedGroupEvent event) {
     if (event.getGroup().isSpectator() && event.getGroupFrom().isPresent() && !event.getGroupFrom()
-        .get().isSpectator()) {
+            .get().isSpectator()) {
       AtlasTask.of(() -> {
         matchRecap(event.getPlayer());
       }).nowAsync();
@@ -151,21 +145,29 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
             return;
           }
           User mvpUser = Users.user(mvp).get();
+          String userName;
+          if(!Bukkit.getPlayer(mvp).isOnline()) {
+            userName = Bukkit.getOfflinePlayer(mvp).getName();
+          } else {
+            userName = Bukkit.getPlayer(mvp).getDisplayName();
+          }
+          // Users.getTranslatableDisplayName(mvpUser, false) <- SCREW YOU TRYNA TRANSLATE A NAME
+          userName = ChatColor.DARK_AQUA + userName;
           Localizable name = Messages.UI_MVP_TITLE
-              .with(ChatColor.GREEN, Users.getTranslatableDisplayName(mvpUser, false));
+                  .with(ChatColor.GREEN, userName);
           Localizable sub;
           if (Bukkit.getPlayer(mvp) == null || !Bukkit.getPlayer(mvp).isOnline()) {
             sub = Messages.UI_MVP_NOT_ONLINE.with(ChatColor.RED);
           } else {
             sub = LifetimeDisplayUtils.randomTag(Arrays.asList(
-                Messages.UI_MVP_TAG_1,
-                Messages.UI_MVP_TAG_2,
-                Messages.UI_MVP_TAG_3,
-                Messages.UI_MVP_TAG_4,
-                Messages.UI_MVP_TAG_5,
-                Messages.UI_MVP_TAG_6,
-                Messages.UI_MVP_TAG_7,
-                Messages.UI_MVP_TAG_8
+                    Messages.UI_MVP_TAG_1,
+                    Messages.UI_MVP_TAG_2,
+                    Messages.UI_MVP_TAG_3,
+                    Messages.UI_MVP_TAG_4,
+                    Messages.UI_MVP_TAG_5,
+                    Messages.UI_MVP_TAG_6,
+                    Messages.UI_MVP_TAG_7,
+                    Messages.UI_MVP_TAG_8
             ));
           }
           Events.call(new PlayerReceiveMVPEvent(Bukkit.getPlayer(mvp)));
@@ -177,10 +179,10 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
           data.append("MVP: " + Bukkit.getPlayer(mvp).getName() + "\n");
           this.store.getLifetimeStore().getPlayerLifetimes().entries().forEach(e -> {
             data.append(
-                Users.user(e.getKey()).map(User::getName).orElse("[User] Not in DB: " + e.getKey())
-                    + ": \n");
+                    Users.user(e.getKey()).map(User::getName).orElse("[User] Not in DB: " + e.getKey())
+                            + ": \n");
             e.getValue().getActions()
-                .forEach(a -> data.append("  " + a.getScore() + "  " + a.getDebugMessage() + "\n"));
+                    .forEach(a -> data.append("  " + a.getScore() + "  " + a.getDebugMessage() + "\n"));
           });
           String link = new Paste("Action Data", "Console", data.toString(), true).upload();
           TextComponent message = new TextComponent("Data Paste: " + link);
@@ -207,17 +209,17 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
   private void matchRecap(Player player) {
     // Header
     BaseComponent name = Translations.STATS_RECAP_MATCH.with(ChatColor.GOLD)
-        .translate(player.getLocale());
+            .translate(player.getLocale());
 
     List<Localizable> melee = LifetimeDisplayUtils
-        .getMeleeDisplay(this.store.getLifetimeStore(), player.getUniqueId());
+            .getMeleeDisplay(this.store.getLifetimeStore(), player.getUniqueId());
     List<Localizable> objectives = LifetimeDisplayUtils
-        .getObjectiveDisplay(this.store.getLifetimeStore(), player.getUniqueId(), player);
+            .getObjectiveDisplay(this.store.getLifetimeStore(), player.getUniqueId(), player);
 
     if (melee.size() + objectives.size() > 0) {
       player.sendMessage(Strings
-          .padTextComponent(name, " ", ChatColor.DARK_AQUA.toString() + ChatColor.STRIKETHROUGH,
-              ChatColor.BLUE));
+              .padTextComponent(name, " ", ChatColor.DARK_AQUA.toString() + ChatColor.STRIKETHROUGH,
+                      ChatColor.BLUE));
       melee.forEach(player::sendMessage);
       objectives.forEach(player::sendMessage);
     }
