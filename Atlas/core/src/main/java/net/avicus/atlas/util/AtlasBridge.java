@@ -40,7 +40,7 @@ public interface AtlasBridge {
     @Nullable
     @Override
     public String getServerName() {
-      return NetworkIdentification.SERVER.equals("") || NetworkIdentification.SERVER == null ? null : NetworkIdentification.SERVER;
+      return NetworkIdentification.SERVER;
     }
 
     @Nonnull

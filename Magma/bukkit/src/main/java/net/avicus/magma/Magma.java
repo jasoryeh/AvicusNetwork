@@ -264,7 +264,7 @@ public final class Magma extends JavaPlugin {
 
   private void loadLocalServer() {
     File folder = getDataFolder().getAbsoluteFile().getParentFile().getParentFile();
-    String name = folder.getName();
+    String name = NetworkIdentification.SERVER == null ? folder.getName() : NetworkIdentification.SERVER;
 
     // HOOK: String name = HookConfig.Server.getName().orElse(folder);
 
