@@ -173,6 +173,11 @@ public final class Magma extends JavaPlugin {
             NetworkIdentification.LOCATION = "The Moon";
             e.printStackTrace();
         }
+        getLogger().info("----------------------------------");
+        getLogger().info(NetworkIdentification.NAME + "'s (" + NetworkIdentification.URL + ") "
+                + NetworkIdentification.SERVER + " Server @ " + NetworkIdentification.LOCATION);
+
+        getLogger().info("----------------------------------");
         /*
          * End Config for NetworkIdentification
          */
