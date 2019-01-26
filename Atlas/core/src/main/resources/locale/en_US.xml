@@ -78,7 +78,7 @@
         <chat-team-enabled>You are now talking in team chat.</chat-team-enabled>
         <more-players-needed>More players ({0}) are required for the match to start.
         </more-players-needed>
-        <waiting-for-more>Waiting for more players to start the match.</waiting-for-more>
+        <waiting-for-more>Waiting for more players ({0}) to start the match.</waiting-for-more>
         <balance-needed>Teams must be balanced properly for the match to start.</balance-needed>
         <state-change>Match state changed from {0} to {1}.</state-change>
         <joined>You have joined {0}.</joined>

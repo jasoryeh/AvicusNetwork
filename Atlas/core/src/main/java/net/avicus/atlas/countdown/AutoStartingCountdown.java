@@ -79,10 +79,31 @@ public class AutoStartingCountdown extends StartingCountdown {
                 (!needMorePlayers.isEmpty() || !needBalancing.isEmpty()) && !AtlasConfig.isScrimmage();
 
         if (cancel) {
+            // Format players needed
+            String textFormat = "";
+            for (int i = 0; i < needMorePlayers.size(); i++) {
+                textFormat += "{" + i + "}, ";
+            }
+            textFormat = textFormat.substring(0, textFormat.length() - 2);
+            LocalizableFormat format = new UnlocalizedFormat(textFormat);
+
+            Localizable[] args = new Localizable[needMorePlayers.size()];
+            for (int i = 0; i < needMorePlayers.size(); i++) {
+                LocalizableFormat groupFormat = new UnlocalizedFormat("{0} {1}");
+                Group group = needMorePlayers.get(i);
+                int countNeeded = group.getMinPlayers() - group.size();
+                Localizable text = groupFormat
+                        .with(group.getChatColor(), new LocalizedNumber(countNeeded),
+                                group.getName().toText());
+                text.style().click(new ClickEvent(Action.RUN_COMMAND, "/join " + group.getId()));
+                args[i] = text;
+            }
+            //
+
             if (!needMorePlayers.isEmpty()) {
-                this.updateBossBar(Messages.GENERIC_WAITING_FOR_MORE.with(), (float) 1);
+                this.updateBossBar(Messages.GENERIC_WAITING_FOR_MORE.with(format.with(args)), (float) 1);
             } else {
-                this.updateBossBar(Messages.GENERIC_BALANCE_NEEDED.with(), (float) 1);
+                this.updateBossBar(Messages.GENERIC_BALANCE_NEEDED.with(ChatColor.WHITE), (float) 1);
             }
 
             long now = System.currentTimeMillis();
@@ -90,25 +111,6 @@ public class AutoStartingCountdown extends StartingCountdown {
                 this.lastAnnounce = now;
 
                 if (!needMorePlayers.isEmpty()) {
-                    String textFormat = "";
-                    for (int i = 0; i < needMorePlayers.size(); i++) {
-                        textFormat += "{" + i + "}, ";
-                    }
-                    textFormat = textFormat.substring(0, textFormat.length() - 2);
-                    LocalizableFormat format = new UnlocalizedFormat(textFormat);
-
-                    Localizable[] args = new Localizable[needMorePlayers.size()];
-                    for (int i = 0; i < needMorePlayers.size(); i++) {
-                        LocalizableFormat groupFormat = new UnlocalizedFormat("{0} {1}");
-                        Group group = needMorePlayers.get(i);
-                        int countNeeded = group.getMinPlayers() - group.size();
-                        Localizable text = groupFormat
-                                .with(group.getChatColor(), new LocalizedNumber(countNeeded),
-                                        group.getName().toText());
-                        text.style().click(new ClickEvent(Action.RUN_COMMAND, "/join " + group.getId()));
-                        args[i] = text;
-                    }
-
                     // Broadcast
                     this.match.broadcast(Messages.GENERIC_MORE_PLAYERS_NEEDED.with(format.with(args)));
                 } else {
