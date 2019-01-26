@@ -226,7 +226,9 @@ public class TabListComponent implements ListenerModule {
                 ? NetworkIdentification.SERVER : "Unknown";
 
         if (serverName != null) {
-            footer = ChatColor.GOLD + "" + ChatColor.BOLD + serverName + ChatColor.GRAY + " - " + footer;
+            footer = ChatColor.GOLD + "" + ChatColor.BOLD + serverName + ChatColor.GRAY + " - " + footer
+                    + ChatColor.GRAY + " - " + (sm.getTotalPlayingDuration().getStandardSeconds() <= 0
+                    ? Messages.UI_WAITING : "");
         }
 
         tab.setHeaderFooter(header, footer);

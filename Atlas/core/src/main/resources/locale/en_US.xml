@@ -197,6 +197,7 @@
         <maps>Maps ({0}/{1})</maps>
         <match>Match on {0}</match>
         <by>{0} by {1}</by>
+        <waiting>Waiting for players</waiting>
         <authors>Authors</authors>
         <contributors>Contributors</contributors>
         <tips>Tips</tips>

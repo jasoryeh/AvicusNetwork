@@ -204,6 +204,7 @@ public class Messages {
     public static final LocalizedFormat UI_MAPS = get("ui", "maps");
     public static final LocalizedFormat UI_MATCH = get("ui", "match");
     public static final LocalizedFormat UI_BY = get("ui", "by");
+    public static final LocalizedFormat UI_WAITING = get("ui", "waiting");
     public static final LocalizedFormat UI_CURRENTLY_PLAYING = get("ui", "currently-playing");
     public static final LocalizedFormat UI_WELCOME_LINE_1 = get("ui", "welcome", "line-1");
     public static final LocalizedFormat UI_WELCOME_LINE_2 = get("ui", "welcome", "line-2");
