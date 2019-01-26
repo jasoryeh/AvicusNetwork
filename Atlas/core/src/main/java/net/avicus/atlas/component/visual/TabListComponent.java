@@ -40,6 +40,7 @@ import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.StringUtil;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.module.ListenerModule;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -220,7 +221,10 @@ public class TabListComponent implements ListenerModule {
                 .translate(player.getLocale()).toLegacyText();
         String footer = stateColor + "" + ChatColor.BOLD + time;
 
-        @Nullable String serverName = Atlas.get().getBridge().getServerName();
+        @Nullable String serverName = Atlas.get().getBridge().getServerName() == null ||
+                Atlas.get().getBridge().getServerName().equals("UNKNOWN")
+                ? NetworkIdentification.SERVER : "Unknown";
+
         if (serverName != null) {
             footer = ChatColor.GOLD + "" + ChatColor.BOLD + serverName + ChatColor.GRAY + " - " + footer;
         }
