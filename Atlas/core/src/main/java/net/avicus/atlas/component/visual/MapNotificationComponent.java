@@ -78,7 +78,8 @@ public class MapNotificationComponent implements ListenerModule {
             if (match != null) {
                 match.broadcast(this.currentlyPlaying(this.infoCache));
             }
-        }).repeat(20 * 100, 20 * 60);
+        }).repeat(20 * 100, 20 * 60 * 3);
+        // Start 100 seconds after schedule, every 3 minutes
     }
 
     @EventHandler
