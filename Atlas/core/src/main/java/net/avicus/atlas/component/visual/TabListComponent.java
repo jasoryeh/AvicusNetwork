@@ -221,12 +221,15 @@ public class TabListComponent implements ListenerModule {
                 .translate(player.getLocale()).toLegacyText();
         String footer = stateColor + "" + ChatColor.BOLD + time;
 
+        String location = NetworkIdentification.LOCATION;
+
         @Nullable String serverName = Atlas.get().getBridge().getServerName() == null ||
                 Atlas.get().getBridge().getServerName().equals("UNKNOWN")
                 ? NetworkIdentification.SERVER : "Unknown";
 
         if (serverName != null) {
-            footer = ChatColor.GOLD + "" + ChatColor.BOLD + serverName + ChatColor.GRAY + " - " + footer
+            footer = ChatColor.AQUA + location + ChatColor.GRAY + " - " +
+                    ChatColor.GOLD + "" + ChatColor.BOLD + serverName + ChatColor.GRAY + " - " + footer
                     + (sm.getTotalPlayingDuration().getStandardSeconds() <= 0
                     ? ChatColor.GRAY + " - " + Messages.UI_WAITING.with().translate(player.getLocale()).toLegacyText() : "");
         }
