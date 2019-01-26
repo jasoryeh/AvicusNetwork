@@ -107,7 +107,7 @@ public class AutoStartingCountdown extends StartingCountdown {
             }
 
             long now = System.currentTimeMillis();
-            if (now - this.lastAnnounce > 45000) {
+            if (now - this.lastAnnounce > 1000 * 30 * 3) { // every 1 1/2 minutes
                 this.lastAnnounce = now;
 
                 if (!needMorePlayers.isEmpty()) {
