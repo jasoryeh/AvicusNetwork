@@ -23,6 +23,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.github.paperspigot.Title;
 
@@ -75,7 +76,7 @@ public class MapNotificationComponent implements ListenerModule {
     public void enable() {
         AtlasTask.of(() -> {
             Match match = Atlas.getMatch();
-            if (match != null) {
+            if (match != null && !Bukkit.getOnlinePlayers().isEmpty()) {
                 match.broadcast(this.currentlyPlaying(this.infoCache));
             }
         }).repeat(20 * 100, 20 * 60 * 3);
