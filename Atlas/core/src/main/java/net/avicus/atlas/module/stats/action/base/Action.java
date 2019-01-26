@@ -4,9 +4,9 @@ import java.time.Instant;
 
 public interface Action {
 
-  Instant getWhen();
+    Instant getWhen();
 
-  double getScore();
+    double getScore();
 
-  String getDebugMessage();
+    String getDebugMessage();
 }

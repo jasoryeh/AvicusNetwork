@@ -17,65 +17,65 @@ import org.bukkit.event.Listener;
 
 public class GroupsBridge {
 
-  public static class TeamsBridge implements ModuleBridge<TeamsModule> {
+    public static class TeamsBridge implements ModuleBridge<TeamsModule> {
 
-    private final GroupMenuListener listener;
+        private final GroupMenuListener listener;
 
-    public TeamsBridge(TeamsModule module) {
-      this.listener = new GroupMenuListener(module);
+        public TeamsBridge(TeamsModule module) {
+            this.listener = new GroupMenuListener(module);
+        }
+
+        @Override
+        public void onOpen(TeamsModule module) {
+            Events.register(this.listener);
+        }
+
+        @Override
+        public void onClose(TeamsModule module) {
+            Events.unregister(this.listener);
+        }
     }
 
-    @Override
-    public void onOpen(TeamsModule module) {
-      Events.register(this.listener);
+    public static class FFABridge implements ModuleBridge<FFAModule>, Listener {
+
+        private final StatesModule statesModule;
+        private final FFAModule ffa;
+
+        public FFABridge(FFAModule module) {
+            this.statesModule = module.getMatch().getRequiredModule(StatesModule.class);
+            this.ffa = module;
+        }
+
+        @Override
+        public void onOpen(FFAModule module) {
+            Events.register(this);
+        }
+
+        @Override
+        public void onClose(FFAModule module) {
+            Events.unregister(this);
+        }
+
+        @EventHandler
+        public void onJoin(PlayerJoinDelayedEvent event) {
+            if (this.statesModule.isStarting()) {
+                join(event.getPlayer());
+            }
+        }
+
+        private void join(Player p) {
+            FFATeam team = this.ffa.getTeam();
+            if (!team.isFull(p)) {
+                this.ffa.changeGroup(p, this.ffa.getTeam(), false, false);
+            }
+        }
+
+        @EventHandler(priority = EventPriority.MONITOR)
+        public void onMatchOpen(MatchOpenEvent event) {
+            // Delay so as to allow players to load the regions and tp to world first
+            AtlasTask.of(() -> {
+                this.ffa.getMatch().getPlayers().forEach(this::join);
+            }).later(5);
+        }
     }
-
-    @Override
-    public void onClose(TeamsModule module) {
-      Events.unregister(this.listener);
-    }
-  }
-
-  public static class FFABridge implements ModuleBridge<FFAModule>, Listener {
-
-    private final StatesModule statesModule;
-    private final FFAModule ffa;
-
-    public FFABridge(FFAModule module) {
-      this.statesModule = module.getMatch().getRequiredModule(StatesModule.class);
-      this.ffa = module;
-    }
-
-    @Override
-    public void onOpen(FFAModule module) {
-      Events.register(this);
-    }
-
-    @Override
-    public void onClose(FFAModule module) {
-      Events.unregister(this);
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinDelayedEvent event) {
-      if (this.statesModule.isStarting()) {
-        join(event.getPlayer());
-      }
-    }
-
-    private void join(Player p) {
-      FFATeam team = this.ffa.getTeam();
-      if (!team.isFull(p)) {
-        this.ffa.changeGroup(p, this.ffa.getTeam(), false, false);
-      }
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onMatchOpen(MatchOpenEvent event) {
-      // Delay so as to allow players to load the regions and tp to world first
-      AtlasTask.of(() -> {
-        this.ffa.getMatch().getPlayers().forEach(this::join);
-      }).later(5);
-    }
-  }
 }

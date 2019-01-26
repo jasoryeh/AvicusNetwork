@@ -1,11 +1,11 @@
 package net.avicus.atlas.sets.competitve.objectives.flag;
 
 public enum FlagPickupMethod {
-  ANY,
-  MOVE,
-  INTERACT;
+    ANY,
+    MOVE,
+    INTERACT;
 
-  public boolean allow(final FlagPickupMethod that) {
-    return this == that || this == ANY;
-  }
+    public boolean allow(final FlagPickupMethod that) {
+        return this == that || this == ANY;
+    }
 }

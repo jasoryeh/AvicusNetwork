@@ -4,5 +4,5 @@ import net.avicus.atlas.sets.competitve.objectives.hill.HillObjective;
 
 public interface HillAction {
 
-  HillObjective getHill();
+    HillObjective getHill();
 }

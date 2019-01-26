@@ -3,7 +3,9 @@ package net.avicus.atlas.sets.competitve.objectives.actions.destroyable.base;
 import static net.avicus.atlas.module.stats.action.ScoreUtils.getNearbyPlayers;
 
 import com.google.common.util.concurrent.AtomicDouble;
+
 import java.util.HashMap;
+
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.sets.competitve.objectives.destroyable.DestroyableEventInfo;
@@ -17,34 +19,34 @@ import org.bukkit.inventory.ItemStack;
 
 public interface DestroyableAction {
 
-  DestroyableObjective getDestroyable();
+    DestroyableObjective getDestroyable();
 
-  DestroyableEventInfo getInfo();
+    DestroyableEventInfo getInfo();
 
-  default Pair<StringBuilder, Double> getBreakScore(ItemStack tool, Material broken,
-      Player breaker) {
-    Pair<StringBuilder, Double> res = MutablePair
-        .of(new StringBuilder("Destroyable Break Data: "), 0.0);
-    long breakDurr = ToolUtils.getBreakingDuration(broken, tool, breaker);
-    res.getKey().append("breakDurr=" + breakDurr + " ");
+    default Pair<StringBuilder, Double> getBreakScore(ItemStack tool, Material broken,
+                                                      Player breaker) {
+        Pair<StringBuilder, Double> res = MutablePair
+                .of(new StringBuilder("Destroyable Break Data: "), 0.0);
+        long breakDurr = ToolUtils.getBreakingDuration(broken, tool, breaker);
+        res.getKey().append("breakDurr=" + breakDurr + " ");
 
-    GroupsModule module = Atlas.getMatch().getRequiredModule(GroupsModule.class);
+        GroupsModule module = Atlas.getMatch().getRequiredModule(GroupsModule.class);
 
-    Pair<StringBuilder, HashMap<Integer, AtomicDouble>> nearby = getNearbyPlayers(
-        breaker.getLocation(), module.getCompetitorOf(breaker).get(), module);
-    double in5 = nearby.getValue().get(5).get();
-    double in10 = nearby.getValue().get(10).get();
-    double in15 = nearby.getValue().get(15).get();
-    double in20 = nearby.getValue().get(20).get();
+        Pair<StringBuilder, HashMap<Integer, AtomicDouble>> nearby = getNearbyPlayers(
+                breaker.getLocation(), module.getCompetitorOf(breaker).get(), module);
+        double in5 = nearby.getValue().get(5).get();
+        double in10 = nearby.getValue().get(10).get();
+        double in15 = nearby.getValue().get(15).get();
+        double in20 = nearby.getValue().get(20).get();
 
-    res.getKey().append(
-        "in5=" + in5 + " in10=" + in10 + " in15=" + in15 + " in20=" + in20 + " data=" + nearby
-            .getKey().toString());
+        res.getKey().append(
+                "in5=" + in5 + " in10=" + in10 + " in15=" + in15 + " in20=" + in20 + " data=" + nearby
+                        .getKey().toString());
 
-    res.setValue(6.3 + (breakDurr * .42) + (in5 * .6) + (in10 * .43) + (in15 * .25) + (in20 * .13));
+        res.setValue(6.3 + (breakDurr * .42) + (in5 * .6) + (in10 * .43) + (in15 * .25) + (in20 * .13));
 
-    res.getKey().append("score=" + res.getValue());
+        res.getKey().append("score=" + res.getValue());
 
-    return res;
-  }
+        return res;
+    }
 }

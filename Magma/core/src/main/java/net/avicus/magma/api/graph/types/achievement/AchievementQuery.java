@@ -4,38 +4,38 @@ import com.shopify.graphql.support.Query;
 
 public class AchievementQuery extends Query<AchievementQuery> {
 
-  public AchievementQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public AchievementQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Description of the achievement used in the UI.
-   */
-  public AchievementQuery description() {
-    startField("description");
+    /**
+     * Description of the achievement used in the UI.
+     */
+    public AchievementQuery description() {
+        startField("description");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Name of the achievement used in the UI.
-   */
-  public AchievementQuery name() {
-    startField("name");
+    /**
+     * Name of the achievement used in the UI.
+     */
+    public AchievementQuery name() {
+        startField("name");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Slug of the achievement used in plugins to protect against name changes.
-   */
-  public AchievementQuery slug() {
-    startField("slug");
+    /**
+     * Slug of the achievement used in plugins to protect against name changes.
+     */
+    public AchievementQuery slug() {
+        startField("slug");
 
-    return this;
-  }
+        return this;
+    }
 }

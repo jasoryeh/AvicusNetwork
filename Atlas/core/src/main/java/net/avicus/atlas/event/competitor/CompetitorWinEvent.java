@@ -13,52 +13,52 @@ import org.bukkit.event.HandlerList;
  */
 public class CompetitorWinEvent extends Event implements Cancellable {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
-  /**
-   * Match that the competitor won.
-   */
-  @Getter
-  private final Match match;
-  /**
-   * Competitor that won the match.
-   */
-  @Getter
-  private final Competitor winner;
-  /**
-   * If the event was canceled.
-   */
-  @Getter
-  @Setter
-  private boolean cancelled;
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
+    /**
+     * Match that the competitor won.
+     */
+    @Getter
+    private final Match match;
+    /**
+     * Competitor that won the match.
+     */
+    @Getter
+    private final Competitor winner;
+    /**
+     * If the event was canceled.
+     */
+    @Getter
+    @Setter
+    private boolean cancelled;
 
-  /**
-   * @param match match that the competitor won
-   * @param winner competitor that won the match
-   */
-  public CompetitorWinEvent(Match match, Competitor winner) {
-    this.match = match;
-    this.winner = winner;
-  }
+    /**
+     * @param match  match that the competitor won
+     * @param winner competitor that won the match
+     */
+    public CompetitorWinEvent(Match match, Competitor winner) {
+        this.match = match;
+        this.winner = winner;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

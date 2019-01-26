@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ModuleFactorySort {
 
-  Order value();
+    Order value();
 
-  enum Order {
-    FIRST,
-    EARLY,
-    NORMAL,
-    LATE,
-    LAST;
-  }
+    enum Order {
+        FIRST,
+        EARLY,
+        NORMAL,
+        LATE,
+        LAST;
+    }
 }

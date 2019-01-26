@@ -9,36 +9,36 @@ import org.bukkit.event.player.PlayerEvent;
  */
 public class PlayerJoinDelayedEvent extends PlayerEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
 
-  /**
-   * Constructor.
-   *
-   * @param player player that is joining
-   */
-  public PlayerJoinDelayedEvent(Player player) {
-    super(player);
-  }
+    /**
+     * Constructor.
+     *
+     * @param player player that is joining
+     */
+    public PlayerJoinDelayedEvent(Player player) {
+        super(player);
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

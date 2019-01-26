@@ -5,5 +5,5 @@ import net.avicus.atlas.sets.competitve.objectives.destroyable.monument.Monument
 
 public interface MonumentAction extends DestroyableAction {
 
-  MonumentObjective getMonument();
+    MonumentObjective getMonument();
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Nullable;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.match.Match;
@@ -29,90 +30,90 @@ import org.bukkit.event.Listener;
 @Setter
 public abstract class SidebarHook implements Listener {
 
-  private SidebarComponent component;
-  private Match match;
+    private SidebarComponent component;
+    private Match match;
 
-  public ObjectiveRenderer getRenderer() {
-    return SidebarComponent.DEFAULT_RENDERER;
-  }
-
-  public List<String> getRows(Player player, GroupsModule groups, Sidebar sidebar,
-      ObjectivesModule module) {
-    if (groups.getCompetitorRule() == CompetitorRule.INDIVIDUAL) {
-      return getScoreLCS(player, sidebar, module, groups);
-    } else {
-      return getTeamDisplay(player, sidebar, module, getRenderer());
+    public ObjectiveRenderer getRenderer() {
+        return SidebarComponent.DEFAULT_RENDERER;
     }
-  }
 
-  public List<String> getScoreLCS(Player viewer, Sidebar sidebar, ObjectivesModule module,
-      GroupsModule groups) {
-    List<String> lines = new ArrayList<>();
-    for (Objective objective : module.getObjectives()) {
-      if (!objective.show()) {
-        continue;
-      }
+    public List<String> getRows(Player player, GroupsModule groups, Sidebar sidebar,
+                                ObjectivesModule module) {
+        if (groups.getCompetitorRule() == CompetitorRule.INDIVIDUAL) {
+            return getScoreLCS(player, sidebar, module, groups);
+        } else {
+            return getTeamDisplay(player, sidebar, module, getRenderer());
+        }
+    }
 
-      if (objective instanceof ScoreObjective) {
-        Map<Player, Integer> points = new HashMap<>();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-          Competitor competitor = groups.getCompetitorOf(player).orElse(null);
-          if (competitor == null) {
-            continue;
-          }
+    public List<String> getScoreLCS(Player viewer, Sidebar sidebar, ObjectivesModule module,
+                                    GroupsModule groups) {
+        List<String> lines = new ArrayList<>();
+        for (Objective objective : module.getObjectives()) {
+            if (!objective.show()) {
+                continue;
+            }
 
-          ScoreObjective scoreObjective = (ScoreObjective) objective;
-          int score = scoreObjective.getPoints(competitor);
-          points.put(player, score);
+            if (objective instanceof ScoreObjective) {
+                Map<Player, Integer> points = new HashMap<>();
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    Competitor competitor = groups.getCompetitorOf(player).orElse(null);
+                    if (competitor == null) {
+                        continue;
+                    }
+
+                    ScoreObjective scoreObjective = (ScoreObjective) objective;
+                    int score = scoreObjective.getPoints(competitor);
+                    points.put(player, score);
+                }
+
+                List<Player> ordered = new ArrayList<>(points.keySet());
+                ordered.sort((o1, o2) -> points.get(o2).compareTo(points.get(o1)));
+
+                for (Player player : ordered) {
+                    lines.add(points.get(player) + " " + player.getDisplayName());
+                }
+
+                break;
+            } else if (objective instanceof LastCompetitorStanding) {
+                LastCompetitorStanding lcs = (LastCompetitorStanding) objective;
+                lines.add(0, ObjectiveUtils
+                        .getDisplay(this.getMatch(), null, viewer, lcs, SidebarComponent.DEFAULT_RENDERER,
+                                false));
+            }
         }
 
-        List<Player> ordered = new ArrayList<>(points.keySet());
-        ordered.sort((o1, o2) -> points.get(o2).compareTo(points.get(o1)));
+        return lines;
+    }
 
-        for (Player player : ordered) {
-          lines.add(points.get(player) + " " + player.getDisplayName());
+    public List<String> getTeamDisplay(Player player, Sidebar sidebar, ObjectivesModule module,
+                                       ObjectiveRenderer renderer) {
+        List<String> lines = ObjectiveUtils.objectivesByTeam(this.getMatch(), player, module,
+                this.getMatch().getRequiredModule(GroupsModule.class), renderer);
+
+        int num = lines.size() - 1;
+
+        // remove last space
+        if (num >= 0) {
+            if (lines.get(num).equals("")) {
+                lines.remove(num);
+            }
         }
 
-        break;
-      } else if (objective instanceof LastCompetitorStanding) {
-        LastCompetitorStanding lcs = (LastCompetitorStanding) objective;
-        lines.add(0, ObjectiveUtils
-            .getDisplay(this.getMatch(), null, viewer, lcs, SidebarComponent.DEFAULT_RENDERER,
-                false));
-      }
+        return lines;
     }
 
-    return lines;
-  }
+    @Nullable
+    public Localizable getTitleFinal(ObjectivesModule module) {
+        Localizable title = null;
+        if (module.getObjectives().size() == module.getScores().size()) {
+            title = Messages.UI_POINTS.with();
+        }
 
-  public List<String> getTeamDisplay(Player player, Sidebar sidebar, ObjectivesModule module,
-      ObjectiveRenderer renderer) {
-    List<String> lines = ObjectiveUtils.objectivesByTeam(this.getMatch(), player, module,
-        this.getMatch().getRequiredModule(GroupsModule.class), renderer);
-
-    int num = lines.size() - 1;
-
-    // remove last space
-    if (num >= 0) {
-      if (lines.get(num).equals("")) {
-        lines.remove(num);
-      }
+        return getTitle(module).orElse(title);
     }
 
-    return lines;
-  }
-
-  @Nullable
-  public Localizable getTitleFinal(ObjectivesModule module) {
-    Localizable title = null;
-    if (module.getObjectives().size() == module.getScores().size()) {
-      title = Messages.UI_POINTS.with();
+    public Optional<Localizable> getTitle(ObjectivesModule module) {
+        return Optional.empty();
     }
-
-    return getTitle(module).orElse(title);
-  }
-
-  public Optional<Localizable> getTitle(ObjectivesModule module) {
-    return Optional.empty();
-  }
 }

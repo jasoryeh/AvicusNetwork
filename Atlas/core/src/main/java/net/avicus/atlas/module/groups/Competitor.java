@@ -12,29 +12,29 @@ import org.bukkit.entity.Player;
 
 public interface Competitor extends PlayerStore {
 
-  String getId();
+    String getId();
 
-  LocalizedXmlString getName();
+    LocalizedXmlString getName();
 
-  default Localizable getColoredName() {
-    return getName().toText(TextStyle.ofColor(getChatColor()));
-  }
+    default Localizable getColoredName() {
+        return getName().toText(TextStyle.ofColor(getChatColor()));
+    }
 
-  Group getGroup();
+    Group getGroup();
 
-  boolean hasPlayer(Player player);
+    boolean hasPlayer(Player player);
 
-  TeamColor getTeamColor();
+    TeamColor getTeamColor();
 
-  default ChatColor getChatColor() {
-    return getTeamColor().getChatColor();
-  }
+    default ChatColor getChatColor() {
+        return getTeamColor().getChatColor();
+    }
 
-  default DyeColor getDyeColor() {
-    return getTeamColor().getDyeColor();
-  }
+    default DyeColor getDyeColor() {
+        return getTeamColor().getDyeColor();
+    }
 
-  default Color getFireworkColor() {
-    return getTeamColor().getFireworkColor();
-  }
+    default Color getFireworkColor() {
+        return getTeamColor().getFireworkColor();
+    }
 }

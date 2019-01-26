@@ -9,31 +9,31 @@ import net.avicus.quest.model.Model;
 @ToString
 public class TeamSpeakUser extends Model {
 
-  @Getter
-  @Id
-  @Column
-  private int id;
+    @Getter
+    @Id
+    @Column
+    private int id;
 
-  @Getter
-  @Column(name = "user_id")
-  private int userId;
+    @Getter
+    @Column(name = "user_id")
+    private int userId;
 
-  @Getter
-  @Column(name = "client_id")
-  private int clientId;
+    @Getter
+    @Column(name = "client_id")
+    private int clientId;
 
-  public TeamSpeakUser(int userId, int clientId) {
-    this.userId = userId;
-    this.clientId = clientId;
-  }
+    public TeamSpeakUser(int userId, int clientId) {
+        this.userId = userId;
+        this.clientId = clientId;
+    }
 
-  public TeamSpeakUser() {
+    public TeamSpeakUser() {
 
-  }
+    }
 
-  public TeamSpeakUser(int id, int userId, int clientId) {
-    this.id = id;
-    this.userId = userId;
-    this.clientId = clientId;
-  }
+    public TeamSpeakUser(int id, int userId, int clientId) {
+        this.id = id;
+        this.userId = userId;
+        this.clientId = clientId;
+    }
 }

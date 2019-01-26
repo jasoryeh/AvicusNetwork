@@ -6,42 +6,42 @@ import net.avicus.magma.api.graph.mutations.gadget_purchase.fail_reason.FailReas
 
 public class GadgetPurchaseQuery extends Query<GadgetPurchaseQuery> {
 
-  public GadgetPurchaseQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public GadgetPurchaseQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * A unique identifier for the client performing the mutation.
-   */
-  public GadgetPurchaseQuery clientMutationId() {
-    startField("clientMutationId");
+    /**
+     * A unique identifier for the client performing the mutation.
+     */
+    public GadgetPurchaseQuery clientMutationId() {
+        startField("clientMutationId");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Information about why the purchase failed.
-   */
-  public GadgetPurchaseQuery failReason(FailReasonQueryDefinition queryDef) {
-    startField("fail_reason");
+    /**
+     * Information about why the purchase failed.
+     */
+    public GadgetPurchaseQuery failReason(FailReasonQueryDefinition queryDef) {
+        startField("fail_reason");
 
-    builder().append('{');
-    queryDef.define(new FailReasonQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new FailReasonQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the purchase failed.
-   */
-  public GadgetPurchaseQuery failed() {
-    startField("failed");
+    /**
+     * If the purchase failed.
+     */
+    public GadgetPurchaseQuery failed() {
+        startField("failed");
 
-    return this;
-  }
+        return this;
+    }
 }

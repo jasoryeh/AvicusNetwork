@@ -10,20 +10,20 @@ import org.bukkit.event.HandlerList;
  */
 public class AsyncHookLogoutEvent extends Event {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final User user;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final User user;
 
-  public AsyncHookLogoutEvent(User user) {
-    this.user = user;
-  }
+    public AsyncHookLogoutEvent(User user) {
+        this.user = user;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

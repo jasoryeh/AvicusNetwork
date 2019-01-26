@@ -4,56 +4,56 @@ import com.shopify.graphql.support.Query;
 
 public class DeathQuery extends Query<DeathQuery> {
 
-  public DeathQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public DeathQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * ID of the user who caused this death.
-   */
-  public DeathQuery cause() {
-    startField("cause");
+    /**
+     * ID of the user who caused this death.
+     */
+    public DeathQuery cause() {
+        startField("cause");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the cause has hidden this death (their kill, respectively) with a stats reset.
-   */
-  public DeathQuery causeHidden() {
-    startField("cause_hidden");
+    /**
+     * If the cause has hidden this death (their kill, respectively) with a stats reset.
+     */
+    public DeathQuery causeHidden() {
+        startField("cause_hidden");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this death was created.
-   */
-  public DeathQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this death was created.
+     */
+    public DeathQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the user has hidden this death with a stats reset.
-   */
-  public DeathQuery userHidden() {
-    startField("user_hidden");
+    /**
+     * If the user has hidden this death with a stats reset.
+     */
+    public DeathQuery userHidden() {
+        startField("user_hidden");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who died.
-   */
-  public DeathQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user who died.
+     */
+    public DeathQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 }

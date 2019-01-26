@@ -12,7 +12,7 @@ import net.avicus.quest.model.Table;
  */
 public class LeaderboardTable extends Table<LeaderboardEntry> {
 
-  public LeaderboardTable(Database database, String name, Class<LeaderboardEntry> model) {
-    super(database, name, model);
-  }
+    public LeaderboardTable(Database database, String name, Class<LeaderboardEntry> model) {
+        super(database, name, model);
+    }
 }

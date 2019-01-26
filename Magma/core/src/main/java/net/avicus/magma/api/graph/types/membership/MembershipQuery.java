@@ -4,65 +4,65 @@ import com.shopify.graphql.support.Query;
 
 public class MembershipQuery extends Query<MembershipQuery> {
 
-  public MembershipQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public MembershipQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Date when this membership was created.
-   */
-  public MembershipQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this membership was created.
+     */
+    public MembershipQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * When this membership expires.
-   */
-  public MembershipQuery expiresAt() {
-    startField("expires_at");
+    /**
+     * When this membership expires.
+     */
+    public MembershipQuery expiresAt() {
+        startField("expires_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If this rank was purchased from the store.
-   */
-  public MembershipQuery isPurchased() {
-    startField("is_purchased");
+    /**
+     * If this rank was purchased from the store.
+     */
+    public MembershipQuery isPurchased() {
+        startField("is_purchased");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who this membership is for.
-   */
-  public MembershipQuery memberId() {
-    startField("member_id");
+    /**
+     * ID of the user who this membership is for.
+     */
+    public MembershipQuery memberId() {
+        startField("member_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the rank which the user belongs to.
-   */
-  public MembershipQuery rankId() {
-    startField("rank_id");
+    /**
+     * ID of the rank which the user belongs to.
+     */
+    public MembershipQuery rankId() {
+        startField("rank_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this membership was last updated.
-   */
-  public MembershipQuery updatedAt() {
-    startField("updated_at");
+    /**
+     * Date when this membership was last updated.
+     */
+    public MembershipQuery updatedAt() {
+        startField("updated_at");
 
-    return this;
-  }
+        return this;
+    }
 }

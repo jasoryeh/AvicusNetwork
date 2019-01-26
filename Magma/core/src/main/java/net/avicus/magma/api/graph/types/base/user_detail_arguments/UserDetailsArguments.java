@@ -5,54 +5,54 @@ import com.shopify.graphql.support.Query;
 
 public class UserDetailsArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public UserDetailsArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public UserDetailsArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public UserDetailsArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public UserDetailsArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public UserDetailsArguments emailStatus(Integer value) {
-    if (value != null) {
-      startArgument("email_status");
-      builder().append(value);
+    public UserDetailsArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public UserDetailsArguments coverArt(String value) {
-    if (value != null) {
-      startArgument("cover_art");
-      Query.appendQuotedString(builder(), value.toString());
+    public UserDetailsArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public UserDetailsArguments gender(String value) {
-    if (value != null) {
-      startArgument("gender");
-      Query.appendQuotedString(builder(), value.toString());
+    public UserDetailsArguments emailStatus(Integer value) {
+        if (value != null) {
+            startArgument("email_status");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public UserDetailsArguments coverArt(String value) {
+        if (value != null) {
+            startArgument("cover_art");
+            Query.appendQuotedString(builder(), value.toString());
+        }
+        return this;
+    }
+
+    public UserDetailsArguments gender(String value) {
+        if (value != null) {
+            startArgument("gender");
+            Query.appendQuotedString(builder(), value.toString());
+        }
+        return this;
+    }
 }

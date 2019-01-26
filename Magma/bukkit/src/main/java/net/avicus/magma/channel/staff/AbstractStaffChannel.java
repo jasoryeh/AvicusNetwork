@@ -8,14 +8,14 @@ import org.bukkit.entity.Player;
 
 public abstract class AbstractStaffChannel extends DistributedSimpleDescriptorChannel {
 
-  protected AbstractStaffChannel(String id, String permission, BaseComponent descriptor) {
-    super(id, permission, descriptor);
-  }
+    protected AbstractStaffChannel(String id, String permission, BaseComponent descriptor) {
+        super(id, permission, descriptor);
+    }
 
-  @Override
-  public boolean canRead(final CommandSender viewer) {
-    return
-        !(viewer instanceof Player && !PlayerSettings.get((Player) viewer, StaffChannels.SETTING))
-            && super.canRead(viewer);
-  }
+    @Override
+    public boolean canRead(final CommandSender viewer) {
+        return
+                !(viewer instanceof Player && !PlayerSettings.get((Player) viewer, StaffChannels.SETTING))
+                        && super.canRead(viewer);
+    }
 }

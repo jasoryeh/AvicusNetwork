@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.executors;
 
 import java.util.LinkedHashSet;
+
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
 
@@ -9,18 +10,18 @@ import net.avicus.atlas.module.checks.CheckContext;
  */
 public class ExecutorCollection extends Executor {
 
-  private final LinkedHashSet<Executor> executors;
+    private final LinkedHashSet<Executor> executors;
 
-  public ExecutorCollection(String id, Check check, LinkedHashSet<Executor> executors) {
-    super(id, check);
-    this.executors = executors;
-  }
+    public ExecutorCollection(String id, Check check, LinkedHashSet<Executor> executors) {
+        super(id, check);
+        this.executors = executors;
+    }
 
-  @Override
-  public void execute(CheckContext context) {
-    this.executors.forEach(executor -> {
-      CheckContext dupe = context.duplicate();
-      executor.executeChecked(dupe);
-    });
-  }
+    @Override
+    public void execute(CheckContext context) {
+        this.executors.forEach(executor -> {
+            CheckContext dupe = context.duplicate();
+            executor.executeChecked(dupe);
+        });
+    }
 }

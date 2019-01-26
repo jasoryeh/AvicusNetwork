@@ -5,70 +5,70 @@ import com.shopify.graphql.support.Query;
 
 public class PunishmentsArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public PunishmentsArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public PunishmentsArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public PunishmentsArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public PunishmentsArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public PunishmentsArguments staffId(Integer value) {
-    if (value != null) {
-      startArgument("staff_id");
-      builder().append(value);
+    public PunishmentsArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public PunishmentsArguments type(String value) {
-    if (value != null) {
-      startArgument("type");
-      Query.appendQuotedString(builder(), value.toString());
+    public PunishmentsArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public PunishmentsArguments serverId(Integer value) {
-    if (value != null) {
-      startArgument("server_id");
-      builder().append(value);
+    public PunishmentsArguments staffId(Integer value) {
+        if (value != null) {
+            startArgument("staff_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public PunishmentsArguments appealed(Integer value) {
-    if (value != null) {
-      startArgument("appealed");
-      builder().append(value);
+    public PunishmentsArguments type(String value) {
+        if (value != null) {
+            startArgument("type");
+            Query.appendQuotedString(builder(), value.toString());
+        }
+        return this;
     }
-    return this;
-  }
 
-  public PunishmentsArguments silent(Boolean value) {
-    if (value != null) {
-      startArgument("silent");
-      builder().append(value);
+    public PunishmentsArguments serverId(Integer value) {
+        if (value != null) {
+            startArgument("server_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public PunishmentsArguments appealed(Integer value) {
+        if (value != null) {
+            startArgument("appealed");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public PunishmentsArguments silent(Boolean value) {
+        if (value != null) {
+            startArgument("silent");
+            builder().append(value);
+        }
+        return this;
+    }
 }

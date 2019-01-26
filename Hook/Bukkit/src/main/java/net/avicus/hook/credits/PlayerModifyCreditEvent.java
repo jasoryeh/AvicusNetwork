@@ -7,20 +7,20 @@ import org.bukkit.event.player.PlayerEvent;
 
 public class PlayerModifyCreditEvent extends PlayerEvent {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final int amount;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final int amount;
 
-  public PlayerModifyCreditEvent(Player player, int amount) {
-    super(player);
-    this.amount = amount;
-  }
+    public PlayerModifyCreditEvent(Player player, int amount) {
+        super(player);
+        this.amount = amount;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

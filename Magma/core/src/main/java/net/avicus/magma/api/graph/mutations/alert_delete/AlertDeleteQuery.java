@@ -4,29 +4,29 @@ import com.shopify.graphql.support.Query;
 
 public class AlertDeleteQuery extends Query<AlertDeleteQuery> {
 
-  public AlertDeleteQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public AlertDeleteQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * A unique identifier for the client performing the mutation.
-   */
-  public AlertDeleteQuery clientMutationId() {
-    startField("clientMutationId");
+    /**
+     * A unique identifier for the client performing the mutation.
+     */
+    public AlertDeleteQuery clientMutationId() {
+        startField("clientMutationId");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the alert was delete.
-   */
-  public AlertDeleteQuery success() {
-    startField("success");
+    /**
+     * If the alert was delete.
+     */
+    public AlertDeleteQuery success() {
+        startField("success");
 
-    return this;
-  }
+        return this;
+    }
 }

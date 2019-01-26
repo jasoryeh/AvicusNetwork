@@ -12,7 +12,7 @@ import net.avicus.atlas.module.checks.Variable;
 @ToString(callSuper = true)
 public class VictimVariable extends CheckContext implements Variable {
 
-  public VictimVariable(Match match) {
-    super(match);
-  }
+    public VictimVariable(Match match) {
+        super(match);
+    }
 }

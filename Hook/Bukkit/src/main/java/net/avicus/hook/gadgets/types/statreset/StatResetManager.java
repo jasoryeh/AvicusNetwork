@@ -14,75 +14,75 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class StatResetManager implements
-    GadgetManager<StatResetGadget, EmptyGadgetContext<StatResetGadget>> {
+        GadgetManager<StatResetGadget, EmptyGadgetContext<StatResetGadget>> {
 
-  public static final StatResetManager INSTANCE = new StatResetManager();
+    public static final StatResetManager INSTANCE = new StatResetManager();
 
-  private final Gadgets gadgets;
+    private final Gadgets gadgets;
 
-  private StatResetManager() {
-    this.gadgets = getGadgets();
-  }
+    private StatResetManager() {
+        this.gadgets = getGadgets();
+    }
 
-  @Override
-  public String getType() {
-    return "stat-reset";
-  }
+    @Override
+    public String getType() {
+        return "stat-reset";
+    }
 
-  @Override
-  public void init() {
+    @Override
+    public void init() {
 
-  }
+    }
 
-  @Override
-  public void onAsyncLoad(User user, EmptyGadgetContext<StatResetGadget> context) {
+    @Override
+    public void onAsyncLoad(User user, EmptyGadgetContext<StatResetGadget> context) {
 
-  }
+    }
 
-  @Override
-  public void onAsyncUnload(User user, EmptyGadgetContext<StatResetGadget> context) {
+    @Override
+    public void onAsyncUnload(User user, EmptyGadgetContext<StatResetGadget> context) {
 
-  }
+    }
 
-  @Override
-  public void onUse(Player player, EmptyGadgetContext<StatResetGadget> context) {
-    player.closeInventory();
-
-    User user = Users.user(player);
-
-    ConfirmationDialog dialog = new ConfirmationDialog(player, () -> {
-      HookTask.of(() -> {
+    @Override
+    public void onUse(Player player, EmptyGadgetContext<StatResetGadget> context) {
         player.closeInventory();
 
-        player.sendMessage(Messages.GENERIC_RESETTING_STATS.with(ChatColor.YELLOW));
+        User user = Users.user(player);
 
-        // Delete gadget
-        gadgets.deleteBackpackGadget(context);
+        ConfirmationDialog dialog = new ConfirmationDialog(player, () -> {
+            HookTask.of(() -> {
+                player.closeInventory();
 
-        // Hide deaths
-        Hook.database().getDeaths().hideStats(user.getId());
+                player.sendMessage(Messages.GENERIC_RESETTING_STATS.with(ChatColor.YELLOW));
 
-        // Hide objectives
-        Hook.database().getObjectiveCompletions().hideStats(user.getId());
+                // Delete gadget
+                gadgets.deleteBackpackGadget(context);
 
-        // This task may have taken some time...
-        if (!player.isOnline()) {
-          return;
-        }
+                // Hide deaths
+                Hook.database().getDeaths().hideStats(user.getId());
 
-        // Done!
-        player.sendMessage(Messages.GENERIC_STATS_RESET.with(ChatColor.YELLOW));
-      }).nowAsync();
-    }, () -> {
-      player.sendMessage(Messages.GENERIC_STATS_RESET_CANCELLED.with(ChatColor.RED));
-      player.closeInventory();
-    }, Messages.UI_STATS_RESET.with(ChatColor.DARK_GRAY));
+                // Hide objectives
+                Hook.database().getObjectiveCompletions().hideStats(user.getId());
 
-    dialog.open();
-  }
+                // This task may have taken some time...
+                if (!player.isOnline()) {
+                    return;
+                }
 
-  @Override
-  public StatResetGadget deserializeGadget(JsonObject json) {
-    return new StatResetGadget();
-  }
+                // Done!
+                player.sendMessage(Messages.GENERIC_STATS_RESET.with(ChatColor.YELLOW));
+            }).nowAsync();
+        }, () -> {
+            player.sendMessage(Messages.GENERIC_STATS_RESET_CANCELLED.with(ChatColor.RED));
+            player.closeInventory();
+        }, Messages.UI_STATS_RESET.with(ChatColor.DARK_GRAY));
+
+        dialog.open();
+    }
+
+    @Override
+    public StatResetGadget deserializeGadget(JsonObject json) {
+        return new StatResetGadget();
+    }
 }

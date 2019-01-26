@@ -13,52 +13,52 @@ import org.bukkit.entity.Player;
 
 public class KeyManager implements GadgetManager<KeyGadget, EmptyGadgetContext<KeyGadget>> {
 
-  public static final KeyManager INSTANCE = new KeyManager();
+    public static final KeyManager INSTANCE = new KeyManager();
 
-  private final Gadgets gadgets;
+    private final Gadgets gadgets;
 
-  private KeyManager() {
-    this.gadgets = getGadgets();
-  }
-
-  @Override
-  public String getType() {
-    return "key";
-  }
-
-  @Override
-  public void init() {
-
-  }
-
-  @Override
-  public void onAsyncLoad(User user, EmptyGadgetContext<KeyGadget> context) {
-
-  }
-
-  @Override
-  public void onAsyncUnload(User user, EmptyGadgetContext<KeyGadget> context) {
-
-  }
-
-  @Override
-  public void onUse(Player player, EmptyGadgetContext<KeyGadget> key) {
-    for (GadgetContext context : gadgets.getGadgets(player.getUniqueId())) {
-      if (key.getGadget().isMatchingCrate(context)) {
-        CrateContext crate = (CrateContext) context;
-        CrateManager.INSTANCE.onUse(player, crate);
-        return;
-      }
+    private KeyManager() {
+        this.gadgets = getGadgets();
     }
 
-    player.sendMessage(
-        MagmaTranslations.ERROR_NO_KEY.with(ChatColor.RED, NetworkIdentification.URL + "/shop"));
-  }
+    @Override
+    public String getType() {
+        return "key";
+    }
 
-  @Override
-  public KeyGadget deserializeGadget(JsonObject json) {
-    TypeManager.CrateType crate = TypeManager
-        .getType(json.get("crate").getAsString().toUpperCase());
-    return new KeyGadget(crate);
-  }
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void onAsyncLoad(User user, EmptyGadgetContext<KeyGadget> context) {
+
+    }
+
+    @Override
+    public void onAsyncUnload(User user, EmptyGadgetContext<KeyGadget> context) {
+
+    }
+
+    @Override
+    public void onUse(Player player, EmptyGadgetContext<KeyGadget> key) {
+        for (GadgetContext context : gadgets.getGadgets(player.getUniqueId())) {
+            if (key.getGadget().isMatchingCrate(context)) {
+                CrateContext crate = (CrateContext) context;
+                CrateManager.INSTANCE.onUse(player, crate);
+                return;
+            }
+        }
+
+        player.sendMessage(
+                MagmaTranslations.ERROR_NO_KEY.with(ChatColor.RED, NetworkIdentification.URL + "/shop"));
+    }
+
+    @Override
+    public KeyGadget deserializeGadget(JsonObject json) {
+        TypeManager.CrateType crate = TypeManager
+                .getType(json.get("crate").getAsString().toUpperCase());
+        return new KeyGadget(crate);
+    }
 }

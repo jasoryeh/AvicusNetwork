@@ -7,11 +7,11 @@ import net.avicus.quest.model.Table;
 
 public class UserDetailTable extends Table<UserDetail> {
 
-  public UserDetailTable(Database database, String name, Class<UserDetail> model) {
-    super(database, name, model);
-  }
+    public UserDetailTable(Database database, String name, Class<UserDetail> model) {
+        super(database, name, model);
+    }
 
-  public UserDetail findByUser(User user) {
-    return select().where("id", user.getId()).execute().first();
-  }
+    public UserDetail findByUser(User user) {
+        return select().where("id", user.getId()).execute().first();
+    }
 }

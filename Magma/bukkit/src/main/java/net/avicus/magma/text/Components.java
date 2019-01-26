@@ -8,23 +8,23 @@ import org.bukkit.ChatColor;
 
 public class Components {
 
-  public static BaseComponent simple(String string, ChatColor color) {
-    return color(new TextComponent(string), color);
-  }
+    public static BaseComponent simple(String string, ChatColor color) {
+        return color(new TextComponent(string), color);
+    }
 
-  public static BaseComponent simple(BaseComponent[] components, ChatColor color) {
-    return color(new TextComponent(components), color);
-  }
+    public static BaseComponent simple(BaseComponent[] components, ChatColor color) {
+        return color(new TextComponent(components), color);
+    }
 
-  public static BaseComponent color(BaseComponent component, ChatColor color) {
-    component.setColor(color.asBungee());
-    return component;
-  }
+    public static BaseComponent color(BaseComponent component, ChatColor color) {
+        component.setColor(color.asBungee());
+        return component;
+    }
 
-  public static BaseComponent event(BaseComponent component, ClickEvent clickEvent,
-      HoverEvent hoverEvent) {
-    component.setHoverEvent(hoverEvent);
-    component.setClickEvent(clickEvent);
-    return component;
-  }
+    public static BaseComponent event(BaseComponent component, ClickEvent clickEvent,
+                                      HoverEvent hoverEvent) {
+        component.setHoverEvent(hoverEvent);
+        component.setClickEvent(clickEvent);
+        return component;
+    }
 }

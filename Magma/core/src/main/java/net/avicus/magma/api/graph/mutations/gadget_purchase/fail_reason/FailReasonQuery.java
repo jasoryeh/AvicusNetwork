@@ -4,29 +4,29 @@ import com.shopify.graphql.support.Query;
 
 public class FailReasonQuery extends Query<FailReasonQuery> {
 
-  public FailReasonQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public FailReasonQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * If the purchase failed due to a lack of currency.
-   */
-  public FailReasonQuery money() {
-    startField("money");
+    /**
+     * If the purchase failed due to a lack of currency.
+     */
+    public FailReasonQuery money() {
+        startField("money");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the purchase failed due to a lack of rank.
-   */
-  public FailReasonQuery rank() {
-    startField("rank");
+    /**
+     * If the purchase failed due to a lack of rank.
+     */
+    public FailReasonQuery rank() {
+        startField("rank");
 
-    return this;
-  }
+        return this;
+    }
 }

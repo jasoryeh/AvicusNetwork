@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface MinecraftProfileResolver {
 
-  Optional<String> username(UUID uuid);
+    Optional<String> username(UUID uuid);
 
-  Optional<UUID> uuid(String username);
+    Optional<UUID> uuid(String username);
 }

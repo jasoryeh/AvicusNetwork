@@ -7,11 +7,11 @@ import lombok.ToString;
 @ToString
 public class KitPermission {
 
-  private final String node;
-  private final boolean value;
+    private final String node;
+    private final boolean value;
 
-  public KitPermission(String node, boolean value) {
-    this.node = node;
-    this.value = value;
-  }
+    public KitPermission(String node, boolean value) {
+        this.node = node;
+        this.value = value;
+    }
 }

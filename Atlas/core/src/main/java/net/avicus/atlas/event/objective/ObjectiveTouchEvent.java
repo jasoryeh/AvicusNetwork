@@ -10,43 +10,43 @@ import org.bukkit.event.HandlerList;
  */
 public class ObjectiveTouchEvent extends ObjectiveEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
-  /**
-   * Player who touched the objective.
-   */
-  @Getter
-  private final Player player;
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
+    /**
+     * Player who touched the objective.
+     */
+    @Getter
+    private final Player player;
 
-  /**
-   * Constructor.
-   *
-   * @param objective objective that was touched
-   * @param player player who touched the objective
-   */
-  public ObjectiveTouchEvent(Objective objective, Player player) {
-    super(objective);
-    this.player = player;
-  }
+    /**
+     * Constructor.
+     *
+     * @param objective objective that was touched
+     * @param player    player who touched the objective
+     */
+    public ObjectiveTouchEvent(Objective objective, Player player) {
+        super(objective);
+        this.player = player;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

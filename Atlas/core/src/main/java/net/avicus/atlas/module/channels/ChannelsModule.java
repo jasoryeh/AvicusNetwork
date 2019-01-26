@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.channels;
 
 import com.google.common.base.Preconditions;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,132 +30,134 @@ import org.bukkit.event.player.PlayerQuitEvent;
  */
 public class ChannelsModule implements Module {
 
-  /**
-   * Map of players that are currently talking in global chat.
-   * If the value is false, they are taking in team chat.
-   */
-  private final Map<Player, Boolean> globalEnabled;
-  /**
-   * Match that this module exists in.
-   */
-  private final Match match;
-  /**
-   * If team chat is allowed during this match.
-   */
-  private final boolean allowTeamChat;
-  /**
-   * If global chat is allowed during this match.
-   */
-  private final boolean allowGlobalChat;
+    /**
+     * Map of players that are currently talking in global chat.
+     * If the value is false, they are taking in team chat.
+     */
+    private final Map<Player, Boolean> globalEnabled;
+    /**
+     * Match that this module exists in.
+     */
+    private final Match match;
+    /**
+     * If team chat is allowed during this match.
+     */
+    private final boolean allowTeamChat;
+    /**
+     * If global chat is allowed during this match.
+     */
+    private final boolean allowGlobalChat;
 
-  /**
-   * Constructor.
-   * <p>
-   * <p>Note: Either team chat or global chat must be enabled.</p>
-   *
-   * @param match match that this module exists in
-   * @param allowTeamChat if team chat is allowed in this match
-   * @param allowGlobalChat if global chat is allowed during this match
-   */
-  public ChannelsModule(Match match, boolean allowTeamChat, boolean allowGlobalChat) {
-    Preconditions.checkArgument(allowTeamChat || allowGlobalChat,
-        "Team chat or global chat must be enabled");
-    this.match = match;
-    this.allowTeamChat = allowTeamChat;
-    this.allowGlobalChat = allowGlobalChat;
-    this.globalEnabled = new HashMap<>();
-  }
-
-  @EventHandler
-  public void onPlayerQuit(PlayerQuitEvent event) {
-    this.globalEnabled.remove(event.getPlayer());
-  }
-
-  /**
-   * Check if team chat is allowed in the match.
-   *
-   * @return if team chat is allowed in the match
-   */
-  public boolean isTeamChatAllowed() {
-    return this.allowTeamChat;
-  }
-
-  /**
-   * Check if global chat is enabled in the match.
-   *
-   * @return if global chat is enabled in the match
-   */
-  public boolean isGlobalChatAllowed() {
-    return this.allowGlobalChat;
-  }
-
-  /**
-   * Set if a player is  talking in global chat.
-   *
-   * @param player player to check
-   * @param globalEnabled if the player is  talking in global chat
-   */
-  public void setGlobalEnabled(Player player, boolean globalEnabled) {
-    this.globalEnabled.put(player, globalEnabled);
-  }
-
-  /**
-   * Check if a player is currently talking in global chat.
-   *
-   * @param player player to check
-   * @return if the player is currently talking in global chat
-   */
-  public boolean isGlobalEnabled(Player player) {
-    return this.allowGlobalChat && this.globalEnabled.getOrDefault(player, true);
-  }
-
-  /**
-   * Get the recipients of a message.
-   * This will either return all players or the players in the same group as the sender.
-   *
-   * @param sender sender of the message
-   * @return list of players who are allowed to see the message
-   */
-  private List<Player> recipients(Player sender) {
-    if (isGlobalEnabled(sender)) {
-      return Bukkit.getOnlinePlayers().stream().collect(Collectors.toList());
-    } else {
-      GroupsModule groups = this.match.getRequiredModule(GroupsModule.class);
-      Group group = groups.getGroup(sender);
-      Competitor competitor = groups.getCompetitorOf(sender).orElse(null);
-
-      return competitor == null ? group.getPlayers() : competitor.getPlayers();
+    /**
+     * Constructor.
+     * <p>
+     * <p>Note: Either team chat or global chat must be enabled.</p>
+     *
+     * @param match           match that this module exists in
+     * @param allowTeamChat   if team chat is allowed in this match
+     * @param allowGlobalChat if global chat is allowed during this match
+     */
+    public ChannelsModule(Match match, boolean allowTeamChat, boolean allowGlobalChat) {
+        Preconditions.checkArgument(allowTeamChat || allowGlobalChat,
+                "Team chat or global chat must be enabled");
+        this.match = match;
+        this.allowTeamChat = allowTeamChat;
+        this.allowGlobalChat = allowGlobalChat;
+        this.globalEnabled = new HashMap<>();
     }
-  }
 
-  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-    // LP API for prefixes start
-    String fmat = Atlas.get().getConfig().getString("chat", "<%3$s%1$s> %2$s");
-    String prefix = "";
-    try {
-      LuckPermsApi api = LuckPerms.getApi();
-      prefix = api.getUser(event.getPlayer().getUniqueId()).getCachedData().getMetaData(Contexts.global()).getPrefix();
-    } catch(Exception e) { e.printStackTrace(); }
-    fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', prefix));
-    event.setFormat(fmat);
-    // LP API for prefixes end
-
-    event.getRecipients().clear();
-    event.getRecipients().addAll(recipients(event.getPlayer()));
-
-    if (!isGlobalEnabled(event.getPlayer())) {
-      GroupsModule groups = this.match.getRequiredModule(GroupsModule.class);
-      ChatColor color;
-      Competitor competitor = groups.getCompetitorOf(event.getPlayer()).orElse(null);
-      if (competitor == null) {
-        color = groups.getGroup(event.getPlayer()).getChatColor();
-      } else {
-        color = competitor.getChatColor();
-      }
-
-      String format = color + "[Team] " + ChatColor.RESET + event.getFormat();
-      event.setFormat(format);
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        this.globalEnabled.remove(event.getPlayer());
     }
-  }
+
+    /**
+     * Check if team chat is allowed in the match.
+     *
+     * @return if team chat is allowed in the match
+     */
+    public boolean isTeamChatAllowed() {
+        return this.allowTeamChat;
+    }
+
+    /**
+     * Check if global chat is enabled in the match.
+     *
+     * @return if global chat is enabled in the match
+     */
+    public boolean isGlobalChatAllowed() {
+        return this.allowGlobalChat;
+    }
+
+    /**
+     * Set if a player is  talking in global chat.
+     *
+     * @param player        player to check
+     * @param globalEnabled if the player is  talking in global chat
+     */
+    public void setGlobalEnabled(Player player, boolean globalEnabled) {
+        this.globalEnabled.put(player, globalEnabled);
+    }
+
+    /**
+     * Check if a player is currently talking in global chat.
+     *
+     * @param player player to check
+     * @return if the player is currently talking in global chat
+     */
+    public boolean isGlobalEnabled(Player player) {
+        return this.allowGlobalChat && this.globalEnabled.getOrDefault(player, true);
+    }
+
+    /**
+     * Get the recipients of a message.
+     * This will either return all players or the players in the same group as the sender.
+     *
+     * @param sender sender of the message
+     * @return list of players who are allowed to see the message
+     */
+    private List<Player> recipients(Player sender) {
+        if (isGlobalEnabled(sender)) {
+            return Bukkit.getOnlinePlayers().stream().collect(Collectors.toList());
+        } else {
+            GroupsModule groups = this.match.getRequiredModule(GroupsModule.class);
+            Group group = groups.getGroup(sender);
+            Competitor competitor = groups.getCompetitorOf(sender).orElse(null);
+
+            return competitor == null ? group.getPlayers() : competitor.getPlayers();
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        // LP API for prefixes start
+        String fmat = Atlas.get().getConfig().getString("chat", "<%3$s%1$s> %2$s");
+        String prefix = "";
+        try {
+            LuckPermsApi api = LuckPerms.getApi();
+            prefix = api.getUser(event.getPlayer().getUniqueId()).getCachedData().getMetaData(Contexts.global()).getPrefix();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', prefix));
+        event.setFormat(fmat);
+        // LP API for prefixes end
+
+        event.getRecipients().clear();
+        event.getRecipients().addAll(recipients(event.getPlayer()));
+
+        if (!isGlobalEnabled(event.getPlayer())) {
+            GroupsModule groups = this.match.getRequiredModule(GroupsModule.class);
+            ChatColor color;
+            Competitor competitor = groups.getCompetitorOf(event.getPlayer()).orElse(null);
+            if (competitor == null) {
+                color = groups.getGroup(event.getPlayer()).getChatColor();
+            } else {
+                color = competitor.getChatColor();
+            }
+
+            String format = color + "[Team] " + ChatColor.RESET + event.getFormat();
+            event.setFormat(format);
+        }
+    }
 }

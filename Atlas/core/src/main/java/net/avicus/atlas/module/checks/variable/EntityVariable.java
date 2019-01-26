@@ -12,10 +12,10 @@ import org.bukkit.entity.Entity;
 @ToString
 public class EntityVariable implements Variable {
 
-  @Getter
-  private final Entity entity;
+    @Getter
+    private final Entity entity;
 
-  public EntityVariable(Entity entity) {
-    this.entity = entity;
-  }
+    public EntityVariable(Entity entity) {
+        this.entity = entity;
+    }
 }

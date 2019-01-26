@@ -4,48 +4,48 @@ import com.shopify.graphql.support.Query;
 
 public class CreditTransactionQuery extends Query<CreditTransactionQuery> {
 
-  public CreditTransactionQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public CreditTransactionQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Number of credits this transaction should represent.
-   */
-  public CreditTransactionQuery amount() {
-    startField("amount");
+    /**
+     * Number of credits this transaction should represent.
+     */
+    public CreditTransactionQuery amount() {
+        startField("amount");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this credittransaction was created.
-   */
-  public CreditTransactionQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this credittransaction was created.
+     */
+    public CreditTransactionQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who the credit(s) in this transaction are rewarded to.
-   */
-  public CreditTransactionQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user who the credit(s) in this transaction are rewarded to.
+     */
+    public CreditTransactionQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Amount the base credit value was multiplied by. The amount represented by this object already
-   * reflects this operation.
-   */
-  public CreditTransactionQuery weight() {
-    startField("weight");
+    /**
+     * Amount the base credit value was multiplied by. The amount represented by this object already
+     * reflects this operation.
+     */
+    public CreditTransactionQuery weight() {
+        startField("weight");
 
-    return this;
-  }
+        return this;
+    }
 }

@@ -17,31 +17,31 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
  */
 public class Chat implements Listener {
 
-  public static void init() {
-    Events.register(new Chat());
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-    if (HookConfig.Chat.isStripColor()) {
-      String message = Strings.removeColors(event.getMessage());
-      event.setMessage(message);
-    } else {
-      String message = ChatColor.translateAlternateColorCodes('&', event.getMessage());
-      event.setMessage(message);
+    public static void init() {
+        Events.register(new Chat());
     }
 
-    String name = Users.getDisplay(Users.user(event.getPlayer()));
-    String message = event.getMessage();
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+        if (HookConfig.Chat.isStripColor()) {
+            String message = Strings.removeColors(event.getMessage());
+            event.setMessage(message);
+        } else {
+            String message = ChatColor.translateAlternateColorCodes('&', event.getMessage());
+            event.setMessage(message);
+        }
 
-    String full = String.format(event.getFormat(), name, message);
+        String name = Users.getDisplay(Users.user(event.getPlayer()));
+        String message = event.getMessage();
 
-    for (Player player : event.getRecipients()) {
-      player.sendMessage(full);
+        String full = String.format(event.getFormat(), name, message);
+
+        for (Player player : event.getRecipients()) {
+            player.sendMessage(full);
+        }
+        Bukkit.getConsoleSender().sendMessage(full);
+
+        event.getRecipients().clear();
+        event.setCancelled(true);
     }
-    Bukkit.getConsoleSender().sendMessage(full);
-
-    event.getRecipients().clear();
-    event.setCancelled(true);
-  }
 }

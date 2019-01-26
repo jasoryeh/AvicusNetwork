@@ -12,10 +12,10 @@ import org.bukkit.Location;
 @ToString
 public class LocationVariable implements Variable {
 
-  @Getter
-  private final Location location;
+    @Getter
+    private final Location location;
 
-  public LocationVariable(Location location) {
-    this.location = location;
-  }
+    public LocationVariable(Location location) {
+        this.location = location;
+    }
 }

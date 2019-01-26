@@ -12,100 +12,100 @@ import net.avicus.magma.api.graph.types.setting.SettingQueryDefinition;
 
 public class UserLoginQuery extends Query<UserLoginQuery> {
 
-  public UserLoginQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public UserLoginQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Information about the user's display in chat.
-   */
-  public UserLoginQuery chatData(ChatDataQueryDefinition queryDef) {
-    startField("chat_data");
+    /**
+     * Information about the user's display in chat.
+     */
+    public UserLoginQuery chatData(ChatDataQueryDefinition queryDef) {
+        startField("chat_data");
 
-    builder().append('{');
-    queryDef.define(new ChatDataQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new ChatDataQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * A unique identifier for the client performing the mutation.
-   */
-  public UserLoginQuery clientMutationId() {
-    startField("clientMutationId");
+    /**
+     * A unique identifier for the client performing the mutation.
+     */
+    public UserLoginQuery clientMutationId() {
+        startField("clientMutationId");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Information about if this login is allowed.
-   */
-  public UserLoginQuery disallowScope(DisallowScopeQueryDefinition queryDef) {
-    startField("disallow_scope");
+    /**
+     * Information about if this login is allowed.
+     */
+    public UserLoginQuery disallowScope(DisallowScopeQueryDefinition queryDef) {
+        startField("disallow_scope");
 
-    builder().append('{');
-    queryDef.define(new DisallowScopeQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new DisallowScopeQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Gadgets which a user has in their backpack.
-   */
-  public UserLoginQuery gadgets(BackpackGadgetQueryDefinition queryDef) {
-    startField("gadgets");
+    /**
+     * Gadgets which a user has in their backpack.
+     */
+    public UserLoginQuery gadgets(BackpackGadgetQueryDefinition queryDef) {
+        startField("gadgets");
 
-    builder().append('{');
-    queryDef.define(new BackpackGadgetQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new BackpackGadgetQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the user has web alerts which are unread.
-   */
-  public UserLoginQuery hasAlerts() {
-    startField("has_alerts");
+    /**
+     * If the user has web alerts which are unread.
+     */
+    public UserLoginQuery hasAlerts() {
+        startField("has_alerts");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Message to be shown to the user when they join. This is usually a recent announce message.
-   */
-  public UserLoginQuery message() {
-    startField("message");
+    /**
+     * Message to be shown to the user when they join. This is usually a recent announce message.
+     */
+    public UserLoginQuery message() {
+        startField("message");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Permissions that the user should receive when joining this server. These include category
-   * permissions.
-   */
-  public UserLoginQuery permissions() {
-    startField("permissions");
+    /**
+     * Permissions that the user should receive when joining this server. These include category
+     * permissions.
+     */
+    public UserLoginQuery permissions() {
+        startField("permissions");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Saved settings for the user.
-   */
-  public UserLoginQuery settings(SettingQueryDefinition queryDef) {
-    startField("settings");
+    /**
+     * Saved settings for the user.
+     */
+    public UserLoginQuery settings(SettingQueryDefinition queryDef) {
+        startField("settings");
 
-    builder().append('{');
-    queryDef.define(new SettingQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new SettingQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 }

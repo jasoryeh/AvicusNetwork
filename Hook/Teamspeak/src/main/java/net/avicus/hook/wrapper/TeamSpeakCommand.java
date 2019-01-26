@@ -6,5 +6,5 @@ import java.util.List;
 @FunctionalInterface
 public interface TeamSpeakCommand {
 
-  void execute(HookClient sender, List<String> args) throws Exception;
+    void execute(HookClient sender, List<String> args) throws Exception;
 }

@@ -4,6 +4,7 @@ import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandNumberFormatException;
 import com.sk89q.minecraft.util.commands.CommandPermissionsException;
 import com.sk89q.minecraft.util.commands.CommandUsageException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +13,7 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.command.ChannelCommands;
@@ -74,223 +76,223 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Atlas extends JavaPlugin {
 
-  private static Atlas instance;
-  private AvicusCommandsManager commandManager;
-  @Getter
-  @Setter
-  private AtlasBridge bridge = new AtlasBridge.SimpleAtlasBridge();
-  @Getter
-  private MapManager mapManager;
-  @Getter
-  private MatchManager matchManager;
+    private static Atlas instance;
+    private AvicusCommandsManager commandManager;
+    @Getter
+    @Setter
+    private AtlasBridge bridge = new AtlasBridge.SimpleAtlasBridge();
+    @Getter
+    private MapManager mapManager;
+    @Getter
+    private MatchManager matchManager;
 
-  @Getter
-  private Logger mapErrorLogger;
+    @Getter
+    private Logger mapErrorLogger;
 
-  @Getter
-  private SidebarComponent sideBar;
+    @Getter
+    private SidebarComponent sideBar;
 
-  @Getter
-  private AtlasComponentManager componentManager;
+    @Getter
+    private AtlasComponentManager componentManager;
 
-  @Getter
-  private SetLoader loader;
+    @Getter
+    private SetLoader loader;
 
-  @Getter
-  private MatchFactory matchFactory;
+    @Getter
+    private MatchFactory matchFactory;
 
-  @Getter
-  private AvicusCommandsRegistration registrar;
+    @Getter
+    private AvicusCommandsRegistration registrar;
 
-  @Nullable
-  public static Match getMatch() {
-    return get().getMatchManager().getRotation().getMatch();
-  }
-
-  public static void performOnMatch(Consumer<Match> consumer) {
-    Match match = getMatch();
-    if (match != null) {
-      consumer.accept(match);
-    }
-  }
-
-  public static Atlas get() {
-    return instance;
-  }
-
-  @Override
-  public void onEnable() {
-    instance = this;
-
-    this.saveDefaultConfig();
-    this.reloadConfig();
-
-    final Config config;
-    try {
-      config = new Config(new FileInputStream(new File(this.getDataFolder(), "config.yml")));
-    } catch (FileNotFoundException e) {
-      this.getLogger().log(Level.SEVERE, "Could not load configuration", e);
-      this.getServer().getPluginManager().disablePlugin(this);
-      return;
-    }
-    config.injector(AtlasConfig.class).inject();
-
-    if (Translations.TYPE_BOOLEAN_FALSE == TranslationProvider.$NULL$) {
-      this.getLogger().severe("Failed to pre-load.");
-      this.getPluginLoader().disablePlugin(this);
-      return;
+    @Nullable
+    public static Match getMatch() {
+        return get().getMatchManager().getRotation().getMatch();
     }
 
-    this.mapErrorLogger = Logger.getLogger("map-error");
-    this.mapErrorLogger.setUseParentHandlers(false);
-    this.mapErrorLogger.addHandler(new ChatLogHandler("MAPS", "atlas.maperrors"));
-
-    this.mapManager = new MapManager();
-    this.mapManager.loadLibraries(AtlasConfig.getLibraries());
-    this.matchFactory = new MatchFactory();
-
-    this.commandManager = new AvicusCommandsManager();
-    this.registrar = new AvicusCommandsRegistration(this, this.commandManager);
-
-    this.loader = new SetLoader(new File(this.getDataFolder(), "module-sets"));
-    Bukkit.getLogger().info("Beginning external module set loading...");
-    this.loader.loadModules();
-    this.loader.getLoadedModules().forEach(m -> {
-      try {
-        ModuleSet set = m.getModuleInstance();
-
-        set.setAtlas(this);
-        set.setMatchFactory(this.matchFactory);
-        Logger logger = Logger.getLogger(m.getDescriptionFile().getName());
-        logger.setParent(this.getLogger());
-        set.setLogger(logger);
-        set.setRegistrar(this.registrar);
-
-        set.onEnable();
-      } catch (Exception e) {
-        Bukkit.getLogger().info("Failed to load module!");
-        e.printStackTrace();
-      }
-      Bukkit.getLogger().info("Loaded Module Set: " + m.getDescriptionFile().getName());
-    });
-    Bukkit.getLogger().info(
-        "Finished external module set loading! Loaded " + this.loader.getLoadedModules().size()
-            + " modules!");
-
-    final RotationProvider rotationProvider = new XmlRotationProvider(
-        new File(AtlasConfig.getRotationFile()), this.mapManager, this.matchFactory);
-    this.getLogger().info("Using " + rotationProvider.getClass().getName() + " rotation provider");
-    Rotation rotation;
-    try {
-      rotation = rotationProvider.provideRotation();
-    } catch (IllegalStateException e) {
-      rotation = new RandomRotationProvider(this.mapManager, this.matchFactory).provideRotation();
-    }
-    this.matchManager = new MatchManager(this.matchFactory, rotation);
-
-    PlayerSettings.register(DeathMessage.SETTING);
-    PlayerSettings.register(TutorialModule.SHOW_TUTORIAL_SETTING);
-
-    // Components
-    this.componentManager = new AtlasComponentManager(Bukkit.getPluginManager(), this, registrar);
-    this.componentManager.register(StatusComponent.class);
-    this.componentManager.register(TabListComponent.class);
-    this.componentManager.register(DebuggingComponent.class);
-    this.componentManager
-        .register(AtlasQuickPlayComponent.class, MagmaConfig.Server.QuickPlay.isEnabled());
-    this.componentManager.register(MapNotificationComponent.class);
-    this.componentManager.register(SidebarComponent.class);
-    this.componentManager.register(VisualEffectComponent.class);
-    this.componentManager.register(SoundComponent.class);
-    this.componentManager.register(ArrowRemovalComponent.class);
-    this.sideBar = this.componentManager.get(SidebarComponent.class);
-    this.loader.getLoadedModules()
-        .forEach(m -> m.getModuleInstance().onComponentsEnable(this.componentManager));
-    this.componentManager.enable();
-
-    // Listeners
-    Events.register(new BlockChangeListener());
-    Events.register(new EntityChangeListener());
-    Events.register(new AtlasListener());
-
-    try {
-      this.matchManager.start();
-    } catch (IOException e) {
-      this.getLogger().log(Level.SEVERE, "Could not start rotation", e);
-      this.getPluginLoader().disablePlugin(this);
-      return;
+    public static void performOnMatch(Consumer<Match> consumer) {
+        Match match = getMatch();
+        if (match != null) {
+            consumer.accept(match);
+        }
     }
 
-    this.registerCommands(registrar);
-
-    // Fun
-    // new Friday13(this);
-
-    RestartMessageHandler.RESTART_HANDLER = () -> get().getMatchManager().getRotation()
-        .queueRestart();
-  }
-
-  @Override
-  public void onDisable() {
-    if (this.matchManager != null) {
-      this.matchManager.shutdown();
-    }
-    if (this.componentManager != null) {
-      this.componentManager.disable();
-    }
-    if (this.loader != null) {
-      this.loader.disableAll();
-    }
-  }
-
-  private void registerCommands(AvicusCommandsRegistration registrar) {
-    registrar.register(ChannelCommands.class);
-    registrar.register(DevCommands.class);
-    registrar.register(JoinCommands.class);
-    registrar.register(RotationCommands.class);
-    registrar.register(StateCommands.class);
-    registrar.register(GameCommands.class);
-    registrar.register(ResourcePackCommand.class);
-    registrar.register(GroupCommands.GroupParentCommand.class);
-    registrar.register(GenericCommands.class);
-
-    // Modular
-    registrar.register(KitCommands.class);
-    registrar.register(ObserverCommands.class);
-    registrar.register(VoteCommands.class);
-
-    try {
-      Class.forName("com.sk89q.worldedit.WorldEdit");
-      registrar.register(WorldEditCommands.class);
-    } catch (ClassNotFoundException ignored) {
-    }
-  }
-
-  @Override
-  public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-    try {
-      this.commandManager.execute(cmd.getName(), args, sender, sender);
-    } catch (AbstractTranslatableCommandException e) {
-      sender.sendMessage(AbstractTranslatableCommandException.format(e));
-    } catch (CommandNumberFormatException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
-              new UnlocalizedText(e.getActualText())));
-    } catch (CommandPermissionsException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
-    } catch (CommandUsageException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
-              new UnlocalizedText(e.getUsage())));
-    } catch (CommandMatchException e) {
-      sender.sendMessage(AbstractTranslatableCommandException.error(Messages.ERROR_MATCH_MISSING));
-    } catch (CommandException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-          .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
-      e.printStackTrace();
+    public static Atlas get() {
+        return instance;
     }
 
-    return true;
-  }
+    @Override
+    public void onEnable() {
+        instance = this;
+
+        this.saveDefaultConfig();
+        this.reloadConfig();
+
+        final Config config;
+        try {
+            config = new Config(new FileInputStream(new File(this.getDataFolder(), "config.yml")));
+        } catch (FileNotFoundException e) {
+            this.getLogger().log(Level.SEVERE, "Could not load configuration", e);
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        config.injector(AtlasConfig.class).inject();
+
+        if (Translations.TYPE_BOOLEAN_FALSE == TranslationProvider.$NULL$) {
+            this.getLogger().severe("Failed to pre-load.");
+            this.getPluginLoader().disablePlugin(this);
+            return;
+        }
+
+        this.mapErrorLogger = Logger.getLogger("map-error");
+        this.mapErrorLogger.setUseParentHandlers(false);
+        this.mapErrorLogger.addHandler(new ChatLogHandler("MAPS", "atlas.maperrors"));
+
+        this.mapManager = new MapManager();
+        this.mapManager.loadLibraries(AtlasConfig.getLibraries());
+        this.matchFactory = new MatchFactory();
+
+        this.commandManager = new AvicusCommandsManager();
+        this.registrar = new AvicusCommandsRegistration(this, this.commandManager);
+
+        this.loader = new SetLoader(new File(this.getDataFolder(), "module-sets"));
+        Bukkit.getLogger().info("Beginning external module set loading...");
+        this.loader.loadModules();
+        this.loader.getLoadedModules().forEach(m -> {
+            try {
+                ModuleSet set = m.getModuleInstance();
+
+                set.setAtlas(this);
+                set.setMatchFactory(this.matchFactory);
+                Logger logger = Logger.getLogger(m.getDescriptionFile().getName());
+                logger.setParent(this.getLogger());
+                set.setLogger(logger);
+                set.setRegistrar(this.registrar);
+
+                set.onEnable();
+            } catch (Exception e) {
+                Bukkit.getLogger().info("Failed to load module!");
+                e.printStackTrace();
+            }
+            Bukkit.getLogger().info("Loaded Module Set: " + m.getDescriptionFile().getName());
+        });
+        Bukkit.getLogger().info(
+                "Finished external module set loading! Loaded " + this.loader.getLoadedModules().size()
+                        + " modules!");
+
+        final RotationProvider rotationProvider = new XmlRotationProvider(
+                new File(AtlasConfig.getRotationFile()), this.mapManager, this.matchFactory);
+        this.getLogger().info("Using " + rotationProvider.getClass().getName() + " rotation provider");
+        Rotation rotation;
+        try {
+            rotation = rotationProvider.provideRotation();
+        } catch (IllegalStateException e) {
+            rotation = new RandomRotationProvider(this.mapManager, this.matchFactory).provideRotation();
+        }
+        this.matchManager = new MatchManager(this.matchFactory, rotation);
+
+        PlayerSettings.register(DeathMessage.SETTING);
+        PlayerSettings.register(TutorialModule.SHOW_TUTORIAL_SETTING);
+
+        // Components
+        this.componentManager = new AtlasComponentManager(Bukkit.getPluginManager(), this, registrar);
+        this.componentManager.register(StatusComponent.class);
+        this.componentManager.register(TabListComponent.class);
+        this.componentManager.register(DebuggingComponent.class);
+        this.componentManager
+                .register(AtlasQuickPlayComponent.class, MagmaConfig.Server.QuickPlay.isEnabled());
+        this.componentManager.register(MapNotificationComponent.class);
+        this.componentManager.register(SidebarComponent.class);
+        this.componentManager.register(VisualEffectComponent.class);
+        this.componentManager.register(SoundComponent.class);
+        this.componentManager.register(ArrowRemovalComponent.class);
+        this.sideBar = this.componentManager.get(SidebarComponent.class);
+        this.loader.getLoadedModules()
+                .forEach(m -> m.getModuleInstance().onComponentsEnable(this.componentManager));
+        this.componentManager.enable();
+
+        // Listeners
+        Events.register(new BlockChangeListener());
+        Events.register(new EntityChangeListener());
+        Events.register(new AtlasListener());
+
+        try {
+            this.matchManager.start();
+        } catch (IOException e) {
+            this.getLogger().log(Level.SEVERE, "Could not start rotation", e);
+            this.getPluginLoader().disablePlugin(this);
+            return;
+        }
+
+        this.registerCommands(registrar);
+
+        // Fun
+        // new Friday13(this);
+
+        RestartMessageHandler.RESTART_HANDLER = () -> get().getMatchManager().getRotation()
+                .queueRestart();
+    }
+
+    @Override
+    public void onDisable() {
+        if (this.matchManager != null) {
+            this.matchManager.shutdown();
+        }
+        if (this.componentManager != null) {
+            this.componentManager.disable();
+        }
+        if (this.loader != null) {
+            this.loader.disableAll();
+        }
+    }
+
+    private void registerCommands(AvicusCommandsRegistration registrar) {
+        registrar.register(ChannelCommands.class);
+        registrar.register(DevCommands.class);
+        registrar.register(JoinCommands.class);
+        registrar.register(RotationCommands.class);
+        registrar.register(StateCommands.class);
+        registrar.register(GameCommands.class);
+        registrar.register(ResourcePackCommand.class);
+        registrar.register(GroupCommands.GroupParentCommand.class);
+        registrar.register(GenericCommands.class);
+
+        // Modular
+        registrar.register(KitCommands.class);
+        registrar.register(ObserverCommands.class);
+        registrar.register(VoteCommands.class);
+
+        try {
+            Class.forName("com.sk89q.worldedit.WorldEdit");
+            registrar.register(WorldEditCommands.class);
+        } catch (ClassNotFoundException ignored) {
+        }
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        try {
+            this.commandManager.execute(cmd.getName(), args, sender, sender);
+        } catch (AbstractTranslatableCommandException e) {
+            sender.sendMessage(AbstractTranslatableCommandException.format(e));
+        } catch (CommandNumberFormatException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
+                            new UnlocalizedText(e.getActualText())));
+        } catch (CommandPermissionsException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
+        } catch (CommandUsageException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
+                            new UnlocalizedText(e.getUsage())));
+        } catch (CommandMatchException e) {
+            sender.sendMessage(AbstractTranslatableCommandException.error(Messages.ERROR_MATCH_MISSING));
+        } catch (CommandException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 }

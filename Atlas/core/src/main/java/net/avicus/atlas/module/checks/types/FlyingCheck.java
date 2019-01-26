@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.checks.types;
 
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -14,21 +15,21 @@ import org.bukkit.entity.Player;
 @ToString
 public class FlyingCheck implements Check {
 
-  private final boolean flying;
+    private final boolean flying;
 
-  public FlyingCheck(boolean flying) {
-    this.flying = flying;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
-
-    if (!optional.isPresent()) {
-      return CheckResult.IGNORE;
+    public FlyingCheck(boolean flying) {
+        this.flying = flying;
     }
 
-    Player player = optional.get().getPlayer();
-    return CheckResult.valueOf(this.flying == player.isFlying());
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
+
+        if (!optional.isPresent()) {
+            return CheckResult.IGNORE;
+        }
+
+        Player player = optional.get().getPlayer();
+        return CheckResult.valueOf(this.flying == player.isFlying());
+    }
 }

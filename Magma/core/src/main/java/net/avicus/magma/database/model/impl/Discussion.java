@@ -11,31 +11,31 @@ import net.avicus.quest.model.Model;
 @Getter
 public class Discussion extends Model {
 
-  @Id
-  @Column
-  private int id;
+    @Id
+    @Column
+    private int id;
 
-  @Column(name = "user_id")
-  private int userId;
+    @Column(name = "user_id")
+    private int userId;
 
-  @Column(name = "category_id")
-  private int categoryId;
+    @Column(name = "category_id")
+    private int categoryId;
 
-  @Column
-  private String uuid;
+    @Column
+    private String uuid;
 
-  public String getTitle(Database database) {
-    return database.select("revisions").where("discussion_id", this.getId())
-        .order("created_at", "DESC").execute().first()
-        .getString("title");
-  }
+    public String getTitle(Database database) {
+        return database.select("revisions").where("discussion_id", this.getId())
+                .order("created_at", "DESC").execute().first()
+                .getString("title");
+    }
 
-  public User getAuthor(Database database) {
-    return database.getUsers().findById(this.getUserId()).get();
-  }
+    public User getAuthor(Database database) {
+        return database.getUsers().findById(this.getUserId()).get();
+    }
 
-  public String getCatName(Database database) {
-    return database.select("categories").where("id", this.getCategoryId()).execute().first()
-        .getString("name");
-  }
+    public String getCatName(Database database) {
+        return database.select("categories").where("id", this.getCategoryId()).execute().first()
+                .getString("name");
+    }
 }

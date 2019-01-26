@@ -4,5 +4,5 @@ import org.bukkit.util.Vector;
 
 public interface RepelableRegion extends Region {
 
-  Vector getRepelVector(Vector from);
+    Vector getRepelVector(Vector from);
 }

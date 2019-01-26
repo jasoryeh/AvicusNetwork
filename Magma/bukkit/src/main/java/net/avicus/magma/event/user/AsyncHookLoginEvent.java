@@ -14,34 +14,34 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
  */
 public class AsyncHookLoginEvent extends Event implements Cancellable {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final AsyncPlayerPreLoginEvent loginEvent;
-  @Getter
-  private final User user;
-  @Getter
-  @Setter
-  Localizable kickMessage;
-  @Getter
-  private boolean newUser;
-  @Getter
-  @Setter
-  private boolean cancelled;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final AsyncPlayerPreLoginEvent loginEvent;
+    @Getter
+    private final User user;
+    @Getter
+    @Setter
+    Localizable kickMessage;
+    @Getter
+    private boolean newUser;
+    @Getter
+    @Setter
+    private boolean cancelled;
 
-  public AsyncHookLoginEvent(AsyncPlayerPreLoginEvent loginEvent, User user, boolean newUser,
-      Localizable kickMessage) {
-    this.loginEvent = loginEvent;
-    this.user = user;
-    this.newUser = newUser;
-    this.kickMessage = kickMessage;
-  }
+    public AsyncHookLoginEvent(AsyncPlayerPreLoginEvent loginEvent, User user, boolean newUser,
+                               Localizable kickMessage) {
+        this.loginEvent = loginEvent;
+        this.user = user;
+        this.newUser = newUser;
+        this.kickMessage = kickMessage;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

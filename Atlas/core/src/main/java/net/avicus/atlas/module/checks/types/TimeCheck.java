@@ -15,22 +15,22 @@ import org.joda.time.Duration;
 @ToString
 public class TimeCheck implements Check {
 
-  @Getter
-  private final Duration value;
-  @Getter
-  private final NumberComparator comparator;
+    @Getter
+    private final Duration value;
+    @Getter
+    private final NumberComparator comparator;
 
-  public TimeCheck(Duration value, NumberComparator comparator) {
-    this.value = value;
-    this.comparator = comparator;
-  }
+    public TimeCheck(Duration value, NumberComparator comparator) {
+        this.value = value;
+        this.comparator = comparator;
+    }
 
-  @Override
-  public CheckResult test(CheckContext context) {
-    long time = context.getMatch().getRequiredModule(StatesModule.class).getTotalPlayingDuration()
-        .getStandardSeconds();
-    long compare = this.value.getStandardSeconds();
+    @Override
+    public CheckResult test(CheckContext context) {
+        long time = context.getMatch().getRequiredModule(StatesModule.class).getTotalPlayingDuration()
+                .getStandardSeconds();
+        long compare = this.value.getStandardSeconds();
 
-    return CheckResult.valueOf(this.comparator.perform(time, compare));
-  }
+        return CheckResult.valueOf(this.comparator.perform(time, compare));
+    }
 }

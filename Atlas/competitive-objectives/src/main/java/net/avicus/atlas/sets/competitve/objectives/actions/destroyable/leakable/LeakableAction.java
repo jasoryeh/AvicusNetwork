@@ -5,5 +5,5 @@ import net.avicus.atlas.sets.competitve.objectives.destroyable.leakable.Leakable
 
 public interface LeakableAction extends DestroyableAction {
 
-  LeakableObjective getLeakable();
+    LeakableObjective getLeakable();
 }

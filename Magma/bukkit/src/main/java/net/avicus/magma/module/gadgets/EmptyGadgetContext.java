@@ -7,12 +7,12 @@ import com.google.gson.JsonObject;
  */
 public class EmptyGadgetContext<G extends Gadget> extends AbstractGadgetContext<G> {
 
-  public EmptyGadgetContext(G gadget) {
-    super(gadget);
-  }
+    public EmptyGadgetContext(G gadget) {
+        super(gadget);
+    }
 
-  @Override
-  public JsonObject serialize() {
-    return new JsonObject();
-  }
+    @Override
+    public JsonObject serialize() {
+        return new JsonObject();
+    }
 }

@@ -4,65 +4,65 @@ import com.shopify.graphql.support.Query;
 
 public class TeamQuery extends Query<TeamQuery> {
 
-  public TeamQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public TeamQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * The about section on the team page in raw HTML.
-   */
-  public TeamQuery about() {
-    startField("about");
+    /**
+     * The about section on the team page in raw HTML.
+     */
+    public TeamQuery about() {
+        startField("about");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this team was created.
-   */
-  public TeamQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this team was created.
+     */
+    public TeamQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The tag of the team.
-   */
-  public TeamQuery tag() {
-    startField("tag");
+    /**
+     * The tag of the team.
+     */
+    public TeamQuery tag() {
+        startField("tag");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The tagline of the team.
-   */
-  public TeamQuery tagline() {
-    startField("tagline");
+    /**
+     * The tagline of the team.
+     */
+    public TeamQuery tagline() {
+        startField("tagline");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The title of the team.
-   */
-  public TeamQuery title() {
-    startField("title");
+    /**
+     * The title of the team.
+     */
+    public TeamQuery title() {
+        startField("title");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this team was last updated.
-   */
-  public TeamQuery updatedAt() {
-    startField("updated_at");
+    /**
+     * Date when this team was last updated.
+     */
+    public TeamQuery updatedAt() {
+        startField("updated_at");
 
-    return this;
-  }
+        return this;
+    }
 }

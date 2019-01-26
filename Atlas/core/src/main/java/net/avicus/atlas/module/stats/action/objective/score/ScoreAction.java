@@ -4,5 +4,5 @@ import net.avicus.atlas.module.objectives.score.ScoreObjective;
 
 public interface ScoreAction {
 
-  ScoreObjective getScoreObjective();
+    ScoreObjective getScoreObjective();
 }

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.event.match.MatchLoadEvent;
@@ -38,186 +39,186 @@ import org.bukkit.event.weather.WeatherChangeEvent;
 @ToString(exclude = "match")
 public class WorldModule implements Module {
 
-  private static final NullChunkGenerator NULL_GENERATOR = new NullChunkGenerator();
-  private final Match match;
-  private final Map<GameRule, String> gamerules;
-  private final Optional<Check> mobs;
-  private final Optional<Difficulty> difficulty;
-  private final List<Listener> listeners;
-  private final Optional<Check> weather;
-  private final WorldType type;
-  @Getter
-  private final boolean shouldStorm;
+    private static final NullChunkGenerator NULL_GENERATOR = new NullChunkGenerator();
+    private final Match match;
+    private final Map<GameRule, String> gamerules;
+    private final Optional<Check> mobs;
+    private final Optional<Difficulty> difficulty;
+    private final List<Listener> listeners;
+    private final Optional<Check> weather;
+    private final WorldType type;
+    @Getter
+    private final boolean shouldStorm;
 
-  @Getter
-  private final Optional<String> path;
+    @Getter
+    private final Optional<String> path;
 
 
-  public WorldModule(Match match,
-      Map<GameRule, String> gamerules,
-      Optional<Check> mobs,
-      Optional<Difficulty> difficulty,
-      Optional<Check> weather,
-      WorldType type,
-      Optional<String> path,
-      boolean shouldStorm) {
-    this.match = match;
-    this.gamerules = gamerules;
-    this.mobs = mobs;
-    this.difficulty = difficulty;
-    this.weather = weather;
-    this.type = type;
-    this.shouldStorm = shouldStorm;
-    this.path = path;
-    this.listeners = Collections.singletonList(new MobsListener(match, mobs));
+    public WorldModule(Match match,
+                       Map<GameRule, String> gamerules,
+                       Optional<Check> mobs,
+                       Optional<Difficulty> difficulty,
+                       Optional<Check> weather,
+                       WorldType type,
+                       Optional<String> path,
+                       boolean shouldStorm) {
+        this.match = match;
+        this.gamerules = gamerules;
+        this.mobs = mobs;
+        this.difficulty = difficulty;
+        this.weather = weather;
+        this.type = type;
+        this.shouldStorm = shouldStorm;
+        this.path = path;
+        this.listeners = Collections.singletonList(new MobsListener(match, mobs));
 
-    match.getFactory().getFactory(ExecutorsFactory.class)
-        .registerExecutor("change-world-time", ChangeTimeExecutor::parse);
-  }
-
-  public boolean isPlaying() {
-    return this.match.getRequiredModule(StatesModule.class).getState().isPlaying();
-  }
-
-  @EventHandler
-  public void onMatchLoad(MatchLoadEvent event) {
-    event.getCreator().type(this.type);
-    event.getCreator().generator(NULL_GENERATOR);
-  }
-
-  @Override
-  public void open() {
-    World world = this.match.getWorld();
-
-    // Allow mob spawning
-    world.setSpawnFlags(true, true);
-
-    // World difficulty
-    if (this.difficulty.isPresent()) {
-      world.setDifficulty(this.difficulty.get());
+        match.getFactory().getFactory(ExecutorsFactory.class)
+                .registerExecutor("change-world-time", ChangeTimeExecutor::parse);
     }
 
-    // Set xml gamerules
-    for (GameRule rule : this.gamerules.keySet()) {
-      world.setGameRuleValue(rule.name(), this.gamerules.get(rule));
+    public boolean isPlaying() {
+        return this.match.getRequiredModule(StatesModule.class).getState().isPlaying();
     }
 
-    Events.register(this.listeners);
-  }
-
-  @Override
-  public void close() {
-    Events.unregister(this.listeners);
-  }
-
-  @EventHandler
-  public void onWeatherChange(WeatherChangeEvent event) {
-    if (!shouldStorm && !event.toWeatherState()) {
-      return;
+    @EventHandler
+    public void onMatchLoad(MatchLoadEvent event) {
+        event.getCreator().type(this.type);
+        event.getCreator().generator(NULL_GENERATOR);
     }
 
-    if (!this.weather.isPresent()) {
-      event.setCancelled(true);
-      return;
+    @Override
+    public void open() {
+        World world = this.match.getWorld();
+
+        // Allow mob spawning
+        world.setSpawnFlags(true, true);
+
+        // World difficulty
+        if (this.difficulty.isPresent()) {
+            world.setDifficulty(this.difficulty.get());
+        }
+
+        // Set xml gamerules
+        for (GameRule rule : this.gamerules.keySet()) {
+            world.setGameRuleValue(rule.name(), this.gamerules.get(rule));
+        }
+
+        Events.register(this.listeners);
     }
 
-    CheckContext context = new CheckContext(match);
-    event.setCancelled(this.weather.get().test(context).fails());
-  }
-
-  @EventHandler
-  public void onThunderChange(ThunderChangeEvent event) {
-    if (!this.weather.isPresent()) {
-      event.setCancelled(true);
-      return;
+    @Override
+    public void close() {
+        Events.unregister(this.listeners);
     }
 
-    CheckContext context = new CheckContext(match);
-    event.setCancelled(this.weather.get().test(context).fails());
-  }
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent event) {
+        if (!shouldStorm && !event.toWeatherState()) {
+            return;
+        }
 
-  @EventHandler
-  public void onLiquidFlow(BlockFromToEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
-    }
-  }
+        if (!this.weather.isPresent()) {
+            event.setCancelled(true);
+            return;
+        }
 
-  @EventHandler
-  public void onBlockBurn(BlockBurnEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+        CheckContext context = new CheckContext(match);
+        event.setCancelled(this.weather.get().test(context).fails());
     }
-  }
 
-  @EventHandler
-  public void onBlockDispense(BlockDispenseEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
-    }
-  }
+    @EventHandler
+    public void onThunderChange(ThunderChangeEvent event) {
+        if (!this.weather.isPresent()) {
+            event.setCancelled(true);
+            return;
+        }
 
-  @EventHandler
-  public void onBlockDispense(BlockDispenseEntityEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+        CheckContext context = new CheckContext(match);
+        event.setCancelled(this.weather.get().test(context).fails());
     }
-  }
 
-  @EventHandler
-  public void onBlockFade(BlockFadeEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onLiquidFlow(BlockFromToEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onBlockForm(BlockFormEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockBurn(BlockBurnEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onBlockGrow(BlockGrowEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockDispense(BlockDispenseEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onBlockIgnite(BlockIgniteEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockDispense(BlockDispenseEntityEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onBlockRedstone(BlockRedstoneEvent event) {
-    if (!isPlaying()) {
-      event.setNewCurrent(event.getOldCurrent());
+    @EventHandler
+    public void onBlockFade(BlockFadeEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onBlockPhysics(BlockPhysicsEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockForm(BlockFormEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onFurnaceBurn(FurnaceBurnEvent event) {
-    if (!isPlaying()) {
-      event.setBurning(true);
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockGrow(BlockGrowEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
 
-  @EventHandler
-  public void onEntityExplode(EntityExplodeEvent event) {
-    if (!isPlaying()) {
-      event.setCancelled(true);
+    @EventHandler
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
     }
-  }
+
+    @EventHandler
+    public void onBlockRedstone(BlockRedstoneEvent event) {
+        if (!isPlaying()) {
+            event.setNewCurrent(event.getOldCurrent());
+        }
+    }
+
+    @EventHandler
+    public void onBlockPhysics(BlockPhysicsEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onFurnaceBurn(FurnaceBurnEvent event) {
+        if (!isPlaying()) {
+            event.setBurning(true);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if (!isPlaying()) {
+            event.setCancelled(true);
+        }
+    }
 }

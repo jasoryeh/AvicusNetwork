@@ -10,128 +10,128 @@ import java.util.List;
 
 public final class MagmaConfig {
 
-  /**
-   * Pagoda Start
-   */
+    /**
+     * Pagoda Start
+     */
 
-  @ConfigPath("properties")
-  public static final class Properties {
-    @Getter
-    @ConfigKey
-    public static String name;
+    @ConfigPath("properties")
+    public static final class Properties {
+        @Getter
+        @ConfigKey
+        public static String name;
 
-    @Getter
-    @ConfigKey
-    public static String url;
+        @Getter
+        @ConfigKey
+        public static String url;
 
-    @Getter
-    @ConfigKey
-    public static String server;
+        @Getter
+        @ConfigKey
+        public static String server;
 
-    @Getter
-    @ConfigKey
-    public static String location;
-  }
-
-  /**
-   * Pagoda End
-   */
-
-  @ConfigPath("channels")
-  public static final class Channel {
-
-    @Getter
-    @ConfigKey
-    public static boolean enabled;
-
-    @ConfigPath("staff")
-    public static final class Staff {
-
-      @Getter
-      @ConfigKey
-      public static boolean enabled;
+        @Getter
+        @ConfigKey
+        public static String location;
     }
 
-    @ConfigPath("reports")
-    public static final class Report {
+    /**
+     * Pagoda End
+     */
 
-      @ConfigKey
-      private static long cooldown;
-      @Getter
-      @ConfigKey
-      private static boolean enabled;
+    @ConfigPath("channels")
+    public static final class Channel {
 
-      public static Duration getCooldown() {
-        return Duration.standardSeconds(cooldown);
-      }
-    }
-  }
+        @Getter
+        @ConfigKey
+        public static boolean enabled;
 
-  @ConfigPath("api")
-  public static final class API {
+        @ConfigPath("staff")
+        public static final class Staff {
 
-    @Getter
-    @ConfigKey
-    private static String url;
+            @Getter
+            @ConfigKey
+            public static boolean enabled;
+        }
 
-    @Getter
-    @ConfigKey
-    private static String key;
-  }
+        @ConfigPath("reports")
+        public static final class Report {
 
-  @ConfigPath("alerts")
-  public static class Alerts {
+            @ConfigKey
+            private static long cooldown;
+            @Getter
+            @ConfigKey
+            private static boolean enabled;
 
-    @Getter
-    @ConfigKey
-    private static boolean enabled;
-
-    @Getter
-    @ConfigKey
-    private static int poll;
-  }
-
-  @ConfigPath("freeze")
-  public static final class Freeze {
-
-    @Getter
-    @ConfigKey
-    private static boolean enabled;
-
-    @ConfigPath("radius")
-    public static final class Radius {
-
-      @Getter
-      @ConfigKey
-      private static int extinguish;
-
-      @Getter
-      @ConfigKey
-      private static int tnt;
-    }
-  }
-
-  @ConfigPath("server")
-  public static final class Server {
-
-    @ConfigPath("gui")
-    public static final class Gui {
-
-      @Getter
-      @ConfigKey
-      private static int rows;
-
-      @Getter
-      @ConfigKey
-      private static List<Config> slots;
+            public static Duration getCooldown() {
+                return Duration.standardSeconds(cooldown);
+            }
+        }
     }
 
-    @ConfigPath("quick-play")
-    public static final class QuickPlay {
+    @ConfigPath("api")
+    public static final class API {
 
-      @Getter
-      @ConfigKey
-      private static boolean enabled;
+        @Getter
+        @ConfigKey
+        private static String url;
+
+        @Getter
+        @ConfigKey
+        private static String key;
     }
-  }
+
+    @ConfigPath("alerts")
+    public static class Alerts {
+
+        @Getter
+        @ConfigKey
+        private static boolean enabled;
+
+        @Getter
+        @ConfigKey
+        private static int poll;
+    }
+
+    @ConfigPath("freeze")
+    public static final class Freeze {
+
+        @Getter
+        @ConfigKey
+        private static boolean enabled;
+
+        @ConfigPath("radius")
+        public static final class Radius {
+
+            @Getter
+            @ConfigKey
+            private static int extinguish;
+
+            @Getter
+            @ConfigKey
+            private static int tnt;
+        }
+    }
+
+    @ConfigPath("server")
+    public static final class Server {
+
+        @ConfigPath("gui")
+        public static final class Gui {
+
+            @Getter
+            @ConfigKey
+            private static int rows;
+
+            @Getter
+            @ConfigKey
+            private static List<Config> slots;
+        }
+
+        @ConfigPath("quick-play")
+        public static final class QuickPlay {
+
+            @Getter
+            @ConfigKey
+            private static boolean enabled;
+        }
+    }
 }

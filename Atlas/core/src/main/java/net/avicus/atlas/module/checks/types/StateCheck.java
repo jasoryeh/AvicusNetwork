@@ -14,19 +14,19 @@ import net.avicus.atlas.module.states.StatesModule;
 @ToString
 public class StateCheck implements Check {
 
-  private final WeakReference<State> state;
+    private final WeakReference<State> state;
 
-  public StateCheck(WeakReference<State> state) {
-    this.state = state;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    if (!this.state.isPresent()) {
-      return CheckResult.IGNORE;
+    public StateCheck(WeakReference<State> state) {
+        this.state = state;
     }
 
-    State currentState = context.getMatch().getRequiredModule(StatesModule.class).getState();
-    return CheckResult.valueOf(currentState.equals(this.state.getObject().get()));
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        if (!this.state.isPresent()) {
+            return CheckResult.IGNORE;
+        }
+
+        State currentState = context.getMatch().getRequiredModule(StatesModule.class).getState();
+        return CheckResult.valueOf(currentState.equals(this.state.getObject().get()));
+    }
 }

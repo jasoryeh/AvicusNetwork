@@ -19,63 +19,63 @@ import org.bukkit.event.Listener;
 
 public class LocatableUpdater implements Listener {
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableDamage(final DestroyableDamageEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableDamage(final DestroyableDamageEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableRepair(final DestroyableRepairEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableRepair(final DestroyableRepairEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableTouch(final DestroyableTouchEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableTouch(final DestroyableTouchEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void leakableLeak(final LeakableLeakEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void leakableLeak(final LeakableLeakEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void monumentDestroy(final MonumentDestroyEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void monumentDestroy(final MonumentDestroyEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagCapture(final FlagCaptureEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagCapture(final FlagCaptureEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagRecover(final FlagRecoverEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagRecover(final FlagRecoverEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagDrop(final FlagDropEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagDrop(final FlagDropEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagPickup(final FlagPickupEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagPickup(final FlagPickupEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagSteal(final FlagStealEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagSteal(final FlagStealEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void woolPickup(final WoolPickupEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void woolPickup(final WoolPickupEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void woolPlace(final WoolPlaceEvent event) {
-    LocatableListener.reset(event.getObjective());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void woolPlace(final WoolPlaceEvent event) {
+        LocatableListener.reset(event.getObjective());
+    }
 }

@@ -10,26 +10,26 @@ import net.avicus.quest.model.Model;
 @Getter
 public class AchievementReceiver extends Model {
 
-  @Id
-  @Column
-  private int id;
+    @Id
+    @Column
+    private int id;
 
-  @Column(name = "user_id")
-  private int userId;
+    @Column(name = "user_id")
+    private int userId;
 
-  @Column(name = "achievement_id")
-  private int achievementId;
+    @Column(name = "achievement_id")
+    private int achievementId;
 
-  public AchievementReceiver() {
+    public AchievementReceiver() {
 
-  }
+    }
 
-  public AchievementReceiver(int userId, int achievementId) {
-    this.userId = userId;
-    this.achievementId = achievementId;
-  }
+    public AchievementReceiver(int userId, int achievementId) {
+        this.userId = userId;
+        this.achievementId = achievementId;
+    }
 
-  public AchievementReceiver(User user, Achievement achievement) {
-    this(user.getId(), achievement.getId());
-  }
+    public AchievementReceiver(User user, Achievement achievement) {
+        this(user.getId(), achievement.getId());
+    }
 }

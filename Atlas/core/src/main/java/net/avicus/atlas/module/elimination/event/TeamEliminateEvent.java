@@ -7,19 +7,19 @@ import org.bukkit.event.HandlerList;
 
 public class TeamEliminateEvent extends Event {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final Team team;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final Team team;
 
-  public TeamEliminateEvent(Team team) {
-    this.team = team;
-  }
+    public TeamEliminateEvent(Team team) {
+        this.team = team;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

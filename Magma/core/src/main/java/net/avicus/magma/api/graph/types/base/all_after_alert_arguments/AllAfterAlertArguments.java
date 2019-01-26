@@ -6,22 +6,22 @@ import org.joda.time.DateTime;
 
 public class AllAfterAlertArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public AllAfterAlertArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public AllAfterAlertArguments createdAt(DateTime value) {
-    if (value != null) {
-      startArgument("created_at");
-      Query.appendQuotedString(builder(), value.toString());
+    public AllAfterAlertArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
+
+    private StringBuilder builder() {
+        return builder;
+    }
+
+    public AllAfterAlertArguments createdAt(DateTime value) {
+        if (value != null) {
+            startArgument("created_at");
+            Query.appendQuotedString(builder(), value.toString());
+        }
+        return this;
+    }
 }

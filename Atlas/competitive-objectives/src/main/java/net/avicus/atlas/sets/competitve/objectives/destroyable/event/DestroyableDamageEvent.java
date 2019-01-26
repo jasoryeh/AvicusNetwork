@@ -8,21 +8,21 @@ import org.bukkit.event.HandlerList;
 
 public class DestroyableDamageEvent extends ObjectiveStateChangeEvent {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final DestroyableEventInfo info;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final DestroyableEventInfo info;
 
-  public DestroyableDamageEvent(DestroyableObjective objective, DestroyableEventInfo info) {
-    super(objective);
-    this.info = info;
-  }
+    public DestroyableDamageEvent(DestroyableObjective objective, DestroyableEventInfo info) {
+        super(objective);
+        this.info = info;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

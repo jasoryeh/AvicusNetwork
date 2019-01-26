@@ -34,128 +34,128 @@ import tc.oc.tracker.event.PlayerCoarseMoveEvent;
 
 public class AtlasListener implements Listener {
 
-  @EventHandler
-  public void onPlayerJoin(final PlayerJoinEvent event) {
-    event.setJoinMessage(null);
+    @EventHandler
+    public void onPlayerJoin(final PlayerJoinEvent event) {
+        event.setJoinMessage(null);
 
-    new AtlasTask() {
-      @Override
-      public void run() {
-        if (event.getPlayer().isOnline()) {
-          PlayerJoinDelayedEvent call = new PlayerJoinDelayedEvent(event.getPlayer());
-          Events.call(call);
-        }
-      }
-    }.later(1);
-  }
-
-  @EventHandler
-  public void onPlayerDeath(PlayerDeathEvent event) {
-    event.setDeathMessage(null);
-  }
-
-  @EventHandler
-  public void onPlayerQuit(PlayerQuitEvent event) {
-    event.setQuitMessage(null);
-  }
-
-  @EventHandler
-  public void onPlayerKick(PlayerKickEvent event) {
-    event.setLeaveMessage(null);
-  }
-
-  @EventHandler
-  public void onRotationEnd(RotationEndEvent event) {
-    if (!AtlasConfig.isRotationRestart()) {
-      return;
+        new AtlasTask() {
+            @Override
+            public void run() {
+                if (event.getPlayer().isOnline()) {
+                    PlayerJoinDelayedEvent call = new PlayerJoinDelayedEvent(event.getPlayer());
+                    Events.call(call);
+                }
+            }
+        }.later(1);
     }
 
-    event.getRotation().startRestartCountdown(new RestartingCountdown());
-  }
-
-  @EventHandler
-  public void handleQueuedRestart(MatchStateChangeEvent event) {
-    if (event.isChangeToNotPlaying() && Atlas.get().getMatchManager().getRotation()
-        .isRestartQueued()) {
-      Atlas.get().getMatchManager().getRotation()
-          .startRestartCountdown(new RestartingCountdown(Duration.standardSeconds(30)));
-    }
-  }
-
-  @EventHandler
-  public void onCoarseMove(PlayerCoarseMoveEvent event) {
-    if (event.getTo().getY() < -72 && event.getPlayer().getGameMode() != GameMode.SURVIVAL) {
-      event.getPlayer().setVelocity(new Vector(0, 4, 0));
-    }
-  }
-
-  @EventHandler
-  public void onMatchEnd(MatchStateChangeEvent event) {
-    if (!event.getTo().isPresent()) {
-      return;
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        event.setDeathMessage(null);
     }
 
-    Rotation rotation = Atlas.get().getMatchManager().getRotation();
-    if (!event.getTo().get().getNextState().isPresent()) {
-      if (rotation.getNextMatch().isPresent()) {
-        if (rotation.isRestartQueued()) {
-          rotation.startRestartCountdown(new RestartingCountdown());
-          return;
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        event.setQuitMessage(null);
+    }
+
+    @EventHandler
+    public void onPlayerKick(PlayerKickEvent event) {
+        event.setLeaveMessage(null);
+    }
+
+    @EventHandler
+    public void onRotationEnd(RotationEndEvent event) {
+        if (!AtlasConfig.isRotationRestart()) {
+            return;
         }
 
-        if (rotation.isVoteQueued()) {
-          AtlasTask.of(() -> event.getMatch().getModule(VoteModule.class)
-              .ifPresent(VoteModule::delayedStart)).later(20);
-          rotation.setVoteQueued(false);
-          return;
+        event.getRotation().startRestartCountdown(new RestartingCountdown());
+    }
+
+    @EventHandler
+    public void handleQueuedRestart(MatchStateChangeEvent event) {
+        if (event.isChangeToNotPlaying() && Atlas.get().getMatchManager().getRotation()
+                .isRestartQueued()) {
+            Atlas.get().getMatchManager().getRotation()
+                    .startRestartCountdown(new RestartingCountdown(Duration.standardSeconds(30)));
+        }
+    }
+
+    @EventHandler
+    public void onCoarseMove(PlayerCoarseMoveEvent event) {
+        if (event.getTo().getY() < -72 && event.getPlayer().getGameMode() != GameMode.SURVIVAL) {
+            event.getPlayer().setVelocity(new Vector(0, 4, 0));
+        }
+    }
+
+    @EventHandler
+    public void onMatchEnd(MatchStateChangeEvent event) {
+        if (!event.getTo().isPresent()) {
+            return;
         }
 
-        CyclingCountdown countdown = new CyclingCountdown(event.getMatch(),
-            rotation.getNextMatch().get());
-        rotation.cycleMatch(countdown);
-      } else {
-        RotationEndEvent call = new RotationEndEvent(rotation);
-        Events.call(call);
-      }
-    }
-  }
+        Rotation rotation = Atlas.get().getMatchManager().getRotation();
+        if (!event.getTo().get().getNextState().isPresent()) {
+            if (rotation.getNextMatch().isPresent()) {
+                if (rotation.isRestartQueued()) {
+                    rotation.startRestartCountdown(new RestartingCountdown());
+                    return;
+                }
 
-  @EventHandler
-  public void multiTrade(PlayerInteractEntityEvent event) {
-    if (event.getRightClicked().getType() == EntityType.VILLAGER) {
-      event.setCancelled(true);
-      event.getPlayer().openMerchantCopy((Villager) event.getRightClicked());
-    }
-  }
+                if (rotation.isVoteQueued()) {
+                    AtlasTask.of(() -> event.getMatch().getModule(VoteModule.class)
+                            .ifPresent(VoteModule::delayedStart)).later(20);
+                    rotation.setVoteQueued(false);
+                    return;
+                }
 
-  @EventHandler
-  public void onMatchOpen(MatchOpenEvent event) {
-    if (event.getMatch().getRequiredModule(StatesModule.class).isStarting() && AtlasConfig
-        .isRotationAutoStart()) {
-      StartingCountdown starting = new AutoStartingCountdown(event.getMatch());
-      Atlas.get().getMatchManager().getRotation().startMatch(starting);
-    }
-  }
-
-  @EventHandler
-  public void onPing(ServerListPingEvent event) {
-    if (Atlas.getMatch() != null) {
-      event.setMotd(Atlas.getMatch().getMap().getName());
-    }
-  }
-
-  // TODO: Maybe put this somewhere else.
-
-  @EventHandler
-  public void onDismount(EntityDismountEvent event) {
-    if (event.getDismounted().hasMetadata(VehicleLoadout.STICKY_TAG) &&
-        event.getDismounted().getMetadata(VehicleLoadout.STICKY_TAG).get(0).asBoolean()) {
-      event.setCancelled(true);
+                CyclingCountdown countdown = new CyclingCountdown(event.getMatch(),
+                        rotation.getNextMatch().get());
+                rotation.cycleMatch(countdown);
+            } else {
+                RotationEndEvent call = new RotationEndEvent(rotation);
+                Events.call(call);
+            }
+        }
     }
 
-    if (event.getDismounted().hasMetadata(VehicleLoadout.REMOVE_TAG) &&
-        event.getDismounted().getMetadata(VehicleLoadout.REMOVE_TAG).get(0).asBoolean()) {
-      event.getDismounted().remove();
+    @EventHandler
+    public void multiTrade(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked().getType() == EntityType.VILLAGER) {
+            event.setCancelled(true);
+            event.getPlayer().openMerchantCopy((Villager) event.getRightClicked());
+        }
     }
-  }
+
+    @EventHandler
+    public void onMatchOpen(MatchOpenEvent event) {
+        if (event.getMatch().getRequiredModule(StatesModule.class).isStarting() && AtlasConfig
+                .isRotationAutoStart()) {
+            StartingCountdown starting = new AutoStartingCountdown(event.getMatch());
+            Atlas.get().getMatchManager().getRotation().startMatch(starting);
+        }
+    }
+
+    @EventHandler
+    public void onPing(ServerListPingEvent event) {
+        if (Atlas.getMatch() != null) {
+            event.setMotd(Atlas.getMatch().getMap().getName());
+        }
+    }
+
+    // TODO: Maybe put this somewhere else.
+
+    @EventHandler
+    public void onDismount(EntityDismountEvent event) {
+        if (event.getDismounted().hasMetadata(VehicleLoadout.STICKY_TAG) &&
+                event.getDismounted().getMetadata(VehicleLoadout.STICKY_TAG).get(0).asBoolean()) {
+            event.setCancelled(true);
+        }
+
+        if (event.getDismounted().hasMetadata(VehicleLoadout.REMOVE_TAG) &&
+                event.getDismounted().getMetadata(VehicleLoadout.REMOVE_TAG).get(0).asBoolean()) {
+            event.getDismounted().remove();
+        }
+    }
 }

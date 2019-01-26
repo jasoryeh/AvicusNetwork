@@ -4,70 +4,70 @@ import com.shopify.graphql.support.Arguments;
 
 public class AppealsArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public AppealsArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public AppealsArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public AppealsArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public AppealsArguments punishmentId(Integer value) {
-    if (value != null) {
-      startArgument("punishment_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public AppealsArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    public AppealsArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public AppealsArguments open(Boolean value) {
-    if (value != null) {
-      startArgument("open");
-      builder().append(value);
+    public AppealsArguments punishmentId(Integer value) {
+        if (value != null) {
+            startArgument("punishment_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public AppealsArguments locked(Boolean value) {
-    if (value != null) {
-      startArgument("locked");
-      builder().append(value);
+    public AppealsArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public AppealsArguments appealed(Boolean value) {
-    if (value != null) {
-      startArgument("appealed");
-      builder().append(value);
+    public AppealsArguments open(Boolean value) {
+        if (value != null) {
+            startArgument("open");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public AppealsArguments escalated(Boolean value) {
-    if (value != null) {
-      startArgument("escalated");
-      builder().append(value);
+    public AppealsArguments locked(Boolean value) {
+        if (value != null) {
+            startArgument("locked");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public AppealsArguments appealed(Boolean value) {
+        if (value != null) {
+            startArgument("appealed");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public AppealsArguments escalated(Boolean value) {
+        if (value != null) {
+            startArgument("escalated");
+            builder().append(value);
+        }
+        return this;
+    }
 }

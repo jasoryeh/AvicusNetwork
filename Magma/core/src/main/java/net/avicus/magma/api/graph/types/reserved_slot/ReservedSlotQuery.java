@@ -4,65 +4,65 @@ import com.shopify.graphql.support.Query;
 
 public class ReservedSlotQuery extends Query<ReservedSlotQuery> {
 
-  public ReservedSlotQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public ReservedSlotQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Date when this reservedslot was created.
-   */
-  public ReservedSlotQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this reservedslot was created.
+     */
+    public ReservedSlotQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * When the reservation ends.
-   */
-  public ReservedSlotQuery endAt() {
-    startField("end_at");
+    /**
+     * When the reservation ends.
+     */
+    public ReservedSlotQuery endAt() {
+        startField("end_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who made the reservation.
-   */
-  public ReservedSlotQuery reservee() {
-    startField("reservee");
+    /**
+     * ID of the user who made the reservation.
+     */
+    public ReservedSlotQuery reservee() {
+        startField("reservee");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Name of the server which is reserved.
-   */
-  public ReservedSlotQuery server() {
-    startField("server");
+    /**
+     * Name of the server which is reserved.
+     */
+    public ReservedSlotQuery server() {
+        startField("server");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * When the reservation starts.
-   */
-  public ReservedSlotQuery startAt() {
-    startField("start_at");
+    /**
+     * When the reservation starts.
+     */
+    public ReservedSlotQuery startAt() {
+        startField("start_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the team that owns the server.
-   */
-  public ReservedSlotQuery teamId() {
-    startField("team_id");
+    /**
+     * ID of the team that owns the server.
+     */
+    public ReservedSlotQuery teamId() {
+        startField("team_id");
 
-    return this;
-  }
+        return this;
+    }
 }

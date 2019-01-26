@@ -3,6 +3,7 @@ package net.avicus.atlas.module.items;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
 import net.avicus.atlas.event.world.EntityChangeEvent;
@@ -32,155 +33,155 @@ import org.bukkit.inventory.ItemStack;
 
 public class RemoveDropsListener implements Listener {
 
-  private final Match match;
-  private final Check removeDrops;
+    private final Match match;
+    private final Check removeDrops;
 
-  public RemoveDropsListener(Match match, Check removeDrops) {
-    this.match = match;
-    this.removeDrops = removeDrops;
-  }
-
-  @EventHandler(priority = EventPriority.HIGH)
-  public void onPlayerDeath(EntityDeathEvent event) {
-    Iterator<ItemStack> iterator = event.getDrops().iterator();
-    CheckContext parent = new CheckContext(this.match);
-    if (event.getEntity() instanceof Player) {
-      parent.add(new PlayerVariable((Player) event.getEntity()));
-    } else {
-      parent.add(new EntityVariable(event.getEntity()));
-    }
-    parent.add(new LocationVariable(event.getEntity().getLocation()));
-
-    while (iterator.hasNext()) {
-      ItemStack item = iterator.next();
-
-      CheckContext context = parent.duplicate();
-
-      context.add(new MaterialVariable(item.getData()));
-      context.add(new ItemVariable(this.match, item));
-
-      boolean remove = this.removeDrops.test(context).passes();
-
-      if (remove) {
-        iterator.remove();
-      }
-    }
-  }
-
-  @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-  public void onPlayerDropItem(PlayerDropItemEvent event) {
-    if (this.match.getRequiredModule(GroupsModule.class).isObservingOrDead(event.getPlayer())) {
-      return;
+    public RemoveDropsListener(Match match, Check removeDrops) {
+        this.match = match;
+        this.removeDrops = removeDrops;
     }
 
-    CheckContext context = new CheckContext(this.match);
-    context.add(new PlayerVariable(event.getPlayer()));
-    context.add(new LocationVariable(event.getPlayer().getLocation()));
-    context.add(new MaterialVariable(event.getItemDrop().getItemStack().getData()));
-    context.add(new ItemVariable(this.match, event.getItemDrop().getItemStack()));
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDeath(EntityDeathEvent event) {
+        Iterator<ItemStack> iterator = event.getDrops().iterator();
+        CheckContext parent = new CheckContext(this.match);
+        if (event.getEntity() instanceof Player) {
+            parent.add(new PlayerVariable((Player) event.getEntity()));
+        } else {
+            parent.add(new EntityVariable(event.getEntity()));
+        }
+        parent.add(new LocationVariable(event.getEntity().getLocation()));
 
-    boolean remove = this.removeDrops.test(context).passes();
+        while (iterator.hasNext()) {
+            ItemStack item = iterator.next();
 
-    if (remove) {
-      event.getItemDrop().remove();
-    }
-  }
+            CheckContext context = parent.duplicate();
 
-  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void blockChangeByPlayer(BlockChangeByPlayerEvent event) {
-    this.onBlockChange(event);
-  }
+            context.add(new MaterialVariable(item.getData()));
+            context.add(new ItemVariable(this.match, item));
 
-  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void onBlockChange(BlockChangeEvent event) {
-    if (!event.isToAir()) {
-      return;
-    }
+            boolean remove = this.removeDrops.test(context).passes();
 
-    List<ItemStack> drops = new ArrayList<>(event.getBlock().getDrops());
-    Iterator<ItemStack> iterator = drops.iterator();
-
-    CheckContext parent = new CheckContext(this.match);
-    if (event instanceof BlockChangeByPlayerEvent) {
-      parent.add(new PlayerVariable(((BlockChangeByPlayerEvent) event).getPlayer()));
-    }
-    parent.add(new LocationVariable(event.getBlock().getLocation()));
-
-    while (iterator.hasNext()) {
-      ItemStack item = iterator.next();
-
-      CheckContext context = parent.duplicate();
-
-      context.add(new MaterialVariable(event.getBlock().getState().getData()));
-      context.add(new ItemVariable(this.match, item));
-
-      boolean remove = this.removeDrops.test(context).passes();
-
-      if (remove) {
-        iterator.remove();
-      }
+            if (remove) {
+                iterator.remove();
+            }
+        }
     }
 
-    // Don't manually spawn drops, nothing changed
-    if (drops.size() == event.getBlock().getDrops().size()) {
-      return;
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        if (this.match.getRequiredModule(GroupsModule.class).isObservingOrDead(event.getPlayer())) {
+            return;
+        }
+
+        CheckContext context = new CheckContext(this.match);
+        context.add(new PlayerVariable(event.getPlayer()));
+        context.add(new LocationVariable(event.getPlayer().getLocation()));
+        context.add(new MaterialVariable(event.getItemDrop().getItemStack().getData()));
+        context.add(new ItemVariable(this.match, event.getItemDrop().getItemStack()));
+
+        boolean remove = this.removeDrops.test(context).passes();
+
+        if (remove) {
+            event.getItemDrop().remove();
+        }
     }
 
-    // cancel block drop
-    event.setCancelled(true);
-
-    BlockState newState = event.getNewState();
-
-    // but set the type
-    event.getBlock().setType(newState.getType());
-    event.getBlock().setData(newState.getRawData());
-
-    for (ItemStack item : drops) {
-      event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), item);
-    }
-  }
-
-  @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-  public void onEntityChange(EntityChangeEvent event) {
-    if (event.getAction() != Action.BREAK) {
-      return;
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void blockChangeByPlayer(BlockChangeByPlayerEvent event) {
+        this.onBlockChange(event);
     }
 
-    ItemStack item = null;
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onBlockChange(BlockChangeEvent event) {
+        if (!event.isToAir()) {
+            return;
+        }
 
-    if (event.getEntity() instanceof ItemFrame) {
-      item = ((ItemFrame) event.getEntity()).getItem();
-    } else if (event.getEntity() instanceof Minecart) {
-      item = new ItemStack(Material.MINECART);
-    } else if (event.getEntity() instanceof Boat) {
-      item = new ItemStack(Material.BOAT);
+        List<ItemStack> drops = new ArrayList<>(event.getBlock().getDrops());
+        Iterator<ItemStack> iterator = drops.iterator();
+
+        CheckContext parent = new CheckContext(this.match);
+        if (event instanceof BlockChangeByPlayerEvent) {
+            parent.add(new PlayerVariable(((BlockChangeByPlayerEvent) event).getPlayer()));
+        }
+        parent.add(new LocationVariable(event.getBlock().getLocation()));
+
+        while (iterator.hasNext()) {
+            ItemStack item = iterator.next();
+
+            CheckContext context = parent.duplicate();
+
+            context.add(new MaterialVariable(event.getBlock().getState().getData()));
+            context.add(new ItemVariable(this.match, item));
+
+            boolean remove = this.removeDrops.test(context).passes();
+
+            if (remove) {
+                iterator.remove();
+            }
+        }
+
+        // Don't manually spawn drops, nothing changed
+        if (drops.size() == event.getBlock().getDrops().size()) {
+            return;
+        }
+
+        // cancel block drop
+        event.setCancelled(true);
+
+        BlockState newState = event.getNewState();
+
+        // but set the type
+        event.getBlock().setType(newState.getType());
+        event.getBlock().setData(newState.getRawData());
+
+        for (ItemStack item : drops) {
+            event.getBlock().getWorld().dropItem(event.getBlock().getLocation(), item);
+        }
     }
 
-    if (item == null) {
-      return;
-    }
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    public void onEntityChange(EntityChangeEvent event) {
+        if (event.getAction() != Action.BREAK) {
+            return;
+        }
 
-    CheckContext context = new CheckContext(this.match);
-    if (event.getWhoChanged() instanceof Player) {
-      context.add(new PlayerVariable((Player) event.getWhoChanged()));
-    }
-    context.add(new LocationVariable(event.getEntity().getLocation()));
-    context.add(new MaterialVariable(item.getData()));
-    context.add(new ItemVariable(this.match, item));
+        ItemStack item = null;
 
-    boolean remove = this.removeDrops.test(context).passes();
+        if (event.getEntity() instanceof ItemFrame) {
+            item = ((ItemFrame) event.getEntity()).getItem();
+        } else if (event.getEntity() instanceof Minecart) {
+            item = new ItemStack(Material.MINECART);
+        } else if (event.getEntity() instanceof Boat) {
+            item = new ItemStack(Material.BOAT);
+        }
 
-    if (remove) {
-      // hanging break
-      if (event.getCause() instanceof EntityDamageByEntityEvent && event
-          .getEntity() instanceof ItemFrame) {
-        EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event.getCause();
-        ItemFrame frame = (ItemFrame) event.getEntity();
-        damageEvent.setCancelled(true);
-        frame.setItem(null);
-      } else {
-        event.getEntity().remove();
-      }
+        if (item == null) {
+            return;
+        }
+
+        CheckContext context = new CheckContext(this.match);
+        if (event.getWhoChanged() instanceof Player) {
+            context.add(new PlayerVariable((Player) event.getWhoChanged()));
+        }
+        context.add(new LocationVariable(event.getEntity().getLocation()));
+        context.add(new MaterialVariable(item.getData()));
+        context.add(new ItemVariable(this.match, item));
+
+        boolean remove = this.removeDrops.test(context).passes();
+
+        if (remove) {
+            // hanging break
+            if (event.getCause() instanceof EntityDamageByEntityEvent && event
+                    .getEntity() instanceof ItemFrame) {
+                EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event.getCause();
+                ItemFrame frame = (ItemFrame) event.getEntity();
+                damageEvent.setCancelled(true);
+                frame.setItem(null);
+            } else {
+                event.getEntity().remove();
+            }
+        }
     }
-  }
 }

@@ -154,1007 +154,1007 @@ import net.avicus.magma.api.graph.types.username.UsernameQueryDefinition;
 
 public class BaseQueryQuery extends Query<BaseQueryQuery> {
 
-  public BaseQueryQuery(StringBuilder builder) {
-    super(builder);
-  }
-
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
-
-  /**
-   * Search for all AchievementPursuits
-   */
-  public BaseQueryQuery achievementPursuits(AchievementPursuitQueryDefinition queryDef) {
-    return achievementPursuits(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all AchievementPursuits
-   */
-  public BaseQueryQuery achievementPursuits(AchievementPursuitsArgumentsDefinition argsDef,
-      AchievementPursuitQueryDefinition queryDef) {
-    startField("achievementPursuits");
-
-    AchievementPursuitsArguments args = new AchievementPursuitsArguments(builder());
-    argsDef.define(args);
-    AchievementPursuitsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AchievementPursuitQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all AchievementReceivers
-   */
-  public BaseQueryQuery achievementReceivers(AchievementReceiverQueryDefinition queryDef) {
-    return achievementReceivers(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all AchievementReceivers
-   */
-  public BaseQueryQuery achievementReceivers(AchievementReceiversArgumentsDefinition argsDef,
-      AchievementReceiverQueryDefinition queryDef) {
-    startField("achievementReceivers");
-
-    AchievementReceiversArguments args = new AchievementReceiversArguments(builder());
-    argsDef.define(args);
-    AchievementReceiversArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AchievementReceiverQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Achievements
-   */
-  public BaseQueryQuery achievements(AchievementQueryDefinition queryDef) {
-    return achievements(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Achievements
-   */
-  public BaseQueryQuery achievements(AchievementsArgumentsDefinition argsDef,
-      AchievementQueryDefinition queryDef) {
-    startField("achievements");
-
-    AchievementsArguments args = new AchievementsArguments(builder());
-    argsDef.define(args);
-    AchievementsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AchievementQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Alerts
-   */
-  public BaseQueryQuery alerts(AlertQueryDefinition queryDef) {
-    return alerts(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Alerts
-   */
-  public BaseQueryQuery alerts(AlertsArgumentsDefinition argsDef, AlertQueryDefinition queryDef) {
-    startField("alerts");
-
-    AlertsArguments args = new AlertsArguments(builder());
-    argsDef.define(args);
-    AlertsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AlertQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Find all created after the given date.
-   */
-  public BaseQueryQuery allAfterAlert(AlertQueryDefinition queryDef) {
-    return allAfterAlert(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Find all created after the given date.
-   */
-  public BaseQueryQuery allAfterAlert(AllAfterAlertArgumentsDefinition argsDef,
-      AlertQueryDefinition queryDef) {
-    startField("allAfterAlert");
-
-    AllAfterAlertArguments args = new AllAfterAlertArguments(builder());
-    argsDef.define(args);
-    AllAfterAlertArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AlertQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Find all channels which are currently live.
-   */
-  public BaseQueryQuery allLiveLivestreams(LivestreamQueryDefinition queryDef) {
-    startField("allLiveLivestreams");
-
-    builder().append('{');
-    queryDef.define(new LivestreamQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Announcements
-   */
-  public BaseQueryQuery announcements(AnnouncementQueryDefinition queryDef) {
-    return announcements(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Announcements
-   */
-  public BaseQueryQuery announcements(AnnouncementsArgumentsDefinition argsDef,
-      AnnouncementQueryDefinition queryDef) {
-    startField("announcements");
-
-    AnnouncementsArguments args = new AnnouncementsArguments(builder());
-    argsDef.define(args);
-    AnnouncementsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AnnouncementQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Appeals
-   */
-  public BaseQueryQuery appeals(AppealQueryDefinition queryDef) {
-    return appeals(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Appeals
-   */
-  public BaseQueryQuery appeals(AppealsArgumentsDefinition argsDef,
-      AppealQueryDefinition queryDef) {
-    startField("appeals");
-
-    AppealsArguments args = new AppealsArguments(builder());
-    argsDef.define(args);
-    AppealsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new AppealQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all BackpackGadgets
-   */
-  public BaseQueryQuery backpackGadgets(BackpackGadgetQueryDefinition queryDef) {
-    return backpackGadgets(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all BackpackGadgets
-   */
-  public BaseQueryQuery backpackGadgets(BackpackGadgetsArgumentsDefinition argsDef,
-      BackpackGadgetQueryDefinition queryDef) {
-    startField("backpackGadgets");
-
-    BackpackGadgetsArguments args = new BackpackGadgetsArguments(builder());
-    argsDef.define(args);
-    BackpackGadgetsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new BackpackGadgetQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all CreditTransactions
-   */
-  public BaseQueryQuery creditTransactions(CreditTransactionQueryDefinition queryDef) {
-    return creditTransactions(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all CreditTransactions
-   */
-  public BaseQueryQuery creditTransactions(CreditTransactionsArgumentsDefinition argsDef,
-      CreditTransactionQueryDefinition queryDef) {
-    startField("creditTransactions");
-
-    CreditTransactionsArguments args = new CreditTransactionsArguments(builder());
-    argsDef.define(args);
-    CreditTransactionsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new CreditTransactionQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Deaths
-   */
-  public BaseQueryQuery deaths(DeathQueryDefinition queryDef) {
-    return deaths(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Deaths
-   */
-  public BaseQueryQuery deaths(DeathsArgumentsDefinition argsDef, DeathQueryDefinition queryDef) {
-    startField("deaths");
-
-    DeathsArguments args = new DeathsArguments(builder());
-    argsDef.define(args);
-    DeathsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new DeathQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ExperienceTransactions
-   */
-  public BaseQueryQuery experienceTransactions(ExperienceTransactionQueryDefinition queryDef) {
-    return experienceTransactions(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ExperienceTransactions
-   */
-  public BaseQueryQuery experienceTransactions(ExperienceTransactionsArgumentsDefinition argsDef,
-      ExperienceTransactionQueryDefinition queryDef) {
-    startField("experienceTransactions");
-
-    ExperienceTransactionsArguments args = new ExperienceTransactionsArguments(builder());
-    argsDef.define(args);
-    ExperienceTransactionsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ExperienceTransactionQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Friends
-   */
-  public BaseQueryQuery friends(FriendQueryDefinition queryDef) {
-    return friends(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Friends
-   */
-  public BaseQueryQuery friends(FriendsArgumentsDefinition argsDef,
-      FriendQueryDefinition queryDef) {
-    startField("friends");
-
-    FriendsArguments args = new FriendsArguments(builder());
-    argsDef.define(args);
-    FriendsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new FriendQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Livestreams
-   */
-  public BaseQueryQuery livestreams(LivestreamQueryDefinition queryDef) {
-    return livestreams(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Livestreams
-   */
-  public BaseQueryQuery livestreams(LivestreamsArgumentsDefinition argsDef,
-      LivestreamQueryDefinition queryDef) {
-    startField("livestreams");
-
-    LivestreamsArguments args = new LivestreamsArguments(builder());
-    argsDef.define(args);
-    LivestreamsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new LivestreamQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all MapRatings
-   */
-  public BaseQueryQuery mapRatings(MapRatingQueryDefinition queryDef) {
-    return mapRatings(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all MapRatings
-   */
-  public BaseQueryQuery mapRatings(MapRatingsArgumentsDefinition argsDef,
-      MapRatingQueryDefinition queryDef) {
-    startField("mapRatings");
-
-    MapRatingsArguments args = new MapRatingsArguments(builder());
-    argsDef.define(args);
-    MapRatingsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new MapRatingQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Memberships
-   */
-  public BaseQueryQuery memberships(MembershipQueryDefinition queryDef) {
-    return memberships(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Memberships
-   */
-  public BaseQueryQuery memberships(MembershipsArgumentsDefinition argsDef,
-      MembershipQueryDefinition queryDef) {
-    startField("memberships");
-
-    MembershipsArguments args = new MembershipsArguments(builder());
-    argsDef.define(args);
-    MembershipsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new MembershipQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ObjectiveTypes
-   */
-  public BaseQueryQuery objectiveTypes(ObjectiveTypeQueryDefinition queryDef) {
-    return objectiveTypes(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ObjectiveTypes
-   */
-  public BaseQueryQuery objectiveTypes(ObjectiveTypesArgumentsDefinition argsDef,
-      ObjectiveTypeQueryDefinition queryDef) {
-    startField("objectiveTypes");
-
-    ObjectiveTypesArguments args = new ObjectiveTypesArguments(builder());
-    argsDef.define(args);
-    ObjectiveTypesArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ObjectiveTypeQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Objectives
-   */
-  public BaseQueryQuery objectives(ObjectiveQueryDefinition queryDef) {
-    return objectives(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Objectives
-   */
-  public BaseQueryQuery objectives(ObjectivesArgumentsDefinition argsDef,
-      ObjectiveQueryDefinition queryDef) {
-    startField("objectives");
-
-    ObjectivesArguments args = new ObjectivesArguments(builder());
-    argsDef.define(args);
-    ObjectivesArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ObjectiveQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all PresentFinders
-   */
-  public BaseQueryQuery presentFinders(PresentFinderQueryDefinition queryDef) {
-    return presentFinders(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all PresentFinders
-   */
-  public BaseQueryQuery presentFinders(PresentFindersArgumentsDefinition argsDef,
-      PresentFinderQueryDefinition queryDef) {
-    startField("presentFinders");
-
-    PresentFindersArguments args = new PresentFindersArguments(builder());
-    argsDef.define(args);
-    PresentFindersArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new PresentFinderQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Presents
-   */
-  public BaseQueryQuery presents(PresentQueryDefinition queryDef) {
-    return presents(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Presents
-   */
-  public BaseQueryQuery presents(PresentsArgumentsDefinition argsDef,
-      PresentQueryDefinition queryDef) {
-    startField("presents");
-
-    PresentsArguments args = new PresentsArguments(builder());
-    argsDef.define(args);
-    PresentsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new PresentQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all PrestigeLevels
-   */
-  public BaseQueryQuery prestigeLevels(PrestigeLevelQueryDefinition queryDef) {
-    return prestigeLevels(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all PrestigeLevels
-   */
-  public BaseQueryQuery prestigeLevels(PrestigeLevelsArgumentsDefinition argsDef,
-      PrestigeLevelQueryDefinition queryDef) {
-    startField("prestigeLevels");
-
-    PrestigeLevelsArguments args = new PrestigeLevelsArguments(builder());
-    argsDef.define(args);
-    PrestigeLevelsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new PrestigeLevelQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all PrestigeSeasons
-   */
-  public BaseQueryQuery prestigeSeasons(PrestigeSeasonQueryDefinition queryDef) {
-    return prestigeSeasons(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all PrestigeSeasons
-   */
-  public BaseQueryQuery prestigeSeasons(PrestigeSeasonsArgumentsDefinition argsDef,
-      PrestigeSeasonQueryDefinition queryDef) {
-    startField("prestigeSeasons");
-
-    PrestigeSeasonsArguments args = new PrestigeSeasonsArguments(builder());
-    argsDef.define(args);
-    PrestigeSeasonsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new PrestigeSeasonQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Punishments
-   */
-  public BaseQueryQuery punishments(PunishmentQueryDefinition queryDef) {
-    return punishments(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Punishments
-   */
-  public BaseQueryQuery punishments(PunishmentsArgumentsDefinition argsDef,
-      PunishmentQueryDefinition queryDef) {
-    startField("punishments");
-
-    PunishmentsArguments args = new PunishmentsArguments(builder());
-    argsDef.define(args);
-    PunishmentsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new PunishmentQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Ranks
-   */
-  public BaseQueryQuery ranks(RankQueryDefinition queryDef) {
-    return ranks(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Ranks
-   */
-  public BaseQueryQuery ranks(RanksArgumentsDefinition argsDef, RankQueryDefinition queryDef) {
-    startField("ranks");
-
-    RanksArguments args = new RanksArguments(builder());
-    argsDef.define(args);
-    RanksArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new RankQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Registrations
-   */
-  public BaseQueryQuery registrations(RegistrationQueryDefinition queryDef) {
-    return registrations(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Registrations
-   */
-  public BaseQueryQuery registrations(RegistrationsArgumentsDefinition argsDef,
-      RegistrationQueryDefinition queryDef) {
-    startField("registrations");
-
-    RegistrationsArguments args = new RegistrationsArguments(builder());
-    argsDef.define(args);
-    RegistrationsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new RegistrationQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Reports
-   */
-  public BaseQueryQuery reports(ReportQueryDefinition queryDef) {
-    return reports(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Reports
-   */
-  public BaseQueryQuery reports(ReportsArgumentsDefinition argsDef,
-      ReportQueryDefinition queryDef) {
-    startField("reports");
-
-    ReportsArguments args = new ReportsArguments(builder());
-    argsDef.define(args);
-    ReportsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ReportQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ReservedSlots
-   */
-  public BaseQueryQuery reservedSlots(ReservedSlotQueryDefinition queryDef) {
-    return reservedSlots(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ReservedSlots
-   */
-  public BaseQueryQuery reservedSlots(ReservedSlotsArgumentsDefinition argsDef,
-      ReservedSlotQueryDefinition queryDef) {
-    startField("reservedSlots");
-
-    ReservedSlotsArguments args = new ReservedSlotsArguments(builder());
-    argsDef.define(args);
-    ReservedSlotsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ReservedSlotQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ServerBoosters
-   */
-  public BaseQueryQuery serverBoosters(ServerBoosterQueryDefinition queryDef) {
-    return serverBoosters(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ServerBoosters
-   */
-  public BaseQueryQuery serverBoosters(ServerBoostersArgumentsDefinition argsDef,
-      ServerBoosterQueryDefinition queryDef) {
-    startField("serverBoosters");
-
-    ServerBoostersArguments args = new ServerBoostersArguments(builder());
-    argsDef.define(args);
-    ServerBoostersArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ServerBoosterQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ServerCategories
-   */
-  public BaseQueryQuery serverCategories(ServerCategoryQueryDefinition queryDef) {
-    return serverCategories(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ServerCategories
-   */
-  public BaseQueryQuery serverCategories(ServerCategoriesArgumentsDefinition argsDef,
-      ServerCategoryQueryDefinition queryDef) {
-    startField("serverCategories");
-
-    ServerCategoriesArguments args = new ServerCategoriesArguments(builder());
-    argsDef.define(args);
-    ServerCategoriesArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ServerCategoryQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all ServerGroups
-   */
-  public BaseQueryQuery serverGroups(ServerGroupQueryDefinition queryDef) {
-    return serverGroups(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all ServerGroups
-   */
-  public BaseQueryQuery serverGroups(ServerGroupsArgumentsDefinition argsDef,
-      ServerGroupQueryDefinition queryDef) {
-    startField("serverGroups");
-
-    ServerGroupsArguments args = new ServerGroupsArguments(builder());
-    argsDef.define(args);
-    ServerGroupsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ServerGroupQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Servers
-   */
-  public BaseQueryQuery servers(ServerQueryDefinition queryDef) {
-    return servers(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Servers
-   */
-  public BaseQueryQuery servers(ServersArgumentsDefinition argsDef,
-      ServerQueryDefinition queryDef) {
-    startField("servers");
-
-    ServersArguments args = new ServersArguments(builder());
-    argsDef.define(args);
-    ServersArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new ServerQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Sessions
-   */
-  public BaseQueryQuery sessions(SessionQueryDefinition queryDef) {
-    return sessions(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Sessions
-   */
-  public BaseQueryQuery sessions(SessionsArgumentsDefinition argsDef,
-      SessionQueryDefinition queryDef) {
-    startField("sessions");
-
-    SessionsArguments args = new SessionsArguments(builder());
-    argsDef.define(args);
-    SessionsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new SessionQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Settings
-   */
-  public BaseQueryQuery settings(SettingQueryDefinition queryDef) {
-    return settings(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Settings
-   */
-  public BaseQueryQuery settings(SettingsArgumentsDefinition argsDef,
-      SettingQueryDefinition queryDef) {
-    startField("settings");
-
-    SettingsArguments args = new SettingsArguments(builder());
-    argsDef.define(args);
-    SettingsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new SettingQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all TeamMembers
-   */
-  public BaseQueryQuery teamMembers(TeamMemberQueryDefinition queryDef) {
-    return teamMembers(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all TeamMembers
-   */
-  public BaseQueryQuery teamMembers(TeamMembersArgumentsDefinition argsDef,
-      TeamMemberQueryDefinition queryDef) {
-    startField("teamMembers");
-
-    TeamMembersArguments args = new TeamMembersArguments(builder());
-    argsDef.define(args);
-    TeamMembersArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new TeamMemberQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Teams
-   */
-  public BaseQueryQuery teams(TeamQueryDefinition queryDef) {
-    return teams(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Teams
-   */
-  public BaseQueryQuery teams(TeamsArgumentsDefinition argsDef, TeamQueryDefinition queryDef) {
-    startField("teams");
-
-    TeamsArguments args = new TeamsArguments(builder());
-    argsDef.define(args);
-    TeamsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new TeamQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Tournaments
-   */
-  public BaseQueryQuery tournaments(TournamentQueryDefinition queryDef) {
-    return tournaments(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Tournaments
-   */
-  public BaseQueryQuery tournaments(TournamentsArgumentsDefinition argsDef,
-      TournamentQueryDefinition queryDef) {
-    startField("tournaments");
-
-    TournamentsArguments args = new TournamentsArguments(builder());
-    argsDef.define(args);
-    TournamentsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new TournamentQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all UserDetails
-   */
-  public BaseQueryQuery userDetails(UserDetailQueryDefinition queryDef) {
-    return userDetails(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all UserDetails
-   */
-  public BaseQueryQuery userDetails(UserDetailsArgumentsDefinition argsDef,
-      UserDetailQueryDefinition queryDef) {
-    startField("userDetails");
-
-    UserDetailsArguments args = new UserDetailsArguments(builder());
-    argsDef.define(args);
-    UserDetailsArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new UserDetailQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Usernames
-   */
-  public BaseQueryQuery usernames(UsernameQueryDefinition queryDef) {
-    return usernames(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Usernames
-   */
-  public BaseQueryQuery usernames(UsernamesArgumentsDefinition argsDef,
-      UsernameQueryDefinition queryDef) {
-    startField("usernames");
-
-    UsernamesArguments args = new UsernamesArguments(builder());
-    argsDef.define(args);
-    UsernamesArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new UsernameQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
-
-  /**
-   * Search for all Users
-   */
-  public BaseQueryQuery users(UserQueryDefinition queryDef) {
-    return users(args -> {
-    }, queryDef);
-  }
-
-  /**
-   * Search for all Users
-   */
-  public BaseQueryQuery users(UsersArgumentsDefinition argsDef, UserQueryDefinition queryDef) {
-    startField("users");
-
-    UsersArguments args = new UsersArguments(builder());
-    argsDef.define(args);
-    UsersArguments.end(args);
-
-    builder().append('{');
-    queryDef.define(new UserQuery(builder()));
-    builder().append('}');
-
-    return this;
-  }
+    public BaseQueryQuery(StringBuilder builder) {
+        super(builder);
+    }
+
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
+
+    /**
+     * Search for all AchievementPursuits
+     */
+    public BaseQueryQuery achievementPursuits(AchievementPursuitQueryDefinition queryDef) {
+        return achievementPursuits(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all AchievementPursuits
+     */
+    public BaseQueryQuery achievementPursuits(AchievementPursuitsArgumentsDefinition argsDef,
+                                              AchievementPursuitQueryDefinition queryDef) {
+        startField("achievementPursuits");
+
+        AchievementPursuitsArguments args = new AchievementPursuitsArguments(builder());
+        argsDef.define(args);
+        AchievementPursuitsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AchievementPursuitQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all AchievementReceivers
+     */
+    public BaseQueryQuery achievementReceivers(AchievementReceiverQueryDefinition queryDef) {
+        return achievementReceivers(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all AchievementReceivers
+     */
+    public BaseQueryQuery achievementReceivers(AchievementReceiversArgumentsDefinition argsDef,
+                                               AchievementReceiverQueryDefinition queryDef) {
+        startField("achievementReceivers");
+
+        AchievementReceiversArguments args = new AchievementReceiversArguments(builder());
+        argsDef.define(args);
+        AchievementReceiversArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AchievementReceiverQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Achievements
+     */
+    public BaseQueryQuery achievements(AchievementQueryDefinition queryDef) {
+        return achievements(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Achievements
+     */
+    public BaseQueryQuery achievements(AchievementsArgumentsDefinition argsDef,
+                                       AchievementQueryDefinition queryDef) {
+        startField("achievements");
+
+        AchievementsArguments args = new AchievementsArguments(builder());
+        argsDef.define(args);
+        AchievementsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AchievementQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Alerts
+     */
+    public BaseQueryQuery alerts(AlertQueryDefinition queryDef) {
+        return alerts(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Alerts
+     */
+    public BaseQueryQuery alerts(AlertsArgumentsDefinition argsDef, AlertQueryDefinition queryDef) {
+        startField("alerts");
+
+        AlertsArguments args = new AlertsArguments(builder());
+        argsDef.define(args);
+        AlertsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AlertQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Find all created after the given date.
+     */
+    public BaseQueryQuery allAfterAlert(AlertQueryDefinition queryDef) {
+        return allAfterAlert(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Find all created after the given date.
+     */
+    public BaseQueryQuery allAfterAlert(AllAfterAlertArgumentsDefinition argsDef,
+                                        AlertQueryDefinition queryDef) {
+        startField("allAfterAlert");
+
+        AllAfterAlertArguments args = new AllAfterAlertArguments(builder());
+        argsDef.define(args);
+        AllAfterAlertArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AlertQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Find all channels which are currently live.
+     */
+    public BaseQueryQuery allLiveLivestreams(LivestreamQueryDefinition queryDef) {
+        startField("allLiveLivestreams");
+
+        builder().append('{');
+        queryDef.define(new LivestreamQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Announcements
+     */
+    public BaseQueryQuery announcements(AnnouncementQueryDefinition queryDef) {
+        return announcements(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Announcements
+     */
+    public BaseQueryQuery announcements(AnnouncementsArgumentsDefinition argsDef,
+                                        AnnouncementQueryDefinition queryDef) {
+        startField("announcements");
+
+        AnnouncementsArguments args = new AnnouncementsArguments(builder());
+        argsDef.define(args);
+        AnnouncementsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AnnouncementQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Appeals
+     */
+    public BaseQueryQuery appeals(AppealQueryDefinition queryDef) {
+        return appeals(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Appeals
+     */
+    public BaseQueryQuery appeals(AppealsArgumentsDefinition argsDef,
+                                  AppealQueryDefinition queryDef) {
+        startField("appeals");
+
+        AppealsArguments args = new AppealsArguments(builder());
+        argsDef.define(args);
+        AppealsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new AppealQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all BackpackGadgets
+     */
+    public BaseQueryQuery backpackGadgets(BackpackGadgetQueryDefinition queryDef) {
+        return backpackGadgets(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all BackpackGadgets
+     */
+    public BaseQueryQuery backpackGadgets(BackpackGadgetsArgumentsDefinition argsDef,
+                                          BackpackGadgetQueryDefinition queryDef) {
+        startField("backpackGadgets");
+
+        BackpackGadgetsArguments args = new BackpackGadgetsArguments(builder());
+        argsDef.define(args);
+        BackpackGadgetsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new BackpackGadgetQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all CreditTransactions
+     */
+    public BaseQueryQuery creditTransactions(CreditTransactionQueryDefinition queryDef) {
+        return creditTransactions(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all CreditTransactions
+     */
+    public BaseQueryQuery creditTransactions(CreditTransactionsArgumentsDefinition argsDef,
+                                             CreditTransactionQueryDefinition queryDef) {
+        startField("creditTransactions");
+
+        CreditTransactionsArguments args = new CreditTransactionsArguments(builder());
+        argsDef.define(args);
+        CreditTransactionsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new CreditTransactionQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Deaths
+     */
+    public BaseQueryQuery deaths(DeathQueryDefinition queryDef) {
+        return deaths(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Deaths
+     */
+    public BaseQueryQuery deaths(DeathsArgumentsDefinition argsDef, DeathQueryDefinition queryDef) {
+        startField("deaths");
+
+        DeathsArguments args = new DeathsArguments(builder());
+        argsDef.define(args);
+        DeathsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new DeathQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ExperienceTransactions
+     */
+    public BaseQueryQuery experienceTransactions(ExperienceTransactionQueryDefinition queryDef) {
+        return experienceTransactions(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ExperienceTransactions
+     */
+    public BaseQueryQuery experienceTransactions(ExperienceTransactionsArgumentsDefinition argsDef,
+                                                 ExperienceTransactionQueryDefinition queryDef) {
+        startField("experienceTransactions");
+
+        ExperienceTransactionsArguments args = new ExperienceTransactionsArguments(builder());
+        argsDef.define(args);
+        ExperienceTransactionsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ExperienceTransactionQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Friends
+     */
+    public BaseQueryQuery friends(FriendQueryDefinition queryDef) {
+        return friends(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Friends
+     */
+    public BaseQueryQuery friends(FriendsArgumentsDefinition argsDef,
+                                  FriendQueryDefinition queryDef) {
+        startField("friends");
+
+        FriendsArguments args = new FriendsArguments(builder());
+        argsDef.define(args);
+        FriendsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new FriendQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Livestreams
+     */
+    public BaseQueryQuery livestreams(LivestreamQueryDefinition queryDef) {
+        return livestreams(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Livestreams
+     */
+    public BaseQueryQuery livestreams(LivestreamsArgumentsDefinition argsDef,
+                                      LivestreamQueryDefinition queryDef) {
+        startField("livestreams");
+
+        LivestreamsArguments args = new LivestreamsArguments(builder());
+        argsDef.define(args);
+        LivestreamsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new LivestreamQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all MapRatings
+     */
+    public BaseQueryQuery mapRatings(MapRatingQueryDefinition queryDef) {
+        return mapRatings(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all MapRatings
+     */
+    public BaseQueryQuery mapRatings(MapRatingsArgumentsDefinition argsDef,
+                                     MapRatingQueryDefinition queryDef) {
+        startField("mapRatings");
+
+        MapRatingsArguments args = new MapRatingsArguments(builder());
+        argsDef.define(args);
+        MapRatingsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new MapRatingQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Memberships
+     */
+    public BaseQueryQuery memberships(MembershipQueryDefinition queryDef) {
+        return memberships(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Memberships
+     */
+    public BaseQueryQuery memberships(MembershipsArgumentsDefinition argsDef,
+                                      MembershipQueryDefinition queryDef) {
+        startField("memberships");
+
+        MembershipsArguments args = new MembershipsArguments(builder());
+        argsDef.define(args);
+        MembershipsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new MembershipQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ObjectiveTypes
+     */
+    public BaseQueryQuery objectiveTypes(ObjectiveTypeQueryDefinition queryDef) {
+        return objectiveTypes(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ObjectiveTypes
+     */
+    public BaseQueryQuery objectiveTypes(ObjectiveTypesArgumentsDefinition argsDef,
+                                         ObjectiveTypeQueryDefinition queryDef) {
+        startField("objectiveTypes");
+
+        ObjectiveTypesArguments args = new ObjectiveTypesArguments(builder());
+        argsDef.define(args);
+        ObjectiveTypesArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ObjectiveTypeQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Objectives
+     */
+    public BaseQueryQuery objectives(ObjectiveQueryDefinition queryDef) {
+        return objectives(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Objectives
+     */
+    public BaseQueryQuery objectives(ObjectivesArgumentsDefinition argsDef,
+                                     ObjectiveQueryDefinition queryDef) {
+        startField("objectives");
+
+        ObjectivesArguments args = new ObjectivesArguments(builder());
+        argsDef.define(args);
+        ObjectivesArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ObjectiveQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all PresentFinders
+     */
+    public BaseQueryQuery presentFinders(PresentFinderQueryDefinition queryDef) {
+        return presentFinders(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all PresentFinders
+     */
+    public BaseQueryQuery presentFinders(PresentFindersArgumentsDefinition argsDef,
+                                         PresentFinderQueryDefinition queryDef) {
+        startField("presentFinders");
+
+        PresentFindersArguments args = new PresentFindersArguments(builder());
+        argsDef.define(args);
+        PresentFindersArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new PresentFinderQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Presents
+     */
+    public BaseQueryQuery presents(PresentQueryDefinition queryDef) {
+        return presents(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Presents
+     */
+    public BaseQueryQuery presents(PresentsArgumentsDefinition argsDef,
+                                   PresentQueryDefinition queryDef) {
+        startField("presents");
+
+        PresentsArguments args = new PresentsArguments(builder());
+        argsDef.define(args);
+        PresentsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new PresentQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all PrestigeLevels
+     */
+    public BaseQueryQuery prestigeLevels(PrestigeLevelQueryDefinition queryDef) {
+        return prestigeLevels(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all PrestigeLevels
+     */
+    public BaseQueryQuery prestigeLevels(PrestigeLevelsArgumentsDefinition argsDef,
+                                         PrestigeLevelQueryDefinition queryDef) {
+        startField("prestigeLevels");
+
+        PrestigeLevelsArguments args = new PrestigeLevelsArguments(builder());
+        argsDef.define(args);
+        PrestigeLevelsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new PrestigeLevelQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all PrestigeSeasons
+     */
+    public BaseQueryQuery prestigeSeasons(PrestigeSeasonQueryDefinition queryDef) {
+        return prestigeSeasons(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all PrestigeSeasons
+     */
+    public BaseQueryQuery prestigeSeasons(PrestigeSeasonsArgumentsDefinition argsDef,
+                                          PrestigeSeasonQueryDefinition queryDef) {
+        startField("prestigeSeasons");
+
+        PrestigeSeasonsArguments args = new PrestigeSeasonsArguments(builder());
+        argsDef.define(args);
+        PrestigeSeasonsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new PrestigeSeasonQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Punishments
+     */
+    public BaseQueryQuery punishments(PunishmentQueryDefinition queryDef) {
+        return punishments(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Punishments
+     */
+    public BaseQueryQuery punishments(PunishmentsArgumentsDefinition argsDef,
+                                      PunishmentQueryDefinition queryDef) {
+        startField("punishments");
+
+        PunishmentsArguments args = new PunishmentsArguments(builder());
+        argsDef.define(args);
+        PunishmentsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new PunishmentQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Ranks
+     */
+    public BaseQueryQuery ranks(RankQueryDefinition queryDef) {
+        return ranks(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Ranks
+     */
+    public BaseQueryQuery ranks(RanksArgumentsDefinition argsDef, RankQueryDefinition queryDef) {
+        startField("ranks");
+
+        RanksArguments args = new RanksArguments(builder());
+        argsDef.define(args);
+        RanksArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new RankQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Registrations
+     */
+    public BaseQueryQuery registrations(RegistrationQueryDefinition queryDef) {
+        return registrations(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Registrations
+     */
+    public BaseQueryQuery registrations(RegistrationsArgumentsDefinition argsDef,
+                                        RegistrationQueryDefinition queryDef) {
+        startField("registrations");
+
+        RegistrationsArguments args = new RegistrationsArguments(builder());
+        argsDef.define(args);
+        RegistrationsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new RegistrationQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Reports
+     */
+    public BaseQueryQuery reports(ReportQueryDefinition queryDef) {
+        return reports(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Reports
+     */
+    public BaseQueryQuery reports(ReportsArgumentsDefinition argsDef,
+                                  ReportQueryDefinition queryDef) {
+        startField("reports");
+
+        ReportsArguments args = new ReportsArguments(builder());
+        argsDef.define(args);
+        ReportsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ReportQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ReservedSlots
+     */
+    public BaseQueryQuery reservedSlots(ReservedSlotQueryDefinition queryDef) {
+        return reservedSlots(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ReservedSlots
+     */
+    public BaseQueryQuery reservedSlots(ReservedSlotsArgumentsDefinition argsDef,
+                                        ReservedSlotQueryDefinition queryDef) {
+        startField("reservedSlots");
+
+        ReservedSlotsArguments args = new ReservedSlotsArguments(builder());
+        argsDef.define(args);
+        ReservedSlotsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ReservedSlotQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ServerBoosters
+     */
+    public BaseQueryQuery serverBoosters(ServerBoosterQueryDefinition queryDef) {
+        return serverBoosters(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ServerBoosters
+     */
+    public BaseQueryQuery serverBoosters(ServerBoostersArgumentsDefinition argsDef,
+                                         ServerBoosterQueryDefinition queryDef) {
+        startField("serverBoosters");
+
+        ServerBoostersArguments args = new ServerBoostersArguments(builder());
+        argsDef.define(args);
+        ServerBoostersArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ServerBoosterQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ServerCategories
+     */
+    public BaseQueryQuery serverCategories(ServerCategoryQueryDefinition queryDef) {
+        return serverCategories(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ServerCategories
+     */
+    public BaseQueryQuery serverCategories(ServerCategoriesArgumentsDefinition argsDef,
+                                           ServerCategoryQueryDefinition queryDef) {
+        startField("serverCategories");
+
+        ServerCategoriesArguments args = new ServerCategoriesArguments(builder());
+        argsDef.define(args);
+        ServerCategoriesArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ServerCategoryQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all ServerGroups
+     */
+    public BaseQueryQuery serverGroups(ServerGroupQueryDefinition queryDef) {
+        return serverGroups(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all ServerGroups
+     */
+    public BaseQueryQuery serverGroups(ServerGroupsArgumentsDefinition argsDef,
+                                       ServerGroupQueryDefinition queryDef) {
+        startField("serverGroups");
+
+        ServerGroupsArguments args = new ServerGroupsArguments(builder());
+        argsDef.define(args);
+        ServerGroupsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ServerGroupQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Servers
+     */
+    public BaseQueryQuery servers(ServerQueryDefinition queryDef) {
+        return servers(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Servers
+     */
+    public BaseQueryQuery servers(ServersArgumentsDefinition argsDef,
+                                  ServerQueryDefinition queryDef) {
+        startField("servers");
+
+        ServersArguments args = new ServersArguments(builder());
+        argsDef.define(args);
+        ServersArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new ServerQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Sessions
+     */
+    public BaseQueryQuery sessions(SessionQueryDefinition queryDef) {
+        return sessions(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Sessions
+     */
+    public BaseQueryQuery sessions(SessionsArgumentsDefinition argsDef,
+                                   SessionQueryDefinition queryDef) {
+        startField("sessions");
+
+        SessionsArguments args = new SessionsArguments(builder());
+        argsDef.define(args);
+        SessionsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new SessionQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Settings
+     */
+    public BaseQueryQuery settings(SettingQueryDefinition queryDef) {
+        return settings(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Settings
+     */
+    public BaseQueryQuery settings(SettingsArgumentsDefinition argsDef,
+                                   SettingQueryDefinition queryDef) {
+        startField("settings");
+
+        SettingsArguments args = new SettingsArguments(builder());
+        argsDef.define(args);
+        SettingsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new SettingQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all TeamMembers
+     */
+    public BaseQueryQuery teamMembers(TeamMemberQueryDefinition queryDef) {
+        return teamMembers(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all TeamMembers
+     */
+    public BaseQueryQuery teamMembers(TeamMembersArgumentsDefinition argsDef,
+                                      TeamMemberQueryDefinition queryDef) {
+        startField("teamMembers");
+
+        TeamMembersArguments args = new TeamMembersArguments(builder());
+        argsDef.define(args);
+        TeamMembersArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new TeamMemberQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Teams
+     */
+    public BaseQueryQuery teams(TeamQueryDefinition queryDef) {
+        return teams(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Teams
+     */
+    public BaseQueryQuery teams(TeamsArgumentsDefinition argsDef, TeamQueryDefinition queryDef) {
+        startField("teams");
+
+        TeamsArguments args = new TeamsArguments(builder());
+        argsDef.define(args);
+        TeamsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new TeamQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Tournaments
+     */
+    public BaseQueryQuery tournaments(TournamentQueryDefinition queryDef) {
+        return tournaments(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Tournaments
+     */
+    public BaseQueryQuery tournaments(TournamentsArgumentsDefinition argsDef,
+                                      TournamentQueryDefinition queryDef) {
+        startField("tournaments");
+
+        TournamentsArguments args = new TournamentsArguments(builder());
+        argsDef.define(args);
+        TournamentsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new TournamentQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all UserDetails
+     */
+    public BaseQueryQuery userDetails(UserDetailQueryDefinition queryDef) {
+        return userDetails(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all UserDetails
+     */
+    public BaseQueryQuery userDetails(UserDetailsArgumentsDefinition argsDef,
+                                      UserDetailQueryDefinition queryDef) {
+        startField("userDetails");
+
+        UserDetailsArguments args = new UserDetailsArguments(builder());
+        argsDef.define(args);
+        UserDetailsArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new UserDetailQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Usernames
+     */
+    public BaseQueryQuery usernames(UsernameQueryDefinition queryDef) {
+        return usernames(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Usernames
+     */
+    public BaseQueryQuery usernames(UsernamesArgumentsDefinition argsDef,
+                                    UsernameQueryDefinition queryDef) {
+        startField("usernames");
+
+        UsernamesArguments args = new UsernamesArguments(builder());
+        argsDef.define(args);
+        UsernamesArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new UsernameQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
+
+    /**
+     * Search for all Users
+     */
+    public BaseQueryQuery users(UserQueryDefinition queryDef) {
+        return users(args -> {
+        }, queryDef);
+    }
+
+    /**
+     * Search for all Users
+     */
+    public BaseQueryQuery users(UsersArgumentsDefinition argsDef, UserQueryDefinition queryDef) {
+        startField("users");
+
+        UsersArguments args = new UsersArguments(builder());
+        argsDef.define(args);
+        UsersArguments.end(args);
+
+        builder().append('{');
+        queryDef.define(new UserQuery(builder()));
+        builder().append('}');
+
+        return this;
+    }
 }

@@ -2,17 +2,17 @@ package net.avicus.atlas.documentation.attributes;
 
 public interface Attribute {
 
-  String getName();
+    String getName();
 
-  boolean isRequired();
+    boolean isRequired();
 
-  String[] getDescription();
+    String[] getDescription();
 
-  default String[] getValues() {
-    return new String[]{};
-  }
+    default String[] getValues() {
+        return new String[]{};
+    }
 
-  default String getLink() {
-    return "";
-  }
+    default String getLink() {
+        return "";
+    }
 }

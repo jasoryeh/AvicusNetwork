@@ -10,13 +10,13 @@ import net.avicus.magma.database.model.impl.Rank;
  */
 public class HookGroup {
 
-  @Getter
-  private final Rank rank;
-  @Getter
-  private final ServerGroup serverGroup;
+    @Getter
+    private final Rank rank;
+    @Getter
+    private final ServerGroup serverGroup;
 
-  public HookGroup(Rank rank, ServerGroup serverGroup) {
-    this.rank = rank;
-    this.serverGroup = serverGroup;
-  }
+    public HookGroup(Rank rank, ServerGroup serverGroup) {
+        this.rank = rank;
+        this.serverGroup = serverGroup;
+    }
 }

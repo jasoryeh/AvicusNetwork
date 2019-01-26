@@ -13,32 +13,32 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class KeysCategory extends CategoryMenu {
 
-  public KeysCategory(Player player, GadgetStore store, int index) {
-    super(player, store, index);
+    public KeysCategory(Player player, GadgetStore store, int index) {
+        super(player, store, index);
 
-    if (TypeManager.hasType("alpha")) {
-      add(new KeyGadget(TypeManager.getType("alpha")), 1500);
+        if (TypeManager.hasType("alpha")) {
+            add(new KeyGadget(TypeManager.getType("alpha")), 1500);
+        }
+
+        if (TypeManager.hasType("beta")) {
+            add(new KeyGadget(TypeManager.getType("beta")), 2000,
+                    new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
+        }
+
+        if (TypeManager.hasType("gamma")) {
+            add(new KeyGadget(TypeManager.getType("gamma")), 2500,
+                    new GadgetRanksRequirement("Emerald", "Diamond"));
+        }
     }
 
-    if (TypeManager.hasType("beta")) {
-      add(new KeyGadget(TypeManager.getType("beta")), 2000,
-          new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
+    @Override
+    public ItemStack getItemStack() {
+        ItemStack stack = new ItemStack(Material.FEATHER);
+        ItemMeta meta = stack.getItemMeta();
+
+        meta.setDisplayName(ChatColor.RED + "Crate Keys");
+
+        stack.setItemMeta(meta);
+        return stack;
     }
-
-    if (TypeManager.hasType("gamma")) {
-      add(new KeyGadget(TypeManager.getType("gamma")), 2500,
-          new GadgetRanksRequirement("Emerald", "Diamond"));
-    }
-  }
-
-  @Override
-  public ItemStack getItemStack() {
-    ItemStack stack = new ItemStack(Material.FEATHER);
-    ItemMeta meta = stack.getItemMeta();
-
-    meta.setDisplayName(ChatColor.RED + "Crate Keys");
-
-    stack.setItemMeta(meta);
-    return stack;
-  }
 }

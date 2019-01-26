@@ -7,7 +7,7 @@ import net.avicus.atlas.util.xml.XmlElement;
 
 public interface ObjectiveFactory<T extends Objective> {
 
-  T build(Match match, MatchFactory factory, XmlElement element);
+    T build(Match match, MatchFactory factory, XmlElement element);
 
-  FeatureDocumentation getDocumentation();
+    FeatureDocumentation getDocumentation();
 }

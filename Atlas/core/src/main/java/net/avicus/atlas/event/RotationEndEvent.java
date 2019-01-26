@@ -10,41 +10,41 @@ import org.bukkit.event.HandlerList;
  */
 public class RotationEndEvent extends Event {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
-  /**
-   * Rotation that is ending.
-   */
-  @Getter
-  private final Rotation rotation;
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
+    /**
+     * Rotation that is ending.
+     */
+    @Getter
+    private final Rotation rotation;
 
-  /**
-   * Constructor.
-   *
-   * @param rotation rotation that is ending
-   */
-  public RotationEndEvent(Rotation rotation) {
-    this.rotation = rotation;
-  }
+    /**
+     * Constructor.
+     *
+     * @param rotation rotation that is ending
+     */
+    public RotationEndEvent(Rotation rotation) {
+        this.rotation = rotation;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

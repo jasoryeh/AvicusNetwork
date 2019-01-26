@@ -11,21 +11,21 @@ import org.bukkit.entity.Player;
 @EqualsAndHashCode
 public class RankPermission {
 
-  private final boolean allow;
-  private String node;
+    private final boolean allow;
+    private String node;
 
-  public RankPermission(String node) {
-    if (node.startsWith("-")) {
-      this.node = node.substring(1);
-      this.allow = false;
-    } else {
-      this.node = node;
-      this.allow = true;
+    public RankPermission(String node) {
+        if (node.startsWith("-")) {
+            this.node = node.substring(1);
+            this.allow = false;
+        } else {
+            this.node = node;
+            this.allow = true;
+        }
     }
-  }
 
-  public void attach(Player player) {
-    player.addAttachment(Magma.get(), this.node, this.allow);
-    player.recalculatePermissions();
-  }
+    public void attach(Player player) {
+        player.addAttachment(Magma.get(), this.node, this.allow);
+        player.recalculatePermissions();
+    }
 }

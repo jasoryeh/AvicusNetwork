@@ -11,10 +11,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 @ToString
 public class SpawnReasonVariable implements Variable {
 
-  @Getter
-  private final SpawnReason reason;
+    @Getter
+    private final SpawnReason reason;
 
-  public SpawnReasonVariable(SpawnReason reason) {
-    this.reason = reason;
-  }
+    public SpawnReasonVariable(SpawnReason reason) {
+        this.reason = reason;
+    }
 }

@@ -11,34 +11,34 @@ import org.bukkit.event.Listener;
 
 public class SoundListener implements Listener {
 
-  private final SoundComponent soundComponent;
+    private final SoundComponent soundComponent;
 
-  public SoundListener(SoundComponent soundComponent) {
-    this.soundComponent = soundComponent;
-  }
+    public SoundListener(SoundComponent soundComponent) {
+        this.soundComponent = soundComponent;
+    }
 
-  @EventHandler
-  public void leakableLeak(final LeakableLeakEvent event) {
-    this.soundComponent.objectiveComplete();
-  }
+    @EventHandler
+    public void leakableLeak(final LeakableLeakEvent event) {
+        this.soundComponent.objectiveComplete();
+    }
 
-  @EventHandler
-  public void monumentDestroy(final MonumentDestroyEvent event) {
-    this.soundComponent.objectiveComplete();
-  }
+    @EventHandler
+    public void monumentDestroy(final MonumentDestroyEvent event) {
+        this.soundComponent.objectiveComplete();
+    }
 
-  @EventHandler
-  public void flagCapture(final FlagCaptureEvent event) {
-    this.soundComponent.objectiveComplete();
-  }
+    @EventHandler
+    public void flagCapture(final FlagCaptureEvent event) {
+        this.soundComponent.objectiveComplete();
+    }
 
-  @EventHandler
-  public void hillCapture(final HillCaptureEvent event) {
-    this.soundComponent.objectiveComplete();
-  }
+    @EventHandler
+    public void hillCapture(final HillCaptureEvent event) {
+        this.soundComponent.objectiveComplete();
+    }
 
-  @EventHandler
-  public void woolPlace(final WoolPlaceEvent event) {
-    this.soundComponent.objectiveComplete();
-  }
+    @EventHandler
+    public void woolPlace(final WoolPlaceEvent event) {
+        this.soundComponent.objectiveComplete();
+    }
 }

@@ -62,297 +62,297 @@ import java.util.Optional;
  */
 public final class Magma extends JavaPlugin {
 
-  /**
-   * The magma instance.
-   */
-  private static Magma magma;
-  /**
-   * The channel manager.
-   */
-  private ChannelManager channelManager;
-  /**
-   * Avicus stuff start
-   * TODO: Remove dependency
-   */
-  @Getter
-  private Redis redis;
-  private Database database;
-  @Getter
-  private API apiClient;
-  /**
-   * Avicus stuff end
-   */
-  /**
-   * Pagoda start
-   */
-  @Getter
-  private boolean redisEnabled = true;
-  @Getter
-  private boolean databaseEnabled = true;
-  @Getter
-  private boolean apiEnabled = true;
-  /**
-   * Pagoda end
-   */
-  private Server localServer;
-  private ServerCategory localCategory;
-  private AvicusCommandsManager commands;
-  @Getter
-  private ModuleManager mm;
-  @Getter
-  private PrestigeSeason currentSeason;
-
-  public Magma() {
-    magma = this;
-  }
-
-  /**
-   * Gets the instance of magma.
-   *
-   * @return the magma instance
-   */
-  public static Magma get() {
-    return magma;
-  }
-
-  // do not remove this. trust me. bad things will happen.
-  private void preloadClasses() {
-    Instant.class.getName();
-    ServerStatus.State.class.getName();
-  }
-
-  @Override
-  public void onEnable() {
-    this.preloadClasses();
-
-    this.saveDefaultConfig();
-    this.reloadConfig();
-
-    Config config = new ConfigFile(new File(getDataFolder(), "config.yml"));
-    config.injector(MagmaConfig.class).inject();
-
-    this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-    this.getServer().getMessenger()
-            .registerOutgoingPluginChannel(this, NetworkConstants.CONNECT_CHANNEL);
-
-    this.channelManager = new ChannelManager();
-
-    this.initServices();
-
-    this.loadLocalServer();
-
-    this.commands = new AvicusCommandsManager();
-    final AvicusCommandsRegistration registrar = new AvicusCommandsRegistration(this,
-            this.commands);
-    this.mm = new ModuleManager(this.getServer().getPluginManager(), this, registrar);
-    registrar.register(GenericCommands.class);
-    this.registerModules();
-    this.mm.enable();
-    Servers.init(registrar);
-    Alerts.init(registrar);
-
-    Bukkit.getPluginManager().registerEvents(new LockingSharingListener(), this);
-    BlockPropStore.initBlocks();
-    BlockPropStore.initTools();
-
-    getRedis().register(new RestartMessageHandler());
-    Users.init(registrar);
-
-    /*
-     * Start Config for NetworkIdentification
+    /**
+     * The magma instance.
      */
-    try {
-      NetworkIdentification.NAME = MagmaConfig.Properties.getName().equals("") ? "Your Cool Site" : MagmaConfig.Properties.getName();
-      NetworkIdentification.URL = MagmaConfig.Properties.getUrl().equals("") ? "some.cool.site" : MagmaConfig.Properties.getUrl();
-      NetworkIdentification.SERVER = MagmaConfig.Properties.getServer().equals("") ? "UNKNOWN" : MagmaConfig.Properties.getServer();
-      NetworkIdentification.LOCATION = MagmaConfig.Properties.getLocation().equals("") ? "The Moon" : MagmaConfig.Properties.getLocation();
-    } catch(Exception e) {
-      NetworkIdentification.NAME = "VectorMC";
-      NetworkIdentification.URL = "vectormc.net";
-      NetworkIdentification.SERVER = "Atlas";
-      NetworkIdentification.LOCATION = "The Moon";
-      e.printStackTrace();
-    }
-    /*
-     * End Config for NetworkIdentification
+    private static Magma magma;
+    /**
+     * The channel manager.
      */
-  }
+    private ChannelManager channelManager;
+    /**
+     * Avicus stuff start
+     * TODO: Remove dependency
+     */
+    @Getter
+    private Redis redis;
+    private Database database;
+    @Getter
+    private API apiClient;
+    /**
+     * Avicus stuff end
+     */
+    /**
+     * Pagoda start
+     */
+    @Getter
+    private boolean redisEnabled = true;
+    @Getter
+    private boolean databaseEnabled = true;
+    @Getter
+    private boolean apiEnabled = true;
+    /**
+     * Pagoda end
+     */
+    private Server localServer;
+    private ServerCategory localCategory;
+    private AvicusCommandsManager commands;
+    @Getter
+    private ModuleManager mm;
+    @Getter
+    private PrestigeSeason currentSeason;
 
-  private void registerModules() {
-    this.mm.register(ServerModule.class);
-    this.mm.register(RemoteTeleports.class);
-    if (MagmaConfig.Channel.isEnabled()) {
-      this.mm.register(DistributedChannels.class);
-      this.mm.register(StaffChannels.class, MagmaConfig.Channel.Staff.isEnabled());
-      this.mm.register(Reports.class, MagmaConfig.Channel.Report.isEnabled());
-      this.mm.register(Premium.class);
-    }
-    this.mm.register(Announce.class);
-    this.mm.register(FreezeModule.class, MagmaConfig.Freeze.isEnabled());
-    try {
-      this.database().getSeasons().findCurrentSeason().ifPresent(season -> {
-        this.currentSeason = season;
-        this.mm.register(PrestigeModule.class);
-      });
-    } catch(Exception e) {
-      // Db issues
-      this.currentSeason = new PrestigeSeason();
-      this.mm.register(PrestigeModule.class);
-    }
-    this.mm.register(Gadgets.class);
-  }
-
-  private void initServices() {
-    final Configuration config = this.getConfig();
-
-    // Redis
-    getLogger().info("Connecting to Redis...");
-    final Redis.Builder builder = Redis.builder(config.getString("redis.hostname"))
-            .database(config.getInt("redis.database"));
-    if (config.getBoolean("redis.auth.enabled")) {
-      builder.password(config.getString("redis.auth.password"));
-    }
-    try {
-      this.redis = builder.build();
-      this.redis.enable();
-      getLogger().info("Connected to Redis!");
-    } catch (IllegalStateException | RedisConnectionException e) {
-      getLogger().severe("Failed to connect to redis!");
-      e.printStackTrace();
-      redisEnabled = false;
+    public Magma() {
+        magma = this;
     }
 
-    // API
-    getLogger().info("Connecting to API...");
-    try {
-      this.apiClient = new API(new APIClient(MagmaConfig.API.getUrl(), MagmaConfig.API.getKey()));
-      getLogger().info("Connected to API!");
-    } catch(IOException ioe) {
-      getLogger().severe("Failed to connect to API!");
-      ioe.printStackTrace();
-      apiEnabled = false;
+    /**
+     * Gets the instance of magma.
+     *
+     * @return the magma instance
+     */
+    public static Magma get() {
+        return magma;
     }
 
-    // Database
-    getLogger().info("Connecting to database...");
-    this.database = new Database(DatabaseConfig.builder(
-            config.getString("database.hostname"),
-            config.getString("database.database"),
-            config.getString("database.auth.username"),
-            config.getString("database.auth.password")
-    ).reconnect(true).build());
-    try {
-      this.database.enable();
-      getLogger().info("Connected to database!");
-    } catch (IllegalStateException | DatabaseException e) {
-      getLogger().info("Failed to connect to database!");
-      e.printStackTrace();
-      databaseEnabled = false;
-    }
-  }
-
-  @Override
-  public void onDisable() {
-    if (this.mm != null) {
-      this.mm.disable();
+    // do not remove this. trust me. bad things will happen.
+    private void preloadClasses() {
+        Instant.class.getName();
+        ServerStatus.State.class.getName();
     }
 
-    if (this.localServer != null) {
-      Servers.syncUp(this.redis, new ServerStatus(this.localServer));
-    }
-  }
+    @Override
+    public void onEnable() {
+        this.preloadClasses();
 
-  private void loadLocalServer() {
-    String name = NetworkIdentification.SERVER;
+        this.saveDefaultConfig();
+        this.reloadConfig();
 
-    // HOOK: String name = HookConfig.Server.getName().orElse(folder);
+        Config config = new ConfigFile(new File(getDataFolder(), "config.yml"));
+        config.injector(MagmaConfig.class).inject();
 
-    final ServerTable servers = Magma.get().database().getServers();
-    Optional<Server> server = servers.findByName(name);
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger()
+                .registerOutgoingPluginChannel(this, NetworkConstants.CONNECT_CHANNEL);
 
-    String host = getServer().getIp();
-    int port = getServer().getPort();
+        this.channelManager = new ChannelManager();
 
-    if (host == null || host.length() == 0 ||
-            host.startsWith("0.0" // localhost (need real IP)
-            )) {
-      try {
-        host = InetAddress.getLocalHost().getHostAddress();
-      } catch (UnknownHostException e) {
-        e.printStackTrace();
-        setEnabled(false);
-        return;
-      }
-    }
+        this.initServices();
 
-    if (server.isPresent()) {
-      this.localServer = server.get();
-      this.localCategory = server.get().getCategory(database().getServerCategories()).orElse(null);
+        this.loadLocalServer();
 
-      // update ip/port
-      servers.update().set("host", host).set("port", port).where("id", server.get().getId())
-              .execute();
-    } else {
-      Server created = new Server(name, host, port, false);
-      this.localServer = created;
+        this.commands = new AvicusCommandsManager();
+        final AvicusCommandsRegistration registrar = new AvicusCommandsRegistration(this,
+                this.commands);
+        this.mm = new ModuleManager(this.getServer().getPluginManager(), this, registrar);
+        registrar.register(GenericCommands.class);
+        this.registerModules();
+        this.mm.enable();
+        Servers.init(registrar);
+        Alerts.init(registrar);
 
-      // insert new server
-      servers.insert(created).execute();
-    }
+        Bukkit.getPluginManager().registerEvents(new LockingSharingListener(), this);
+        BlockPropStore.initBlocks();
+        BlockPropStore.initTools();
 
-    Server.local = this.localServer;
-  }
+        getRedis().register(new RestartMessageHandler());
+        Users.init(registrar);
 
-  /**
-   * Gets the channel manager.
-   *
-   * @return the channel manager
-   */
-  public ChannelManager getChannelManager() {
-    return this.channelManager;
-  }
-
-  public Database database() {
-    return this.database;
-  }
-
-  public Server localServer() {
-    return this.localServer;
-  }
-
-  public ServerCategory localCategory() {
-    return this.localCategory;
-  }
-
-  @Override
-  public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    try {
-      this.commands.execute(cmd.getName(), args, sender, sender);
-    } catch (AbstractTranslatableCommandException e) {
-      sender.sendMessage(AbstractTranslatableCommandException.format(e));
-    } catch (CommandNumberFormatException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
-                      new UnlocalizedText(e.getActualText())));
-    } catch (PremiumCommandPermissionsException e) {
-      sender.sendMessage(e.asTranslatable());
-    } catch (CommandPermissionsException e) {
-      if (PremiumCommandPermissionsException.PREMIUM_COMMANDS.contains(cmd.getName())) {
-        sender.sendMessage(PremiumCommandPermissionsException.MESSAGE);
-      } else {
-        sender.sendMessage(AbstractTranslatableCommandException
-                .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
-      }
-    } catch (CommandUsageException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
-                      new UnlocalizedText(e.getUsage())));
-    } catch (CommandException e) {
-      sender.sendMessage(AbstractTranslatableCommandException
-              .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
-      e.printStackTrace();
+        /*
+         * Start Config for NetworkIdentification
+         */
+        try {
+            NetworkIdentification.NAME = MagmaConfig.Properties.getName().equals("") ? "Your Cool Site" : MagmaConfig.Properties.getName();
+            NetworkIdentification.URL = MagmaConfig.Properties.getUrl().equals("") ? "some.cool.site" : MagmaConfig.Properties.getUrl();
+            NetworkIdentification.SERVER = MagmaConfig.Properties.getServer().equals("") ? "UNKNOWN" : MagmaConfig.Properties.getServer();
+            NetworkIdentification.LOCATION = MagmaConfig.Properties.getLocation().equals("") ? "The Moon" : MagmaConfig.Properties.getLocation();
+        } catch (Exception e) {
+            NetworkIdentification.NAME = "VectorMC";
+            NetworkIdentification.URL = "vectormc.net";
+            NetworkIdentification.SERVER = "Atlas";
+            NetworkIdentification.LOCATION = "The Moon";
+            e.printStackTrace();
+        }
+        /*
+         * End Config for NetworkIdentification
+         */
     }
 
-    return true;
-  }
+    private void registerModules() {
+        this.mm.register(ServerModule.class);
+        this.mm.register(RemoteTeleports.class);
+        if (MagmaConfig.Channel.isEnabled()) {
+            this.mm.register(DistributedChannels.class);
+            this.mm.register(StaffChannels.class, MagmaConfig.Channel.Staff.isEnabled());
+            this.mm.register(Reports.class, MagmaConfig.Channel.Report.isEnabled());
+            this.mm.register(Premium.class);
+        }
+        this.mm.register(Announce.class);
+        this.mm.register(FreezeModule.class, MagmaConfig.Freeze.isEnabled());
+        try {
+            this.database().getSeasons().findCurrentSeason().ifPresent(season -> {
+                this.currentSeason = season;
+                this.mm.register(PrestigeModule.class);
+            });
+        } catch (Exception e) {
+            // Db issues
+            this.currentSeason = new PrestigeSeason();
+            this.mm.register(PrestigeModule.class);
+        }
+        this.mm.register(Gadgets.class);
+    }
+
+    private void initServices() {
+        final Configuration config = this.getConfig();
+
+        // Redis
+        getLogger().info("Connecting to Redis...");
+        final Redis.Builder builder = Redis.builder(config.getString("redis.hostname"))
+                .database(config.getInt("redis.database"));
+        if (config.getBoolean("redis.auth.enabled")) {
+            builder.password(config.getString("redis.auth.password"));
+        }
+        try {
+            this.redis = builder.build();
+            this.redis.enable();
+            getLogger().info("Connected to Redis!");
+        } catch (IllegalStateException | RedisConnectionException e) {
+            getLogger().severe("Failed to connect to redis!");
+            e.printStackTrace();
+            redisEnabled = false;
+        }
+
+        // API
+        getLogger().info("Connecting to API...");
+        try {
+            this.apiClient = new API(new APIClient(MagmaConfig.API.getUrl(), MagmaConfig.API.getKey()));
+            getLogger().info("Connected to API!");
+        } catch (IOException ioe) {
+            getLogger().severe("Failed to connect to API!");
+            ioe.printStackTrace();
+            apiEnabled = false;
+        }
+
+        // Database
+        getLogger().info("Connecting to database...");
+        this.database = new Database(DatabaseConfig.builder(
+                config.getString("database.hostname"),
+                config.getString("database.database"),
+                config.getString("database.auth.username"),
+                config.getString("database.auth.password")
+        ).reconnect(true).build());
+        try {
+            this.database.enable();
+            getLogger().info("Connected to database!");
+        } catch (IllegalStateException | DatabaseException e) {
+            getLogger().info("Failed to connect to database!");
+            e.printStackTrace();
+            databaseEnabled = false;
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        if (this.mm != null) {
+            this.mm.disable();
+        }
+
+        if (this.localServer != null) {
+            Servers.syncUp(this.redis, new ServerStatus(this.localServer));
+        }
+    }
+
+    private void loadLocalServer() {
+        String name = NetworkIdentification.SERVER;
+
+        // HOOK: String name = HookConfig.Server.getName().orElse(folder);
+
+        final ServerTable servers = Magma.get().database().getServers();
+        Optional<Server> server = servers.findByName(name);
+
+        String host = getServer().getIp();
+        int port = getServer().getPort();
+
+        if (host == null || host.length() == 0 ||
+                host.startsWith("0.0" // localhost (need real IP)
+                )) {
+            try {
+                host = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                setEnabled(false);
+                return;
+            }
+        }
+
+        if (server.isPresent()) {
+            this.localServer = server.get();
+            this.localCategory = server.get().getCategory(database().getServerCategories()).orElse(null);
+
+            // update ip/port
+            servers.update().set("host", host).set("port", port).where("id", server.get().getId())
+                    .execute();
+        } else {
+            Server created = new Server(name, host, port, false);
+            this.localServer = created;
+
+            // insert new server
+            servers.insert(created).execute();
+        }
+
+        Server.local = this.localServer;
+    }
+
+    /**
+     * Gets the channel manager.
+     *
+     * @return the channel manager
+     */
+    public ChannelManager getChannelManager() {
+        return this.channelManager;
+    }
+
+    public Database database() {
+        return this.database;
+    }
+
+    public Server localServer() {
+        return this.localServer;
+    }
+
+    public ServerCategory localCategory() {
+        return this.localCategory;
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        try {
+            this.commands.execute(cmd.getName(), args, sender, sender);
+        } catch (AbstractTranslatableCommandException e) {
+            sender.sendMessage(AbstractTranslatableCommandException.format(e));
+        } catch (CommandNumberFormatException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NUMBER_EXPECTED,
+                            new UnlocalizedText(e.getActualText())));
+        } catch (PremiumCommandPermissionsException e) {
+            sender.sendMessage(e.asTranslatable());
+        } catch (CommandPermissionsException e) {
+            if (PremiumCommandPermissionsException.PREMIUM_COMMANDS.contains(cmd.getName())) {
+                sender.sendMessage(PremiumCommandPermissionsException.MESSAGE);
+            } else {
+                sender.sendMessage(AbstractTranslatableCommandException
+                        .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_NO_PERMISSION));
+            }
+        } catch (CommandUsageException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INVALID_USAGE,
+                            new UnlocalizedText(e.getUsage())));
+        } catch (CommandException e) {
+            sender.sendMessage(AbstractTranslatableCommandException
+                    .error(net.avicus.compendium.plugin.Messages.ERRORS_COMMAND_INTERNAL_ERROR));
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 }

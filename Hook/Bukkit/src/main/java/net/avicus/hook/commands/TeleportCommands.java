@@ -22,48 +22,48 @@ import org.bukkit.entity.Player;
 
 public class TeleportCommands {
 
-  @CommandPermissions("hook.tp")
-  @Command(aliases = {"tp",
-      "teleport"}, desc = "Teleport to a player or location.", usage = "<player> OR <x> <y> <z>", min = 0, max = 3)
-  public static void tp(CommandContext cmd, CommandSender sender) throws CommandException {
-    MustBePlayerCommandException.ensurePlayer(sender);
+    @CommandPermissions("hook.tp")
+    @Command(aliases = {"tp",
+            "teleport"}, desc = "Teleport to a player or location.", usage = "<player> OR <x> <y> <z>", min = 0, max = 3)
+    public static void tp(CommandContext cmd, CommandSender sender) throws CommandException {
+        MustBePlayerCommandException.ensurePlayer(sender);
 
-    if (cmd.argsLength() != 1 && cmd.argsLength() != 3) {
-      throw new CommandUsageException("Invalid arguments", "/tp <player> OR <x> <y> <z>");
+        if (cmd.argsLength() != 1 && cmd.argsLength() != 3) {
+            throw new CommandUsageException("Invalid arguments", "/tp <player> OR <x> <y> <z>");
+        }
+
+        Player player = (Player) sender;
+
+        if (cmd.argsLength() == 1) {
+            String query = cmd.getString(0);
+            Player search = Bukkit.getPlayer(query);
+
+            if (search == null) {
+                sender.sendMessage(Messages.ERROR_NO_PLAYERS.with(ChatColor.RED));
+                return;
+            }
+
+            User user = Users.user(search);
+            player.sendMessage(
+                    Messages.GENERIC_TELEPORTED.with(ChatColor.GRAY, Users.getLocalizedDisplay(user)));
+            player.teleport(search);
+        } else {
+            if (!player.hasPermission("hook.tp.location")) {
+                throw new CommandPermissionsException();
+            }
+
+            int x = cmd.getInteger(0);
+            int y = cmd.getInteger(1);
+            int z = cmd.getInteger(2);
+            float yaw = player.getLocation().getYaw();
+            float pitch = player.getLocation().getPitch();
+
+            LocalizableFormat format = new UnlocalizedFormat("{0}, {1}, {2}");
+            Localizable text = format
+                    .with(new LocalizedNumber(x), new LocalizedNumber(y), new LocalizedNumber(z));
+
+            player.sendMessage(Messages.GENERIC_TELEPORTED.with(ChatColor.GRAY, text));
+            player.teleport(new Location(player.getWorld(), x, y, z, yaw, pitch));
+        }
     }
-
-    Player player = (Player) sender;
-
-    if (cmd.argsLength() == 1) {
-      String query = cmd.getString(0);
-      Player search = Bukkit.getPlayer(query);
-
-      if (search == null) {
-        sender.sendMessage(Messages.ERROR_NO_PLAYERS.with(ChatColor.RED));
-        return;
-      }
-
-      User user = Users.user(search);
-      player.sendMessage(
-          Messages.GENERIC_TELEPORTED.with(ChatColor.GRAY, Users.getLocalizedDisplay(user)));
-      player.teleport(search);
-    } else {
-      if (!player.hasPermission("hook.tp.location")) {
-        throw new CommandPermissionsException();
-      }
-
-      int x = cmd.getInteger(0);
-      int y = cmd.getInteger(1);
-      int z = cmd.getInteger(2);
-      float yaw = player.getLocation().getYaw();
-      float pitch = player.getLocation().getPitch();
-
-      LocalizableFormat format = new UnlocalizedFormat("{0}, {1}, {2}");
-      Localizable text = format
-          .with(new LocalizedNumber(x), new LocalizedNumber(y), new LocalizedNumber(z));
-
-      player.sendMessage(Messages.GENERIC_TELEPORTED.with(ChatColor.GRAY, text));
-      player.teleport(new Location(player.getWorld(), x, y, z, yaw, pitch));
-    }
-  }
 }

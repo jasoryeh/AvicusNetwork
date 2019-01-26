@@ -12,10 +12,10 @@ import org.bukkit.material.MaterialData;
 @ToString
 public class MaterialVariable implements Variable {
 
-  @Getter
-  private final MaterialData data;
+    @Getter
+    private final MaterialData data;
 
-  public MaterialVariable(MaterialData data) {
-    this.data = data;
-  }
+    public MaterialVariable(MaterialData data) {
+        this.data = data;
+    }
 }

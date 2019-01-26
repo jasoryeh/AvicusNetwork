@@ -5,15 +5,15 @@ package net.avicus.magma.module;
  */
 public interface Module {
 
-  /**
-   * Invoked when enabling the module.
-   */
-  default void enable() {
-  }
+    /**
+     * Invoked when enabling the module.
+     */
+    default void enable() {
+    }
 
-  /**
-   * Invoked when disabling the module.
-   */
-  default void disable() {
-  }
+    /**
+     * Invoked when disabling the module.
+     */
+    default void disable() {
+    }
 }

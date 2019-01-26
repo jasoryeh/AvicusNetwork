@@ -9,36 +9,36 @@ import org.bukkit.event.HandlerList;
  */
 public class ObjectiveStateChangeEvent extends ObjectiveEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
 
-  /**
-   * Constructor.
-   *
-   * @param objective objective that changed
-   */
-  public ObjectiveStateChangeEvent(Objective objective) {
-    super(objective);
-  }
+    /**
+     * Constructor.
+     *
+     * @param objective objective that changed
+     */
+    public ObjectiveStateChangeEvent(Objective objective) {
+        super(objective);
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

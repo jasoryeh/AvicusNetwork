@@ -2,6 +2,7 @@ package net.avicus.atlas.module.spawns;
 
 import java.util.Locale;
 import java.util.Optional;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.Atlas;
@@ -37,166 +38,166 @@ import tc.oc.tracker.event.PlayerDamageEvent;
 
 public class RespawnTask extends AtlasTask implements Listener {
 
-  public static final String METADATA_TAG = "atlas.respawn-stand";
+    public static final String METADATA_TAG = "atlas.respawn-stand";
 
-  private final SpawnsModule manager;
-  private final Player player;
-  private final Locale locale;
-  private final Location location;
-  @Getter
-  private final long respawnTime;
-  private final boolean freezePlayer;
-  private final boolean blindPlayer;
-  @Getter
-  @Setter
-  private boolean autoRespawn;
-  private Optional<Entity> mount = Optional.empty();
-  private BaseComponent title;
+    private final SpawnsModule manager;
+    private final Player player;
+    private final Locale locale;
+    private final Location location;
+    @Getter
+    private final long respawnTime;
+    private final boolean freezePlayer;
+    private final boolean blindPlayer;
+    @Getter
+    @Setter
+    private boolean autoRespawn;
+    private Optional<Entity> mount = Optional.empty();
+    private BaseComponent title;
 
-  private int currentTick;
-  private boolean hasRefreshed;
+    private int currentTick;
+    private boolean hasRefreshed;
 
-  public RespawnTask(SpawnsModule manager, Player player, Instant respawnTime, boolean autoRespawn,
-      boolean freezePlayer, boolean blindPlayer) {
-    super();
-    this.manager = manager;
-    this.player = player;
-    this.locale = this.player.getLocale();
-    this.location = this.player.getLocation();
-    this.respawnTime = respawnTime.getMillis();
-    this.autoRespawn = autoRespawn;
-    this.freezePlayer = freezePlayer;
-    this.blindPlayer = blindPlayer;
-    this.title = Messages.GENERIC_DEATH.with(ChatColor.RED).translate(this.locale);
-    this.currentTick = 0;
-    this.hasRefreshed = false;
-  }
-
-  @EventHandler
-  public void onEntityDismount(EntityDismountEvent event) {
-    if (!this.mount.isPresent()) {
-      return;
+    public RespawnTask(SpawnsModule manager, Player player, Instant respawnTime, boolean autoRespawn,
+                       boolean freezePlayer, boolean blindPlayer) {
+        super();
+        this.manager = manager;
+        this.player = player;
+        this.locale = this.player.getLocale();
+        this.location = this.player.getLocation();
+        this.respawnTime = respawnTime.getMillis();
+        this.autoRespawn = autoRespawn;
+        this.freezePlayer = freezePlayer;
+        this.blindPlayer = blindPlayer;
+        this.title = Messages.GENERIC_DEATH.with(ChatColor.RED).translate(this.locale);
+        this.currentTick = 0;
+        this.hasRefreshed = false;
     }
 
-    if (event.getEntity().equals(this.player) && event.getDismounted().equals(this.mount.get())) {
-      event.setCancelled(true);
-    }
-  }
+    @EventHandler
+    public void onEntityDismount(EntityDismountEvent event) {
+        if (!this.mount.isPresent()) {
+            return;
+        }
 
-  @EventHandler
-  public void onPPlayerDamage(PlayerDamageEvent event) {
-    if (event.getEntity().equals(this.player)) {
-      event.setCancelled(true);
-    }
-  }
-
-  public RespawnTask start() {
-    this.repeat(0, 2);
-    Events.register(this);
-
-    if (!this.freezePlayer) {
-      this.player.setAllowFlight(true);
-      this.player.setFlying(true);
+        if (event.getEntity().equals(this.player) && event.getDismounted().equals(this.mount.get())) {
+            event.setCancelled(true);
+        }
     }
 
-    this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0), true);
-    SoundEvent call = Events
-        .call(new SoundEvent(this.player, SoundType.GOLEM_DEATH, SoundLocation.DEATH));
-    call.getSound().play(this.player, 1F);
-    this.player.setVelocity(new Vector());
-
-    this.player.spigot().setCollidesWithEntities(false);
-    // Todo?
-    if (!VersionUtil.isCombatUpdate()) {
-      this.player.spigot().setAffectsSpawning(false);
-    }
-    return this;
-  }
-
-  @Override
-  public boolean cancel0() {
-    Events.unregister(this);
-
-    if (this.mount.isPresent()) {
-      this.mount.get().remove();
-    }
-    if (this.player.isOnline()) {
-      this.player.hideTitle();
-    }
-    return super.cancel0();
-  }
-
-  @Override
-  public void run() {
-    if (!this.player.isOnline()) {
-      cancel0();
-      return;
+    @EventHandler
+    public void onPPlayerDamage(PlayerDamageEvent event) {
+        if (event.getEntity().equals(this.player)) {
+            event.setCancelled(true);
+        }
     }
 
-    // TODO: move tick counting to AtlasTask somehow
-    this.currentTick = currentTick + 2;
+    public RespawnTask start() {
+        this.repeat(0, 2);
+        Events.register(this);
 
-    // Need to mount them after death animation
-    if (!this.mount.isPresent() && this.freezePlayer && currentTick >= 15) {
-      ArmorStand entity = (ArmorStand) this.location.getWorld()
-          .spawnEntity(this.location, EntityType.ARMOR_STAND);
-      entity.setVisible(false); // can't see it
-      entity.setHealth(0.5); // hides health bar
-      entity.setMaxHealth(0.5);
-      entity.setGravity(false);
-      entity.setSmall(true);
-      entity.setMarker(true);
-      entity.setMetadata(METADATA_TAG, new FixedMetadataValue(Atlas.get(), true));
+        if (!this.freezePlayer) {
+            this.player.setAllowFlight(true);
+            this.player.setFlying(true);
+        }
 
-      this.mount = Optional.of(entity);
+        this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0), true);
+        SoundEvent call = Events
+                .call(new SoundEvent(this.player, SoundType.GOLEM_DEATH, SoundLocation.DEATH));
+        call.getSound().play(this.player, 1F);
+        this.player.setVelocity(new Vector());
+
+        this.player.spigot().setCollidesWithEntities(false);
+        // Todo?
+        if (!VersionUtil.isCombatUpdate()) {
+            this.player.spigot().setAffectsSpawning(false);
+        }
+        return this;
     }
 
-    if (this.currentTick >= 15 && !this.hasRefreshed) {
-      this.manager.getMatch().getRequiredModule(GroupsModule.class).refreshObservers();
-      this.hasRefreshed = true;
+    @Override
+    public boolean cancel0() {
+        Events.unregister(this);
+
+        if (this.mount.isPresent()) {
+            this.mount.get().remove();
+        }
+        if (this.player.isOnline()) {
+            this.player.hideTitle();
+        }
+        return super.cancel0();
     }
 
-    if (this.blindPlayer) {
-      this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1), true);
+    @Override
+    public void run() {
+        if (!this.player.isOnline()) {
+            cancel0();
+            return;
+        }
+
+        // TODO: move tick counting to AtlasTask somehow
+        this.currentTick = currentTick + 2;
+
+        // Need to mount them after death animation
+        if (!this.mount.isPresent() && this.freezePlayer && currentTick >= 15) {
+            ArmorStand entity = (ArmorStand) this.location.getWorld()
+                    .spawnEntity(this.location, EntityType.ARMOR_STAND);
+            entity.setVisible(false); // can't see it
+            entity.setHealth(0.5); // hides health bar
+            entity.setMaxHealth(0.5);
+            entity.setGravity(false);
+            entity.setSmall(true);
+            entity.setMarker(true);
+            entity.setMetadata(METADATA_TAG, new FixedMetadataValue(Atlas.get(), true));
+
+            this.mount = Optional.of(entity);
+        }
+
+        if (this.currentTick >= 15 && !this.hasRefreshed) {
+            this.manager.getMatch().getRequiredModule(GroupsModule.class).refreshObservers();
+            this.hasRefreshed = true;
+        }
+
+        if (this.blindPlayer) {
+            this.player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 40, 1), true);
+        }
+
+        // Prevent player movement
+        if (this.mount.isPresent()) {
+            if (this.mount.get().getPassenger() == null) {
+                this.mount.get().setPassenger(this.player);
+            }
+        }
+
+        long now = System.currentTimeMillis();
+        boolean isAfter = now >= this.respawnTime;
+
+        // Match has since ended.
+        if (!manager.getMatch().getRequiredModule(StatesModule.class).isPlaying()) {
+            this.manager.stopRespawnTask(this.player);
+            return;
+        }
+
+        if (this.autoRespawn && isAfter) {
+            this.manager.stopRespawnTask(this.player);
+            this.manager.spawn(this.player);
+            return;
+        }
+
+        LocalizedText subtitle;
+        if (isAfter) {
+            subtitle = Messages.GENERIC_PUNCH_RESPAWN.with();
+        } else {
+            double seconds = ((double) this.respawnTime - (double) now) / 1000.0;
+            LocalizedNumber secondsPart = new LocalizedNumber(seconds, 1, 1,
+                    TextStyle.ofColor(ChatColor.GREEN));
+            if (this.autoRespawn) {
+                subtitle = Messages.GENERIC_AUTO_RESPAWN.with(secondsPart);
+            } else {
+                subtitle = Messages.GENERIC_RESPAWN.with(secondsPart);
+            }
+        }
+        subtitle.style().color(ChatColor.WHITE);
+
+        this.player.sendTitle(new Title(this.title, subtitle.translate(locale), 0, 40, 20));
     }
-
-    // Prevent player movement
-    if (this.mount.isPresent()) {
-      if (this.mount.get().getPassenger() == null) {
-        this.mount.get().setPassenger(this.player);
-      }
-    }
-
-    long now = System.currentTimeMillis();
-    boolean isAfter = now >= this.respawnTime;
-
-    // Match has since ended.
-    if (!manager.getMatch().getRequiredModule(StatesModule.class).isPlaying()) {
-      this.manager.stopRespawnTask(this.player);
-      return;
-    }
-
-    if (this.autoRespawn && isAfter) {
-      this.manager.stopRespawnTask(this.player);
-      this.manager.spawn(this.player);
-      return;
-    }
-
-    LocalizedText subtitle;
-    if (isAfter) {
-      subtitle = Messages.GENERIC_PUNCH_RESPAWN.with();
-    } else {
-      double seconds = ((double) this.respawnTime - (double) now) / 1000.0;
-      LocalizedNumber secondsPart = new LocalizedNumber(seconds, 1, 1,
-          TextStyle.ofColor(ChatColor.GREEN));
-      if (this.autoRespawn) {
-        subtitle = Messages.GENERIC_AUTO_RESPAWN.with(secondsPart);
-      } else {
-        subtitle = Messages.GENERIC_RESPAWN.with(secondsPart);
-      }
-    }
-    subtitle.style().color(ChatColor.WHITE);
-
-    this.player.sendTitle(new Title(this.title, subtitle.translate(locale), 0, 40, 20));
-  }
 }

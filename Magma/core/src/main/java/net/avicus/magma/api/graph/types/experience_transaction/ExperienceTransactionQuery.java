@@ -4,66 +4,66 @@ import com.shopify.graphql.support.Query;
 
 public class ExperienceTransactionQuery extends Query<ExperienceTransactionQuery> {
 
-  public ExperienceTransactionQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public ExperienceTransactionQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Number of XP this transaction should represent.
-   */
-  public ExperienceTransactionQuery amount() {
-    startField("amount");
+    /**
+     * Number of XP this transaction should represent.
+     */
+    public ExperienceTransactionQuery amount() {
+        startField("amount");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this experiencetransaction was created.
-   */
-  public ExperienceTransactionQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this experiencetransaction was created.
+     */
+    public ExperienceTransactionQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Game genre of this transaction.
-   */
-  public ExperienceTransactionQuery genre() {
-    startField("genre");
+    /**
+     * Game genre of this transaction.
+     */
+    public ExperienceTransactionQuery genre() {
+        startField("genre");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the season which this transaction happened inside of
-   */
-  public ExperienceTransactionQuery seasonId() {
-    startField("season_id");
+    /**
+     * ID of the season which this transaction happened inside of
+     */
+    public ExperienceTransactionQuery seasonId() {
+        startField("season_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user that the XP in this transaction is rewarded to.
-   */
-  public ExperienceTransactionQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user that the XP in this transaction is rewarded to.
+     */
+    public ExperienceTransactionQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The base XP value was multiplied by. The amount represented by this object already reflects
-   * this operation.
-   */
-  public ExperienceTransactionQuery weight() {
-    startField("weight");
+    /**
+     * The base XP value was multiplied by. The amount represented by this object already reflects
+     * this operation.
+     */
+    public ExperienceTransactionQuery weight() {
+        startField("weight");
 
-    return this;
-  }
+        return this;
+    }
 }

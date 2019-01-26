@@ -8,13 +8,13 @@ import org.bukkit.Location;
 @ToString
 public class CompassView {
 
-  @Getter
-  private final Location target;
-  @Getter
-  private final Localizable display;
+    @Getter
+    private final Location target;
+    @Getter
+    private final Localizable display;
 
-  public CompassView(Location target, Localizable display) {
-    this.target = target;
-    this.display = display;
-  }
+    public CompassView(Location target, Localizable display) {
+        this.target = target;
+        this.display = display;
+    }
 }

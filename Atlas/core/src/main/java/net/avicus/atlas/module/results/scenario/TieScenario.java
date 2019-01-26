@@ -22,32 +22,32 @@ import org.github.paperspigot.Title;
 @ToString
 public class TieScenario extends EndScenario {
 
-  public TieScenario(Match match, Check check, int places) {
-    super(match, check, places);
-  }
-
-  @Override
-  public void execute(Match match, GroupsModule groups) {
-    match.getRequiredModule(StatesModule.class).next();
-
-    Localizable tie = Messages.UI_TIE.with(ChatColor.GRAY);
-
-    for (Player player : Bukkit.getOnlinePlayers()) {
-      Title title = Title.builder().title(tie.translate(player.getLocale()))
-          .fadeIn(10)
-          .stay(60)
-          .fadeOut(20)
-          .build();
-      player.sendTitle(title);
-
-      SoundEvent call = Events
-          .call(new SoundEvent(player, SoundType.HMMM, SoundLocation.MATCH_TIE));
-      call.getSound().play(player, 1F);
+    public TieScenario(Match match, Check check, int places) {
+        super(match, check, places);
     }
-    match.importantBroadcast(tie);
-  }
 
-  public void execute(Match match) {
-    this.execute(match, null);
-  }
+    @Override
+    public void execute(Match match, GroupsModule groups) {
+        match.getRequiredModule(StatesModule.class).next();
+
+        Localizable tie = Messages.UI_TIE.with(ChatColor.GRAY);
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Title title = Title.builder().title(tie.translate(player.getLocale()))
+                    .fadeIn(10)
+                    .stay(60)
+                    .fadeOut(20)
+                    .build();
+            player.sendTitle(title);
+
+            SoundEvent call = Events
+                    .call(new SoundEvent(player, SoundType.HMMM, SoundLocation.MATCH_TIE));
+            call.getSound().play(player, 1F);
+        }
+        match.importantBroadcast(tie);
+    }
+
+    public void execute(Match match) {
+        this.execute(match, null);
+    }
 }

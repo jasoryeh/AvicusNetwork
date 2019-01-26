@@ -8,15 +8,15 @@ package net.avicus.atlas.module.objectives;
  */
 public interface GlobalObjective {
 
-  /**
-   * Check if the objective is completed.
-   */
-  boolean isCompleted();
+    /**
+     * Check if the objective is completed.
+     */
+    boolean isCompleted();
 
-  /**
-   * Get the objective completion.
-   */
-  double getCompletion();
+    /**
+     * Get the objective completion.
+     */
+    double getCompletion();
 
 
 }

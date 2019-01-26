@@ -10,44 +10,44 @@ import org.bukkit.event.player.PlayerEvent;
  */
 public class PlayerEarnPointEvent extends PlayerEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
 
-  /**
-   * ID of the action that the player performed.
-   */
-  @Getter
-  private final String action;
+    /**
+     * ID of the action that the player performed.
+     */
+    @Getter
+    private final String action;
 
-  /**
-   * Constructor.
-   *
-   * @param who Player who performed the event.
-   * @param action ID of the action that the player performed.
-   */
-  public PlayerEarnPointEvent(Player who, String action) {
-    super(who);
-    this.action = action;
-  }
+    /**
+     * Constructor.
+     *
+     * @param who    Player who performed the event.
+     * @param action ID of the action that the player performed.
+     */
+    public PlayerEarnPointEvent(Player who, String action) {
+        super(who);
+        this.action = action;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

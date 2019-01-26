@@ -11,19 +11,19 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class AlertsListener implements Listener {
 
-  @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent event) {
-    MagmaTask.of(() -> {
-      User user = Users.user(event.getPlayer());
-      Alerts.reload(user);
-      if (Alerts.get(user, true).size() > 0) {
-        Alerts.notify(event.getPlayer());
-      }
-    }).nowAsync();
-  }
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        MagmaTask.of(() -> {
+            User user = Users.user(event.getPlayer());
+            Alerts.reload(user);
+            if (Alerts.get(user, true).size() > 0) {
+                Alerts.notify(event.getPlayer());
+            }
+        }).nowAsync();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onAsyncLogout(AsyncHookLogoutEvent event) {
-    Alerts.unload(event.getUser());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAsyncLogout(AsyncHookLogoutEvent event) {
+        Alerts.unload(event.getUser());
+    }
 }

@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.world;
 
 import java.util.Optional;
+
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -26,86 +27,86 @@ import tc.oc.tracker.trackers.OwnedMobTracker;
 
 public class MobsListener implements Listener {
 
-  private final Match match;
-  private final Optional<Check> mobs;
+    private final Match match;
+    private final Optional<Check> mobs;
 
-  private final OwnedMobTracker tracker = Trackers.getTracker(OwnedMobTracker.class);
+    private final OwnedMobTracker tracker = Trackers.getTracker(OwnedMobTracker.class);
 
-  public MobsListener(Match match, Optional<Check> mobs) {
-    this.match = match;
-    this.mobs = mobs;
-  }
-
-  @EventHandler
-  public void onCreatureSpawn(CreatureSpawnEvent event) {
-    if (event.getSpawnReason() == SpawnReason.CUSTOM
-        || event.getSpawnReason() == SpawnReason.DEFAULT) {
-      return;
+    public MobsListener(Match match, Optional<Check> mobs) {
+        this.match = match;
+        this.mobs = mobs;
     }
 
-    event.setCancelled(true);
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (event.getSpawnReason() == SpawnReason.CUSTOM
+                || event.getSpawnReason() == SpawnReason.DEFAULT) {
+            return;
+        }
 
-    // never allow spawning during non-playing states
-    if (!this.match.getRequiredModule(StatesModule.class).getState().isPlaying()) {
-      return;
+        event.setCancelled(true);
+
+        // never allow spawning during non-playing states
+        if (!this.match.getRequiredModule(StatesModule.class).getState().isPlaying()) {
+            return;
+        }
+
+        // by default, all mobs disabled
+        if (!this.mobs.isPresent()) {
+            return;
+        }
+
+        CheckContext context = new CheckContext(match);
+        context.add(new EntityVariable(event.getEntity()));
+        context.add(new SpawnReasonVariable(event.getSpawnReason()));
+
+        event.setCancelled(this.mobs.get().test(context).fails());
     }
 
-    // by default, all mobs disabled
-    if (!this.mobs.isPresent()) {
-      return;
+    @EventHandler
+    public void onTarget(EntityTargetEvent event) {
+        if (!(event.getTarget() instanceof Player)) {
+            return;
+        }
+
+        Player targetPlayer = (Player) event.getTarget();
+        event.setCancelled(preventTeamMob(event.getEntity(), targetPlayer));
     }
 
-    CheckContext context = new CheckContext(match);
-    context.add(new EntityVariable(event.getEntity()));
-    context.add(new SpawnReasonVariable(event.getSpawnReason()));
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+        if (!(event.getEntity() instanceof Player)) {
+            return;
+        }
 
-    event.setCancelled(this.mobs.get().test(context).fails());
-  }
+        if (event.getDamager() instanceof Player && match.getRequiredModule(GroupsModule.class)
+                .isObservingOrDead(((Player) event.getDamager()))) {
+            return;
+        }
 
-  @EventHandler
-  public void onTarget(EntityTargetEvent event) {
-    if (!(event.getTarget() instanceof Player)) {
-      return;
+        Player targetPlayer = (Player) event.getEntity();
+        event.setCancelled(preventTeamMob(event.getDamager(), targetPlayer));
     }
 
-    Player targetPlayer = (Player) event.getTarget();
-    event.setCancelled(preventTeamMob(event.getEntity(), targetPlayer));
-  }
+    private boolean preventTeamMob(Entity entity, Player effected) {
+        if (!(entity instanceof Creature || entity instanceof Slime || entity instanceof Ghast)) {
+            return false;
+        }
 
-  @EventHandler
-  public void onDamage(EntityDamageByEntityEvent event) {
-    if (!(event.getEntity() instanceof Player)) {
-      return;
+        if (match.getRequiredModule(GroupsModule.class).isObservingOrDead(effected)) {
+            return true;
+        }
+
+        Player ownerPlayer = tracker.getOwner((LivingEntity) entity);
+        if (ownerPlayer == null) {
+            return false;
+        }
+
+        Optional<Competitor> target = match.getRequiredModule(GroupsModule.class)
+                .getCompetitorOf(effected);
+        Optional<Competitor> owner = match.getRequiredModule(GroupsModule.class)
+                .getCompetitorOf(ownerPlayer);
+
+        return owner.isPresent() && target.isPresent() && owner.get().equals(target.get());
     }
-
-    if (event.getDamager() instanceof Player && match.getRequiredModule(GroupsModule.class)
-        .isObservingOrDead(((Player) event.getDamager()))) {
-      return;
-    }
-
-    Player targetPlayer = (Player) event.getEntity();
-    event.setCancelled(preventTeamMob(event.getDamager(), targetPlayer));
-  }
-
-  private boolean preventTeamMob(Entity entity, Player effected) {
-    if (!(entity instanceof Creature || entity instanceof Slime || entity instanceof Ghast)) {
-      return false;
-    }
-
-    if (match.getRequiredModule(GroupsModule.class).isObservingOrDead(effected)) {
-      return true;
-    }
-
-    Player ownerPlayer = tracker.getOwner((LivingEntity) entity);
-    if (ownerPlayer == null) {
-      return false;
-    }
-
-    Optional<Competitor> target = match.getRequiredModule(GroupsModule.class)
-        .getCompetitorOf(effected);
-    Optional<Competitor> owner = match.getRequiredModule(GroupsModule.class)
-        .getCompetitorOf(ownerPlayer);
-
-    return owner.isPresent() && target.isPresent() && owner.get().equals(target.get());
-  }
 }

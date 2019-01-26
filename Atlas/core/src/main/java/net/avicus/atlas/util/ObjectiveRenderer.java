@@ -7,6 +7,6 @@ import org.bukkit.entity.Player;
 
 public abstract class ObjectiveRenderer {
 
-  public abstract String getDisplay(Match match, Competitor competitor, Player viewer,
-      Objective objective, boolean showName);
+    public abstract String getDisplay(Match match, Competitor competitor, Player viewer,
+                                      Objective objective, boolean showName);
 }

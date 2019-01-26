@@ -7,8 +7,8 @@ import org.bukkit.plugin.PluginManager;
 
 public class HookModuleManager extends ModuleManager {
 
-  public HookModuleManager(PluginManager pluginManager, Plugin plugin,
-      CommandsManagerRegistration commandRegistrar) {
-    super(pluginManager, plugin, commandRegistrar);
-  }
+    public HookModuleManager(PluginManager pluginManager, Plugin plugin,
+                             CommandsManagerRegistration commandRegistrar) {
+        super(pluginManager, plugin, commandRegistrar);
+    }
 }

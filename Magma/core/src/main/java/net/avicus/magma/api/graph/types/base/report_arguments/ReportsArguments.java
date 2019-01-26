@@ -5,46 +5,46 @@ import com.shopify.graphql.support.Query;
 
 public class ReportsArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public ReportsArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public ReportsArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public ReportsArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public ReportsArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public ReportsArguments creatorId(Integer value) {
-    if (value != null) {
-      startArgument("creator_id");
-      builder().append(value);
+    public ReportsArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public ReportsArguments server(String value) {
-    if (value != null) {
-      startArgument("server");
-      Query.appendQuotedString(builder(), value.toString());
+    public ReportsArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public ReportsArguments creatorId(Integer value) {
+        if (value != null) {
+            startArgument("creator_id");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public ReportsArguments server(String value) {
+        if (value != null) {
+            startArgument("server");
+            Query.appendQuotedString(builder(), value.toString());
+        }
+        return this;
+    }
 }

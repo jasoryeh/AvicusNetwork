@@ -8,22 +8,22 @@ import org.bukkit.event.HandlerList;
 
 public class LeakableLeakEvent extends ObjectiveCompleteEvent {
 
-  private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-  @Getter
-  private final DestroyableEventInfo info;
+    @Getter
+    private final DestroyableEventInfo info;
 
-  public LeakableLeakEvent(LeakableObjective objective, DestroyableEventInfo info) {
-    super(objective, info.getActor());
-    this.info = info;
-  }
+    public LeakableLeakEvent(LeakableObjective objective, DestroyableEventInfo info) {
+        super(objective, info.getActor());
+        this.info = info;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

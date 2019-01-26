@@ -6,7 +6,7 @@ import org.bukkit.util.Vector;
 @ToString(callSuper = true)
 public class CircleRegion extends CylinderRegion {
 
-  public CircleRegion(Vector center, int radius) {
-    super(center, radius, 0);
-  }
+    public CircleRegion(Vector center, int radius) {
+        super(center, radius, 0);
+    }
 }

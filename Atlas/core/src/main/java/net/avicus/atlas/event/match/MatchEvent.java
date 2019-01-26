@@ -9,18 +9,18 @@ import org.bukkit.event.Event;
  */
 public abstract class MatchEvent extends Event {
 
-  /**
-   * Match that the event occurred in.
-   */
-  @Getter
-  final Match match;
+    /**
+     * Match that the event occurred in.
+     */
+    @Getter
+    final Match match;
 
-  /**
-   * Constructor.
-   *
-   * @param match match that the event occurred in
-   */
-  protected MatchEvent(Match match) {
-    this.match = match;
-  }
+    /**
+     * Constructor.
+     *
+     * @param match match that the event occurred in
+     */
+    protected MatchEvent(Match match) {
+        this.match = match;
+    }
 }

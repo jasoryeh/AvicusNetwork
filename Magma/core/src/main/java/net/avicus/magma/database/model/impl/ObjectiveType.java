@@ -7,19 +7,19 @@ import net.avicus.quest.model.Model;
 
 public class ObjectiveType extends Model {
 
-  @Getter
-  @Id
-  @Column
-  private int id;
-  @Getter
-  @Column
-  private String name;
+    @Getter
+    @Id
+    @Column
+    private int id;
+    @Getter
+    @Column
+    private String name;
 
-  public ObjectiveType(String name) {
-    this.name = name;
-  }
+    public ObjectiveType(String name) {
+        this.name = name;
+    }
 
-  public ObjectiveType() {
+    public ObjectiveType() {
 
-  }
+    }
 }

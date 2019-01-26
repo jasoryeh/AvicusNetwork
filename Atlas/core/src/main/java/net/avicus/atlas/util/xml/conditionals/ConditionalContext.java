@@ -3,6 +3,7 @@ package net.avicus.atlas.util.xml.conditionals;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import net.avicus.atlas.module.checks.CheckContext;
 import org.jdom2.Element;
 
@@ -11,25 +12,25 @@ import org.jdom2.Element;
  */
 public class ConditionalContext {
 
-  private final Conditional conditional;
-  private final List<Element> elseElements;
+    private final Conditional conditional;
+    private final List<Element> elseElements;
 
-  public ConditionalContext(Conditional conditional, List<Element> elseElements) {
-    this.conditional = conditional;
-    this.elseElements = elseElements;
-  }
-
-  public List<Element> getPassingElements(CheckContext context) {
-    List<Element> result = new ArrayList<>();
-    if (!this.conditional.shouldExclude(context)) {
-      result.addAll(this.conditional.getElements());
+    public ConditionalContext(Conditional conditional, List<Element> elseElements) {
+        this.conditional = conditional;
+        this.elseElements = elseElements;
     }
 
-    // Didn't pass, add else
-    if (result.isEmpty()) {
-      result.addAll(this.elseElements);
-    }
+    public List<Element> getPassingElements(CheckContext context) {
+        List<Element> result = new ArrayList<>();
+        if (!this.conditional.shouldExclude(context)) {
+            result.addAll(this.conditional.getElements());
+        }
 
-    return result;
-  }
+        // Didn't pass, add else
+        if (result.isEmpty()) {
+            result.addAll(this.elseElements);
+        }
+
+        return result;
+    }
 }

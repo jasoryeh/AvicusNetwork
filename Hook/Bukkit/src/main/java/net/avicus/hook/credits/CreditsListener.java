@@ -14,33 +14,33 @@ import org.bukkit.inventory.ItemStack;
 
 public class CreditsListener implements Listener {
 
-  public static ItemTag.Boolean GIVE_CREDITS = new Boolean("GiveCredits", false);
-  public static ItemTag.Integer CREDIT_AMOUNT = new Integer("CreditAmount", 0);
+    public static ItemTag.Boolean GIVE_CREDITS = new Boolean("GiveCredits", false);
+    public static ItemTag.Integer CREDIT_AMOUNT = new Integer("CreditAmount", 0);
 
-  @EventHandler
-  public void onAsyncHookLogin(AsyncHookLoginEvent event) {
-    Credits.load(event.getUser());
-  }
-
-  @EventHandler
-  public void onAsyncHookLogin(AsyncHookLogoutEvent event) {
-    Credits.unload(event.getUser());
-  }
-
-  @EventHandler(priority = EventPriority.LOWEST)
-  public void onItem(PlayerPickupItemEvent event) {
-    ItemStack stack = event.getItem().getItemStack();
-
-    if (!GIVE_CREDITS.has(stack)) {
-      return;
+    @EventHandler
+    public void onAsyncHookLogin(AsyncHookLoginEvent event) {
+        Credits.load(event.getUser());
     }
 
-    int amount = CREDIT_AMOUNT.get(stack);
+    @EventHandler
+    public void onAsyncHookLogin(AsyncHookLogoutEvent event) {
+        Credits.unload(event.getUser());
+    }
 
-    event.getItem().remove();
-    event.setCancelled(true);
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onItem(PlayerPickupItemEvent event) {
+        ItemStack stack = event.getItem().getItemStack();
 
-    Credits.reward(event.getPlayer(), amount, Messages.UI_REWARD_ITEM, false);
-    event.setCancelled(true);
-  }
+        if (!GIVE_CREDITS.has(stack)) {
+            return;
+        }
+
+        int amount = CREDIT_AMOUNT.get(stack);
+
+        event.getItem().remove();
+        event.setCancelled(true);
+
+        Credits.reward(event.getPlayer(), amount, Messages.UI_REWARD_ITEM, false);
+        event.setCancelled(true);
+    }
 }

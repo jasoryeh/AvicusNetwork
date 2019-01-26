@@ -4,5 +4,5 @@ import net.avicus.atlas.module.groups.Competitor;
 
 public interface CompetitorAction extends Action {
 
-  Competitor getActor();
+    Competitor getActor();
 }

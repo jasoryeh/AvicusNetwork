@@ -20,69 +20,69 @@ import org.joda.time.Duration;
  */
 public class MatchEndCountdown extends MatchCountdown {
 
-  private final EndScenario scenario;
+    private final EndScenario scenario;
 
-  /**
-   * Constructor.
-   *
-   * @param match match the countdown is being run inside of
-   * @param duration duration of the countdown
-   * @param scenario scenario to execute on end
-   */
-  public MatchEndCountdown(Match match, Duration duration, EndScenario scenario) {
-    super(match, duration);
-    this.scenario = scenario;
-  }
-
-  @Override
-  public Localizable getName() {
-    return Messages.GENERIC_COUNTDOWN_END_NAME.with();
-  }
-
-  @Override
-  protected void onTick(Duration elapsedTime, Duration remainingTime) {
-    int sec = (int) remainingTime.getStandardSeconds();
-
-    Localizable message = timeRemainingMessage(elapsedTime, remainingTime);
-
-    // Boss bar
-    updateBossBar(message, elapsedTime);
-
-    // Periodic chat broadcast
-    if (shouldBroadcast(sec)) {
-      Localizable broadcast = Messages.UI_IMPORTANT.with(TextStyle.ofBold(), message);
-      this.match.broadcast(broadcast);
-
-      this.match.getPlayers().forEach((p) -> {
-        SoundEvent call = Events.call(new SoundEvent(p, SoundType.PIANO, SoundLocation.MATCH_DING));
-        call.getSound().play(p, 1F);
-      });
+    /**
+     * Constructor.
+     *
+     * @param match    match the countdown is being run inside of
+     * @param duration duration of the countdown
+     * @param scenario scenario to execute on end
+     */
+    public MatchEndCountdown(Match match, Duration duration, EndScenario scenario) {
+        super(match, duration);
+        this.scenario = scenario;
     }
-  }
 
-  /**
-   * Generate the text that is displayed to users.
-   *
-   * @param elapsedTime time elapsed
-   * @param remainingTime time remaining
-   * @return text for display
-   */
-  public Localizable timeRemainingMessage(Duration elapsedTime, Duration remainingTime) {
-    ChatColor color = determineTimeColor(elapsedTime);
-    UnlocalizedText time = new UnlocalizedText(
-        StringUtil.secondsToClock((int) remainingTime.getStandardSeconds()), color);
+    @Override
+    public Localizable getName() {
+        return Messages.GENERIC_COUNTDOWN_END_NAME.with();
+    }
 
-    return Messages.MATCH_TIME_REMAINING.with(ChatColor.WHITE, time);
-  }
+    @Override
+    protected void onTick(Duration elapsedTime, Duration remainingTime) {
+        int sec = (int) remainingTime.getStandardSeconds();
 
-  @Override
-  protected void onEnd() {
-    this.clearBossBars();
-    this.scenario.execute(this.match, this.match.getRequiredModule(GroupsModule.class));
-  }
+        Localizable message = timeRemainingMessage(elapsedTime, remainingTime);
 
-  @Override
-  protected void onCancel() {
-    this.clearBossBars();
-  }
+        // Boss bar
+        updateBossBar(message, elapsedTime);
+
+        // Periodic chat broadcast
+        if (shouldBroadcast(sec)) {
+            Localizable broadcast = Messages.UI_IMPORTANT.with(TextStyle.ofBold(), message);
+            this.match.broadcast(broadcast);
+
+            this.match.getPlayers().forEach((p) -> {
+                SoundEvent call = Events.call(new SoundEvent(p, SoundType.PIANO, SoundLocation.MATCH_DING));
+                call.getSound().play(p, 1F);
+            });
+        }
+    }
+
+    /**
+     * Generate the text that is displayed to users.
+     *
+     * @param elapsedTime   time elapsed
+     * @param remainingTime time remaining
+     * @return text for display
+     */
+    public Localizable timeRemainingMessage(Duration elapsedTime, Duration remainingTime) {
+        ChatColor color = determineTimeColor(elapsedTime);
+        UnlocalizedText time = new UnlocalizedText(
+                StringUtil.secondsToClock((int) remainingTime.getStandardSeconds()), color);
+
+        return Messages.MATCH_TIME_REMAINING.with(ChatColor.WHITE, time);
+    }
+
+    @Override
+    protected void onEnd() {
+        this.clearBossBars();
+        this.scenario.execute(this.match, this.match.getRequiredModule(GroupsModule.class));
+    }
+
+    @Override
+    protected void onCancel() {
+        this.clearBossBars();
+    }
 }

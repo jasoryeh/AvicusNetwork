@@ -1,8 +1,10 @@
 package net.avicus.hook.gadgets.types.morph;
 
 import com.google.gson.JsonObject;
+
 import java.util.Arrays;
 import java.util.Locale;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,62 +28,62 @@ import org.bukkit.inventory.meta.ItemMeta;
 @ToString
 public class MorphContext extends AbstractGadgetContext<MorphGadget> {
 
-  @Getter
-  @Setter
-  private boolean enabled;
+    @Getter
+    @Setter
+    private boolean enabled;
 
-  public MorphContext(MorphGadget gadget, boolean enabled) {
-    super(gadget);
-    this.enabled = enabled;
-  }
+    public MorphContext(MorphGadget gadget, boolean enabled) {
+        super(gadget);
+        this.enabled = enabled;
+    }
 
-  public void disguise(Player player) {
-    // Gotta do these things sync.
-    EntityType entity = getGadget().getEntity().getEntity();
-    HookTask.of(() -> {
-      if (entity.equals(EntityType.PLAYER)) {
-        PlayerMorphData data = (PlayerMorphData) getGadget().getEntity().getData();
-        PlayerDisguise pd = new PlayerDisguise(ChatColor.BLUE + player.getName(),
-            data.getPlayerName());
-        DisguiseAPI.disguiseToAll(player, pd);
-      } else {
-        MobDisguise disguise = new MobDisguise(
-            DisguiseType.getType(getGadget().getEntity().getEntity()));
-        DisguiseAPI.disguiseToAll(player, disguise);
-        ((LivingWatcher) disguise.getWatcher()).setCustomName(ChatColor.BLUE + player.getName());
-        ((LivingWatcher) disguise.getWatcher()).setCustomNameVisible(true);
-        if (entity.equals(EntityType.RABBIT)) {
-          RabbitMorphData data = (RabbitMorphData) getGadget().getEntity().getData();
-          ((RabbitWatcher) disguise.getWatcher()).setType(data.getType());
-        }
-      }
-    }).now();
-  }
+    public void disguise(Player player) {
+        // Gotta do these things sync.
+        EntityType entity = getGadget().getEntity().getEntity();
+        HookTask.of(() -> {
+            if (entity.equals(EntityType.PLAYER)) {
+                PlayerMorphData data = (PlayerMorphData) getGadget().getEntity().getData();
+                PlayerDisguise pd = new PlayerDisguise(ChatColor.BLUE + player.getName(),
+                        data.getPlayerName());
+                DisguiseAPI.disguiseToAll(player, pd);
+            } else {
+                MobDisguise disguise = new MobDisguise(
+                        DisguiseType.getType(getGadget().getEntity().getEntity()));
+                DisguiseAPI.disguiseToAll(player, disguise);
+                ((LivingWatcher) disguise.getWatcher()).setCustomName(ChatColor.BLUE + player.getName());
+                ((LivingWatcher) disguise.getWatcher()).setCustomNameVisible(true);
+                if (entity.equals(EntityType.RABBIT)) {
+                    RabbitMorphData data = (RabbitMorphData) getGadget().getEntity().getData();
+                    ((RabbitWatcher) disguise.getWatcher()).setType(data.getType());
+                }
+            }
+        }).now();
+    }
 
-  public void unDisguise(Player player) {
-    // Gotta do these things sync.
-    HookTask.of(() -> {
-      DisguiseAPI.undisguiseToAll(player);
-    }).now();
-  }
+    public void unDisguise(Player player) {
+        // Gotta do these things sync.
+        HookTask.of(() -> {
+            DisguiseAPI.undisguiseToAll(player);
+        }).now();
+    }
 
-  @Override
-  public ItemStack icon(Locale locale) {
-    ItemStack stack = super.icon(locale);
-    ItemMeta meta = stack.getItemMeta();
+    @Override
+    public ItemStack icon(Locale locale) {
+        ItemStack stack = super.icon(locale);
+        ItemMeta meta = stack.getItemMeta();
 
-    meta.setLore(Arrays.asList(
-        Messages.enabledOrDisabled(this.enabled).translate(locale).toLegacyText()
-    ));
+        meta.setLore(Arrays.asList(
+                Messages.enabledOrDisabled(this.enabled).translate(locale).toLegacyText()
+        ));
 
-    stack.setItemMeta(meta);
-    return stack;
-  }
+        stack.setItemMeta(meta);
+        return stack;
+    }
 
-  @Override
-  public JsonObject serialize() {
-    JsonObject json = new JsonObject();
-    json.addProperty("enabled", this.enabled);
-    return json;
-  }
+    @Override
+    public JsonObject serialize() {
+        JsonObject json = new JsonObject();
+        json.addProperty("enabled", this.enabled);
+        return json;
+    }
 }

@@ -1,7 +1,9 @@
 package net.avicus.atlas.module.stats.action.objective.score;
 
 import com.google.common.base.Preconditions;
+
 import java.time.Instant;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.module.objectives.Objective;
@@ -13,32 +15,32 @@ import org.bukkit.entity.Player;
 
 @ToString
 public class PlayerEarnPointAction extends PlayerInteractWithObjectiveAction implements
-    ScoreAction {
+        ScoreAction {
 
-  @Getter
-  private final ScoreObjective scoreObjective;
+    @Getter
+    private final ScoreObjective scoreObjective;
 
-  public PlayerEarnPointAction(Objective acted, Player actor, Instant when) {
-    super(acted, actor, when);
-    Preconditions.checkArgument(acted instanceof ScoreObjective, "Objective must be a score.");
-    this.scoreObjective = (ScoreObjective) acted;
-  }
-
-  @Override
-  public double getScore() {
-    return 4.2;
-  }
-
-  @Override
-  public String getDebugMessage() {
-    return "Earn Point: " + scoreObjective.getName().translateDefault();
-  }
-
-  @Override
-  public LocalizedFormat actionMessage(boolean plural) {
-    if (plural) {
-      return Translations.STATS_OBJECTIVES_POINTS_EARNEDPLURAL;
+    public PlayerEarnPointAction(Objective acted, Player actor, Instant when) {
+        super(acted, actor, when);
+        Preconditions.checkArgument(acted instanceof ScoreObjective, "Objective must be a score.");
+        this.scoreObjective = (ScoreObjective) acted;
     }
-    return Translations.STATS_OBJECTIVES_POINTS_EARNED;
-  }
+
+    @Override
+    public double getScore() {
+        return 4.2;
+    }
+
+    @Override
+    public String getDebugMessage() {
+        return "Earn Point: " + scoreObjective.getName().translateDefault();
+    }
+
+    @Override
+    public LocalizedFormat actionMessage(boolean plural) {
+        if (plural) {
+            return Translations.STATS_OBJECTIVES_POINTS_EARNEDPLURAL;
+        }
+        return Translations.STATS_OBJECTIVES_POINTS_EARNED;
+    }
 }

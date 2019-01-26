@@ -6,20 +6,20 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class RankReloadTask extends BukkitRunnable {
 
-  public void start() {
-    this.runTaskTimerAsynchronously(Magma.get(), 0, 20 * 5);
-  }
-
-  @Override
-  public void run() {
-    for (Rank rank : Magma.get().database().getRanks().all()) {
-      BukkitRank bukkit = new BukkitRank(rank);
-      bukkit.init();
-      if (rank.getName().startsWith("@")) {
-        Ranks.registerPermsOnly(rank, bukkit);
-      } else {
-        Ranks.register(rank, bukkit);
-      }
+    public void start() {
+        this.runTaskTimerAsynchronously(Magma.get(), 0, 20 * 5);
     }
-  }
+
+    @Override
+    public void run() {
+        for (Rank rank : Magma.get().database().getRanks().all()) {
+            BukkitRank bukkit = new BukkitRank(rank);
+            bukkit.init();
+            if (rank.getName().startsWith("@")) {
+                Ranks.registerPermsOnly(rank, bukkit);
+            } else {
+                Ranks.register(rank, bukkit);
+            }
+        }
+    }
 }

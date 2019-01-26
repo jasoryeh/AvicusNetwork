@@ -6,42 +6,42 @@ import net.avicus.magma.api.graph.mutations.friend_remove.remove_response_data.R
 
 public class FriendRemoveQuery extends Query<FriendRemoveQuery> {
 
-  public FriendRemoveQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public FriendRemoveQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * A unique identifier for the client performing the mutation.
-   */
-  public FriendRemoveQuery clientMutationId() {
-    startField("clientMutationId");
+    /**
+     * A unique identifier for the client performing the mutation.
+     */
+    public FriendRemoveQuery clientMutationId() {
+        startField("clientMutationId");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Information about what the request accompanied (removed, request canceled, not friends, etc).
-   */
-  public FriendRemoveQuery responseData(RemoveResponseDataQueryDefinition queryDef) {
-    startField("response_data");
+    /**
+     * Information about what the request accompanied (removed, request canceled, not friends, etc).
+     */
+    public FriendRemoveQuery responseData(RemoveResponseDataQueryDefinition queryDef) {
+        startField("response_data");
 
-    builder().append('{');
-    queryDef.define(new RemoveResponseDataQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new RemoveResponseDataQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the friend was removed.
-   */
-  public FriendRemoveQuery success() {
-    startField("success");
+    /**
+     * If the friend was removed.
+     */
+    public FriendRemoveQuery success() {
+        startField("success");
 
-    return this;
-  }
+        return this;
+    }
 }

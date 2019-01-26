@@ -1,6 +1,7 @@
 package net.avicus.hook.tracking;
 
 import java.util.Date;
+
 import net.avicus.atlas.Atlas;
 import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.Hook;
@@ -16,32 +17,32 @@ import org.bukkit.event.Listener;
 
 public class Tracking implements Listener {
 
-  public static void init() {
-    Tracking tracking = new Tracking();
-    Events.register(tracking);
+    public static void init() {
+        Tracking tracking = new Tracking();
+        Events.register(tracking);
 
-    if (Atlas.get().getLoader().hasModule("competitive-objectives")) {
-      Events.register(new CompetitveTracker(tracking));
-    }
-  }
-
-  @EventHandler
-  public void onPlayerDeath(PlayerDeathEvent event) {
-    if (!HookConfig.Tracking.isDeaths()) {
-      return;
+        if (Atlas.get().getLoader().hasModule("competitive-objectives")) {
+            Events.register(new CompetitveTracker(tracking));
+        }
     }
 
-    int user = Users.user(event.getPlayer()).getId();
-    int cause = 0;
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        if (!HookConfig.Tracking.isDeaths()) {
+            return;
+        }
 
-    if (event.getLifetime().getLastDamage() != null) {
-      LivingEntity entity = event.getLifetime().getLastDamage().getInfo().getResolvedDamager();
-      if (entity instanceof Player) {
-        cause = Users.user((Player) entity).getId();
-      }
+        int user = Users.user(event.getPlayer()).getId();
+        int cause = 0;
+
+        if (event.getLifetime().getLastDamage() != null) {
+            LivingEntity entity = event.getLifetime().getLastDamage().getInfo().getResolvedDamager();
+            if (entity instanceof Player) {
+                cause = Users.user((Player) entity).getId();
+            }
+        }
+
+        Death death = new Death(user, cause, new Date());
+        HookTask.of(() -> Hook.database().getDeaths().insert(death).execute()).nowAsync();
     }
-
-    Death death = new Death(user, cause, new Date());
-    HookTask.of(() -> Hook.database().getDeaths().insert(death).execute()).nowAsync();
-  }
 }

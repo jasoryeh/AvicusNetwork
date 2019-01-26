@@ -8,19 +8,19 @@ import org.bukkit.entity.Player;
 
 public class PlayerSidebarProvider implements PlayerProvider<String> {
 
-  private final Match match;
-  private final Player viewer;
+    private final Match match;
+    private final Player viewer;
 
-  public PlayerSidebarProvider(Match match, Player viewer) {
-    this.match = match;
-    this.viewer = viewer;
-  }
-
-  @Override
-  public String get(Player player) {
-    if (!player.isOnline()) {
-      return ChatColor.STRIKETHROUGH + player.getName();
+    public PlayerSidebarProvider(Match match, Player viewer) {
+        this.match = match;
+        this.viewer = viewer;
     }
-    return Atlas.get().getBridge().displayName(this.match, this.viewer, player);
-  }
+
+    @Override
+    public String get(Player player) {
+        if (!player.isOnline()) {
+            return ChatColor.STRIKETHROUGH + player.getName();
+        }
+        return Atlas.get().getBridge().displayName(this.match, this.viewer, player);
+    }
 }

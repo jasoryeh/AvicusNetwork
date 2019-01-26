@@ -22,56 +22,56 @@ import org.bukkit.util.Vector;
 @Data
 public class Present {
 
-  private final Vector location;
-  private final String slug;
-  private final String family;
+    private final Vector location;
+    private final String slug;
+    private final String family;
 
-  public void spawnParticles() {
-    ParticleEffect.FIREWORKS_SPARK
-        .display(0f, 0f, 0f, 0.2f, 8,
-            getCenter(location.toLocation(AtrioPlugin.getInstance().getWorld())),
-            20);
-  }
+    public void spawnParticles() {
+        ParticleEffect.FIREWORKS_SPARK
+                .display(0f, 0f, 0f, 0.2f, 8,
+                        getCenter(location.toLocation(AtrioPlugin.getInstance().getWorld())),
+                        20);
+    }
 
-  public void find(Player player) {
-    HookTask.of(() -> {
-      User user = Users.user(player);
-      Pair<Boolean, String> res = Magma.get().getApiClient().getPresents()
-          .find(user, this.getFamily(), this.getSlug());
-      if (res.getKey()) {
-        player.sendMessage(ChatColor.GREEN + res.getValue());
-        Bukkit
-            .broadcastMessage(player.getDisplayName() + ChatColor.GOLD + " just found a present!");
+    public void find(Player player) {
         HookTask.of(() -> {
-          Firework f = (Firework) player.getWorld()
-              .spawnEntity(player.getLocation(), EntityType.FIREWORK);
-          FireworkMeta meta = f.getFireworkMeta();
-          meta.setPower(2);
-          meta.addEffect(FireworkEffect.builder()
-              .trail(true)
-              .withColor(Color.RED)
-              .withColor(Color.GREEN)
-              .with(Type.BALL)
-              .build());
-          f.setFireworkMeta(meta);
-        }).now();
-      } else {
-        player.sendMessage(ChatColor.RED + res.getValue());
-      }
-    }).nowAsync();
-  }
+            User user = Users.user(player);
+            Pair<Boolean, String> res = Magma.get().getApiClient().getPresents()
+                    .find(user, this.getFamily(), this.getSlug());
+            if (res.getKey()) {
+                player.sendMessage(ChatColor.GREEN + res.getValue());
+                Bukkit
+                        .broadcastMessage(player.getDisplayName() + ChatColor.GOLD + " just found a present!");
+                HookTask.of(() -> {
+                    Firework f = (Firework) player.getWorld()
+                            .spawnEntity(player.getLocation(), EntityType.FIREWORK);
+                    FireworkMeta meta = f.getFireworkMeta();
+                    meta.setPower(2);
+                    meta.addEffect(FireworkEffect.builder()
+                            .trail(true)
+                            .withColor(Color.RED)
+                            .withColor(Color.GREEN)
+                            .with(Type.BALL)
+                            .build());
+                    f.setFireworkMeta(meta);
+                }).now();
+            } else {
+                player.sendMessage(ChatColor.RED + res.getValue());
+            }
+        }).nowAsync();
+    }
 
 
-  public Location getCenter(Location loc) {
-    return new Location(loc.getWorld(),
-        getRelativeCoord(loc.getBlockX()),
-        getRelativeCoord(loc.getBlockY()),
-        getRelativeCoord(loc.getBlockZ()));
-  }
+    public Location getCenter(Location loc) {
+        return new Location(loc.getWorld(),
+                getRelativeCoord(loc.getBlockX()),
+                getRelativeCoord(loc.getBlockY()),
+                getRelativeCoord(loc.getBlockZ()));
+    }
 
-  private double getRelativeCoord(int i) {
-    double d = i;
-    d = d < 0 ? d - .5 : d + .5;
-    return d;
-  }
+    private double getRelativeCoord(int i) {
+        double d = i;
+        d = d < 0 ? d - .5 : d + .5;
+        return d;
+    }
 }

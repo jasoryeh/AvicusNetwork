@@ -10,13 +10,13 @@ import net.dv8tion.jda.core.entities.Role;
  */
 public class HookRole {
 
-  @Getter
-  private final Rank rank;
-  @Getter
-  private final Role role;
+    @Getter
+    private final Rank rank;
+    @Getter
+    private final Role role;
 
-  public HookRole(Rank rank, Role role) {
-    this.rank = rank;
-    this.role = role;
-  }
+    public HookRole(Rank rank, Role role) {
+        this.rank = rank;
+        this.role = role;
+    }
 }

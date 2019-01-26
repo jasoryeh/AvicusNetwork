@@ -11,10 +11,10 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 @ToString
 public class DamageVariable implements Variable {
 
-  @Getter
-  private final DamageCause cause;
+    @Getter
+    private final DamageCause cause;
 
-  public DamageVariable(DamageCause cause) {
-    this.cause = cause;
-  }
+    public DamageVariable(DamageCause cause) {
+        this.cause = cause;
+    }
 }

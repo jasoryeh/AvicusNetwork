@@ -13,43 +13,43 @@ import org.bukkit.event.Listener;
 
 public class CompetitveRewardListener implements Listener {
 
-  @EventHandler
-  public void onMonumentDestroy(MonumentDestroyEvent event) {
-    int reward = HookConfig.Credits.Rewards.getMonumentDestroy();
-    if (reward > 0) {
-      Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_MONUMENT_DESTROYED);
+    @EventHandler
+    public void onMonumentDestroy(MonumentDestroyEvent event) {
+        int reward = HookConfig.Credits.Rewards.getMonumentDestroy();
+        if (reward > 0) {
+            Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_MONUMENT_DESTROYED);
+        }
     }
-  }
 
-  @EventHandler
-  public void onFlagCapture(FlagCaptureEvent event) {
-    int reward = HookConfig.Credits.Rewards.getFlagCapture();
-    if (reward > 0) {
-      Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_FLAG_CAPTURED);
+    @EventHandler
+    public void onFlagCapture(FlagCaptureEvent event) {
+        int reward = HookConfig.Credits.Rewards.getFlagCapture();
+        if (reward > 0) {
+            Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_FLAG_CAPTURED);
+        }
     }
-  }
 
-  @EventHandler
-  public void onWoolPlace(WoolPlaceEvent event) {
-    int reward = HookConfig.Credits.Rewards.getWoolPlace();
-    if (reward > 0) {
-      Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_WOOL_PLACE);
+    @EventHandler
+    public void onWoolPlace(WoolPlaceEvent event) {
+        int reward = HookConfig.Credits.Rewards.getWoolPlace();
+        if (reward > 0) {
+            Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_WOOL_PLACE);
+        }
     }
-  }
 
-  @EventHandler
-  public void onWoolPickup(WoolPickupEvent event) {
-    int reward = HookConfig.Credits.Rewards.getWoolPickup();
-    if (reward > 0) {
-      Credits.reward(event.getPlayer(), reward, Messages.UI_REWARD_WOOL_PICKUP);
+    @EventHandler
+    public void onWoolPickup(WoolPickupEvent event) {
+        int reward = HookConfig.Credits.Rewards.getWoolPickup();
+        if (reward > 0) {
+            Credits.reward(event.getPlayer(), reward, Messages.UI_REWARD_WOOL_PICKUP);
+        }
     }
-  }
 
-  @EventHandler
-  public void onLeakableLeak(LeakableLeakEvent event) {
-    int reward = HookConfig.Credits.Rewards.getLeakableLeak();
-    if (reward > 0) {
-      Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_LEAKABLE_LEAK);
+    @EventHandler
+    public void onLeakableLeak(LeakableLeakEvent event) {
+        int reward = HookConfig.Credits.Rewards.getLeakableLeak();
+        if (reward > 0) {
+            Credits.reward(event.getPlayers().get(0), reward, Messages.UI_REWARD_LEAKABLE_LEAK);
+        }
     }
-  }
 }

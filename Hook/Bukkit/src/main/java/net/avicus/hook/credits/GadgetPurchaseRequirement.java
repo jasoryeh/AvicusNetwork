@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public interface GadgetPurchaseRequirement {
 
-  Localizable getText();
+    Localizable getText();
 
-  boolean meetsRequirement(Player player);
+    boolean meetsRequirement(Player player);
 }

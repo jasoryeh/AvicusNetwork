@@ -8,16 +8,16 @@ import org.joda.time.Duration;
 @ToString
 public class DecayPhase {
 
-  @Getter
-  private final Duration delay;
-  @Getter
-  private final Material material;
-  @Getter
-  private final byte data;
+    @Getter
+    private final Duration delay;
+    @Getter
+    private final Material material;
+    @Getter
+    private final byte data;
 
-  public DecayPhase(Duration delay, Material material, byte data) {
-    this.delay = delay;
-    this.material = material;
-    this.data = data;
-  }
+    public DecayPhase(Duration delay, Material material, byte data) {
+        this.delay = delay;
+        this.material = material;
+        this.data = data;
+    }
 }

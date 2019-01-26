@@ -4,56 +4,56 @@ import com.shopify.graphql.support.Query;
 
 public class ReportQuery extends Query<ReportQuery> {
 
-  public ReportQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public ReportQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Date when this report was created.
-   */
-  public ReportQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this report was created.
+     */
+    public ReportQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who made the report.
-   */
-  public ReportQuery creatorId() {
-    startField("creator_id");
+    /**
+     * ID of the user who made the report.
+     */
+    public ReportQuery creatorId() {
+        startField("creator_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The reason this report was made.
-   */
-  public ReportQuery reason() {
-    startField("reason");
+    /**
+     * The reason this report was made.
+     */
+    public ReportQuery reason() {
+        startField("reason");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Name of the server which this report was made on.
-   */
-  public ReportQuery server() {
-    startField("server");
+    /**
+     * Name of the server which this report was made on.
+     */
+    public ReportQuery server() {
+        startField("server");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who is being reported.
-   */
-  public ReportQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user who is being reported.
+     */
+    public ReportQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 }

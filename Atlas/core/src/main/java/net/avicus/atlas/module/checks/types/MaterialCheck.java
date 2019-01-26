@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.checks.types;
 
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -14,21 +15,21 @@ import net.avicus.compendium.inventory.MaterialMatcher;
 @ToString
 public class MaterialCheck implements Check {
 
-  private final MaterialMatcher matcher;
+    private final MaterialMatcher matcher;
 
-  public MaterialCheck(MaterialMatcher matcher) {
-    this.matcher = matcher;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Optional<MaterialVariable> optional = context.getFirst(MaterialVariable.class);
-
-    if (!optional.isPresent()) {
-      return CheckResult.IGNORE;
+    public MaterialCheck(MaterialMatcher matcher) {
+        this.matcher = matcher;
     }
 
-    boolean matches = this.matcher.matches(optional.get().getData());
-    return CheckResult.valueOf(matches);
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        Optional<MaterialVariable> optional = context.getFirst(MaterialVariable.class);
+
+        if (!optional.isPresent()) {
+            return CheckResult.IGNORE;
+        }
+
+        boolean matches = this.matcher.matches(optional.get().getData());
+        return CheckResult.valueOf(matches);
+    }
 }

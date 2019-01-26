@@ -14,41 +14,41 @@ import org.bukkit.event.Listener;
 
 public class GroupsBridge implements ModuleBridge<GroupsModule>, Listener {
 
-  private final GroupsModule module;
-  private final StatesModule statesModule;
-  private final GroupMenuListener listener;
+    private final GroupsModule module;
+    private final StatesModule statesModule;
+    private final GroupMenuListener listener;
 
-  public GroupsBridge(GroupsModule module) {
-    this.module = module;
-    this.statesModule = module.getMatch().getRequiredModule(StatesModule.class);
-    this.listener = new GroupMenuListener(module);
-  }
-
-  @Override
-  public void onOpen(GroupsModule module) {
-    if (module.getCompetitorRule() == CompetitorRule.TEAM) {
-      Events.register(this.listener);
-    } else {
-      Events.register(this);
+    public GroupsBridge(GroupsModule module) {
+        this.module = module;
+        this.statesModule = module.getMatch().getRequiredModule(StatesModule.class);
+        this.listener = new GroupMenuListener(module);
     }
-  }
 
-  @Override
-  public void onClose(GroupsModule module) {
-    if (module.getCompetitorRule() == CompetitorRule.TEAM) {
-      Events.unregister(this.listener);
-    } else {
-      Events.unregister(this);
+    @Override
+    public void onOpen(GroupsModule module) {
+        if (module.getCompetitorRule() == CompetitorRule.TEAM) {
+            Events.register(this.listener);
+        } else {
+            Events.register(this);
+        }
     }
-  }
 
-  @EventHandler
-  public void onJoin(PlayerJoinDelayedEvent event) {
-    if (module.getCompetitorRule() == CompetitorRule.INDIVIDUAL) {
-      FFATeam team = ((FFAModule) module).getTeam();
-      if (!team.isFull(event.getPlayer())) {
-        module.changeGroup(event.getPlayer(), team, false, false);
-      }
+    @Override
+    public void onClose(GroupsModule module) {
+        if (module.getCompetitorRule() == CompetitorRule.TEAM) {
+            Events.unregister(this.listener);
+        } else {
+            Events.unregister(this);
+        }
     }
-  }
+
+    @EventHandler
+    public void onJoin(PlayerJoinDelayedEvent event) {
+        if (module.getCompetitorRule() == CompetitorRule.INDIVIDUAL) {
+            FFATeam team = ((FFAModule) module).getTeam();
+            if (!team.isFull(event.getPlayer())) {
+                module.changeGroup(event.getPlayer(), team, false, false);
+            }
+        }
+    }
 }

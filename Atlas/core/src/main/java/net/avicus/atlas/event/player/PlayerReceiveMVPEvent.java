@@ -9,31 +9,31 @@ import org.bukkit.event.player.PlayerEvent;
  */
 public class PlayerReceiveMVPEvent extends PlayerEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
 
-  public PlayerReceiveMVPEvent(Player who) {
-    super(who);
-  }
+    public PlayerReceiveMVPEvent(Player who) {
+        super(who);
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

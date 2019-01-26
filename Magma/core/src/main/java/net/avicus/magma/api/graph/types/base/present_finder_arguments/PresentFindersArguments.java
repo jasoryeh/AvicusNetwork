@@ -4,38 +4,38 @@ import com.shopify.graphql.support.Arguments;
 
 public class PresentFindersArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public PresentFindersArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public PresentFindersArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public PresentFindersArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public PresentFindersArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public PresentFindersArguments presentId(Integer value) {
-    if (value != null) {
-      startArgument("present_id");
-      builder().append(value);
+    public PresentFindersArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public PresentFindersArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public PresentFindersArguments presentId(Integer value) {
+        if (value != null) {
+            startArgument("present_id");
+            builder().append(value);
+        }
+        return this;
+    }
 }

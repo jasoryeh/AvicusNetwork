@@ -4,20 +4,20 @@ import com.shopify.graphql.support.Query;
 
 public class ObjectiveTypeQuery extends Query<ObjectiveTypeQuery> {
 
-  public ObjectiveTypeQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public ObjectiveTypeQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * Name of the objective type.
-   */
-  public ObjectiveTypeQuery name() {
-    startField("name");
+    /**
+     * Name of the objective type.
+     */
+    public ObjectiveTypeQuery name() {
+        startField("name");
 
-    return this;
-  }
+        return this;
+    }
 }

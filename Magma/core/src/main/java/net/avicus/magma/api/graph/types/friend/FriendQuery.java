@@ -4,47 +4,47 @@ import com.shopify.graphql.support.Query;
 
 public class FriendQuery extends Query<FriendQuery> {
 
-  public FriendQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public FriendQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * If the request has been accepted.
-   */
-  public FriendQuery accepted() {
-    startField("accepted");
+    /**
+     * If the request has been accepted.
+     */
+    public FriendQuery accepted() {
+        startField("accepted");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this friend was created.
-   */
-  public FriendQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this friend was created.
+     */
+    public FriendQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who was requested.
-   */
-  public FriendQuery friendId() {
-    startField("friend_id");
+    /**
+     * ID of the user who was requested.
+     */
+    public FriendQuery friendId() {
+        startField("friend_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who initiated the friendship.
-   */
-  public FriendQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user who initiated the friendship.
+     */
+    public FriendQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 }

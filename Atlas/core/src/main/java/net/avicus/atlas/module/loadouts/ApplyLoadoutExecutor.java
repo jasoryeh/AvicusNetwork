@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.loadouts;
 
 import java.util.UUID;
+
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.FactoryUtils;
@@ -18,28 +19,28 @@ import org.bukkit.entity.Player;
 @ToString(callSuper = true)
 public class ApplyLoadoutExecutor extends Executor {
 
-  private final Loadout loadout;
+    private final Loadout loadout;
 
-  public ApplyLoadoutExecutor(String id, Check check, Loadout loadout) {
-    super(id, check);
-    this.loadout = loadout;
-  }
-
-  public static Executor parse(Match match, XmlElement element) throws XmlException {
-    Check check = FactoryUtils
-        .resolveRequiredCheckChild(match, element.getAttribute("check"), element.getChild("check"));
-    String id = element.getAttribute("id").asString().orElse(UUID.randomUUID().toString());
-    Loadout loadout = FactoryUtils.resolveRequiredLoadout(match, element.getAttribute("loadout"),
-        element.getChild("loadout"));
-    return new ApplyLoadoutExecutor(id, check, loadout);
-  }
-
-  @Override
-  public void execute(CheckContext context) {
-    Player player = context.getFirst(PlayerVariable.class).map(PlayerVariable::getPlayer)
-        .orElse(null);
-    if (player != null) {
-      loadout.apply(player);
+    public ApplyLoadoutExecutor(String id, Check check, Loadout loadout) {
+        super(id, check);
+        this.loadout = loadout;
     }
-  }
+
+    public static Executor parse(Match match, XmlElement element) throws XmlException {
+        Check check = FactoryUtils
+                .resolveRequiredCheckChild(match, element.getAttribute("check"), element.getChild("check"));
+        String id = element.getAttribute("id").asString().orElse(UUID.randomUUID().toString());
+        Loadout loadout = FactoryUtils.resolveRequiredLoadout(match, element.getAttribute("loadout"),
+                element.getChild("loadout"));
+        return new ApplyLoadoutExecutor(id, check, loadout);
+    }
+
+    @Override
+    public void execute(CheckContext context) {
+        Player player = context.getFirst(PlayerVariable.class).map(PlayerVariable::getPlayer)
+                .orElse(null);
+        if (player != null) {
+            loadout.apply(player);
+        }
+    }
 }

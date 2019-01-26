@@ -5,11 +5,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemContext extends EmptyGadgetContext<ItemGadget> {
 
-  public ItemContext(ItemGadget gadget) {
-    super(gadget);
-  }
+    public ItemContext(ItemGadget gadget) {
+        super(gadget);
+    }
 
-  public ItemStack getItemStack() {
-    return getGadget().getItemStack();
-  }
+    public ItemStack getItemStack() {
+        return getGadget().getItemStack();
+    }
 }

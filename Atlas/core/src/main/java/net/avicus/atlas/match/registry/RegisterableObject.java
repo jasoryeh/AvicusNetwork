@@ -2,7 +2,7 @@ package net.avicus.atlas.match.registry;
 
 public interface RegisterableObject<T> {
 
-  String getId();
+    String getId();
 
-  T getObject();
+    T getObject();
 }

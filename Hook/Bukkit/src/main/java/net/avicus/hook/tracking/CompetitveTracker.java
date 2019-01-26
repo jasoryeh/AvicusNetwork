@@ -2,6 +2,7 @@ package net.avicus.hook.tracking;
 
 import java.util.Collection;
 import java.util.Date;
+
 import net.avicus.atlas.sets.competitve.objectives.destroyable.leakable.event.LeakableLeakEvent;
 import net.avicus.atlas.sets.competitve.objectives.destroyable.monument.event.MonumentDestroyEvent;
 import net.avicus.atlas.sets.competitve.objectives.flag.events.FlagCaptureEvent;
@@ -20,60 +21,60 @@ import org.bukkit.event.Listener;
 
 public class CompetitveTracker implements Listener {
 
-  private final Tracking tracking;
+    private final Tracking tracking;
 
-  private final ObjectiveType monument;
-  private final ObjectiveType flag;
-  private final ObjectiveType hill;
-  private final ObjectiveType wool;
-  private final ObjectiveType leakable;
+    private final ObjectiveType monument;
+    private final ObjectiveType flag;
+    private final ObjectiveType hill;
+    private final ObjectiveType wool;
+    private final ObjectiveType leakable;
 
-  public CompetitveTracker(Tracking tracking) {
-    this.tracking = tracking;
-    this.monument = Hook.database().getObjectiveTypes().findOrCreate("monument");
-    this.flag = Hook.database().getObjectiveTypes().findOrCreate("flag");
-    this.hill = Hook.database().getObjectiveTypes().findOrCreate("hill");
-    this.wool = Hook.database().getObjectiveTypes().findOrCreate("wool");
-    this.leakable = Hook.database().getObjectiveTypes().findOrCreate("leakable");
-  }
-
-  protected static void objective(Collection<Player> players, ObjectiveType type) {
-    players.stream().forEach((p) -> objective(p, type));
-  }
-
-  protected static void objective(Player player, ObjectiveType type) {
-    if (!HookConfig.Tracking.isObjectives()) {
-      return;
+    public CompetitveTracker(Tracking tracking) {
+        this.tracking = tracking;
+        this.monument = Hook.database().getObjectiveTypes().findOrCreate("monument");
+        this.flag = Hook.database().getObjectiveTypes().findOrCreate("flag");
+        this.hill = Hook.database().getObjectiveTypes().findOrCreate("hill");
+        this.wool = Hook.database().getObjectiveTypes().findOrCreate("wool");
+        this.leakable = Hook.database().getObjectiveTypes().findOrCreate("leakable");
     }
 
-    User user = Users.user(player);
-    ObjectiveCompletion objective = new ObjectiveCompletion(user.getId(), type, new Date());
-    HookTask.of(() -> Hook.database().getObjectiveCompletions().insert(objective).execute())
-        .nowAsync();
-  }
+    protected static void objective(Collection<Player> players, ObjectiveType type) {
+        players.stream().forEach((p) -> objective(p, type));
+    }
 
-  @EventHandler
-  public void onMonumentDestroy(MonumentDestroyEvent event) {
-    objective(event.getPlayers(), monument);
-  }
+    protected static void objective(Player player, ObjectiveType type) {
+        if (!HookConfig.Tracking.isObjectives()) {
+            return;
+        }
 
-  @EventHandler
-  public void onFlagCapture(FlagCaptureEvent event) {
-    objective(event.getPlayers(), flag);
-  }
+        User user = Users.user(player);
+        ObjectiveCompletion objective = new ObjectiveCompletion(user.getId(), type, new Date());
+        HookTask.of(() -> Hook.database().getObjectiveCompletions().insert(objective).execute())
+                .nowAsync();
+    }
 
-  @EventHandler
-  public void onFlagCapture(HillCaptureEvent event) {
-    objective(event.getPlayers(), hill);
-  }
+    @EventHandler
+    public void onMonumentDestroy(MonumentDestroyEvent event) {
+        objective(event.getPlayers(), monument);
+    }
 
-  @EventHandler
-  public void onWoolPlace(WoolPlaceEvent event) {
-    objective(event.getPlayers().get(0), wool);
-  }
+    @EventHandler
+    public void onFlagCapture(FlagCaptureEvent event) {
+        objective(event.getPlayers(), flag);
+    }
 
-  @EventHandler
-  public void onLeakableLeak(LeakableLeakEvent event) {
-    objective(event.getPlayers().get(0), leakable);
-  }
+    @EventHandler
+    public void onFlagCapture(HillCaptureEvent event) {
+        objective(event.getPlayers(), hill);
+    }
+
+    @EventHandler
+    public void onWoolPlace(WoolPlaceEvent event) {
+        objective(event.getPlayers().get(0), wool);
+    }
+
+    @EventHandler
+    public void onLeakableLeak(LeakableLeakEvent event) {
+        objective(event.getPlayers().get(0), leakable);
+    }
 }

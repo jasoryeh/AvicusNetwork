@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.groups;
 
 import java.util.Collection;
+
 import net.avicus.atlas.command.JoinCommands;
 import net.avicus.atlas.match.registry.RegisterableObject;
 import net.avicus.atlas.module.locales.LocalizedXmlString;
@@ -13,57 +14,57 @@ import org.bukkit.entity.Player;
 
 public interface Group extends RegisterableObject<Group>, PlayerStore {
 
-  String getId();
+    String getId();
 
-  LocalizedXmlString getName();
+    LocalizedXmlString getName();
 
-  void setName(LocalizedXmlString name);
+    void setName(LocalizedXmlString name);
 
-  LocalizedXmlString getOriginalName();
+    LocalizedXmlString getOriginalName();
 
-  TeamColor getTeamColor();
+    TeamColor getTeamColor();
 
-  ChatColor getChatColor();
+    ChatColor getChatColor();
 
-  DyeColor getDyeColor();
+    DyeColor getDyeColor();
 
-  Color getFireworkColor();
+    Color getFireworkColor();
 
-  void add(Player player);
+    void add(Player player);
 
-  void remove(Player player);
+    void remove(Player player);
 
-  boolean isObserving();
+    boolean isObserving();
 
-  void setObserving(boolean observing);
+    void setObserving(boolean observing);
 
-  boolean isFriendlyFireEnabled();
+    boolean isFriendlyFireEnabled();
 
-  boolean isFull(boolean withOverfill);
+    boolean isFull(boolean withOverfill);
 
-  default boolean isFull(Player player) {
-    return isFull(player.hasPermission(JoinCommands.FULL_PERMISSION));
-  }
+    default boolean isFull(Player player) {
+        return isFull(player.hasPermission(JoinCommands.FULL_PERMISSION));
+    }
 
-  Collection<? extends GroupMember> getMembers();
+    Collection<? extends GroupMember> getMembers();
 
-  boolean isMember(Player player);
+    boolean isMember(Player player);
 
-  default boolean isSpectator() {
-    return this instanceof Spectators;
-  }
+    default boolean isSpectator() {
+        return this instanceof Spectators;
+    }
 
-  int size();
+    int size();
 
-  int getMinPlayers();
+    int getMinPlayers();
 
-  int getMaxPlayers();
+    int getMaxPlayers();
 
-  void setMaxPlayers(int max, int overfill);
+    void setMaxPlayers(int max, int overfill);
 
-  int getMaxOverfill();
+    int getMaxOverfill();
 
-  default double filledPortion() {
-    return (double) size() / (double) getMaxPlayers();
-  }
+    default double filledPortion() {
+        return (double) size() / (double) getMaxPlayers();
+    }
 }

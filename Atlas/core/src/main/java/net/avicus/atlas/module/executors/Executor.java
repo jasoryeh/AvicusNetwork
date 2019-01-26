@@ -12,45 +12,45 @@ import net.avicus.atlas.module.checks.CheckContext;
 @ToString
 public abstract class Executor implements RegisterableObject<Executor> {
 
-  private final String id;
-  private final Check check;
+    private final String id;
+    private final Check check;
 
-  /**
-   * Constructor
-   *
-   * @param id of the executor
-   * @param check to be ran before execution
-   */
-  public Executor(String id, Check check) {
-    this.id = id;
-    this.check = check;
-  }
-
-  /**
-   * Execute this executor if it's check passes.
-   *
-   * @param context that holds variables to check against
-   */
-  public void executeChecked(CheckContext context) {
-    if (this.check.test(context).passes()) {
-      this.execute(context);
+    /**
+     * Constructor
+     *
+     * @param id    of the executor
+     * @param check to be ran before execution
+     */
+    public Executor(String id, Check check) {
+        this.id = id;
+        this.check = check;
     }
-  }
 
-  /**
-   * Execute this executor.
-   *
-   * @param context that holds variables to check against
-   */
-  abstract public void execute(CheckContext context);
+    /**
+     * Execute this executor if it's check passes.
+     *
+     * @param context that holds variables to check against
+     */
+    public void executeChecked(CheckContext context) {
+        if (this.check.test(context).passes()) {
+            this.execute(context);
+        }
+    }
 
-  @Override
-  public String getId() {
-    return id;
-  }
+    /**
+     * Execute this executor.
+     *
+     * @param context that holds variables to check against
+     */
+    abstract public void execute(CheckContext context);
 
-  @Override
-  public Executor getObject() {
-    return this;
-  }
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public Executor getObject() {
+        return this;
+    }
 }

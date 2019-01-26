@@ -8,13 +8,13 @@ import org.bukkit.entity.Player;
 
 public class BackpackCommand {
 
-  @Command(aliases = {"backpack", "bp"}, desc = "Open your gadget backpack.", max = 0)
-  public static void backpack(CommandContext context, CommandSender sender)
-      throws MustBePlayerCommandException {
-    MustBePlayerCommandException.ensurePlayer(sender);
+    @Command(aliases = {"backpack", "bp"}, desc = "Open your gadget backpack.", max = 0)
+    public static void backpack(CommandContext context, CommandSender sender)
+            throws MustBePlayerCommandException {
+        MustBePlayerCommandException.ensurePlayer(sender);
 
-    Player player = (Player) sender;
-    BackpackMenu menu = new BackpackMenu(player);
-    menu.open();
-  }
+        Player player = (Player) sender;
+        BackpackMenu menu = new BackpackMenu(player);
+        menu.open();
+    }
 }

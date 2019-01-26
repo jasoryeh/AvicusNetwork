@@ -12,8 +12,8 @@ import net.avicus.quest.model.Table;
  */
 public class ExperienceLeaderboardTable extends Table<ExperienceLeaderboardEntry> {
 
-  public ExperienceLeaderboardTable(Database database, String name,
-      Class<ExperienceLeaderboardEntry> model) {
-    super(database, name, model);
-  }
+    public ExperienceLeaderboardTable(Database database, String name,
+                                      Class<ExperienceLeaderboardEntry> model) {
+        super(database, name, model);
+    }
 }

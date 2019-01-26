@@ -16,35 +16,35 @@ import org.bukkit.event.HandlerList;
 @ToString(callSuper = true)
 public class BlockChangeByPlayerEvent<T extends Event> extends BlockChangeEvent {
 
-  /**
-   * Event handlers.
-   */
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final Player player;
+    /**
+     * Event handlers.
+     */
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final Player player;
 
-  public BlockChangeByPlayerEvent(Block block, T cause, BlockState oldState, BlockState newState,
-      Player player) {
-    super(block, cause, oldState, newState);
-    this.player = player;
-  }
+    public BlockChangeByPlayerEvent(Block block, T cause, BlockState oldState, BlockState newState,
+                                    Player player) {
+        super(block, cause, oldState, newState);
+        this.player = player;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  /**
-   * Get the handlers of the event.
-   *
-   * @return the handlers of the event
-   */
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    /**
+     * Get the handlers of the event.
+     *
+     * @return the handlers of the event
+     */
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

@@ -8,7 +8,7 @@ import lombok.ToString;
 @ToString
 public class SometimesCheck extends RandomCheck {
 
-  public SometimesCheck() {
-    super(0.5);
-  }
+    public SometimesCheck() {
+        super(0.5);
+    }
 }

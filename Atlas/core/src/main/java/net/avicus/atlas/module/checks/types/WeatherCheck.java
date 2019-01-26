@@ -12,20 +12,20 @@ import org.bukkit.WeatherType;
 @ToString
 public class WeatherCheck implements Check {
 
-  private final WeatherType type;
+    private final WeatherType type;
 
-  public WeatherCheck(WeatherType type) {
-    this.type = type;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    switch (this.type) {
-      case DOWNFALL:
-        return CheckResult.valueOf(context.getMatch().getWorld().hasStorm());
-      case CLEAR:
-        return CheckResult.valueOf(!context.getMatch().getWorld().hasStorm());
+    public WeatherCheck(WeatherType type) {
+        this.type = type;
     }
-    return CheckResult.IGNORE;
-  }
+
+    @Override
+    public CheckResult test(CheckContext context) {
+        switch (this.type) {
+            case DOWNFALL:
+                return CheckResult.valueOf(context.getMatch().getWorld().hasStorm());
+            case CLEAR:
+                return CheckResult.valueOf(!context.getMatch().getWorld().hasStorm());
+        }
+        return CheckResult.IGNORE;
+    }
 }

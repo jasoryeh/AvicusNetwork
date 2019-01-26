@@ -4,65 +4,65 @@ import com.shopify.graphql.support.Query;
 
 public class TeamMemberQuery extends Query<TeamMemberQuery> {
 
-  public TeamMemberQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public TeamMemberQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * If the user accepted the invitation to join the team.
-   */
-  public TeamMemberQuery accepted() {
-    startField("accepted");
+    /**
+     * If the user accepted the invitation to join the team.
+     */
+    public TeamMemberQuery accepted() {
+        startField("accepted");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date that the user acceoted the invitation to join the team.
-   */
-  public TeamMemberQuery acceptedAt() {
-    startField("accepted_at");
+    /**
+     * Date that the user acceoted the invitation to join the team.
+     */
+    public TeamMemberQuery acceptedAt() {
+        startField("accepted_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Date when this teammember was created.
-   */
-  public TeamMemberQuery createdAt() {
-    startField("created_at");
+    /**
+     * Date when this teammember was created.
+     */
+    public TeamMemberQuery createdAt() {
+        startField("created_at");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * Role of the user on the team
-   */
-  public TeamMemberQuery role() {
-    startField("role");
+    /**
+     * Role of the user on the team
+     */
+    public TeamMemberQuery role() {
+        startField("role");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the team that the user is on.
-   */
-  public TeamMemberQuery teamId() {
-    startField("team_id");
+    /**
+     * ID of the team that the user is on.
+     */
+    public TeamMemberQuery teamId() {
+        startField("team_id");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * ID of the user who is on the team.
-   */
-  public TeamMemberQuery userId() {
-    startField("user_id");
+    /**
+     * ID of the user who is on the team.
+     */
+    public TeamMemberQuery userId() {
+        startField("user_id");
 
-    return this;
-  }
+        return this;
+    }
 }

@@ -7,15 +7,15 @@ import net.avicus.magma.api.service.PresentsService;
 @Getter
 public class API {
 
-  private final APIClient client;
+    private final APIClient client;
 
-  private final AlertsService alerts;
-  private final PresentsService presents;
+    private final AlertsService alerts;
+    private final PresentsService presents;
 
-  public API(APIClient client) {
-    this.client = client;
+    public API(APIClient client) {
+        this.client = client;
 
-    this.alerts = new AlertsService(this.client);
-    this.presents = new PresentsService(this.client);
-  }
+        this.alerts = new AlertsService(this.client);
+        this.presents = new PresentsService(this.client);
+    }
 }

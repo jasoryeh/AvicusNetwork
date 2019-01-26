@@ -13,21 +13,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AtlasCategory extends CategoryMenu {
 
-  public AtlasCategory(Player player, GadgetStore store, int index) {
-    super(player, store, index);
+    public AtlasCategory(Player player, GadgetStore store, int index) {
+        super(player, store, index);
 
-    add(new SetNextGadget(), 22000, new GadgetRanksRequirement("diamond"));
-    add(new StartVoteGadget(), 15000, new GadgetRanksRequirement("emerald", "diamond"));
-  }
+        add(new SetNextGadget(), 22000, new GadgetRanksRequirement("diamond"));
+        add(new StartVoteGadget(), 15000, new GadgetRanksRequirement("emerald", "diamond"));
+    }
 
-  @Override
-  public ItemStack getItemStack() {
-    ItemStack stack = new ItemStack(Material.MAP);
-    ItemMeta meta = stack.getItemMeta();
+    @Override
+    public ItemStack getItemStack() {
+        ItemStack stack = new ItemStack(Material.MAP);
+        ItemMeta meta = stack.getItemMeta();
 
-    meta.setDisplayName(ChatColor.RED + "Game Modifications");
+        meta.setDisplayName(ChatColor.RED + "Game Modifications");
 
-    stack.setItemMeta(meta);
-    return stack;
-  }
+        stack.setItemMeta(meta);
+        return stack;
+    }
 }

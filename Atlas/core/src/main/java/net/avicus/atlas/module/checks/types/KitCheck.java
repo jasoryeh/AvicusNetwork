@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.checks.types;
 
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.match.registry.WeakReference;
 import net.avicus.atlas.module.checks.Check;
@@ -17,30 +18,30 @@ import org.bukkit.entity.Player;
 @ToString
 public class KitCheck implements Check {
 
-  private final WeakReference<Kit> kit;
+    private final WeakReference<Kit> kit;
 
-  public KitCheck(WeakReference<Kit> kit) {
-    this.kit = kit;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
-    Optional<KitsModule> module = context.getMatch().getModule(KitsModule.class);
-
-    if (!optional.isPresent() || !module.isPresent() || !this.kit.isPresent()) {
-      return CheckResult.IGNORE;
+    public KitCheck(WeakReference<Kit> kit) {
+        this.kit = kit;
     }
 
-    Player player = optional.get().getPlayer();
+    @Override
+    public CheckResult test(CheckContext context) {
+        Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
+        Optional<KitsModule> module = context.getMatch().getModule(KitsModule.class);
 
-    Optional<Kit> kit = module.get().getActiveKit(player);
+        if (!optional.isPresent() || !module.isPresent() || !this.kit.isPresent()) {
+            return CheckResult.IGNORE;
+        }
 
-    if (!kit.isPresent()) {
-      return CheckResult.DENY;
+        Player player = optional.get().getPlayer();
+
+        Optional<Kit> kit = module.get().getActiveKit(player);
+
+        if (!kit.isPresent()) {
+            return CheckResult.DENY;
+        }
+
+        return CheckResult
+                .valueOf(module.get().getActiveKit(player).get().equals(this.kit.getObject().get()));
     }
-
-    return CheckResult
-        .valueOf(module.get().getActiveKit(player).get().equals(this.kit.getObject().get()));
-  }
 }

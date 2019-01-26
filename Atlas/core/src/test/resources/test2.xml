@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <nested>
-    <very-nested>Very very.</very-nested>
-    Ddf
-  </nested>
+    <nested>
+        <very-nested>Very very.</very-nested>
+        Ddf
+    </nested>
 </root>

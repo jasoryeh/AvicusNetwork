@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.countdown.MatchEndCountdown;
@@ -33,82 +34,82 @@ import org.bukkit.ChatColor;
 @ToString
 public abstract class EndScenario {
 
-  @Getter
-  private final Check check;
-  @Getter
-  private final int places;
-  @Getter
-  private Optional<MatchEndCountdown> countdown = Optional.empty();
+    @Getter
+    private final Check check;
+    @Getter
+    private final int places;
+    @Getter
+    private Optional<MatchEndCountdown> countdown = Optional.empty();
 
-  public EndScenario(Match match, Check check, int places) throws RuntimeException {
-    this.check = check;
-    this.places = places;
+    public EndScenario(Match match, Check check, int places) throws RuntimeException {
+        this.check = check;
+        this.places = places;
 
-    validateTimeCheck(match, check);
-  }
-
-  private void validateTimeCheck(Match match, Check check) {
-    if (check instanceof AllCheck) {
-      ((AllCheck) check).getChildren().forEach(c -> validateTimeCheck(match, c));
+        validateTimeCheck(match, check);
     }
 
-    if (check instanceof AnyCheck) {
-      ((AnyCheck) check).getChildren().forEach(c -> validateTimeCheck(match, c));
+    private void validateTimeCheck(Match match, Check check) {
+        if (check instanceof AllCheck) {
+            ((AllCheck) check).getChildren().forEach(c -> validateTimeCheck(match, c));
+        }
+
+        if (check instanceof AnyCheck) {
+            ((AnyCheck) check).getChildren().forEach(c -> validateTimeCheck(match, c));
+        }
+
+        if (check instanceof AllowCheck) {
+            validateTimeCheck(match, ((AllowCheck) check).getChild());
+        }
+
+        if (check instanceof DenyCheck) {
+            validateTimeCheck(match, ((DenyCheck) check).getChild());
+        }
+
+        if (check instanceof NotCheck) {
+            validateTimeCheck(match, ((NotCheck) check).getChild());
+        }
+
+        if (check instanceof TimeCheck) {
+            if (!((TimeCheck) check).getComparator().equals(NumberComparator.EQUALS)) {
+                throw new RuntimeException("Time checks can only use equals comparators in end scenarios.");
+            } else {
+                this.countdown = Optional.of(new MatchEndCountdown(match, ((TimeCheck) check).getValue()
+                        .minus(match.getRequiredModule(StatesModule.class).getTotalPlayingDuration()), this));
+            }
+        }
     }
 
-    if (check instanceof AllowCheck) {
-      validateTimeCheck(match, ((AllowCheck) check).getChild());
+    public boolean test(Match match) {
+        CheckContext context = new CheckContext(match);
+        return this.check.test(context).passes();
     }
 
-    if (check instanceof DenyCheck) {
-      validateTimeCheck(match, ((DenyCheck) check).getChild());
-    }
+    public abstract void execute(Match match, GroupsModule groups);
 
-    if (check instanceof NotCheck) {
-      validateTimeCheck(match, ((NotCheck) check).getChild());
-    }
-
-    if (check instanceof TimeCheck) {
-      if (!((TimeCheck) check).getComparator().equals(NumberComparator.EQUALS)) {
-        throw new RuntimeException("Time checks can only use equals comparators in end scenarios.");
-      } else {
-        this.countdown = Optional.of(new MatchEndCountdown(match, ((TimeCheck) check).getValue()
-            .minus(match.getRequiredModule(StatesModule.class).getTotalPlayingDuration()), this));
-      }
-    }
-  }
-
-  public boolean test(Match match) {
-    CheckContext context = new CheckContext(match);
-    return this.check.test(context).passes();
-  }
-
-  public abstract void execute(Match match, GroupsModule groups);
-
-  public void handleWin(Match match, Competitor competitor) {
-    CompetitorWinEvent event = new CompetitorWinEvent(match, competitor);
-    Events.call(event);
-
-    match.getRequiredModule(ResultsModule.class)
-        .broadcastWinners(match.getRequiredModule(GroupsModule.class).getCompetitors(),
-            Collections.singletonList(competitor));
-  }
-
-  public void handleMultiWin(Match match, RankingDisplay display) {
-    for (Map.Entry<Integer, HashSet<Competitor>> entry : display.getRanking().entrySet()) {
-      for (Competitor competitor : entry.getValue()) {
-        CompetitorPlaceEvent event = new CompetitorPlaceEvent(match, competitor,
-            display.getRanking().headMap(entry.getKey()).size());
+    public void handleWin(Match match, Competitor competitor) {
+        CompetitorWinEvent event = new CompetitorWinEvent(match, competitor);
         Events.call(event);
-      }
+
+        match.getRequiredModule(ResultsModule.class)
+                .broadcastWinners(match.getRequiredModule(GroupsModule.class).getCompetitors(),
+                        Collections.singletonList(competitor));
     }
 
-    final Localizable translation = Messages.UI_WINNERS.with();
-    match.getPlayers().forEach(player -> player.sendMessage(Strings
-        .padChatComponent(translation.translate(player.getLocale()), "-", ChatColor.GOLD,
-            ChatColor.YELLOW)));
-    display.getRankDisplay()
-        .forEach(match::broadcast);
-  }
+    public void handleMultiWin(Match match, RankingDisplay display) {
+        for (Map.Entry<Integer, HashSet<Competitor>> entry : display.getRanking().entrySet()) {
+            for (Competitor competitor : entry.getValue()) {
+                CompetitorPlaceEvent event = new CompetitorPlaceEvent(match, competitor,
+                        display.getRanking().headMap(entry.getKey()).size());
+                Events.call(event);
+            }
+        }
+
+        final Localizable translation = Messages.UI_WINNERS.with();
+        match.getPlayers().forEach(player -> player.sendMessage(Strings
+                .padChatComponent(translation.translate(player.getLocale()), "-", ChatColor.GOLD,
+                        ChatColor.YELLOW)));
+        display.getRankDisplay()
+                .forEach(match::broadcast);
+    }
 
 }

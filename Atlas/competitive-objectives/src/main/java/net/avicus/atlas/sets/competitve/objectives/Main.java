@@ -1,7 +1,9 @@
 package net.avicus.atlas.sets.competitve.objectives;
 
 import com.google.common.collect.Lists;
+
 import java.util.logging.Logger;
+
 import lombok.Setter;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.component.AtlasComponentManager;
@@ -48,175 +50,175 @@ import net.avicus.atlas.util.Events;
 
 public class Main extends ModuleSet {
 
-  @Setter
-  private Atlas atlas;
-  @Setter
-  private MatchFactory matchFactory;
-  @Setter
-  private Logger logger;
+    @Setter
+    private Atlas atlas;
+    @Setter
+    private MatchFactory matchFactory;
+    @Setter
+    private Logger logger;
 
-  @Override
-  public void onEnable() {
-    this.logger.info("Enabling competitive objectives set.");
-    this.matchFactory.register(PhasesFactory.class);
+    @Override
+    public void onEnable() {
+        this.logger.info("Enabling competitive objectives set.");
+        this.matchFactory.register(PhasesFactory.class);
 
-    addFactories();
-    registerExecutionListeners();
+        addFactories();
+        registerExecutionListeners();
 
-    AtlasMapFactory.TYPE_DETECTORS.add(new CompetitiveTypeDetector());
+        AtlasMapFactory.TYPE_DETECTORS.add(new CompetitiveTypeDetector());
 
-    ResultsModule.BRIDGES.putIfAbsent(ResultsModule.class, Lists.newArrayList());
-    ResultsModule.BRIDGES.get(ResultsModule.class).add(ResultsBridge.class);
+        ResultsModule.BRIDGES.putIfAbsent(ResultsModule.class, Lists.newArrayList());
+        ResultsModule.BRIDGES.get(ResultsModule.class).add(ResultsBridge.class);
 
-    ObjectivesModule.BRIDGES.putIfAbsent(ObjectivesModule.class, Lists.newArrayList());
-    ObjectivesModule.BRIDGES.get(ObjectivesModule.class).add(ObjectivesBridge.class);
+        ObjectivesModule.BRIDGES.putIfAbsent(ObjectivesModule.class, Lists.newArrayList());
+        ObjectivesModule.BRIDGES.get(ObjectivesModule.class).add(ObjectivesBridge.class);
 
-    StatsModule.BRIDGES.putIfAbsent(StatsModule.class, Lists.newArrayList());
-    StatsModule.BRIDGES.get(StatsModule.class).add(StatsBridge.class);
+        StatsModule.BRIDGES.putIfAbsent(StatsModule.class, Lists.newArrayList());
+        StatsModule.BRIDGES.get(StatsModule.class).add(StatsBridge.class);
 
-    TeamsModule.BRIDGES.putIfAbsent(TeamsModule.class, Lists.newArrayList());
-    TeamsModule.BRIDGES.get(TeamsModule.class).add(TeamsBridge.class);
-    FFAModule.BRIDGES.putIfAbsent(FFAModule.class, Lists.newArrayList());
-    FFAModule.BRIDGES.get(FFAModule.class).add(FFABridge.class);
+        TeamsModule.BRIDGES.putIfAbsent(TeamsModule.class, Lists.newArrayList());
+        TeamsModule.BRIDGES.get(TeamsModule.class).add(TeamsBridge.class);
+        FFAModule.BRIDGES.putIfAbsent(FFAModule.class, Lists.newArrayList());
+        FFAModule.BRIDGES.get(FFAModule.class).add(FFABridge.class);
 
-    PointEarnConfig.CONFIGURABLES.add("destroyable-damage");
-    PointEarnConfig.CONFIGURABLES.add("destroyable-touch");
-    PointEarnConfig.CONFIGURABLES.add("destroyable-repair");
-    PointEarnConfig.CONFIGURABLES.add("leakable-leak");
-    PointEarnConfig.CONFIGURABLES.add("monument-destroy");
-    PointEarnConfig.CONFIGURABLES.add("flag-capture");
-    PointEarnConfig.CONFIGURABLES.add("flag-pickup");
-    PointEarnConfig.CONFIGURABLES.add("flag-steal");
-    PointEarnConfig.CONFIGURABLES.add("hill-capture");
-    PointEarnConfig.CONFIGURABLES.add("wool-pickup");
-    PointEarnConfig.CONFIGURABLES.add("wool-place");
+        PointEarnConfig.CONFIGURABLES.add("destroyable-damage");
+        PointEarnConfig.CONFIGURABLES.add("destroyable-touch");
+        PointEarnConfig.CONFIGURABLES.add("destroyable-repair");
+        PointEarnConfig.CONFIGURABLES.add("leakable-leak");
+        PointEarnConfig.CONFIGURABLES.add("monument-destroy");
+        PointEarnConfig.CONFIGURABLES.add("flag-capture");
+        PointEarnConfig.CONFIGURABLES.add("flag-pickup");
+        PointEarnConfig.CONFIGURABLES.add("flag-steal");
+        PointEarnConfig.CONFIGURABLES.add("hill-capture");
+        PointEarnConfig.CONFIGURABLES.add("wool-pickup");
+        PointEarnConfig.CONFIGURABLES.add("wool-place");
 
-    this.logger.info("Enabled competitive objectives set.");
-  }
-
-  @Override
-  public void onDisable() {
-    ObjectivesFactory.FACTORY_MAP.remove("hill");
-    ObjectivesFactory.FACTORY_MAP.remove("monument");
-    ObjectivesFactory.FACTORY_MAP.remove("leakable");
-    ObjectivesFactory.FACTORY_MAP.remove("wool");
-    ObjectivesFactory.FACTORY_MAP.remove("flag");
-
-    this.logger.info("Disabled competitive objectives set.");
-  }
-
-  @Override
-  public void onComponentsEnable(AtlasComponentManager componentManager) {
-    if (componentManager.hasModule(SoundComponent.class)) {
-      this.logger.info("Registered sound hook.");
-      Events.register(new SoundListener(componentManager.get(SoundComponent.class)));
+        this.logger.info("Enabled competitive objectives set.");
     }
-    if (componentManager.hasModule(SidebarComponent.class)) {
-      SidebarComponent.HOOKS.add(new SBHook());
-      this.logger.info("Registered sidebar hook.");
+
+    @Override
+    public void onDisable() {
+        ObjectivesFactory.FACTORY_MAP.remove("hill");
+        ObjectivesFactory.FACTORY_MAP.remove("monument");
+        ObjectivesFactory.FACTORY_MAP.remove("leakable");
+        ObjectivesFactory.FACTORY_MAP.remove("wool");
+        ObjectivesFactory.FACTORY_MAP.remove("flag");
+
+        this.logger.info("Disabled competitive objectives set.");
     }
-  }
 
-  private void addFactories() {
-    ObjectivesFactory.FACTORY_MAP.put("hill", new HillFactory());
-    ObjectivesFactory.FACTORY_MAP.put("monument", new DestroyableFactory());
-    ObjectivesFactory.FACTORY_MAP.put("leakable", new DestroyableFactory());
-    ObjectivesFactory.FACTORY_MAP.put("wool", new WoolFactory());
-    ObjectivesFactory.FACTORY_MAP.put("flag", new FlagFactory());
+    @Override
+    public void onComponentsEnable(AtlasComponentManager componentManager) {
+        if (componentManager.hasModule(SoundComponent.class)) {
+            this.logger.info("Registered sound hook.");
+            Events.register(new SoundListener(componentManager.get(SoundComponent.class)));
+        }
+        if (componentManager.hasModule(SidebarComponent.class)) {
+            SidebarComponent.HOOKS.add(new SBHook());
+            this.logger.info("Registered sidebar hook.");
+        }
+    }
 
-    new ZonesParsingBridge().buildBridge();
-  }
+    private void addFactories() {
+        ObjectivesFactory.FACTORY_MAP.put("hill", new HillFactory());
+        ObjectivesFactory.FACTORY_MAP.put("monument", new DestroyableFactory());
+        ObjectivesFactory.FACTORY_MAP.put("leakable", new DestroyableFactory());
+        ObjectivesFactory.FACTORY_MAP.put("wool", new WoolFactory());
+        ObjectivesFactory.FACTORY_MAP.put("flag", new FlagFactory());
 
-  private void registerExecutionListeners() {
-    /**
-     * Objective Completion Events
-     */
+        new ZonesParsingBridge().buildBridge();
+    }
 
-    ExecutionDispatch.registerListener("leakable-leak", LeakableLeakEvent.class, (e) -> {
-      LeakableLeakEvent event = (LeakableLeakEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
-    });
+    private void registerExecutionListeners() {
+        /**
+         * Objective Completion Events
+         */
 
-    ExecutionDispatch.registerListener("monument-destroy", MonumentDestroyEvent.class, (e) -> {
-      MonumentDestroyEvent event = (MonumentDestroyEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
-    });
+        ExecutionDispatch.registerListener("leakable-leak", LeakableLeakEvent.class, (e) -> {
+            LeakableLeakEvent event = (LeakableLeakEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("flag-capture", FlagCaptureEvent.class, (e) -> {
-      FlagCaptureEvent event = (FlagCaptureEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
-    });
+        ExecutionDispatch.registerListener("monument-destroy", MonumentDestroyEvent.class, (e) -> {
+            MonumentDestroyEvent event = (MonumentDestroyEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("hill-capture", HillCaptureEvent.class, (e) -> {
-      HillCaptureEvent event = (HillCaptureEvent) e;
-      ExecutionDispatch
-          .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
-    });
+        ExecutionDispatch.registerListener("flag-capture", FlagCaptureEvent.class, (e) -> {
+            FlagCaptureEvent event = (FlagCaptureEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("wool-place", WoolPlaceEvent.class, (e) -> {
-      WoolPlaceEvent event = (WoolPlaceEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
-    });
+        ExecutionDispatch.registerListener("hill-capture", HillCaptureEvent.class, (e) -> {
+            HillCaptureEvent event = (HillCaptureEvent) e;
+            ExecutionDispatch
+                    .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
+        });
 
-    /**
-     * Objective Touch Events
-     */
+        ExecutionDispatch.registerListener("wool-place", WoolPlaceEvent.class, (e) -> {
+            WoolPlaceEvent event = (WoolPlaceEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayers().get(0), event.getPlayers().get(0).getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("destroyable-touch", DestroyableTouchEvent.class, (e) -> {
-      DestroyableTouchEvent event = (DestroyableTouchEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
-    });
+        /**
+         * Objective Touch Events
+         */
 
-    ExecutionDispatch.registerListener("wool-pickup", WoolPickupEvent.class, (e) -> {
-      WoolPickupEvent event = (WoolPickupEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
-    });
+        ExecutionDispatch.registerListener("destroyable-touch", DestroyableTouchEvent.class, (e) -> {
+            DestroyableTouchEvent event = (DestroyableTouchEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
+        });
 
-    /**
-     * Objective State Change Events
-     */
+        ExecutionDispatch.registerListener("wool-pickup", WoolPickupEvent.class, (e) -> {
+            WoolPickupEvent event = (WoolPickupEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("destroyable-damage", DestroyableDamageEvent.class, (e) -> {
-      DestroyableDamageEvent event = (DestroyableDamageEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getInfo().getActor(),
-              event.getInfo().getActor().getLocation()));
-    });
+        /**
+         * Objective State Change Events
+         */
 
-    ExecutionDispatch.registerListener("destroyable-repair", DestroyableRepairEvent.class, (e) -> {
-      DestroyableRepairEvent event = (DestroyableRepairEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
-    });
+        ExecutionDispatch.registerListener("destroyable-damage", DestroyableDamageEvent.class, (e) -> {
+            DestroyableDamageEvent event = (DestroyableDamageEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getInfo().getActor(),
+                            event.getInfo().getActor().getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("flag-drop", FlagDropEvent.class, (e) -> {
-      FlagDropEvent event = (FlagDropEvent) e;
-      ExecutionDispatch
-          .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
-    });
+        ExecutionDispatch.registerListener("destroyable-repair", DestroyableRepairEvent.class, (e) -> {
+            DestroyableRepairEvent event = (DestroyableRepairEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("flag-pickup", FlagPickupEvent.class, (e) -> {
-      FlagPickupEvent event = (FlagPickupEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
-    });
+        ExecutionDispatch.registerListener("flag-drop", FlagDropEvent.class, (e) -> {
+            FlagDropEvent event = (FlagDropEvent) e;
+            ExecutionDispatch
+                    .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
+        });
 
-    ExecutionDispatch.registerListener("flag-steal", FlagStealEvent.class, (e) -> {
-      FlagStealEvent event = (FlagStealEvent) e;
-      ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
-          .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
-    });
+        ExecutionDispatch.registerListener("flag-pickup", FlagPickupEvent.class, (e) -> {
+            FlagPickupEvent event = (FlagPickupEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
+        });
 
-    ExecutionDispatch.registerListener("hill-owner-change", HillOwnerChangeEvent.class, (e) -> {
-      HillOwnerChangeEvent event = (HillOwnerChangeEvent) e;
-      ExecutionDispatch
-          .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
-    });
-  }
+        ExecutionDispatch.registerListener("flag-steal", FlagStealEvent.class, (e) -> {
+            FlagStealEvent event = (FlagStealEvent) e;
+            ExecutionDispatch.whenDispatcherExists(dispatcher -> dispatcher
+                    .handleEvent(event, event.getPlayer(), event.getPlayer().getLocation()));
+        });
+
+        ExecutionDispatch.registerListener("hill-owner-change", HillOwnerChangeEvent.class, (e) -> {
+            HillOwnerChangeEvent event = (HillOwnerChangeEvent) e;
+            ExecutionDispatch
+                    .whenDispatcherExists(dispatcher -> dispatcher.handleEvent(event, null, null));
+        });
+    }
 }

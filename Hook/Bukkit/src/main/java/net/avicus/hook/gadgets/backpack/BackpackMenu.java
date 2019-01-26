@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.compendium.menu.inventory.InventoryMenuItem;
@@ -19,65 +20,65 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class BackpackMenu extends PaginatedInventory {
 
-  private static final int ROWS = 4;
-  private static final int SIZE = ROWS * 9;
+    private static final int ROWS = 4;
+    private static final int SIZE = ROWS * 9;
 
-  private final Gadgets gadgets;
-  private final BackpackTrashItem trashItem;
+    private final Gadgets gadgets;
+    private final BackpackTrashItem trashItem;
 
-  @Getter
-  @Setter
-  private boolean trashEnabled;
+    @Getter
+    @Setter
+    private boolean trashEnabled;
 
-  public BackpackMenu(Player player) {
-    super(player, "Backpack", ROWS);
-    this.gadgets = Magma.get().getMm().get(Gadgets.class);
-    super.setPaginatedItems(generateGadgetItems());
-    this.trashItem = new BackpackTrashItem(this, player, SIZE - 5);
+    public BackpackMenu(Player player) {
+        super(player, "Backpack", ROWS);
+        this.gadgets = Magma.get().getMm().get(Gadgets.class);
+        super.setPaginatedItems(generateGadgetItems());
+        this.trashItem = new BackpackTrashItem(this, player, SIZE - 5);
 
-    refreshPage();
-  }
+        refreshPage();
+    }
 
-  public static ItemStack createBackpackOpener(Player player) {
-    ItemStack stack = new ItemStack(Material.CHEST);
-    ItemMeta meta = stack.getItemMeta();
+    public static ItemStack createBackpackOpener(Player player) {
+        ItemStack stack = new ItemStack(Material.CHEST);
+        ItemMeta meta = stack.getItemMeta();
 
-    meta.setDisplayName(ChatColor.GOLD + "Backpack");
+        meta.setDisplayName(ChatColor.GOLD + "Backpack");
 
-    stack.setItemMeta(meta);
-    return stack;
-  }
+        stack.setItemMeta(meta);
+        return stack;
+    }
 
-  public static boolean isBackpackOpener(ItemStack stack) {
-    return stack != null &&
-        stack.hasItemMeta() &&
-        stack.getItemMeta().hasDisplayName() &&
-        stack.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Backpack");
-  }
+    public static boolean isBackpackOpener(ItemStack stack) {
+        return stack != null &&
+                stack.hasItemMeta() &&
+                stack.getItemMeta().hasDisplayName() &&
+                stack.getItemMeta().getDisplayName().equals(ChatColor.GOLD + "Backpack");
+    }
 
-  @Override
-  public void refreshPage() {
-    super.refreshPage();
-    // Trash
-    add(this.trashItem);
-  }
+    @Override
+    public void refreshPage() {
+        super.refreshPage();
+        // Trash
+        add(this.trashItem);
+    }
 
-  public void refreshGadgetItems() {
-    this.getPaginator().setCollection(generateGadgetItems());
-    refreshPage();
-  }
+    public void refreshGadgetItems() {
+        this.getPaginator().setCollection(generateGadgetItems());
+        refreshPage();
+    }
 
-  private Collection<InventoryMenuItem> generateGadgetItems() {
-    List<GadgetContext> gadgets = this.gadgets.getGadgets(this.getPlayer().getUniqueId());
-    gadgets.sort(new Comparator<GadgetContext>() {
-      @Override
-      public int compare(GadgetContext o1, GadgetContext o2) {
-        return o1.getManager().getType().compareTo(o2.getManager().getType());
-      }
-    });
+    private Collection<InventoryMenuItem> generateGadgetItems() {
+        List<GadgetContext> gadgets = this.gadgets.getGadgets(this.getPlayer().getUniqueId());
+        gadgets.sort(new Comparator<GadgetContext>() {
+            @Override
+            public int compare(GadgetContext o1, GadgetContext o2) {
+                return o1.getManager().getType().compareTo(o2.getManager().getType());
+            }
+        });
 
-    return gadgets.stream()
-        .map(gadget -> new BackpackGadgetItem(this, super.getPlayer(), gadget))
-        .collect(Collectors.toList());
-  }
+        return gadgets.stream()
+                .map(gadget -> new BackpackGadgetItem(this, super.getPlayer(), gadget))
+                .collect(Collectors.toList());
+    }
 }

@@ -14,10 +14,10 @@ import org.bukkit.inventory.ItemStack;
 @ToString
 public class ItemVariable implements Variable {
 
-  @Getter
-  private final ScopableItemStack itemStack;
+    @Getter
+    private final ScopableItemStack itemStack;
 
-  public ItemVariable(Match match, ItemStack itemStack) {
-    this.itemStack = new ScopableItemStack(match, itemStack);
-  }
+    public ItemVariable(Match match, ItemStack itemStack) {
+        this.itemStack = new ScopableItemStack(match, itemStack);
+    }
 }

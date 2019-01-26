@@ -12,16 +12,16 @@ import org.bukkit.entity.Player;
 
 public class CreditCommand {
 
-  @Command(aliases = {"credits", "c", "bal",
-      "balance"}, desc = "Check your credit balance.", max = 0)
-  public static void credits(CommandContext cmd, CommandSender sender)
-      throws MustBePlayerCommandException {
-    MustBePlayerCommandException.ensurePlayer(sender);
+    @Command(aliases = {"credits", "c", "bal",
+            "balance"}, desc = "Check your credit balance.", max = 0)
+    public static void credits(CommandContext cmd, CommandSender sender)
+            throws MustBePlayerCommandException {
+        MustBePlayerCommandException.ensurePlayer(sender);
 
-    Player player = (Player) sender;
+        Player player = (Player) sender;
 
-    LocalizedNumber number = new LocalizedNumber(Credits.getCredits(player),
-        TextStyle.ofColor(ChatColor.GOLD).bold());
-    player.sendMessage(Messages.GENERIC_CREDITS.with(ChatColor.YELLOW, number));
-  }
+        LocalizedNumber number = new LocalizedNumber(Credits.getCredits(player),
+                TextStyle.ofColor(ChatColor.GOLD).bold());
+        player.sendMessage(Messages.GENERIC_CREDITS.with(ChatColor.YELLOW, number));
+    }
 }

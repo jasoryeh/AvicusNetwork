@@ -13,35 +13,35 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class TrackCategory extends CategoryMenu {
 
-  public TrackCategory(Player player, GadgetStore store, int index) {
-    super(player, store, index);
+    public TrackCategory(Player player, GadgetStore store, int index) {
+        super(player, store, index);
 
-    add(new TrackGadget(TrackType.THIRTEEN, 50), 8500);
-    add(new TrackGadget(TrackType.CAT, 50), 10000);
-    add(new TrackGadget(TrackType.BLOCKS, 50), 12500);
-    add(new TrackGadget(TrackType.CHIRP, 50), 15000);
-    add(new TrackGadget(TrackType.FAR, 50), 15000);
-    add(new TrackGadget(TrackType.MALL, 50), 17500);
-    add(new TrackGadget(TrackType.MELLOHI, 50), 25000,
-        new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
-    add(new TrackGadget(TrackType.STAL, 50), 30000,
-        new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
-    add(new TrackGadget(TrackType.STRAD, 50), 37500,
-        new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
-    add(new TrackGadget(TrackType.WAIT, 50), 50000,
-        new GadgetRanksRequirement("Emerald", "Diamond"));
-    add(new TrackGadget(TrackType.ELEVEN, 50), 75000, new GadgetRanksRequirement("Diamond"));
-    add(new TrackGadget(TrackType.WARD, 50), 100000, new GadgetRanksRequirement("Diamond"));
-  }
+        add(new TrackGadget(TrackType.THIRTEEN, 50), 8500);
+        add(new TrackGadget(TrackType.CAT, 50), 10000);
+        add(new TrackGadget(TrackType.BLOCKS, 50), 12500);
+        add(new TrackGadget(TrackType.CHIRP, 50), 15000);
+        add(new TrackGadget(TrackType.FAR, 50), 15000);
+        add(new TrackGadget(TrackType.MALL, 50), 17500);
+        add(new TrackGadget(TrackType.MELLOHI, 50), 25000,
+                new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
+        add(new TrackGadget(TrackType.STAL, 50), 30000,
+                new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
+        add(new TrackGadget(TrackType.STRAD, 50), 37500,
+                new GadgetRanksRequirement("Gold", "Emerald", "Diamond"));
+        add(new TrackGadget(TrackType.WAIT, 50), 50000,
+                new GadgetRanksRequirement("Emerald", "Diamond"));
+        add(new TrackGadget(TrackType.ELEVEN, 50), 75000, new GadgetRanksRequirement("Diamond"));
+        add(new TrackGadget(TrackType.WARD, 50), 100000, new GadgetRanksRequirement("Diamond"));
+    }
 
-  @Override
-  public ItemStack getItemStack() {
-    ItemStack stack = new ItemStack(Material.JUKEBOX);
-    ItemMeta meta = stack.getItemMeta();
+    @Override
+    public ItemStack getItemStack() {
+        ItemStack stack = new ItemStack(Material.JUKEBOX);
+        ItemMeta meta = stack.getItemMeta();
 
-    meta.setDisplayName(ChatColor.GREEN + "Tracks");
+        meta.setDisplayName(ChatColor.GREEN + "Tracks");
 
-    stack.setItemMeta(meta);
-    return stack;
-  }
+        stack.setItemMeta(meta);
+        return stack;
+    }
 }

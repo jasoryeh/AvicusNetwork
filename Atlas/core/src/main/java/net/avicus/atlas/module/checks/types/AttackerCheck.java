@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.checks.types;
 
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -14,20 +15,20 @@ import net.avicus.atlas.module.checks.variable.AttackerVariable;
 @ToString
 public class AttackerCheck implements Check {
 
-  private final Check check;
+    private final Check check;
 
-  public AttackerCheck(Check check) {
-    this.check = check;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Optional<AttackerVariable> attacker = context.getFirst(AttackerVariable.class);
-
-    if (!attacker.isPresent()) {
-      return CheckResult.IGNORE;
+    public AttackerCheck(Check check) {
+        this.check = check;
     }
 
-    return this.check.test(attacker.get());
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        Optional<AttackerVariable> attacker = context.getFirst(AttackerVariable.class);
+
+        if (!attacker.isPresent()) {
+            return CheckResult.IGNORE;
+        }
+
+        return this.check.test(attacker.get());
+    }
 }

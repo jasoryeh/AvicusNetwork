@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 @ToString
 public class PlayerVariable implements Variable {
 
-  @Getter
-  private final Player player;
+    @Getter
+    private final Player player;
 
-  public PlayerVariable(Player player) {
-    this.player = player;
-  }
+    public PlayerVariable(Player player) {
+        this.player = player;
+    }
 }

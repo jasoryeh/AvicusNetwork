@@ -1,20 +1,21 @@
 package net.avicus.magma.game;
 
 import java.util.List;
+
 import net.avicus.magma.game.author.Author;
 import net.avicus.magma.util.Version;
 
 public interface MinecraftMap {
 
-  Version getSpecification();
+    Version getSpecification();
 
-  String getSlug();
+    String getSlug();
 
-  String getName();
+    String getName();
 
-  Version getVersion();
+    Version getVersion();
 
-  List<Author> getAuthors();
+    List<Author> getAuthors();
 
-  List<Author> getContributors();
+    List<Author> getContributors();
 }

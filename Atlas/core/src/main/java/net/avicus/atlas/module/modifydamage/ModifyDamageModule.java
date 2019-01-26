@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.modifydamage;
 
 import java.util.List;
+
 import lombok.Data;
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
@@ -25,65 +26,65 @@ import org.bukkit.event.entity.EntityDamageEvent;
 @ToString(exclude = "match")
 public class ModifyDamageModule implements Module {
 
-  private final Match match;
-  private final List<DamageModifier> damageMods;
+    private final Match match;
+    private final List<DamageModifier> damageMods;
 
-  public ModifyDamageModule(Match match, List<DamageModifier> damageMods) {
-    this.match = match;
-    this.damageMods = damageMods;
-  }
-
-  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void onDamage(EntityDamageEvent event) {
-    CheckContext context = new CheckContext(this.match);
-    VictimVariable victim = new VictimVariable(this.match);
-    victim.add(new EntityVariable(event.getEntity()));
-    if (event.getEntity() instanceof Player) {
-      victim.add(new PlayerVariable((Player) event.getEntity()));
+    public ModifyDamageModule(Match match, List<DamageModifier> damageMods) {
+        this.match = match;
+        this.damageMods = damageMods;
     }
 
-    context.add(victim);
-
-    if (event instanceof EntityDamageByEntityEvent) {
-      EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
-      AttackerVariable attacker = new AttackerVariable(this.match);
-      attacker.add(new EntityVariable(damageEvent.getDamager()));
-      context.add(attacker);
-    }
-
-    if (event instanceof EntityDamageByBlockEvent) {
-      EntityDamageByBlockEvent damageByBlockEvent = (EntityDamageByBlockEvent) event;
-      if (((EntityDamageByBlockEvent) event).getDamager() != null
-          && ((EntityDamageByBlockEvent) event).getDamager().getState() != null &&
-          ((EntityDamageByBlockEvent) event).getDamager().getType() != Material.AIR) {
-        context.add(new MaterialVariable(damageByBlockEvent.getDamager().getState().getData()));
-      }
-    }
-
-    context.add(new LocationVariable(event.getEntity().getLocation()));
-
-    for (DamageModifier modifier : this.damageMods) {
-      if (modifier.getCause() != event.getCause()) {
-        continue;
-      }
-
-      if (modifier.getCheck().test(context).passes()) {
-        double damage = modifier.getAction().perform(event.getDamage());
-        if (damage <= 0) {
-          event.setCancelled(true);
-        } else {
-          event.setDamage(damage);
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onDamage(EntityDamageEvent event) {
+        CheckContext context = new CheckContext(this.match);
+        VictimVariable victim = new VictimVariable(this.match);
+        victim.add(new EntityVariable(event.getEntity()));
+        if (event.getEntity() instanceof Player) {
+            victim.add(new PlayerVariable((Player) event.getEntity()));
         }
-        break;
-      }
+
+        context.add(victim);
+
+        if (event instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
+            AttackerVariable attacker = new AttackerVariable(this.match);
+            attacker.add(new EntityVariable(damageEvent.getDamager()));
+            context.add(attacker);
+        }
+
+        if (event instanceof EntityDamageByBlockEvent) {
+            EntityDamageByBlockEvent damageByBlockEvent = (EntityDamageByBlockEvent) event;
+            if (((EntityDamageByBlockEvent) event).getDamager() != null
+                    && ((EntityDamageByBlockEvent) event).getDamager().getState() != null &&
+                    ((EntityDamageByBlockEvent) event).getDamager().getType() != Material.AIR) {
+                context.add(new MaterialVariable(damageByBlockEvent.getDamager().getState().getData()));
+            }
+        }
+
+        context.add(new LocationVariable(event.getEntity().getLocation()));
+
+        for (DamageModifier modifier : this.damageMods) {
+            if (modifier.getCause() != event.getCause()) {
+                continue;
+            }
+
+            if (modifier.getCheck().test(context).passes()) {
+                double damage = modifier.getAction().perform(event.getDamage());
+                if (damage <= 0) {
+                    event.setCancelled(true);
+                } else {
+                    event.setDamage(damage);
+                }
+                break;
+            }
+        }
     }
-  }
 
-  @Data
-  protected static class DamageModifier {
+    @Data
+    protected static class DamageModifier {
 
-    private final EntityDamageEvent.DamageCause cause;
-    private final PreparedNumberAction action;
-    private final Check check;
-  }
+        private final EntityDamageEvent.DamageCause cause;
+        private final PreparedNumberAction action;
+        private final Check check;
+    }
 }

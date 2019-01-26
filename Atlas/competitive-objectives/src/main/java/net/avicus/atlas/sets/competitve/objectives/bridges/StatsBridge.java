@@ -1,6 +1,7 @@
 package net.avicus.atlas.sets.competitve.objectives.bridges;
 
 import java.time.Instant;
+
 import net.avicus.atlas.module.ModuleBridge;
 import net.avicus.atlas.module.stats.StatsModule;
 import net.avicus.atlas.sets.competitve.objectives.actions.destroyable.base.PlayerDamageDestoyableAction;
@@ -32,115 +33,115 @@ import org.bukkit.event.Listener;
 
 public class StatsBridge implements ModuleBridge<StatsModule>, Listener {
 
-  private final StatsModule module;
+    private final StatsModule module;
 
-  public StatsBridge(StatsModule module) {
-    this.module = module;
-  }
-
-  @Override
-  public void onOpen(StatsModule module) {
-    Events.register(this);
-  }
-
-  @Override
-  public void onClose(StatsModule module) {
-    Events.unregister(this);
-  }
-
-  // ----------------
-  // -- Objectives --
-  // ----------------
-
-  // ---------------------
-  // ---- Destroyable ----
-  // ---------------------
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onDestroyableDamage(DestroyableDamageEvent event) {
-    this.module.getStore().store(
-        new PlayerDamageDestoyableAction(event.getObjective(), event.getInfo(), Instant.now()));
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onDestroyableRepair(DestroyableRepairEvent event) {
-    this.module.getStore().store(
-        new PlayerRepairDestoyableAction(event.getObjective(), event.getPlayer(), Instant.now()));
-  }
-
-  // ------------------
-  // ---- Leakable ----
-  // ------------------
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onLeakableLeak(LeakableLeakEvent event) {
-    this.module.getStore()
-        .store(new PlayerLeakLeakableAction(event.getObjective(), event.getInfo(), Instant.now()));
-  }
-
-  // ------------------
-  // ---- Monument ----
-  // ------------------
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onMonumentDestroy(MonumentDestroyEvent event) {
-    this.module.getStore().store(
-        new PlayerDestroyMonumentAction(event.getObjective(), event.getInfo(), Instant.now()));
-  }
-
-  // --------------
-  // ---- Flag ----
-  // --------------
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onFlagCapture(FlagCaptureEvent event) {
-    this.module.getStore().store(
-        new PlayerCaptureFlagAction(event.getObjective(), event.getPlayers().get(0),
-            Instant.now()));
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onFlagDrop(FlagDropEvent event) {
-    this.module.getStore()
-        .store(new PlayerDropFlagAction(event.getObjective(), event.getDropper(), Instant.now()));
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onFlagPickup(FlagPickupEvent event) {
-    this.module.getStore()
-        .store(new PlayerPickupFlagAction(event.getObjective(), event.getPlayer(), Instant.now()));
-  }
-
-  // --------------
-  // ---- Hill ----
-  // --------------
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onHillCapture(HillCaptureEvent event) {
-    if (event.getNewOwner().isPresent()) {
-      Instant when = Instant.now();
-      this.module.getStore().store(
-          new CompetitorCaptureHillAction(event.getObjective(), event.getNewOwner().get(), when));
-      for (Player player : event.getPlayers()) {
-        this.module.getStore()
-            .store(new PlayerCaptureHillAssistAction(event.getObjective(), player, when));
-      }
+    public StatsBridge(StatsModule module) {
+        this.module = module;
     }
-  }
 
-  // --------------
-  // ---- Wool ----
-  // --------------
+    @Override
+    public void onOpen(StatsModule module) {
+        Events.register(this);
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onWoolPlace(WoolPlaceEvent event) {
-    this.module.getStore().store(
-        new PlayerPlaceWoolAction(event.getObjective(), event.getPlayers().get(0), Instant.now()));
-  }
+    @Override
+    public void onClose(StatsModule module) {
+        Events.unregister(this);
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onWoolCapture(WoolPickupEvent event) {
-    this.module.getStore().store(
-        new PlayerTouchWoolAction(event.getObjective(), event.getPlayer(), Instant.now(), false));
-  }
+    // ----------------
+    // -- Objectives --
+    // ----------------
+
+    // ---------------------
+    // ---- Destroyable ----
+    // ---------------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onDestroyableDamage(DestroyableDamageEvent event) {
+        this.module.getStore().store(
+                new PlayerDamageDestoyableAction(event.getObjective(), event.getInfo(), Instant.now()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onDestroyableRepair(DestroyableRepairEvent event) {
+        this.module.getStore().store(
+                new PlayerRepairDestoyableAction(event.getObjective(), event.getPlayer(), Instant.now()));
+    }
+
+    // ------------------
+    // ---- Leakable ----
+    // ------------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onLeakableLeak(LeakableLeakEvent event) {
+        this.module.getStore()
+                .store(new PlayerLeakLeakableAction(event.getObjective(), event.getInfo(), Instant.now()));
+    }
+
+    // ------------------
+    // ---- Monument ----
+    // ------------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onMonumentDestroy(MonumentDestroyEvent event) {
+        this.module.getStore().store(
+                new PlayerDestroyMonumentAction(event.getObjective(), event.getInfo(), Instant.now()));
+    }
+
+    // --------------
+    // ---- Flag ----
+    // --------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFlagCapture(FlagCaptureEvent event) {
+        this.module.getStore().store(
+                new PlayerCaptureFlagAction(event.getObjective(), event.getPlayers().get(0),
+                        Instant.now()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFlagDrop(FlagDropEvent event) {
+        this.module.getStore()
+                .store(new PlayerDropFlagAction(event.getObjective(), event.getDropper(), Instant.now()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onFlagPickup(FlagPickupEvent event) {
+        this.module.getStore()
+                .store(new PlayerPickupFlagAction(event.getObjective(), event.getPlayer(), Instant.now()));
+    }
+
+    // --------------
+    // ---- Hill ----
+    // --------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onHillCapture(HillCaptureEvent event) {
+        if (event.getNewOwner().isPresent()) {
+            Instant when = Instant.now();
+            this.module.getStore().store(
+                    new CompetitorCaptureHillAction(event.getObjective(), event.getNewOwner().get(), when));
+            for (Player player : event.getPlayers()) {
+                this.module.getStore()
+                        .store(new PlayerCaptureHillAssistAction(event.getObjective(), player, when));
+            }
+        }
+    }
+
+    // --------------
+    // ---- Wool ----
+    // --------------
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onWoolPlace(WoolPlaceEvent event) {
+        this.module.getStore().store(
+                new PlayerPlaceWoolAction(event.getObjective(), event.getPlayers().get(0), Instant.now()));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onWoolCapture(WoolPickupEvent event) {
+        this.module.getStore().store(
+                new PlayerTouchWoolAction(event.getObjective(), event.getPlayer(), Instant.now(), false));
+    }
 }

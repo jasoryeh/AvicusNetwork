@@ -8,15 +8,15 @@ import org.bukkit.event.Listener;
 
 public class FriendsListener implements Listener {
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onAsyncHookLogin(AsyncHookLoginEvent event) {
-    Friends.reload(event.getUser());
-    Friends.join(event.getUser());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAsyncHookLogin(AsyncHookLoginEvent event) {
+        Friends.reload(event.getUser());
+        Friends.join(event.getUser());
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onAsyncHookLogin(AsyncHookLogoutEvent event) {
-    Friends.unload(event.getUser());
-    Friends.leave(event.getUser());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onAsyncHookLogin(AsyncHookLogoutEvent event) {
+        Friends.unload(event.getUser());
+        Friends.leave(event.getUser());
+    }
 }

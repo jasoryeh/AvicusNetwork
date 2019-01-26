@@ -11,10 +11,10 @@ import net.avicus.atlas.module.groups.Group;
 @ToString
 public class GroupVariable implements Variable {
 
-  @Getter
-  private final Group group;
+    @Getter
+    private final Group group;
 
-  public GroupVariable(Group group) {
-    this.group = group;
-  }
+    public GroupVariable(Group group) {
+        this.group = group;
+    }
 }

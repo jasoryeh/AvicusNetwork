@@ -17,70 +17,70 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class GroupMenuListener implements Listener {
 
-  private final Match match;
-  private final GroupsModule module;
+    private final Match match;
+    private final GroupsModule module;
 
-  public GroupMenuListener(GroupsModule module) {
-    this.match = module.getMatch();
-    this.module = module;
-  }
-
-  private void openGroupMenu(Player player) {
-    GroupMenu menu = new GroupMenu(player, this.match);
-    menu.open();
-  }
-
-  @EventHandler
-  public void onSpawn(PlayerSpawnBeginEvent event) {
-    if (!this.module.getSpectators().equals(event.getGroup())) {
-      return;
+    public GroupMenuListener(GroupsModule module) {
+        this.match = module.getMatch();
+        this.module = module;
     }
 
-    if (!event.isGiveLoadout()) {
-      return;
+    private void openGroupMenu(Player player) {
+        GroupMenu menu = new GroupMenu(player, this.match);
+        menu.open();
     }
 
-    Player player = event.getPlayer();
-    player.getInventory().addItem(GroupMenu.createMenuOpener(player));
-  }
+    @EventHandler
+    public void onSpawn(PlayerSpawnBeginEvent event) {
+        if (!this.module.getSpectators().equals(event.getGroup())) {
+            return;
+        }
 
-  @EventHandler
-  public void onPlayerJoinDelayed(PlayerJoinDelayedEvent event) {
-    StatesModule states = this.match.getRequiredModule(StatesModule.class);
-    boolean isElimination = this.match.hasModule(EliminationModule.class);
+        if (!event.isGiveLoadout()) {
+            return;
+        }
 
-    // Can't join during cycling phase
-    if (states.isCycling()) {
-      return;
+        Player player = event.getPlayer();
+        player.getInventory().addItem(GroupMenu.createMenuOpener(player));
     }
 
-    // Can't join during elim match
-    if (states.isPlaying() && isElimination) {
-      return;
+    @EventHandler
+    public void onPlayerJoinDelayed(PlayerJoinDelayedEvent event) {
+        StatesModule states = this.match.getRequiredModule(StatesModule.class);
+        boolean isElimination = this.match.hasModule(EliminationModule.class);
+
+        // Can't join during cycling phase
+        if (states.isCycling()) {
+            return;
+        }
+
+        // Can't join during elim match
+        if (states.isPlaying() && isElimination) {
+            return;
+        }
+
+        openGroupMenu(event.getPlayer());
     }
 
-    openGroupMenu(event.getPlayer());
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onMatchOpen(MatchOpenEvent event) {
-    // Delay so as to allow players to load the regions and tp to world first
-    AtlasTask.of(() -> {
-      this.match.getPlayers().forEach(this::openGroupMenu);
-    }).later(5);
-  }
-
-  @EventHandler
-  public void onPlayerInteract(PlayerInteractEvent event) {
-    if (event.getAction() != Action.RIGHT_CLICK_AIR
-        && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-      return;
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onMatchOpen(MatchOpenEvent event) {
+        // Delay so as to allow players to load the regions and tp to world first
+        AtlasTask.of(() -> {
+            this.match.getPlayers().forEach(this::openGroupMenu);
+        }).later(5);
     }
 
-    if (!GroupMenu.isMenuOpener(event.getItem())) {
-      return;
-    }
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_AIR
+                && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
 
-    openGroupMenu(event.getPlayer());
-  }
+        if (!GroupMenu.isMenuOpener(event.getItem())) {
+            return;
+        }
+
+        openGroupMenu(event.getPlayer());
+    }
 }

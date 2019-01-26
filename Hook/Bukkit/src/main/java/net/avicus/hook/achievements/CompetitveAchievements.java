@@ -15,48 +15,48 @@ import org.bukkit.event.Listener;
 
 public class CompetitveAchievements implements Listener {
 
-  private final Achievements achievements;
+    private final Achievements achievements;
 
-  public CompetitveAchievements(Achievements achievements) {
-    this.achievements = achievements;
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onMonumentDestroy(MonumentDestroyEvent event) {
-    achievements.increment("monument-completions", event.getPlayers().get(0));
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onDamage(DestroyableTouchEvent event) {
-    if (event.getObjective() instanceof MonumentObjective) {
-      achievements.increment("monument-touches", event.getPlayer());
-    } else if (event.getObjective() instanceof LeakableObjective) {
-      achievements.increment("leakable-touches", event.getPlayer());
+    public CompetitveAchievements(Achievements achievements) {
+        this.achievements = achievements;
     }
-  }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onFlagCapture(FlagCaptureEvent event) {
-    achievements.increment("flag-captures", event.getPlayers().get(0));
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onMonumentDestroy(MonumentDestroyEvent event) {
+        achievements.increment("monument-completions", event.getPlayers().get(0));
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onHillCapture(HillCaptureEvent event) {
-    achievements.increment("hill-captures", event.getPlayers().get(0));
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onDamage(DestroyableTouchEvent event) {
+        if (event.getObjective() instanceof MonumentObjective) {
+            achievements.increment("monument-touches", event.getPlayer());
+        } else if (event.getObjective() instanceof LeakableObjective) {
+            achievements.increment("leakable-touches", event.getPlayer());
+        }
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onWoolPlace(WoolPlaceEvent event) {
-    achievements.increment("wool-places", event.getPlayers().get(0));
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onFlagCapture(FlagCaptureEvent event) {
+        achievements.increment("flag-captures", event.getPlayers().get(0));
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onPickup(WoolPickupEvent event) {
-    achievements.increment("wool-touches", event.getPlayer());
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onHillCapture(HillCaptureEvent event) {
+        achievements.increment("hill-captures", event.getPlayers().get(0));
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onLeakableLeak(LeakableLeakEvent event) {
-    achievements.increment("leakable-leaks", event.getPlayers().get(0));
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onWoolPlace(WoolPlaceEvent event) {
+        achievements.increment("wool-places", event.getPlayers().get(0));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPickup(WoolPickupEvent event) {
+        achievements.increment("wool-touches", event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onLeakableLeak(LeakableLeakEvent event) {
+        achievements.increment("leakable-leaks", event.getPlayers().get(0));
+    }
 }

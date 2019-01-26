@@ -4,38 +4,38 @@ import com.shopify.graphql.support.Arguments;
 
 public class ServerBoostersArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public ServerBoostersArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public ServerBoostersArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public ServerBoostersArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public ServerBoostersArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public ServerBoostersArguments serverId(Integer value) {
-    if (value != null) {
-      startArgument("server_id");
-      builder().append(value);
+    public ServerBoostersArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public ServerBoostersArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public ServerBoostersArguments serverId(Integer value) {
+        if (value != null) {
+            startArgument("server_id");
+            builder().append(value);
+        }
+        return this;
+    }
 }

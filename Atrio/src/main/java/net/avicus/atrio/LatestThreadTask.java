@@ -20,52 +20,52 @@ import org.bukkit.plugin.Plugin;
 
 public class LatestThreadTask extends Task implements Listener {
 
-  private final Database database;
-  private final int catId;
-  private Discussion latest;
+    private final Database database;
+    private final int catId;
+    private Discussion latest;
 
-  public LatestThreadTask(int catId) {
-    this.database = Magma.get().database();
-    this.catId = catId;
-    this.latest = database.getDiscussions().getLatest(this.catId);
-  }
-
-  @Override
-  public Plugin getPlugin() {
-    return AtrioPlugin.getInstance();
-  }
-
-  @Override
-  public void run() throws Exception {
-    Discussion latest = database.getDiscussions().getLatest(this.catId);
-    if (latest == null) {
-      return;
+    public LatestThreadTask(int catId) {
+        this.database = Magma.get().database();
+        this.catId = catId;
+        this.latest = database.getDiscussions().getLatest(this.catId);
     }
 
-    if (latest.getId() != this.latest.getId()) {
-      this.latest = latest;
-    }
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onJoin(PlayerJoinEvent event) {
-    if (this.latest == null) {
-      return;
+    @Override
+    public Plugin getPlugin() {
+        return AtrioPlugin.getInstance();
     }
 
-    TextComponent latestAnnounce = new TextComponent("Latest Announcement: ");
-    latestAnnounce.setColor(net.md_5.bungee.api.ChatColor.AQUA);
-    TextComponent title = new TextComponent(this.latest.getTitle(this.database));
-    title.setClickEvent(new ClickEvent(Action.OPEN_URL,
-        NetworkIdentification.URL + "/forums/discussions/" + this.latest.getUuid()));
-    title.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
-        new TextComponent[]{new TextComponent("Click to view.")}));
-    title.setColor(net.md_5.bungee.api.ChatColor.GOLD);
-    title.setUnderlined(true);
+    @Override
+    public void run() throws Exception {
+        Discussion latest = database.getDiscussions().getLatest(this.catId);
+        if (latest == null) {
+            return;
+        }
 
-    Player player = event.getPlayer();
-    player.sendMessage(Strings.blankLine(ChatColor.GOLD));
-    player.sendMessage(new TextComponent(latestAnnounce, title));
-    player.sendMessage(Strings.blankLine(ChatColor.GOLD));
-  }
+        if (latest.getId() != this.latest.getId()) {
+            this.latest = latest;
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onJoin(PlayerJoinEvent event) {
+        if (this.latest == null) {
+            return;
+        }
+
+        TextComponent latestAnnounce = new TextComponent("Latest Announcement: ");
+        latestAnnounce.setColor(net.md_5.bungee.api.ChatColor.AQUA);
+        TextComponent title = new TextComponent(this.latest.getTitle(this.database));
+        title.setClickEvent(new ClickEvent(Action.OPEN_URL,
+                NetworkIdentification.URL + "/forums/discussions/" + this.latest.getUuid()));
+        title.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                new TextComponent[]{new TextComponent("Click to view.")}));
+        title.setColor(net.md_5.bungee.api.ChatColor.GOLD);
+        title.setUnderlined(true);
+
+        Player player = event.getPlayer();
+        player.sendMessage(Strings.blankLine(ChatColor.GOLD));
+        player.sendMessage(new TextComponent(latestAnnounce, title));
+        player.sendMessage(Strings.blankLine(ChatColor.GOLD));
+    }
 }

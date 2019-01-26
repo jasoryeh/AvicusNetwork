@@ -12,23 +12,23 @@ import net.avicus.atlas.module.checks.CheckResult;
 @ToString
 public class NotCheck implements Check {
 
-  @Getter
-  private final Check child;
+    @Getter
+    private final Check child;
 
-  public NotCheck(Check child) {
-    this.child = child;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    CheckResult result = child.test(context);
-
-    // ignore if ignore
-    if (result == CheckResult.IGNORE) {
-      return CheckResult.IGNORE;
+    public NotCheck(Check child) {
+        this.child = child;
     }
 
-    // otherwise invert
-    return result == CheckResult.ALLOW ? CheckResult.DENY : CheckResult.ALLOW;
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        CheckResult result = child.test(context);
+
+        // ignore if ignore
+        if (result == CheckResult.IGNORE) {
+            return CheckResult.IGNORE;
+        }
+
+        // otherwise invert
+        return result == CheckResult.ALLOW ? CheckResult.DENY : CheckResult.ALLOW;
+    }
 }

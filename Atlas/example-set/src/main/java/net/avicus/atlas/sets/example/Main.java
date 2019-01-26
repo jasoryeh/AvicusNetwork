@@ -5,13 +5,13 @@ import org.bukkit.Bukkit;
 
 public class Main extends ModuleSet {
 
-  @Override
-  public void onEnable() {
-    Bukkit.getLogger().info("Hello World!");
-  }
+    @Override
+    public void onEnable() {
+        Bukkit.getLogger().info("Hello World!");
+    }
 
-  @Override
-  public void onDisable() {
-    Bukkit.getLogger().info("Goodbye Cruel World!");
-  }
+    @Override
+    public void onDisable() {
+        Bukkit.getLogger().info("Goodbye Cruel World!");
+    }
 }

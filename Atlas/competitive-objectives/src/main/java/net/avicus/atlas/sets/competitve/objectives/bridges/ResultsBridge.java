@@ -20,74 +20,74 @@ import org.bukkit.event.Listener;
 
 public class ResultsBridge implements ModuleBridge<ResultsModule>, Listener {
 
-  private final ResultsModule module;
+    private final ResultsModule module;
 
-  public ResultsBridge(ResultsModule module) {
-    this.module = module;
-  }
+    public ResultsBridge(ResultsModule module) {
+        this.module = module;
+    }
 
-  @Override
-  public void onOpen(ResultsModule module) {
-    Events.register(this);
-  }
+    @Override
+    public void onOpen(ResultsModule module) {
+        Events.register(this);
+    }
 
-  @Override
-  public void onClose(ResultsModule module) {
-    Events.unregister(this);
-  }
+    @Override
+    public void onClose(ResultsModule module) {
+        Events.unregister(this);
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableDamage(final DestroyableDamageEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableDamage(final DestroyableDamageEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableRepair(final DestroyableRepairEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableRepair(final DestroyableRepairEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void destroyableTouch(final DestroyableTouchEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void destroyableTouch(final DestroyableTouchEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void leakableLeak(final LeakableLeakEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void leakableLeak(final LeakableLeakEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void monumentDestroy(final MonumentDestroyEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void monumentDestroy(final MonumentDestroyEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagCapture(final FlagCaptureEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagCapture(final FlagCaptureEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void flagPickup(final FlagPickupEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void flagPickup(final FlagPickupEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void hillCapture(final HillCaptureEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void hillCapture(final HillCaptureEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void hillCompletionChange(final HillCompletionChangeEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void hillCompletionChange(final HillCompletionChangeEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void woolPickup(final WoolPickupEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void woolPickup(final WoolPickupEvent event) {
+        module.syncCheck();
+    }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void woolPlace(final WoolPlaceEvent event) {
-    module.syncCheck();
-  }
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void woolPlace(final WoolPlaceEvent event) {
+        module.syncCheck();
+    }
 }

@@ -3,6 +3,7 @@ package net.avicus.atlas.module.checks.types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -20,41 +21,41 @@ import org.bukkit.inventory.ItemStack;
 @ToString
 public class HoldingCheck implements Check {
 
-  private final ScopableItemStack itemStack;
+    private final ScopableItemStack itemStack;
 
-  public HoldingCheck(ScopableItemStack itemStack) {
-    this.itemStack = itemStack;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
-
-    if (!optional.isPresent()) {
-      return CheckResult.IGNORE;
+    public HoldingCheck(ScopableItemStack itemStack) {
+        this.itemStack = itemStack;
     }
 
-    Player player = optional.get().getPlayer();
+    @Override
+    public CheckResult test(CheckContext context) {
+        Optional<PlayerVariable> optional = context.getFirst(PlayerVariable.class);
 
-    List<ItemStack> contents = new ArrayList<>();
-    contents.add(player.getInventory().getItemInHand());
+        if (!optional.isPresent()) {
+            return CheckResult.IGNORE;
+        }
 
-    if (VersionUtil.isCombatUpdate()) {
-      Object offHand = new SnapClass(player.getInventory().getClass()).getMethod("getItemInOffHand")
-          .get(player.getInventory());
-      contents.add((ItemStack) offHand);
+        Player player = optional.get().getPlayer();
 
-      // 1.9 Version
-      // List<ItemStack> contents = Arrays.asList(player.getInventory().getItemInHand(), player.getInventory().getItemInOffHand());
+        List<ItemStack> contents = new ArrayList<>();
+        contents.add(player.getInventory().getItemInHand());
+
+        if (VersionUtil.isCombatUpdate()) {
+            Object offHand = new SnapClass(player.getInventory().getClass()).getMethod("getItemInOffHand")
+                    .get(player.getInventory());
+            contents.add((ItemStack) offHand);
+
+            // 1.9 Version
+            // List<ItemStack> contents = Arrays.asList(player.getInventory().getItemInHand(), player.getInventory().getItemInOffHand());
+        }
+
+        for (ItemStack test : contents) {
+            boolean matches = this.itemStack.equals(player, test);
+            if (matches) {
+                return CheckResult.ALLOW;
+            }
+        }
+
+        return CheckResult.DENY;
     }
-
-    for (ItemStack test : contents) {
-      boolean matches = this.itemStack.equals(player, test);
-      if (matches) {
-        return CheckResult.ALLOW;
-      }
-    }
-
-    return CheckResult.DENY;
-  }
 }

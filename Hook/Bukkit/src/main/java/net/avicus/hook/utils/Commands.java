@@ -6,17 +6,17 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 public class Commands {
 
-  private static final PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
-      .appendYears().appendSuffix("y")
-      .appendMonths().appendSuffix("mo")
-      .appendDays().appendSuffix("d")
-      .appendHours().appendSuffix("h")
-      .appendMinutes().appendSuffix("m")
-      .appendSecondsWithOptionalMillis().appendSuffix("s")
-      .appendDays()
-      .toFormatter();
+    private static final PeriodFormatter periodFormatter = new PeriodFormatterBuilder()
+            .appendYears().appendSuffix("y")
+            .appendMonths().appendSuffix("mo")
+            .appendDays().appendSuffix("d")
+            .appendHours().appendSuffix("h")
+            .appendMinutes().appendSuffix("m")
+            .appendSecondsWithOptionalMillis().appendSuffix("s")
+            .appendDays()
+            .toFormatter();
 
-  public static Period parsePeriod(String text) {
-    return periodFormatter.parsePeriod(text);
-  }
+    public static Period parsePeriod(String text) {
+        return periodFormatter.parsePeriod(text);
+    }
 }

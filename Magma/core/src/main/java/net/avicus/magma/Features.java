@@ -11,19 +11,19 @@ import java.util.TimeZone;
  */
 public class Features {
 
-  private static Calendar CAL = Calendar.getInstance(TimeZone.getTimeZone("CST"));
+    private static Calendar CAL = Calendar.getInstance(TimeZone.getTimeZone("CST"));
 
-  private static boolean check(Month m, int day, int year) {
-    Calendar calendar = new GregorianCalendar(year, m.ordinal(), day);
-    calendar.set(Calendar.HOUR_OF_DAY, 12); // Noon
-    return CAL.getTime().after(calendar.getTime());
-  }
-
-  public static class Gadgets {
-
-    public static boolean newGunsOne() {
-      return check(Month.OCTOBER, 25, 2017);
+    private static boolean check(Month m, int day, int year) {
+        Calendar calendar = new GregorianCalendar(year, m.ordinal(), day);
+        calendar.set(Calendar.HOUR_OF_DAY, 12); // Noon
+        return CAL.getTime().after(calendar.getTime());
     }
 
-  }
+    public static class Gadgets {
+
+        public static boolean newGunsOne() {
+            return check(Month.OCTOBER, 25, 2017);
+        }
+
+    }
 }

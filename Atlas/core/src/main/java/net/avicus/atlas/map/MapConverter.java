@@ -18,38 +18,42 @@ public class MapConverter {
         root.setAttribute("version", map.getVersion().toString());
 
         // Includes
-        if(ogXml.hasChild("include")) {
+        if (ogXml.hasChild("include")) {
             for (Element include : document.getRootElement().getChildren("include")) {
                 root.addContent(include);
             }
         }
 
         // Authors & Contributors
-        if(ogXml.hasChild("authors")) {
+        if (ogXml.hasChild("authors")) {
             for (Author author : map.getAuthors()) {
                 Element newAuthor = new Element("author");
-                if(author instanceof Minecrafter) {
+                if (author instanceof Minecrafter) {
                     newAuthor.setAttribute("uuid", ((Minecrafter) author).getUuid().toString());
                     newAuthor.setAttribute("contribution", author.getRole().isPresent() ? author.getRole().get() : "");
                     newAuthor.setAttribute("promo", author.getPromo().isPresent() ? author.getRole().get() : "");
                     newAuthor.setAttribute("contributor", "true");
-                } else { continue; }
+                } else {
+                    continue;
+                }
                 root.addContent(newAuthor);
             }
             for (Author author : map.getContributors()) {
                 Element newAuthor = new Element("contributor");
-                if(author instanceof Minecrafter) {
+                if (author instanceof Minecrafter) {
                     newAuthor.setAttribute("uuid", ((Minecrafter) author).getUuid().toString());
                     newAuthor.setAttribute("contribution", author.getRole().isPresent() ? author.getRole().get() : "");
                     newAuthor.setAttribute("promo", author.getPromo().isPresent() ? author.getRole().get() : "");
                     newAuthor.setAttribute("contributor", "true");
-                } else { continue; }
+                } else {
+                    continue;
+                }
                 root.addContent(newAuthor);
             }
         }
 
         // Gamemode/Gametype
-        if(ogXml.hasChild("gametype")) {
+        if (ogXml.hasChild("gametype")) {
             for (Element gamemode : document.getRootElement().getChildren("gamemode")) {
                 Element gametype = new Element("gametype");
                 gametype.addContent(gamemode.getContent());
@@ -58,7 +62,7 @@ public class MapConverter {
         }
 
         // Teams
-        if(ogXml.hasChild("teams")) {
+        if (ogXml.hasChild("teams")) {
             root.addContent(document.getRootElement().getChild("teams").getChildren("team"));
         }
 

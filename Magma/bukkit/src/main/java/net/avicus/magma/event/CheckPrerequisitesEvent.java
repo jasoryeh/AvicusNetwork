@@ -12,26 +12,26 @@ import org.bukkit.event.HandlerList;
  */
 public class CheckPrerequisitesEvent extends Event implements Cancellable {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final String actionId;
-  @Getter
-  private final Object[] data;
-  @Getter
-  @Setter
-  private boolean cancelled;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final String actionId;
+    @Getter
+    private final Object[] data;
+    @Getter
+    @Setter
+    private boolean cancelled;
 
-  public CheckPrerequisitesEvent(String actionId, Object... data) {
-    this.actionId = actionId;
-    this.data = data;
-  }
+    public CheckPrerequisitesEvent(String actionId, Object... data) {
+        this.actionId = actionId;
+        this.data = data;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

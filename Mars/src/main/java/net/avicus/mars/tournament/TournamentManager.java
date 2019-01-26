@@ -3,6 +3,7 @@ package net.avicus.mars.tournament;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import lombok.Getter;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.countdown.StartingCountdown;
@@ -23,91 +24,91 @@ import org.bukkit.event.Listener;
 
 public class TournamentManager implements EventManager<TournamentMatch>, Listener {
 
-  @Getter
-  private final Tournament tournament;
-  // Sorted by order of play, last element is always current.
-  @Getter
-  private final List<TournamentMatch> matches = new ArrayList<>();
+    @Getter
+    private final Tournament tournament;
+    // Sorted by order of play, last element is always current.
+    @Getter
+    private final List<TournamentMatch> matches = new ArrayList<>();
 
-  public TournamentManager(Tournament tournament) {
-    this.tournament = tournament;
-  }
-
-  @Override
-  public Optional<TournamentMatch> getCurrentEvent() {
-    if (this.matches.isEmpty()) {
-      return Optional.empty();
+    public TournamentManager(Tournament tournament) {
+        this.tournament = tournament;
     }
 
-    TournamentMatch last = this.matches.get(this.matches.size() - 1);
-    return last.isOngoing() ? Optional.of(last) : Optional.empty();
-  }
-
-  @Override
-  public void start() {
-    Bukkit.getServer().getPluginManager().registerEvents(this, MarsPlugin.getInstance());
-  }
-
-  @EventHandler
-  public void endCurrent(MatchCloseEvent event) {
-    if (getCurrentEvent().isPresent()) {
-      getCurrentEvent().get().setOngoing(false);
-    }
-  }
-
-  @EventHandler
-  public void startCurrent(MatchOpenEvent event) {
-    if (getCurrentEvent().isPresent()) {
-      getCurrentEvent().get().setOngoing(true);
-    } else {
-      this.matches.add(new TournamentMatch(this.tournament, event.getMatch()));
-    }
-  }
-
-  @EventHandler
-  public void onJoin(PlayerJoinDelayedEvent e) {
-    if (getCurrentEvent().isPresent()) {
-      Optional<User> user = Users.user(e.getPlayer().getUniqueId());
-
-      if (user.isPresent()) {
-        Optional<Group> target = getCurrentEvent().get().getIntendedPlayerGroup(user.get().getId());
-        target.ifPresent(t -> {
-          if (t.isFull(false)) {
-            e.getPlayer().kickPlayer(
-                "You are not permitted to play because the max number of playing players has been reached.");
-          } else {
-            getCurrentEvent().get().getGroupsModule().changeGroup(e.getPlayer(), t, true, true);
-          }
-        });
-      }
-    }
-  }
-
-  @EventHandler
-  public void assignPlayer(PlayerChangedGroupEvent event) {
-    if (getCurrentEvent().isPresent()) {
-      if (event.getGroupFrom().isPresent() && event.getGroup().isSpectator()) {
-        return;
-      }
-
-      Optional<User> user = Users.user(event.getPlayer().getUniqueId());
-
-      if (user.isPresent()) {
-        Optional<Group> target = getCurrentEvent().get().getIntendedPlayerGroup(user.get().getId());
-        if (target.isPresent()) {
-          event.setGroup(target.get());
+    @Override
+    public Optional<TournamentMatch> getCurrentEvent() {
+        if (this.matches.isEmpty()) {
+            return Optional.empty();
         }
-      }
-    }
-  }
 
-  @EventHandler
-  public void onMatchOpen(MatchOpenEvent event) {
-    if (event.getMatch().getRequiredModule(StatesModule.class).isStarting() && getCurrentEvent()
-        .isPresent()) {
-      StartingCountdown starting = new ConditionalStartCountdown(event.getMatch(),
-          getCurrentEvent().get());
-      Atlas.get().getMatchManager().getRotation().startMatch(starting);
+        TournamentMatch last = this.matches.get(this.matches.size() - 1);
+        return last.isOngoing() ? Optional.of(last) : Optional.empty();
     }
-  }
+
+    @Override
+    public void start() {
+        Bukkit.getServer().getPluginManager().registerEvents(this, MarsPlugin.getInstance());
+    }
+
+    @EventHandler
+    public void endCurrent(MatchCloseEvent event) {
+        if (getCurrentEvent().isPresent()) {
+            getCurrentEvent().get().setOngoing(false);
+        }
+    }
+
+    @EventHandler
+    public void startCurrent(MatchOpenEvent event) {
+        if (getCurrentEvent().isPresent()) {
+            getCurrentEvent().get().setOngoing(true);
+        } else {
+            this.matches.add(new TournamentMatch(this.tournament, event.getMatch()));
+        }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinDelayedEvent e) {
+        if (getCurrentEvent().isPresent()) {
+            Optional<User> user = Users.user(e.getPlayer().getUniqueId());
+
+            if (user.isPresent()) {
+                Optional<Group> target = getCurrentEvent().get().getIntendedPlayerGroup(user.get().getId());
+                target.ifPresent(t -> {
+                    if (t.isFull(false)) {
+                        e.getPlayer().kickPlayer(
+                                "You are not permitted to play because the max number of playing players has been reached.");
+                    } else {
+                        getCurrentEvent().get().getGroupsModule().changeGroup(e.getPlayer(), t, true, true);
+                    }
+                });
+            }
+        }
+    }
+
+    @EventHandler
+    public void assignPlayer(PlayerChangedGroupEvent event) {
+        if (getCurrentEvent().isPresent()) {
+            if (event.getGroupFrom().isPresent() && event.getGroup().isSpectator()) {
+                return;
+            }
+
+            Optional<User> user = Users.user(event.getPlayer().getUniqueId());
+
+            if (user.isPresent()) {
+                Optional<Group> target = getCurrentEvent().get().getIntendedPlayerGroup(user.get().getId());
+                if (target.isPresent()) {
+                    event.setGroup(target.get());
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onMatchOpen(MatchOpenEvent event) {
+        if (event.getMatch().getRequiredModule(StatesModule.class).isStarting() && getCurrentEvent()
+                .isPresent()) {
+            StartingCountdown starting = new ConditionalStartCountdown(event.getMatch(),
+                    getCurrentEvent().get());
+            Atlas.get().getMatchManager().getRotation().startMatch(starting);
+        }
+    }
 }

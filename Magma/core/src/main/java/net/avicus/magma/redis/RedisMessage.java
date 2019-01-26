@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 
 public interface RedisMessage {
 
-  String channel();
+    String channel();
 
-  JsonObject write();
+    JsonObject write();
 }

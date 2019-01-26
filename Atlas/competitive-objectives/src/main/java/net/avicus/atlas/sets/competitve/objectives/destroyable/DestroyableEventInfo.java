@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 @Data
 public class DestroyableEventInfo {
 
-  private final Player actor;
-  private final ItemStack tool;
-  private final Material broken;
-  private final boolean byHand;
+    private final Player actor;
+    private final ItemStack tool;
+    private final Material broken;
+    private final boolean byHand;
 }

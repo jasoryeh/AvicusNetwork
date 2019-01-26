@@ -7,18 +7,18 @@ import org.bukkit.event.HandlerList;
 
 public class DestroyableTouchEvent extends ObjectiveTouchEvent {
 
-  private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-  public DestroyableTouchEvent(DestroyableObjective objective, DestroyableEventInfo info) {
-    super(objective, info.getActor());
-  }
+    public DestroyableTouchEvent(DestroyableObjective objective, DestroyableEventInfo info) {
+        super(objective, info.getActor());
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

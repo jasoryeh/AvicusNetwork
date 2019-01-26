@@ -4,46 +4,46 @@ import com.shopify.graphql.support.Arguments;
 
 public class ObjectivesArguments extends Arguments {
 
-  private final StringBuilder builder;
+    private final StringBuilder builder;
 
-  public ObjectivesArguments(StringBuilder builder) {
-    super(builder, true);
-    this.builder = builder;
-  }
-
-  private StringBuilder builder() {
-    return builder;
-  }
-
-  public ObjectivesArguments id(Integer value) {
-    if (value != null) {
-      startArgument("id");
-      builder().append(value);
+    public ObjectivesArguments(StringBuilder builder) {
+        super(builder, true);
+        this.builder = builder;
     }
-    return this;
-  }
 
-  public ObjectivesArguments userId(Integer value) {
-    if (value != null) {
-      startArgument("user_id");
-      builder().append(value);
+    private StringBuilder builder() {
+        return builder;
     }
-    return this;
-  }
 
-  public ObjectivesArguments objectiveId(Integer value) {
-    if (value != null) {
-      startArgument("objective_id");
-      builder().append(value);
+    public ObjectivesArguments id(Integer value) {
+        if (value != null) {
+            startArgument("id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
 
-  public ObjectivesArguments hidden(Boolean value) {
-    if (value != null) {
-      startArgument("hidden");
-      builder().append(value);
+    public ObjectivesArguments userId(Integer value) {
+        if (value != null) {
+            startArgument("user_id");
+            builder().append(value);
+        }
+        return this;
     }
-    return this;
-  }
+
+    public ObjectivesArguments objectiveId(Integer value) {
+        if (value != null) {
+            startArgument("objective_id");
+            builder().append(value);
+        }
+        return this;
+    }
+
+    public ObjectivesArguments hidden(Boolean value) {
+        if (value != null) {
+            startArgument("hidden");
+            builder().append(value);
+        }
+        return this;
+    }
 }

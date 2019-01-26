@@ -5,22 +5,22 @@ package net.avicus.atlas.module.checks;
  */
 public class StaticResultCheck implements Check {
 
-  /**
-   * Result to always return
-   */
-  private final CheckResult result;
+    /**
+     * Result to always return
+     */
+    private final CheckResult result;
 
-  /**
-   * Constructor.
-   *
-   * @param result result to always return
-   */
-  public StaticResultCheck(CheckResult result) {
-    this.result = result;
-  }
+    /**
+     * Constructor.
+     *
+     * @param result result to always return
+     */
+    public StaticResultCheck(CheckResult result) {
+        this.result = result;
+    }
 
-  @Override
-  public CheckResult test(CheckContext context) {
-    return this.result;
-  }
+    @Override
+    public CheckResult test(CheckContext context) {
+        return this.result;
+    }
 }

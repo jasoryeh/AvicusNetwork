@@ -2,6 +2,7 @@ package net.avicus.atlas.module.checks.modifiers;
 
 import java.util.List;
 import java.util.Map;
+
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.module.checks.Check;
@@ -14,29 +15,29 @@ import net.avicus.atlas.module.checks.CheckResult;
 @ToString
 public class AllCheck implements Check {
 
-  @Getter
-  private final List<Check> children;
+    @Getter
+    private final List<Check> children;
 
-  public AllCheck(List<Check> children) {
-    this.children = children;
-  }
-
-  @Override
-  public CheckResult test(CheckContext context) {
-    Map<CheckResult, Integer> results = Check.test(this.children, context);
-    int total = results.values().stream().mapToInt(Integer::intValue).sum();
-
-    // allow if all allow
-    if (results.get(CheckResult.ALLOW) == total) {
-      return CheckResult.ALLOW;
+    public AllCheck(List<Check> children) {
+        this.children = children;
     }
 
-    // deny if at least one denies
-    if (results.get(CheckResult.DENY) > 0) {
-      return CheckResult.DENY;
-    }
+    @Override
+    public CheckResult test(CheckContext context) {
+        Map<CheckResult, Integer> results = Check.test(this.children, context);
+        int total = results.values().stream().mapToInt(Integer::intValue).sum();
 
-    // otherwise ignore
-    return CheckResult.IGNORE;
-  }
+        // allow if all allow
+        if (results.get(CheckResult.ALLOW) == total) {
+            return CheckResult.ALLOW;
+        }
+
+        // deny if at least one denies
+        if (results.get(CheckResult.DENY) > 0) {
+            return CheckResult.DENY;
+        }
+
+        // otherwise ignore
+        return CheckResult.IGNORE;
+    }
 }

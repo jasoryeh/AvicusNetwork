@@ -6,42 +6,42 @@ import net.avicus.magma.api.graph.types.punishment.PunishmentQueryDefinition;
 
 public class DisallowScopeQuery extends Query<DisallowScopeQuery> {
 
-  public DisallowScopeQuery(StringBuilder builder) {
-    super(builder);
-  }
+    public DisallowScopeQuery(StringBuilder builder) {
+        super(builder);
+    }
 
-  private StringBuilder builder() {
-    return _queryBuilder;
-  }
+    private StringBuilder builder() {
+        return _queryBuilder;
+    }
 
-  /**
-   * If the login is disallowed due to lack of permissions.
-   */
-  public DisallowScopeQuery permissions() {
-    startField("permissions");
+    /**
+     * If the login is disallowed due to lack of permissions.
+     */
+    public DisallowScopeQuery permissions() {
+        startField("permissions");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * If the login is disallowed due to a punishment.
-   */
-  public DisallowScopeQuery punishment() {
-    startField("punishment");
+    /**
+     * If the login is disallowed due to a punishment.
+     */
+    public DisallowScopeQuery punishment() {
+        startField("punishment");
 
-    return this;
-  }
+        return this;
+    }
 
-  /**
-   * The punishment that disallowed the login.
-   */
-  public DisallowScopeQuery punishmentData(PunishmentQueryDefinition queryDef) {
-    startField("punishment_data");
+    /**
+     * The punishment that disallowed the login.
+     */
+    public DisallowScopeQuery punishmentData(PunishmentQueryDefinition queryDef) {
+        startField("punishment_data");
 
-    builder().append('{');
-    queryDef.define(new PunishmentQuery(builder()));
-    builder().append('}');
+        builder().append('{');
+        queryDef.define(new PunishmentQuery(builder()));
+        builder().append('}');
 
-    return this;
-  }
+        return this;
+    }
 }

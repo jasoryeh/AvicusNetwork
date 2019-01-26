@@ -7,31 +7,31 @@ import net.avicus.compendium.menu.inventory.InventoryMenuItem;
 import org.bukkit.entity.Player;
 
 public abstract class ObserverMenuItem implements ClickableInventoryMenuItem, IndexedMenuItem,
-    InventoryMenuItem {
+        InventoryMenuItem {
 
-  protected static final int MAX_LENGTH = 50;
-  protected static final UnlocalizedFormat TWO_PART_FORMAT = new UnlocalizedFormat("{0}: {1}");
-  protected final Player viewer;
-  protected final ObserverMenu parent;
-  protected final int index;
+    protected static final int MAX_LENGTH = 50;
+    protected static final UnlocalizedFormat TWO_PART_FORMAT = new UnlocalizedFormat("{0}: {1}");
+    protected final Player viewer;
+    protected final ObserverMenu parent;
+    protected final int index;
 
-  protected ObserverMenuItem(final Player viewer, final ObserverMenu parent, final int index) {
-    this.viewer = viewer;
-    this.parent = parent;
-    this.index = index;
-  }
+    protected ObserverMenuItem(final Player viewer, final ObserverMenu parent, final int index) {
+        this.viewer = viewer;
+        this.parent = parent;
+        this.index = index;
+    }
 
-  @Override
-  public boolean shouldUpdate() {
-    return true;
-  }
+    @Override
+    public boolean shouldUpdate() {
+        return true;
+    }
 
-  @Override
-  public void onUpdate() {
-  }
+    @Override
+    public void onUpdate() {
+    }
 
-  @Override
-  public int getIndex() {
-    return this.index;
-  }
+    @Override
+    public int getIndex() {
+        return this.index;
+    }
 }

@@ -11,16 +11,16 @@ import org.bukkit.entity.Player;
 
 public class ObserverCommands {
 
-  @Command(aliases = {"obs"}, desc = "Observer options", min = 0, max = 0)
-  public static void options(final CommandContext args, final CommandSender source)
-      throws TranslatableCommandErrorException {
-    MustBePlayerCommandException.ensurePlayer(source);
+    @Command(aliases = {"obs"}, desc = "Observer options", min = 0, max = 0)
+    public static void options(final CommandContext args, final CommandSender source)
+            throws TranslatableCommandErrorException {
+        MustBePlayerCommandException.ensurePlayer(source);
 
-    if (!ObserverMenu.canOpen((Player) source)) {
-      throw new TranslatableCommandErrorException(
-          Translations.MODULE_OBSERVER_MENU_ERROR_OPEN_PARTICIPANT);
+        if (!ObserverMenu.canOpen((Player) source)) {
+            throw new TranslatableCommandErrorException(
+                    Translations.MODULE_OBSERVER_MENU_ERROR_OPEN_PARTICIPANT);
+        }
+
+        ObserverMenu.create((Player) source).open();
     }
-
-    ObserverMenu.create((Player) source).open();
-  }
 }

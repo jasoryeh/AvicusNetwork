@@ -7,10 +7,10 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class MessageLogger extends ListenerAdapter {
 
-  @Override
-  public void onMessageReceived(MessageReceivedEvent event) {
-    if (event.getChannelType() != ChannelType.TEXT || HookConfig.isDebug()) {
-      System.out.println(ChannelUtils.getConsoleMessage(event.getMessage(), true));
+    @Override
+    public void onMessageReceived(MessageReceivedEvent event) {
+        if (event.getChannelType() != ChannelType.TEXT || HookConfig.isDebug()) {
+            System.out.println(ChannelUtils.getConsoleMessage(event.getMessage(), true));
+        }
     }
-  }
 }

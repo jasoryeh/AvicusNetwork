@@ -10,20 +10,20 @@ import org.bukkit.event.HandlerList;
  */
 public class GroupMaxPlayerCountChangeEvent extends Event {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final Group group;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final Group group;
 
-  public GroupMaxPlayerCountChangeEvent(Group group) {
-    this.group = group;
-  }
+    public GroupMaxPlayerCountChangeEvent(Group group) {
+        this.group = group;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

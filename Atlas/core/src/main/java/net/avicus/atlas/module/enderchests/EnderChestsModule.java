@@ -1,6 +1,7 @@
 package net.avicus.atlas.module.enderchests;
 
 import java.util.Optional;
+
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
@@ -27,55 +28,55 @@ import org.bukkit.inventory.Inventory;
 @ToString(exclude = "match")
 public class EnderChestsModule implements Module {
 
-  private final Match match;
-  private final boolean exclusive;
-  private final Optional<Check> openCheck;
+    private final Match match;
+    private final boolean exclusive;
+    private final Optional<Check> openCheck;
 
-  public EnderChestsModule(Match match, boolean exclusive, Optional<Check> openCheck) {
-    this.match = match;
-    this.exclusive = exclusive;
-    this.openCheck = openCheck;
-  }
+    public EnderChestsModule(Match match, boolean exclusive, Optional<Check> openCheck) {
+        this.match = match;
+        this.exclusive = exclusive;
+        this.openCheck = openCheck;
+    }
 
-  @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-  public void onClick(PlayerInteractEvent event) {
-    Player p = event.getPlayer();
-    if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-      if (event.getClickedBlock().getType() == Material.ENDER_CHEST) {
-        if (this.openCheck.isPresent()) {
-          CheckContext context = new CheckContext(this.match);
-          context.add(new PlayerVariable(event.getPlayer()));
-          context.add(new LocationVariable(event.getClickedBlock().getLocation()));
-          if (this.openCheck.get().test(context).fails()) {
-            event.setCancelled(true);
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onClick(PlayerInteractEvent event) {
+        Player p = event.getPlayer();
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (event.getClickedBlock().getType() == Material.ENDER_CHEST) {
+                if (this.openCheck.isPresent()) {
+                    CheckContext context = new CheckContext(this.match);
+                    context.add(new PlayerVariable(event.getPlayer()));
+                    context.add(new LocationVariable(event.getClickedBlock().getLocation()));
+                    if (this.openCheck.get().test(context).fails()) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                }
+                if (!exclusive) {
+                    event.setCancelled(true);
+                    Inventory inv = Bukkit.createInventory(p, InventoryType.ENDER_CHEST);
+                    EnderChestStore.getChest(p.getUniqueId()).forEach(inv::setItem);
+                    p.openInventory(inv);
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onClose(InventoryCloseEvent event) {
+        if (exclusive) {
             return;
-          }
         }
-        if (!exclusive) {
-          event.setCancelled(true);
-          Inventory inv = Bukkit.createInventory(p, InventoryType.ENDER_CHEST);
-          EnderChestStore.getChest(p.getUniqueId()).forEach(inv::setItem);
-          p.openInventory(inv);
+
+        HumanEntity p = event.getPlayer();
+        if (!(p instanceof Player)) {
+            return;
         }
-      }
-    }
-  }
 
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onClose(InventoryCloseEvent event) {
-    if (exclusive) {
-      return;
+        if (event.getInventory().getType() == InventoryType.ENDER_CHEST
+                && event.getInventory().getContents().length != 0) {
+            EnderChestStore.store(p.getUniqueId(), event.getInventory());
+            p.getEnderChest().clear();
+        }
     }
-
-    HumanEntity p = event.getPlayer();
-    if (!(p instanceof Player)) {
-      return;
-    }
-
-    if (event.getInventory().getType() == InventoryType.ENDER_CHEST
-        && event.getInventory().getContents().length != 0) {
-      EnderChestStore.store(p.getUniqueId(), event.getInventory());
-      p.getEnderChest().clear();
-    }
-  }
 }

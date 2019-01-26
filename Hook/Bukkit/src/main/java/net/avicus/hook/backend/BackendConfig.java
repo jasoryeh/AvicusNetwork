@@ -6,39 +6,39 @@ import net.avicus.compendium.config.inject.ConfigPath;
 
 public class BackendConfig {
 
-  @Getter
-  @ConfigKey(key = "gadget-conversion")
-  private static boolean gadgetConversion;
-
-  @ConfigPath("buycraft")
-  public static class Buycraft {
-
     @Getter
-    @ConfigKey
-    private static boolean enabled;
+    @ConfigKey(key = "gadget-conversion")
+    private static boolean gadgetConversion;
 
-    @Getter
-    @ConfigKey(key = "api-key")
-    private static String apiKey;
+    @ConfigPath("buycraft")
+    public static class Buycraft {
 
-    @Getter
-    @ConfigKey(key = "pool-size")
-    private static int poolSize;
+        @Getter
+        @ConfigKey
+        private static boolean enabled;
 
-    @Getter
-    @ConfigKey
-    private static int period;
-  }
+        @Getter
+        @ConfigKey(key = "api-key")
+        private static String apiKey;
 
-  @ConfigPath("leaderboards")
-  public static class Leaderboards {
+        @Getter
+        @ConfigKey(key = "pool-size")
+        private static int poolSize;
 
-    @Getter
-    @ConfigKey
-    private static boolean enabled;
+        @Getter
+        @ConfigKey
+        private static int period;
+    }
 
-    @Getter
-    @ConfigKey(key = "xp")
-    private static boolean xpEnabled;
-  }
+    @ConfigPath("leaderboards")
+    public static class Leaderboards {
+
+        @Getter
+        @ConfigKey
+        private static boolean enabled;
+
+        @Getter
+        @ConfigKey(key = "xp")
+        private static boolean xpEnabled;
+    }
 }

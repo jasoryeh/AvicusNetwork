@@ -7,25 +7,25 @@ import org.bukkit.event.HandlerList;
 
 public class HillCompletionChangeEvent extends ObjectiveStateChangeEvent {
 
-  private static final HandlerList handlers = new HandlerList();
-  @Getter
-  private final double oldCompletion;
-  @Getter
-  private final double newCompletion;
+    private static final HandlerList handlers = new HandlerList();
+    @Getter
+    private final double oldCompletion;
+    @Getter
+    private final double newCompletion;
 
-  public HillCompletionChangeEvent(HillObjective objective, double oldCompletion,
-      double newCompletion) {
-    super(objective);
-    this.oldCompletion = oldCompletion;
-    this.newCompletion = newCompletion;
-  }
+    public HillCompletionChangeEvent(HillObjective objective, double oldCompletion,
+                                     double newCompletion) {
+        super(objective);
+        this.oldCompletion = oldCompletion;
+        this.newCompletion = newCompletion;
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

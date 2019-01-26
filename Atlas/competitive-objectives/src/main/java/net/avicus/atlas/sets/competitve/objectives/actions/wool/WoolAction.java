@@ -4,5 +4,5 @@ import net.avicus.atlas.sets.competitve.objectives.wool.WoolObjective;
 
 public interface WoolAction {
 
-  WoolObjective getWool();
+    WoolObjective getWool();
 }

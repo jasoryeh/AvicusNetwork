@@ -7,18 +7,18 @@ import org.bukkit.event.HandlerList;
 
 public class WoolPickupEvent extends ObjectiveTouchEvent {
 
-  private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlers = new HandlerList();
 
-  public WoolPickupEvent(WoolObjective objective, Player player) {
-    super(objective, player);
-  }
+    public WoolPickupEvent(WoolObjective objective, Player player) {
+        super(objective, player);
+    }
 
-  public static HandlerList getHandlerList() {
-    return handlers;
-  }
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-  @Override
-  public HandlerList getHandlers() {
-    return handlers;
-  }
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 }

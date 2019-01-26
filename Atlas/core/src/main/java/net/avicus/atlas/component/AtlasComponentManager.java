@@ -10,8 +10,8 @@ import org.bukkit.plugin.PluginManager;
  */
 public class AtlasComponentManager extends ModuleManager {
 
-  public AtlasComponentManager(PluginManager pluginManager, Plugin plugin,
-      CommandsManagerRegistration commandRegistrar) {
-    super(pluginManager, plugin, commandRegistrar);
-  }
+    public AtlasComponentManager(PluginManager pluginManager, Plugin plugin,
+                                 CommandsManagerRegistration commandRegistrar) {
+        super(pluginManager, plugin, commandRegistrar);
+    }
 }

@@ -8,22 +8,22 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ServerMenuListener implements Listener {
 
-  @EventHandler
-  public void onPlayerInteract(PlayerInteractEvent event) {
-    if (event.getAction() != Action.RIGHT_CLICK_AIR
-        && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-      return;
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_AIR
+                && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        if (!Servers.isMenuOpener(event.getItem())) {
+            return;
+        }
+
+        event.setCancelled(true);
+
+        Player player = event.getPlayer();
+
+        ServerMenu menu = ServerMenu.fromConfig(player);
+        menu.open();
     }
-
-    if (!Servers.isMenuOpener(event.getItem())) {
-      return;
-    }
-
-    event.setCancelled(true);
-
-    Player player = event.getPlayer();
-
-    ServerMenu menu = ServerMenu.fromConfig(player);
-    menu.open();
-  }
 }
