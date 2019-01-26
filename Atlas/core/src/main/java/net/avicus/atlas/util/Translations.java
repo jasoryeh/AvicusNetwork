@@ -113,6 +113,9 @@ public final class Translations {
     static final LocaleBundle BUNDLE;
 
     static {
+        /**
+         * Add additional languages here
+         */
         BUNDLE = TranslationProvider.loadBundle(Atlas.get(), "en_US", "es_ES");
         TranslationProvider.map(Translations.class, BUNDLE);
     }

@@ -91,7 +91,7 @@ public class TutorialModule implements Module {
             }
             Duration online = Magma.get().database().getSessions()
                     .timeOnline(Users.user(player).getId());
-            boolean timeCause = online.getStandardHours() < 5;
+            boolean timeCause = online.getStandardHours() < 1;
             boolean settingCause = PlayerSettings.get(player, SHOW_TUTORIAL_SETTING);
             if (timeCause || settingCause) {
                 AtlasTask.of(() -> startTutorial(player, timeCause, settingCause)).now();
@@ -106,7 +106,7 @@ public class TutorialModule implements Module {
                 for (Player player : event.getMatch().getPlayers()) {
                     Duration online = Magma.get().database().getSessions()
                             .timeOnline(Users.user(player).getId());
-                    boolean timeCause = online.getStandardHours() < 5;
+                    boolean timeCause = online.getStandardHours() < 1;
                     boolean settingCause = PlayerSettings.get(player, SHOW_TUTORIAL_SETTING);
                     if (timeCause || settingCause) {
                         AtlasTask.of(() -> startTutorial(player, timeCause, settingCause)).now();
