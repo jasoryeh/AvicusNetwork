@@ -254,7 +254,7 @@
         <tutorial>
             <force>
                 <time>You have been forced to view the map tutorial because you have less than an hour
-                    of <playtime></playtime>.
+                    of playtime.
                 </time>
                 <setting>You are viewing the tutorial because you have the ShowTutorial setting enabled.
                 </setting>

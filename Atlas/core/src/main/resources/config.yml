@@ -21,4 +21,4 @@ website:
   base: https://alm-was.here
   # {0} = map slug
   map: maps/map/{0}/
-chat: '<%3$s%1$s> %2$s'
+chat: '<%3$s%1$s%4$s> %2$s'

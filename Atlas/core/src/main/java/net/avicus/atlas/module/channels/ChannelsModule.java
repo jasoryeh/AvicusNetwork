@@ -5,11 +5,13 @@ import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import me.lucko.luckperms.LuckPerms;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;
+import me.lucko.luckperms.api.caching.UserData;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
@@ -17,6 +19,7 @@ import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -131,15 +134,12 @@ public class ChannelsModule implements Module {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         // LP API for prefixes start
-        String fmat = Atlas.get().getConfig().getString("chat", "<%3$s%1$s> %2$s");
-        String prefix = "";
-        try {
-            LuckPermsApi api = LuckPerms.getApi();
-            prefix = api.getUser(event.getPlayer().getUniqueId()).getCachedData().getMetaData(Contexts.global()).getPrefix();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', prefix));
+        String fmat = Atlas.get().getConfig().getString("chat", "<%3$s%1$s%4$s> %2$s");
+
+        Pair<String, String> meta = getMeta(event.getPlayer());
+
+        fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', meta.getLeft()));
+        fmat = StringUtils.replace(fmat, "%4$s", ChatColor.translateAlternateColorCodes('&', meta.getRight()));
         event.setFormat(fmat);
         // LP API for prefixes end
 
@@ -158,6 +158,24 @@ public class ChannelsModule implements Module {
 
             String format = color + "[Team] " + ChatColor.RESET + event.getFormat();
             event.setFormat(format);
+        }
+    }
+
+    /**
+     * Return a pair of suffix and prefix
+     * @param p player
+     * @return Pair, left - prefix, right - suffix
+     */
+    public static Pair<String, String> getMeta(Player p) {
+        try {
+            LuckPermsApi api = LuckPerms.getApi();
+            UserData cache = Objects.requireNonNull(api.getUser(p.getUniqueId())).getCachedData();
+            String prefix = cache.getMetaData(Contexts.global()).getPrefix();
+            String suffix = cache.getMetaData(Contexts.global()).getSuffix();
+            return Pair.of(prefix, suffix);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Pair.of("", "");
         }
     }
 }
