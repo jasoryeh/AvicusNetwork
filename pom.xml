@@ -51,7 +51,7 @@
     </repository>
     <!-- LibsDisguises && md-5 -->
     <repository>
-      <id>m5-5-repo</id>
+      <id>md-5-repo</id>
       <url>https://repo.md-5.net/content/groups/public/</url>
     </repository>
     <!-- Buycraft -->
