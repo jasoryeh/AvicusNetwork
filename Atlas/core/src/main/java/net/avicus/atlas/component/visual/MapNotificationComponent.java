@@ -93,15 +93,17 @@ public class MapNotificationComponent implements ListenerModule {
             return;
         }
 
+        // Chat message welcome
         event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
         this.welcome(this.infoCache).forEach(event.getPlayer()::sendMessage);
+        event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
 
+        // Title welcome
         Pair<Localizable, Localizable> welcomeTitle = this.welcomeTitle(this.infoCache);
         event.getPlayer().sendTitle(
                 new Title(welcomeTitle.getLeft().translate(event.getPlayer().getLocale()),
                         welcomeTitle.getRight().translate(event.getPlayer().getLocale())));
 
-        event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
     }
 
     private Localizable currentlyPlaying(List<UnlocalizedComponent> info) {
