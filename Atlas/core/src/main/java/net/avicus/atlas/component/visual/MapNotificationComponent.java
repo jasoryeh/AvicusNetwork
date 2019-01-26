@@ -98,8 +98,8 @@ public class MapNotificationComponent implements ListenerModule {
 
         Pair<Localizable, Localizable> welcomeTitle = this.welcomeTitle(this.infoCache);
         event.getPlayer().sendTitle(
-                new Title(welcomeTitle.getLeft().translate(event.getPlayer()),
-                        welcomeTitle.getRight().translate(event.getPlayer())));
+                new Title(welcomeTitle.getLeft().translate(event.getPlayer().getLocale()),
+                        welcomeTitle.getRight().translate(event.getPlayer().getLocale())));
 
         event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
     }
