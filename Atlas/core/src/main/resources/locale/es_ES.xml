@@ -83,7 +83,7 @@
         <chat-team-enabled>Ahora estás hablando en el chat de tu equipo.</chat-team-enabled>
         <more-players-needed>Se necesitan ({0}) jugadores más para empezar la partida.
         </more-players-needed>
-        <waiting-for-more>Esperando a más jugadores para empezar la partida.</waiting-for-more>
+        <waiting-for-more>Esperando a más jugadores ({0}) para empezar la partida.</waiting-for-more>
         <balance-needed>Los equipos deben estar balanceados para empezar la partida.</balance-needed>
         <state-change>El estado de la partida ha cambiado de {0} a {1}.</state-change>
         <joined>Has entrado a {0}.</joined>
@@ -205,6 +205,7 @@
         <maps>Mapas ({0}/{1})</maps>
         <match>Partida en {0}</match>
         <by>{0} por {1}</by>
+        <waiting>Esperando a los jugadores</waiting>
         <authors>Autores</authors>
         <contributors>Ayudantes</contributors>
         <tips>Consejos</tips>
@@ -214,6 +215,10 @@
             <line-1>Bienvenido a {0} {1}!</line-1>
             <line-2>Este mapa fue hecho por {0}, y es un mapa {1}.</line-2>
         </welcome>
+        <welcome-title>
+            <line-1>Jugando ahora {0} v{1}</line-1>
+            <line-2>un {0} mapa por {1}!</line-2>
+        </welcome-title>
         <team-lost>Tu equipo perdió. ☹</team-lost>
         <team-won>Tu equipo ganó! ☻</team-won>
         <winners>Ganadores</winners>
