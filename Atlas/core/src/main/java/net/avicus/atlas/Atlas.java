@@ -265,6 +265,7 @@ public class Atlas extends JavaPlugin {
             Class.forName("com.sk89q.worldedit.WorldEdit");
             registrar.register(WorldEditCommands.class);
         } catch (ClassNotFoundException ignored) {
+            getLogger().info("WorldEdit is not enabled!");
         }
     }
 
