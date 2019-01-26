@@ -138,6 +138,6 @@ public class MapNotificationComponent implements ListenerModule {
         UnlocalizedComponent types = info.get(3);
 
         return Pair.of(Messages.UI_WELCOME_TITLE_LINE_1.with(org.bukkit.ChatColor.GOLD, name, version),
-                Messages.UI_WELCOME_TITLE_LINE_2.with(org.bukkit.ChatColor.WHITE, authors, types));
+                Messages.UI_WELCOME_TITLE_LINE_2.with(org.bukkit.ChatColor.WHITE, types, authors));
     }
 }
