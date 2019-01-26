@@ -22,7 +22,9 @@ import net.avicus.magma.module.ListenerModule;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.event.EventHandler;
+import org.github.paperspigot.Title;
 
 /**
  * General utility to send information about the currently playing map to users.
@@ -93,6 +95,12 @@ public class MapNotificationComponent implements ListenerModule {
 
         event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
         this.welcome(this.infoCache).forEach(event.getPlayer()::sendMessage);
+
+        Pair<Localizable, Localizable> welcomeTitle = this.welcomeTitle(this.infoCache);
+        event.getPlayer().sendTitle(
+                new Title(welcomeTitle.getLeft().translate(event.getPlayer()),
+                        welcomeTitle.getRight().translate(event.getPlayer())));
+
         event.getPlayer().sendMessage(Strings.blankLine(org.bukkit.ChatColor.GRAY));
     }
 
@@ -112,5 +120,20 @@ public class MapNotificationComponent implements ListenerModule {
 
         return Arrays.asList(Messages.UI_WELCOME_LINE_1.with(org.bukkit.ChatColor.GOLD, name, version),
                 Messages.UI_WELCOME_LINE_2.with(org.bukkit.ChatColor.GOLD, authors, types));
+    }
+
+    /**
+     * Returns a pair with title and subtitle
+     * @param info infocache
+     * @return A Pair, containing on left - Title, and Right - Subtitle
+     */
+    private Pair<Localizable, Localizable> welcomeTitle(List<UnlocalizedComponent> info) {
+        UnlocalizedComponent name = info.get(0);
+        UnlocalizedComponent authors = info.get(1);
+        UnlocalizedComponent version = info.get(2);
+        UnlocalizedComponent types = info.get(3);
+
+        return Pair.of(Messages.UI_WELCOME_LINE_1.with(org.bukkit.ChatColor.BOLD, name, version),
+                Messages.UI_WELCOME_LINE_2.with(org.bukkit.ChatColor.WHITE, authors, types));
     }
 }

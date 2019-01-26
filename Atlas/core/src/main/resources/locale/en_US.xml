@@ -206,6 +206,10 @@
             <line-1>Welcome to {0} {1}!</line-1>
             <line-2>This map was made by {0}, and it is a {1} map.</line-2>
         </welcome>
+        <welcome-title>
+            <line-1>Now playing {0} v{1}</line-1>
+            <line-2>A {1} map by {0}!</line-2>
+        </welcome-title>
         <team-lost>The team you were on lost. ☹</team-lost>
         <team-won>The team you were on won! ☻</team-won>
         <winners>Winners</winners>

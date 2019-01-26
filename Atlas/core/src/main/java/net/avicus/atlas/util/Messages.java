@@ -207,6 +207,8 @@ public class Messages {
     public static final LocalizedFormat UI_CURRENTLY_PLAYING = get("ui", "currently-playing");
     public static final LocalizedFormat UI_WELCOME_LINE_1 = get("ui", "welcome", "line-1");
     public static final LocalizedFormat UI_WELCOME_LINE_2 = get("ui", "welcome", "line-2");
+    public static final LocalizedFormat UI_WELCOME_TITLE_LINE_1 = get("ui", "welcome-title", "line-1");
+    public static final LocalizedFormat UI_WELCOME__TITLE_LINE_2 = get("ui", "welcome-title", "line-2");
     public static final LocalizedFormat UI_WINS = get("ui", "wins");
     public static final LocalizedFormat UI_TEAM_LOST = get("ui", "team-lost");
     public static final LocalizedFormat UI_TEAM_WON = get("ui", "team-won");
