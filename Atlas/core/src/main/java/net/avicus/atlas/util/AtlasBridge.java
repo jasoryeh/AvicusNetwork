@@ -82,8 +82,7 @@ public interface AtlasBridge {
                     .map(Competitor::getChatColor).orElse(group.getChatColor());
             final String bold = viewer.equals(player) ? ChatColor.BOLD.toString() : "";
 
-            final String prefix = ChatColor.translateAlternateColorCodes('&', ChannelsModule.getMeta(player).getLeft());
-            return prefix + ChatColor.RESET + color + bold + player.getName() + ChatColor.RESET;
+            return color + bold + player.getName() + ChatColor.RESET;
         }
     }
 }
