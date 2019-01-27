@@ -140,8 +140,8 @@ public class ChannelsModule implements Module {
         Pair<String, String> meta = getMeta(event.getPlayer());
 
         fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', meta.getLeft()));
-        fmat = StringUtils.replace(fmat, "%4$s", PrestigeModule.getPrefix(event.getPlayer(), true)
-                + ChatColor.translateAlternateColorCodes('&', meta.getRight()));
+        fmat = StringUtils.replace(fmat, "%4$s", PrestigeModule.getPrefix(event.getPlayer(), false)
+                + ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', meta.getRight()));
         event.setFormat(fmat);
         // LP API for prefixes end
 
