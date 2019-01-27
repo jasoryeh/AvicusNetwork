@@ -116,4 +116,20 @@ public final class StringUtil {
         }
         return String.valueOf(chars);
     }
+
+    private static ChatColor color(int here, int max) {
+        double dec = ((double) here) / ((double) max);
+
+        if (dec <= 0.25) {
+            return ChatColor.RED;
+        } else if (dec <= 0.5) {
+            return ChatColor.GOLD;
+        } else if (dec <= 0.75) {
+            return ChatColor.YELLOW;
+        } else if (dec <= 1) {
+            return ChatColor.GREEN;
+        } else {
+            return ChatColor.WHITE;
+        }
+    }
 }
