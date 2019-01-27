@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.avicus.atlas.match.Match;
+import net.avicus.atlas.module.channels.ChannelsModule;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
@@ -80,7 +81,9 @@ public interface AtlasBridge {
             final ChatColor color = match.getRequiredModule(GroupsModule.class).getCompetitorOf(player)
                     .map(Competitor::getChatColor).orElse(group.getChatColor());
             final String bold = viewer.equals(player) ? ChatColor.BOLD.toString() : "";
-            return color + bold + player.getName() + ChatColor.RESET;
+
+            final String prefix = ChatColor.translateAlternateColorCodes('&', ChannelsModule.getMeta(player).getLeft());
+            return prefix + ChatColor.RESET + color + bold + player.getName() + ChatColor.RESET;
         }
     }
 }
