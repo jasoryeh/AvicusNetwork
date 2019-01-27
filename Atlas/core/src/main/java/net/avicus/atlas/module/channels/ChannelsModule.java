@@ -172,8 +172,8 @@ public class ChannelsModule implements Module {
             UserData cache = Objects.requireNonNull(api.getUser(p.getUniqueId())).getCachedData();
             String prefix = cache.getMetaData(Contexts.global()).getPrefix();
             String suffix = cache.getMetaData(Contexts.global()).getSuffix();
-            Preconditions.checkNotNull(prefix, "Prefix is null");
-            Preconditions.checkNotNull(suffix, "Suffix is null");
+            prefix = prefix != null ? prefix : "";
+            suffix = suffix != null ? suffix : "";
             return Pair.of(prefix, suffix);
         } catch (Exception e) {
             e.printStackTrace();
