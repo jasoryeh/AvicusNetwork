@@ -18,6 +18,7 @@ import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
+import net.avicus.magma.module.prestige.PrestigeModule;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
@@ -139,7 +140,8 @@ public class ChannelsModule implements Module {
         Pair<String, String> meta = getMeta(event.getPlayer());
 
         fmat = StringUtils.replace(fmat, "%3$s", ChatColor.translateAlternateColorCodes('&', meta.getLeft()));
-        fmat = StringUtils.replace(fmat, "%4$s", ChatColor.translateAlternateColorCodes('&', meta.getRight()));
+        fmat = StringUtils.replace(fmat, "%4$s", PrestigeModule.getPrefix(event.getPlayer(), true)
+                + ChatColor.translateAlternateColorCodes('&', meta.getRight()));
         event.setFormat(fmat);
         // LP API for prefixes end
 
