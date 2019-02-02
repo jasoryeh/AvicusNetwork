@@ -6,12 +6,17 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.match.MatchFactory;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.AtlasTask;
+import net.avicus.atlas.util.Translations;
 import net.avicus.atlas.util.xml.XmlElement;
+import net.avicus.compendium.locale.text.Localizable;
+import net.avicus.compendium.locale.text.UnlocalizedText;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -63,5 +68,62 @@ public class DamageTrackModule implements Module {
         }
 
         damagesTrack.put(attacker.getUniqueId(), dmgs);
+    }
+
+    public void reset(Player reset) {
+        damagesTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
+    }
+
+    public Map<UUID, Double> damageTo(Player to) {
+        Map<UUID, Double> result = new HashMap<>();
+        damagesTrack.forEach((uuid1, chm) -> {
+            chm.forEach((uuid2, ad) -> {
+                if(uuid2 == to.getUniqueId()) {
+                    result.put(uuid1, ad.get());
+                }
+            });
+        });
+        return result;
+    }
+
+    public Map<UUID, Double> damageFrom(Player from) {
+        Map<UUID, Double> result = new HashMap<>();
+        damagesTrack.get(from.getUniqueId()).forEach((uuid, damage) -> {
+            result.put(uuid, damage.get());
+        });
+        return result;
+    }
+
+    public List<Localizable> getPlayerPVPRecap(Player showTo) {
+        List<Localizable> result = new ArrayList<>();
+
+        Map<UUID, Double> damagefromviewer = damageFrom(showTo);
+        Map<UUID, Double> damagetoviewer = damageFrom(showTo);
+
+        //
+        result.add(new UnlocalizedText(""));
+        result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
+        damagefromviewer.forEach((uuid, dmg) -> {
+            Player resolvePlayer = Bukkit.getPlayer(uuid);
+            if(resolvePlayer == null) {
+                // Skip -- unresolvable
+                return;
+            }
+            result.add(Translations.STATS_RECAP_DAMAGE_TO.with(ChatColor.AQUA, dmg.toString(), resolvePlayer.getDisplayName()));
+        });
+
+        //
+        result.add(new UnlocalizedText(""));
+        result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
+        damagetoviewer.forEach((uuid, dmg) -> {
+            Player resolvePlayer = Bukkit.getPlayer(uuid);
+            if(resolvePlayer == null) {
+                // Skip -- unresolvable
+                return;
+            }
+            result.add(Translations.STATS_RECAP_DAMAGE_FROM.with(ChatColor.AQUA, dmg.toString(), resolvePlayer.getDisplayName()));
+        });
+
+        return result;
     }
 }

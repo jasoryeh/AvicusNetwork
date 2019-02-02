@@ -14,6 +14,7 @@ import net.avicus.atlas.module.BridgeableModule;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.ModuleBridge;
 import net.avicus.atlas.module.channels.ChannelsModule;
+import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.atlas.module.stats.action.ActionStore;
 import net.avicus.atlas.module.stats.action.lifetime.LifetimeDisplayUtils;
 import net.avicus.atlas.module.stats.action.lifetime.LifetimeStore;
@@ -100,14 +101,18 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
                     .translate(event.getPlayer().getLocale());
 
             List<Localizable> melee = LifetimeDisplayUtils.getMeleeDisplay(lifetime);
-            List<Localizable> objectives = LifetimeDisplayUtils
-                    .getObjectiveDisplay(lifetime, event.getPlayer());
+            List<Localizable> objectives = LifetimeDisplayUtils.getObjectiveDisplay(lifetime, event.getPlayer());
+
+            DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
+            List<Localizable> damage = trackModule.getPlayerPVPRecap(event.getPlayer());
+
             if (melee.size() + objectives.size() > 0) {
                 event.getPlayer().sendMessage(Strings
                         .padTextComponent(name, " ", ChatColor.DARK_AQUA.toString() + ChatColor.STRIKETHROUGH,
                                 ChatColor.BLUE));
                 melee.forEach(event.getPlayer()::sendMessage);
                 objectives.forEach(event.getPlayer()::sendMessage);
+                damage.forEach(event.getPlayer()::sendMessage);
             }
         }
     }

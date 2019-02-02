@@ -16,6 +16,7 @@ import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.checks.CheckContext;
 import net.avicus.atlas.module.checks.variable.GroupVariable;
 import net.avicus.atlas.module.checks.variable.PlayerVariable;
+import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.loadouts.Loadout;
@@ -96,6 +97,10 @@ public class SpawnsModule implements Module {
         PlayerSpawnCompleteEvent completeEvent = new PlayerSpawnCompleteEvent(call);
         Events.call(completeEvent);
         this.spawningPlayers.remove(player);
+
+        // Reset damage tracker
+        DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
+        trackModule.reset(player);
     }
 
     public void spawn(Player player) {
