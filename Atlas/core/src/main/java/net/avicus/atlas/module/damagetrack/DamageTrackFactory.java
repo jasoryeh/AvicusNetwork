@@ -17,6 +17,6 @@ public class DamageTrackFactory implements ModuleFactory<DamageTrackModule> {
 
     @Override
     public Optional<DamageTrackModule> build(Match match, MatchFactory factory, XmlElement root) throws ModuleBuildException {
-        return Optional.of(new DamageTrackModule(match, factory, root));
+        return Optional.of(new DamageTrackModule(match));
     }
 }

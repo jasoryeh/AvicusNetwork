@@ -3,11 +3,9 @@ package net.avicus.atlas.module.damagetrack;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
 import net.avicus.atlas.match.Match;
-import net.avicus.atlas.match.MatchFactory;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Translations;
-import net.avicus.atlas.util.xml.XmlElement;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import org.bukkit.Bukkit;
@@ -26,19 +24,15 @@ public class DamageTrackModule implements Module {
 
     @Getter
     private final Match match;
-    private final MatchFactory factory;
-    private final XmlElement root;
+    @Getter
+    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesTrack;
 
-    public DamageTrackModule(Match match, MatchFactory factory, XmlElement root) {
+
+    public DamageTrackModule(Match match) {
         this.match = match;
-        this.factory = factory;
-        this.root = root;
 
         this.damagesTrack = new ConcurrentHashMap<>();
     }
-
-    @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesTrack;
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent damageEvent) {
@@ -76,7 +70,9 @@ public class DamageTrackModule implements Module {
         if((damageEvent.getEntity() instanceof Player)) {
            return;
         }
-        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK);
+        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
 
         Player player = ((Player) damageEvent.getEntity());
 
