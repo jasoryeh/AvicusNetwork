@@ -119,6 +119,7 @@ public class AutoStartingCountdown extends StartingCountdown {
                     // Broadcast
                     this.match.broadcast(Messages.GENERIC_BALANCE_NEEDED.with(ChatColor.WHITE));
                 }
+                // click
                 AtlasTask.of(() -> this.match.getPlayers().forEach(p -> p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F))).nowAsync();
             }
 
