@@ -93,6 +93,12 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
 
     @EventHandler
     public void showLifeRecap(PlayerDeathEvent event) {
+        // Display stats then recap
+        DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
+        List<Localizable> damage = trackModule.getPlayerPVPRecap(event.getPlayer());
+        damage.forEach(event.getPlayer()::sendMessage);
+
+        // Recap
         PlayerLifetime lifetime = this.store.getLifetimeStore()
                 .getCurrentLifetime(event.getPlayer(), false);
         if (lifetime != null) {
@@ -111,10 +117,6 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
                 objectives.forEach(event.getPlayer()::sendMessage);
             }
         }
-        
-        DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
-        List<Localizable> damage = trackModule.getPlayerPVPRecap(event.getPlayer());
-        damage.forEach(event.getPlayer()::sendMessage);
     }
 
     @EventHandler
