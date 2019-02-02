@@ -15,12 +15,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 public class DamageTrackModule implements Module {
+    public static final UUID ENVIRONMENT = new UUID(0, 0);
 
     @Getter
     private final Match match;
@@ -69,6 +71,31 @@ public class DamageTrackModule implements Module {
         damagesTrack.put(attacker.getUniqueId(), dmgs);
     }
 
+    @EventHandler
+    public void onEnvironmentDamage(EntityDamageEvent damageEvent) {
+        if((damageEvent.getEntity() instanceof Player)) {
+           return;
+        }
+        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK);
+
+        Player player = ((Player) damageEvent.getEntity());
+
+        if(!damagesTrack.contains(ENVIRONMENT)) {
+            damagesTrack.put(ENVIRONMENT, new ConcurrentHashMap<>());
+        }
+
+        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesTrack.get(ENVIRONMENT);
+
+        if(dmgs.contains(player)) {
+            dmgs.put(player.getUniqueId(), new AtomicDouble(dmgs.get(player.getUniqueId()).get()
+                    + damageEvent.getDamage()));
+        } else {
+            dmgs.put(player.getUniqueId(), new AtomicDouble(damageEvent.getDamage()));
+        }
+
+        damagesTrack.put(ENVIRONMENT, dmgs);
+    }
+
     public void reset(Player reset) {
         damagesTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
     }
@@ -104,6 +131,12 @@ public class DamageTrackModule implements Module {
 
         result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
         damagefromviewer.forEach((uuid, dmg) -> {
+            if(uuid == ENVIRONMENT) {
+                result.add(Translations.STATS_RECAP_DAMAGE_TO
+                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
+                                Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
+                                        .translate(showTo).toLegacyText()));
+            }
             Player resolvePlayer = Bukkit.getPlayer(uuid);
             if(resolvePlayer == null) {
                 // Skip -- unresolvable
@@ -117,6 +150,12 @@ public class DamageTrackModule implements Module {
         result.add(new UnlocalizedText(""));
         result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
         damagetoviewer.forEach((uuid, dmg) -> {
+            if(uuid == ENVIRONMENT) {
+                result.add(Translations.STATS_RECAP_DAMAGE_FROM
+                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
+                                Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
+                                        .translate(showTo).toLegacyText()));
+            }
             Player resolvePlayer = Bukkit.getPlayer(uuid);
             if(resolvePlayer == null) {
                 // Skip -- unresolvable

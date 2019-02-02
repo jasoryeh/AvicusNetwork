@@ -547,6 +547,7 @@
                 <damage-taken>Damage taken</damage-taken>
                 <from>{0} taken from {1}</from>
                 <to>{0} given to {1}</to>
+                <environment>Environment</environment>
             </damage>
         </recap>
         <damage>

@@ -77,6 +77,7 @@ public final class Translations {
     public static final LocalizedFormat STATS_RECAP_DAMAGE_DAMAGETAKEN = $NULL$;
     public static final LocalizedFormat STATS_RECAP_DAMAGE_FROM = $NULL$;
     public static final LocalizedFormat STATS_RECAP_DAMAGE_TO = $NULL$;
+    public static final LocalizedFormat STATS_RECAP_DAMAGE_ENVIRONMENT = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_KILLS = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_CAUSE_WEAPON = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_CAUSE_BOW = $NULL$;
