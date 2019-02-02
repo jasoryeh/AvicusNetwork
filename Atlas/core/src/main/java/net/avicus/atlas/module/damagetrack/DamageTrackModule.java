@@ -67,7 +67,7 @@ public class DamageTrackModule implements Module {
 
     @EventHandler
     public void onEnvironmentDamage(EntityDamageEvent damageEvent) {
-        if((damageEvent.getEntity() instanceof Player)) {
+        if(!(damageEvent.getEntity() instanceof Player)) {
            return;
         }
         if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
