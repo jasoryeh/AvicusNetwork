@@ -98,7 +98,7 @@ public class DamageTrackModule implements Module {
         List<Localizable> result = new ArrayList<>();
 
         Map<UUID, Double> damagefromviewer = damageFrom(showTo);
-        Map<UUID, Double> damagetoviewer = damageFrom(showTo);
+        Map<UUID, Double> damagetoviewer = damageTo(showTo);
 
         //
         result.add(new UnlocalizedText(""));
