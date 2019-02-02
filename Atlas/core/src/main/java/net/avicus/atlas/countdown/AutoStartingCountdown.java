@@ -7,6 +7,7 @@ import net.avicus.atlas.AtlasConfig;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
+import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizableFormat;
@@ -16,6 +17,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.joda.time.Duration;
 
 /**
@@ -117,6 +119,7 @@ public class AutoStartingCountdown extends StartingCountdown {
                     // Broadcast
                     this.match.broadcast(Messages.GENERIC_BALANCE_NEEDED.with(ChatColor.WHITE));
                 }
+                AtlasTask.of(() -> this.match.getPlayers().forEach(p -> p.playSound(p.getLocation(), Sound.CLICK, 1F, 1F))).nowAsync();
             }
 
             this.resetElapsedTime();
