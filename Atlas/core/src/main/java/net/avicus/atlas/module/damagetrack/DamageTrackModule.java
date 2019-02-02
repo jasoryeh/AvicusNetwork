@@ -60,9 +60,8 @@ public class DamageTrackModule implements Module {
         ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesTrack.get(attacker.getUniqueId());
 
         if(dmgs.contains(defender.getUniqueId())) {
-            AtomicDouble previousDamage = dmgs.get(defender.getUniqueId());
-            previousDamage.addAndGet(damageDealt);
-            dmgs.put(defender.getUniqueId(), previousDamage);
+            dmgs.put(defender.getUniqueId(), new AtomicDouble(dmgs.get(defender.getUniqueId()).get()
+                    + damageDealt));
         } else {
             dmgs.put(defender.getUniqueId(), new AtomicDouble(damageDealt));
         }
@@ -102,9 +101,7 @@ public class DamageTrackModule implements Module {
 
         //
         result.add(new UnlocalizedText(""));
-        result.add(new UnlocalizedText(""));
-        result.add(new UnlocalizedText(""));
-        result.add(new UnlocalizedText(""));
+
         result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
         damagefromviewer.forEach((uuid, dmg) -> {
             Player resolvePlayer = Bukkit.getPlayer(uuid);
@@ -128,8 +125,6 @@ public class DamageTrackModule implements Module {
             result.add(Translations.STATS_RECAP_DAMAGE_FROM
                     .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
         });
-        result.add(new UnlocalizedText(""));
-        result.add(new UnlocalizedText(""));
         result.add(new UnlocalizedText(""));
 
         return result;
