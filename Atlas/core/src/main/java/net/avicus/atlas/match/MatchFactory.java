@@ -29,6 +29,7 @@ import net.avicus.atlas.module.checks.ChecksFactory;
 import net.avicus.atlas.module.chests.ChestsFactory;
 import net.avicus.atlas.module.compass.CompassFactory;
 import net.avicus.atlas.module.damage.DamageFactory;
+import net.avicus.atlas.module.damagetrack.DamageTrackFactory;
 import net.avicus.atlas.module.decay.DecayFactory;
 import net.avicus.atlas.module.display.DisplayFactory;
 import net.avicus.atlas.module.doublekill.DoubleKillFactory;
@@ -95,6 +96,7 @@ public class MatchFactory {
         this.register(KitsFactory.class);
         this.register(CompassFactory.class);
         this.register(DamageFactory.class);
+        this.register(DamageTrackFactory.class);
         this.register(DecayFactory.class);
         this.register(DisplayFactory.class);
         this.register(DoubleKillFactory.class);
