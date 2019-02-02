@@ -102,6 +102,9 @@ public class DamageTrackModule implements Module {
 
         //
         result.add(new UnlocalizedText(""));
+        result.add(new UnlocalizedText(""));
+        result.add(new UnlocalizedText(""));
+        result.add(new UnlocalizedText(""));
         result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
         damagefromviewer.forEach((uuid, dmg) -> {
             Player resolvePlayer = Bukkit.getPlayer(uuid);
@@ -109,7 +112,8 @@ public class DamageTrackModule implements Module {
                 // Skip -- unresolvable
                 return;
             }
-            result.add(Translations.STATS_RECAP_DAMAGE_TO.with(ChatColor.AQUA, dmg.toString(), resolvePlayer.getDisplayName()));
+            result.add(Translations.STATS_RECAP_DAMAGE_TO
+                    .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
         });
 
         //
@@ -121,8 +125,12 @@ public class DamageTrackModule implements Module {
                 // Skip -- unresolvable
                 return;
             }
-            result.add(Translations.STATS_RECAP_DAMAGE_FROM.with(ChatColor.AQUA, dmg.toString(), resolvePlayer.getDisplayName()));
+            result.add(Translations.STATS_RECAP_DAMAGE_FROM
+                    .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
         });
+        result.add(new UnlocalizedText(""));
+        result.add(new UnlocalizedText(""));
+        result.add(new UnlocalizedText(""));
 
         return result;
     }
