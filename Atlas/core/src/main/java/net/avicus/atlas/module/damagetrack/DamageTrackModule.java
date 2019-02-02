@@ -40,7 +40,7 @@ public class DamageTrackModule implements Module {
                 !(damageEvent.getDamager() instanceof Player)) {
             if(!(damageEvent.getDamager() instanceof Projectile)) {
                 return;
-            } else {
+            } else if(damageEvent.getDamager() instanceof Projectile) {
                 Projectile projectile = ((Projectile) damageEvent.getEntity());
                 if(projectile.getShooter() instanceof Player) {
                     Player attacker = ((Player) projectile.getShooter());
@@ -49,6 +49,8 @@ public class DamageTrackModule implements Module {
 
                     AtlasTask.of(() -> this.trackDamage(attacker, defender, damage)).nowAsync();
                 }
+            } else {
+                return;
             }
         }
 
