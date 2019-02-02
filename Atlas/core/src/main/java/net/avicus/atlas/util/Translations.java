@@ -73,6 +73,10 @@ public final class Translations {
 
     public static final LocalizedFormat STATS_RECAP_MATCH = $NULL$;
     public static final LocalizedFormat STATS_RECAP_LIFE = $NULL$;
+    public static final LocalizedFormat STATS_RECAP_DAMAGE_DAMAGEGIVEN = $NULL$;
+    public static final LocalizedFormat STATS_RECAP_DAMAGE_DAMAGETAKEN = $NULL$;
+    public static final LocalizedFormat STATS_RECAP_DAMAGE_FROM = $NULL$;
+    public static final LocalizedFormat STATS_RECAP_DAMAGE_TO = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_KILLS = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_CAUSE_WEAPON = $NULL$;
     public static final LocalizedFormat STATS_DAMAGE_KILLS_CAUSE_BOW = $NULL$;
@@ -117,6 +121,7 @@ public final class Translations {
          * Add additional languages here
          */
         BUNDLE = TranslationProvider.loadBundle(Atlas.get(), "en_US", "es_ES");
+        // Theoretically sets the translations above?!?!?!
         TranslationProvider.map(Translations.class, BUNDLE);
     }
 

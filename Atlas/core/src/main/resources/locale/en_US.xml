@@ -549,6 +549,12 @@
         <recap>
             <match>Match Recap</match>
             <life>Life Recap</life>
+            <damage>
+                <damagegiven>Damage given</damagegiven>
+                <damagetaken>Damage taken</damagetaken>
+                <from>{0} taken from {1}</from>
+                <to>{0} given to {1}</to>
+            </damage>
         </recap>
         <damage>
             <kills>
