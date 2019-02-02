@@ -36,7 +36,7 @@ public class DamageTrackModule implements Module {
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent damageEvent) {
-        if(!(damageEvent.getEntity() instanceof Player) &&
+        if(!(damageEvent.getEntity() instanceof Player) ||
                 !(damageEvent.getDamager() instanceof Player)) {
             return;
         }
