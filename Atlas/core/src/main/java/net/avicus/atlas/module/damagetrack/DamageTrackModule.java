@@ -10,7 +10,7 @@ import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -38,7 +38,18 @@ public class DamageTrackModule implements Module {
     public void onAttack(EntityDamageByEntityEvent damageEvent) {
         if(!(damageEvent.getEntity() instanceof Player) ||
                 !(damageEvent.getDamager() instanceof Player)) {
-            return;
+            if(!(damageEvent.getDamager() instanceof Projectile)) {
+                return;
+            } else {
+                Projectile projectile = ((Projectile) damageEvent.getEntity());
+                if(projectile.getShooter() instanceof Player) {
+                    Player attacker = ((Player) projectile.getShooter());
+                    Player defender = ((Player) damageEvent.getEntity());
+                    double damage = damageEvent.getDamage();
+
+                    AtlasTask.of(() -> this.trackDamage(attacker, defender, damage)).nowAsync();
+                }
+            }
         }
 
         Player attacker = ((Player) damageEvent.getDamager());
@@ -70,7 +81,8 @@ public class DamageTrackModule implements Module {
         if(!(damageEvent.getEntity() instanceof Player)) {
            return;
         }
-        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
+                damageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
 
