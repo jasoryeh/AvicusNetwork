@@ -1,6 +1,5 @@
 package net.avicus.atlas.module.damagetrack;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
@@ -30,13 +29,13 @@ public class DamageTrackModule implements Module {
      * A non-permanent, but temporary storage of damage done to other players.
      */
     @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesToOthersTrack;
+    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, Double>> damagesToOthersTrack;
     /**
      * Thread safe map of a list of players the player(key) has received damage from.
      * A non-permanent, but temporary storage of damage received from other players.
      */
     @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesFromOthersTrack;
+    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, Double>> damagesFromOthersTrack;
 
 
     public DamageTrackModule(Match match) {
@@ -81,21 +80,19 @@ public class DamageTrackModule implements Module {
             damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
         }
 
-        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
-        ConcurrentHashMap<UUID, AtomicDouble> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
+        ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
+        ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
         if(dmgs.contains(defender.getUniqueId())) {
-            dmgs.put(defender.getUniqueId(), new AtomicDouble(dmgs.get(defender.getUniqueId()).get()
-                    + damageDealt));
+            dmgs.put(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageDealt);
         } else {
-            dmgs.put(defender.getUniqueId(), new AtomicDouble(damageDealt));
+            dmgs.put(defender.getUniqueId(), damageDealt);
         }
 
         if(rcvd.contains(attacker.getUniqueId())) {
-            rcvd.put(attacker.getUniqueId(), new AtomicDouble(rcvd.get(defender.getUniqueId()).get()
-                    + damageDealt));
+            rcvd.put(attacker.getUniqueId(), rcvd.get(defender.getUniqueId()) + damageDealt);
         } else {
-            rcvd.put(attacker.getUniqueId(), new AtomicDouble(damageDealt));
+            rcvd.put(attacker.getUniqueId(), damageDealt);
         }
 
         damagesToOthersTrack.put(attacker.getUniqueId(), dmgs);
@@ -121,21 +118,19 @@ public class DamageTrackModule implements Module {
             damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
         }
 
-        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
-        ConcurrentHashMap<UUID, AtomicDouble> rcvd = damagesToOthersTrack.get(defender.getUniqueId());
+        ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
+        ConcurrentHashMap<UUID, Double> rcvd = damagesToOthersTrack.get(defender.getUniqueId());
 
         if(dmgs.contains(defender)) {
-            dmgs.put(defender.getUniqueId(), new AtomicDouble(dmgs.get(defender.getUniqueId()).get()
-                    + damageEvent.getDamage()));
+            dmgs.put(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageEvent.getDamage());
         } else {
-            dmgs.put(defender.getUniqueId(), new AtomicDouble(damageEvent.getDamage()));
+            dmgs.put(defender.getUniqueId(), damageEvent.getDamage());
         }
 
         if(rcvd.contains(ENVIRONMENT)) {
-            rcvd.put(ENVIRONMENT, new AtomicDouble(dmgs.get(ENVIRONMENT).get()
-                    + damageEvent.getDamage()));
+            rcvd.put(ENVIRONMENT, dmgs.get(ENVIRONMENT) + damageEvent.getDamage());
         } else {
-            dmgs.put(ENVIRONMENT, new AtomicDouble(damageEvent.getDamage()));
+            dmgs.put(ENVIRONMENT, damageEvent.getDamage());
         }
 
         damagesToOthersTrack.put(ENVIRONMENT, dmgs);
@@ -160,7 +155,7 @@ public class DamageTrackModule implements Module {
     public Map<UUID, Double> getDamageTo(Player to) {
         Map<UUID, Double> result = new HashMap<>();
         damagesFromOthersTrack.get(to.getUniqueId()).forEach((uuid, damage) -> {
-            result.put(uuid, damage.get());
+            result.put(uuid, damage);
         });
         return result;
     }
@@ -173,7 +168,7 @@ public class DamageTrackModule implements Module {
     public Map<UUID, Double> getDamageFrom(Player from) {
         Map<UUID, Double> result = new HashMap<>();
         damagesToOthersTrack.get(from.getUniqueId()).forEach((uuid, damage) -> {
-            result.put(uuid, damage.get());
+            result.put(uuid, damage);
         });
         return result;
     }
@@ -185,9 +180,9 @@ public class DamageTrackModule implements Module {
         Map<UUID, Double> damagetoviewer = getDamageTo(showTo);
 
         //
-        result.add(new UnlocalizedText(""));
 
         if(!damagefromviewer.isEmpty()) {
+            result.add(new UnlocalizedText(""));
             result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
             damagefromviewer.forEach((uuid, dmg) -> {
                 if(uuid == ENVIRONMENT) {
@@ -206,10 +201,10 @@ public class DamageTrackModule implements Module {
             });
         }
 
-        result.add(new UnlocalizedText(""));
 
         //
         if(!damagetoviewer.isEmpty()) {
+            result.add(new UnlocalizedText(""));
             result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
             damagetoviewer.forEach((uuid, dmg) -> {
                 if(uuid == ENVIRONMENT) {
@@ -228,7 +223,9 @@ public class DamageTrackModule implements Module {
             });
         }
 
-        result.add(new UnlocalizedText(""));
+        if(!result.isEmpty()) {
+            result.add(new UnlocalizedText(""));
+        }
 
         return result;
     }
