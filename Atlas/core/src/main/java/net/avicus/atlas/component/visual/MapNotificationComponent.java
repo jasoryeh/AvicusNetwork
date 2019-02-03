@@ -87,6 +87,13 @@ public class MapNotificationComponent implements ListenerModule {
     public void onOpen(MatchOpenEvent event) {
         this.infoCache.clear();
         this.infoCache.addAll(this.getMapInfo(event.getMatch().getMap()));
+
+        event.getMatch().getPlayers().forEach(p -> {
+            Pair<Localizable, Localizable> welcomeTitle = this.welcomeTitle(this.infoCache);
+            p.sendTitle(
+                    new Title(welcomeTitle.getLeft().translate(p.getLocale()),
+                            welcomeTitle.getRight().translate(p.getLocale())));
+        });
     }
 
     @EventHandler
