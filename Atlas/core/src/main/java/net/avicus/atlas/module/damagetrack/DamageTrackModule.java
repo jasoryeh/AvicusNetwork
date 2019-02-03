@@ -24,14 +24,26 @@ public class DamageTrackModule implements Module {
 
     @Getter
     private final Match match;
+
+    /**
+     * Thread safe map of a list of players the player(key) has damaged.
+     * A non-permanent, but temporary storage of damage done to other players.
+     */
     @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesTrack;
+    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesToOthersTrack;
+    /**
+     * Thread safe map of a list of players the player(key) has received damage from.
+     * A non-permanent, but temporary storage of damage received from other players.
+     */
+    @Getter
+    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, AtomicDouble>> damagesFromOthersTrack;
 
 
     public DamageTrackModule(Match match) {
         this.match = match;
 
-        this.damagesTrack = new ConcurrentHashMap<>();
+        this.damagesToOthersTrack = new ConcurrentHashMap<>();
+        this.damagesFromOthersTrack = new ConcurrentHashMap<>();
     }
 
     @EventHandler
@@ -62,11 +74,15 @@ public class DamageTrackModule implements Module {
     }
 
     public void trackDamage(Player attacker, Player defender, double damageDealt) {
-        if(!damagesTrack.contains(attacker.getUniqueId())) {
-            damagesTrack.put(attacker.getUniqueId(), new ConcurrentHashMap<>());
+        if(!damagesToOthersTrack.contains(attacker.getUniqueId())) {
+            damagesToOthersTrack.put(attacker.getUniqueId(), new ConcurrentHashMap<>());
+        }
+        if(!damagesFromOthersTrack.contains(defender.getUniqueId())) {
+            damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
         }
 
-        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesTrack.get(attacker.getUniqueId());
+        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
+        ConcurrentHashMap<UUID, AtomicDouble> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
         if(dmgs.contains(defender.getUniqueId())) {
             dmgs.put(defender.getUniqueId(), new AtomicDouble(dmgs.get(defender.getUniqueId()).get()
@@ -75,7 +91,15 @@ public class DamageTrackModule implements Module {
             dmgs.put(defender.getUniqueId(), new AtomicDouble(damageDealt));
         }
 
-        damagesTrack.put(attacker.getUniqueId(), dmgs);
+        if(rcvd.contains(attacker.getUniqueId())) {
+            rcvd.put(attacker.getUniqueId(), new AtomicDouble(rcvd.get(defender.getUniqueId()).get()
+                    + damageDealt));
+        } else {
+            rcvd.put(attacker.getUniqueId(), new AtomicDouble(damageDealt));
+        }
+
+        damagesToOthersTrack.put(attacker.getUniqueId(), dmgs);
+        damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
     }
 
     @EventHandler
@@ -88,43 +112,61 @@ public class DamageTrackModule implements Module {
             return;
         }
 
-        Player player = ((Player) damageEvent.getEntity());
+        Player defender = ((Player) damageEvent.getEntity());
 
-        if(!damagesTrack.contains(ENVIRONMENT)) {
-            damagesTrack.put(ENVIRONMENT, new ConcurrentHashMap<>());
+        if(!damagesToOthersTrack.contains(ENVIRONMENT)) {
+            damagesToOthersTrack.put(ENVIRONMENT, new ConcurrentHashMap<>());
+        }
+        if(!damagesFromOthersTrack.contains(defender.getUniqueId())) {
+            damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
         }
 
-        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesTrack.get(ENVIRONMENT);
+        ConcurrentHashMap<UUID, AtomicDouble> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
+        ConcurrentHashMap<UUID, AtomicDouble> rcvd = damagesToOthersTrack.get(defender.getUniqueId());
 
-        if(dmgs.contains(player)) {
-            dmgs.put(player.getUniqueId(), new AtomicDouble(dmgs.get(player.getUniqueId()).get()
+        if(dmgs.contains(defender)) {
+            dmgs.put(defender.getUniqueId(), new AtomicDouble(dmgs.get(defender.getUniqueId()).get()
                     + damageEvent.getDamage()));
         } else {
-            dmgs.put(player.getUniqueId(), new AtomicDouble(damageEvent.getDamage()));
+            dmgs.put(defender.getUniqueId(), new AtomicDouble(damageEvent.getDamage()));
         }
 
-        damagesTrack.put(ENVIRONMENT, dmgs);
+        if(rcvd.contains(ENVIRONMENT)) {
+            rcvd.put(ENVIRONMENT, new AtomicDouble(dmgs.get(ENVIRONMENT).get()
+                    + damageEvent.getDamage()));
+        } else {
+            dmgs.put(ENVIRONMENT, new AtomicDouble(damageEvent.getDamage()));
+        }
+
+        damagesToOthersTrack.put(ENVIRONMENT, dmgs);
+        damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
     }
 
     public void reset(Player reset) {
-        damagesTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
+        damagesToOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
     }
 
-    public Map<UUID, Double> damageTo(Player to) {
+    /**
+     * Get damages done to a player
+     * @param to player to find damages dealt to them from others
+     * @return map of all players that have attacked the player
+     */
+    public Map<UUID, Double> getDamageTo(Player to) {
         Map<UUID, Double> result = new HashMap<>();
-        damagesTrack.forEach((uuid1, chm) -> {
-            chm.forEach((uuid2, ad) -> {
-                if(uuid2 == to.getUniqueId()) {
-                    result.put(uuid1, ad.get());
-                }
-            });
+        damagesFromOthersTrack.get(to.getUniqueId()).forEach((uuid, damage) -> {
+            result.put(uuid, damage.get());
         });
         return result;
     }
 
-    public Map<UUID, Double> damageFrom(Player from) {
+    /**
+     * Get damages done from a player
+     * @param from player to find damages they dealt to others
+     * @return map of all players that the player has attacked
+     */
+    public Map<UUID, Double> getDamageFrom(Player from) {
         Map<UUID, Double> result = new HashMap<>();
-        damagesTrack.get(from.getUniqueId()).forEach((uuid, damage) -> {
+        damagesToOthersTrack.get(from.getUniqueId()).forEach((uuid, damage) -> {
             result.put(uuid, damage.get());
         });
         return result;
@@ -133,8 +175,8 @@ public class DamageTrackModule implements Module {
     public List<Localizable> getPlayerPVPRecap(Player showTo) {
         List<Localizable> result = new ArrayList<>();
 
-        Map<UUID, Double> damagefromviewer = damageFrom(showTo);
-        Map<UUID, Double> damagetoviewer = damageTo(showTo);
+        Map<UUID, Double> damagefromviewer = getDamageFrom(showTo);
+        Map<UUID, Double> damagetoviewer = getDamageTo(showTo);
 
         //
         result.add(new UnlocalizedText(""));
