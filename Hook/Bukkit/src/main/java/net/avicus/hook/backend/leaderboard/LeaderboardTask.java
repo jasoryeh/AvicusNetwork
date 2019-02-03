@@ -150,9 +150,9 @@ public class LeaderboardTask extends Thread {
     @Override
     public void run() {
         Instant start = Instant.now();
-        this.log.info("================");
-        this.log.info("= Task started =");
-        this.log.info("================");
+        this.log.finest("================");
+        this.log.finest("= Task started =");
+        this.log.finest("================");
 
         populateObjectiveNames();
 
@@ -170,7 +170,7 @@ public class LeaderboardTask extends Thread {
         }
 
         this.log
-                .info(String.format("Grouping users by %s up to %s", userGrouping + "", maxUserId + ""));
+                .finest(String.format("Grouping users by %s up to %s", userGrouping + "", maxUserId + ""));
 
         // Start at 1, increment by grouping until we reach the end.
         for (int low = 1; low <= maxUserId + userGrouping; low += userGrouping) {
@@ -188,7 +188,7 @@ public class LeaderboardTask extends Thread {
                         .warning(String.format("No users found with an ID in [%s, %s)", low + "", high + ""));
                 continue;
             } else {
-                this.log.info(String.format("Found users in [%s, %s)", low + "", high + ""));
+                this.log.finest(String.format("Found users in [%s, %s)", low + "", high + ""));
             }
 
             // user id between low and high
@@ -213,13 +213,13 @@ public class LeaderboardTask extends Thread {
                     RowIterator punishments = this.database.select("punishments").where(banFilter)
                             .executeIterator();
                     int count = 1;
-                    this.log.info("Streaming bans");
+                    this.log.finest("Streaming bans");
                     while (punishments.hasNext()) {
                         bannedUsers.add(punishments.next().getInteger("user_id"));
                         intervalLog(TEN_SECONDS, Level.INFO, "... (" + count + ")");
                         count++;
                     }
-                    this.log.info("Done streaming bans");
+                    this.log.finest("Done streaming bans");
                 }
 
                 Date earliest = null;
@@ -228,7 +228,7 @@ public class LeaderboardTask extends Thread {
                     filter = new Filter("created_at", earliest, Operator.GREATER_OR_EQUAL).and(userFilter);
                 }
 
-                this.log.info("Period " + period + " = " + filter.build());
+                this.log.finest("Period " + period + " = " + filter.build());
 
                 // Deaths
                 {
@@ -244,7 +244,7 @@ public class LeaderboardTask extends Thread {
                             .executeIterator();
 
                     int count = 1;
-                    this.log.info("Streaming deaths");
+                    this.log.finest("Streaming deaths");
                     while (deathSelect.hasNext()) {
                         Row row = deathSelect.next();
 
@@ -260,7 +260,7 @@ public class LeaderboardTask extends Thread {
                         intervalLog(TEN_SECONDS, Level.INFO, "... (" + count + ")");
                         count++;
                     }
-                    this.log.info("Done streaming deaths");
+                    this.log.finest("Done streaming deaths");
                 }
 
                 // Kills
@@ -277,7 +277,7 @@ public class LeaderboardTask extends Thread {
                             .executeIterator();
 
                     int count = 1;
-                    this.log.info("Streaming kills");
+                    this.log.finest("Streaming kills");
                     while (killsSelect.hasNext()) {
                         Row kill = killsSelect.next();
 
@@ -293,14 +293,14 @@ public class LeaderboardTask extends Thread {
                         intervalLog(TEN_SECONDS, Level.INFO, "... (" + count + ")");
                         count++;
                     }
-                    this.log.info("Done streaming kills");
+                    this.log.finest("Done streaming kills");
                 }
 
                 // KD Ratio
                 {
-                    this.log.info("Updating KD ratios");
+                    this.log.finest("Updating KD ratios");
                     data.values().forEach(LeaderboardEntry::updateKdRatio);
-                    this.log.info("Done updating KD ratios");
+                    this.log.finest("Done updating KD ratios");
                 }
 
                 // Objectives
@@ -309,7 +309,7 @@ public class LeaderboardTask extends Thread {
                             .where(filter).executeIterator();
 
                     int count = 1;
-                    this.log.info("Streaming objectives");
+                    this.log.finest("Streaming objectives");
                     while (objectiveSelect.hasNext()) {
                         ObjectiveCompletion objective = objectiveSelect.next();
 
@@ -325,7 +325,7 @@ public class LeaderboardTask extends Thread {
                         intervalLog(TEN_SECONDS, Level.INFO, "... (" + count + ")");
                         count++;
                     }
-                    this.log.info("Done streaming objectives");
+                    this.log.finest("Done streaming objectives");
                 }
 
                 // Sessions
@@ -334,7 +334,7 @@ public class LeaderboardTask extends Thread {
                             .columns("user_id", "duration").where(filter).executeIterator();
 
                     int count = 1;
-                    this.log.info("Streaming sessions");
+                    this.log.finest("Streaming sessions");
                     while (sessionSelect.hasNext()) {
                         Row row = sessionSelect.next();
 
@@ -351,16 +351,16 @@ public class LeaderboardTask extends Thread {
                         intervalLog(TEN_SECONDS, Level.INFO, "... (" + count + ")");
                         count++;
                     }
-                    this.log.info("Done streaming sessions");
+                    this.log.finest("Done streaming sessions");
                 }
 
                 // Hopefully, entries is now full of data, ready to be inserted.
                 if (!this.entries.get(period).isEmpty()) {
                     Filter deleteFilter = new Filter("period", period.ordinal()).and(userFilter);
-                    this.log.info("Delete old entries for group in " + period);
+                    this.log.finest("Delete old entries for group in " + period);
                     this.leaderboard.delete().where(deleteFilter).execute();
 
-                    this.log.info("Inserting new entries for group in " + period);
+                    this.log.finest("Inserting new entries for group in " + period);
                     Collection<LeaderboardEntry> insert = this.entries.get(period).values();
                     this.leaderboard.multiInsert(insert).execute();
                 }
@@ -372,8 +372,8 @@ public class LeaderboardTask extends Thread {
 
         Duration duration = new Duration(start, end);
 
-        this.log.info("============================");
-        this.log.info("= Task completed: " + PERIOD_FORMAT.print(duration.toPeriod()) + " =");
-        this.log.info("============================");
+        this.log.finest("============================");
+        this.log.finest("= Task completed: " + PERIOD_FORMAT.print(duration.toPeriod()) + " =");
+        this.log.finest("============================");
     }
 }
