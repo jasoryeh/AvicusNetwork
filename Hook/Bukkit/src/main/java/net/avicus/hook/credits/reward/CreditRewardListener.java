@@ -67,6 +67,7 @@ public class CreditRewardListener implements Listener {
             return;
         }
 
+        UUID exclude = null;
         LivingEntity damager = event.getLifetime().getLastDamage().getInfo().getResolvedDamager();
 
         if (damager instanceof Player) {
@@ -77,6 +78,7 @@ public class CreditRewardListener implements Listener {
             int reward = HookConfig.Credits.Rewards.getKillPlayer();
             if (reward > 0) {
                 Credits.reward((Player) damager, reward, Messages.UI_REWARD_KILL_PLAYER);
+                exclude = ((Player) damager).getUniqueId();
             }
         }
 
@@ -85,7 +87,13 @@ public class CreditRewardListener implements Listener {
         DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
         int rewardAssist = HookConfig.Credits.Rewards.getKillPlayerAssist();
 
-        dtm.getDamageTo(killed).forEach((uuid, aDouble) -> {
+        for (Map.Entry<UUID, Double> uuidDoubleEntry : dtm.getDamageTo(killed).entrySet()) {
+            UUID uuid = uuidDoubleEntry.getKey();
+            Double aDouble = uuidDoubleEntry.getValue();
+            if(uuid == exclude) {
+                continue;
+            }
+
             Player assister = Bukkit.getPlayer(uuid);
             if(assister != null) {
                 if(aDouble > 5) {
@@ -93,7 +101,7 @@ public class CreditRewardListener implements Listener {
                 }
                 // people who do less than 5 damage(2 1/2 hearts) are given experience only, as we don't want this abused.
             }
-        });
+        }
     }
 
     @EventHandler

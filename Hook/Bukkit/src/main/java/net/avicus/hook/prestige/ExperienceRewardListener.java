@@ -89,6 +89,7 @@ public class ExperienceRewardListener implements Listener {
             return;
         }
 
+        UUID exclude = null;
         LivingEntity damager = event.getLifetime().getLastDamage().getInfo().getResolvedDamager();
 
         if (damager instanceof Player) {
@@ -100,6 +101,7 @@ public class ExperienceRewardListener implements Listener {
             if (reward > 0) {
                 this.module.reward((Player) damager, reward, Messages.UI_REWARD_KILL_PLAYER,
                         Atlas.getMatch().getMap().getGenre().name());
+                exclude = ((Player) damager).getUniqueId();
             }
         }
 
@@ -108,7 +110,13 @@ public class ExperienceRewardListener implements Listener {
         DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
         int rewardAssist = HookConfig.Experience.Rewards.getKillPlayerAssist();
 
-        dtm.getDamageTo(killed).forEach((uuid, aDouble) -> {
+        for (Map.Entry<UUID, Double> uuidDoubleEntry : dtm.getDamageTo(killed).entrySet()) {
+            UUID uuid = uuidDoubleEntry.getKey();
+            Double aDouble = uuidDoubleEntry.getValue();
+            if(uuid == exclude) {
+                continue;
+            }
+
             Player assister = Bukkit.getPlayer(uuid);
             if(assister != null) {
                 if(aDouble > 2) {
@@ -118,7 +126,7 @@ public class ExperienceRewardListener implements Listener {
                 }
                 // people who do less than 2 damage(1 heart(s)) are not given experience.
             }
-        });
+        }
     }
 
     @EventHandler
