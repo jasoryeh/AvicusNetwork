@@ -59,6 +59,7 @@ public class DamageTrackModule implements Module {
                     double damage = damageEvent.getDamage();
 
                     AtlasTask.of(() -> this.trackDamage(attacker, defender, damage)).nowAsync();
+                    return;
                 }
             } else {
                 return;
