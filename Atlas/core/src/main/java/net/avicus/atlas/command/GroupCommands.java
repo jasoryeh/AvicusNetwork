@@ -96,6 +96,16 @@ public class GroupCommands {
         }
     }
 
+    @Command(aliases = "set", desc = "Set a player's team", usage = "<player> <team>", min = 2, max = 3)
+    @CommandPermissions("atlas.groups.set")
+    public static void set(CommandContext cmd, CommandSender sender) throws CommandException {
+        final Match match = Atlas.getMatch();
+        if (match == null) {
+            throw new CommandMatchException();
+        }
+        // TODO: Complete
+    }
+
     public static class GroupParentCommand {
 
         @Command(aliases = "group", usage = "<rename>", desc = "Manage groups.", min = 1)
