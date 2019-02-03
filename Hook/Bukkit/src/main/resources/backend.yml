@@ -1,3 +1,5 @@
+gadget-conversion: true
+
 buycraft:
   enabled: true
   api-key: secret
