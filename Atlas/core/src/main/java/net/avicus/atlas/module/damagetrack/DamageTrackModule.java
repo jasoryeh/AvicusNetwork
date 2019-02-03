@@ -73,30 +73,29 @@ public class DamageTrackModule implements Module {
     }
 
     public void trackDamage(Player attacker, Player defender, double damageDealt) {
-        if(!damagesToOthersTrack.contains(attacker.getUniqueId())) {
-            damagesToOthersTrack.put(attacker.getUniqueId(), new ConcurrentHashMap<>());
-        }
-        if(!damagesFromOthersTrack.contains(defender.getUniqueId())) {
-            damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
-        }
+        damageDealt = Math.abs(damageDealt);
+
+        this.ensureTracked(attacker.getUniqueId());
+        this.ensureTracked(defender.getUniqueId());
 
         ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
-        if(!dmgs.contains(defender.getUniqueId())) {
-            dmgs.put(defender.getUniqueId(), damageDealt);
-        } else {
-            dmgs.put(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageDealt);
-        }
+        dmgs.put(defender.getUniqueId(), ((dmgs.get(defender.getUniqueId()) == null)
+                ? 0D : dmgs.get(defender.getUniqueId())) + damageDealt);
 
-        if(!rcvd.contains(attacker.getUniqueId())) {
-            rcvd.put(attacker.getUniqueId(), damageDealt);
-        } else {
-            rcvd.put(attacker.getUniqueId(), rcvd.get(defender.getUniqueId()) + damageDealt);
-        }
+        rcvd.put(attacker.getUniqueId(), (dmgs.get(attacker.getUniqueId()) == null)
+                ? 0D : dmgs.get(attacker.getUniqueId()) + damageDealt);
 
         damagesToOthersTrack.put(attacker.getUniqueId(), dmgs);
         damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
+    }
+
+    private void ensureTracked(UUID player) {
+        damagesToOthersTrack.put(player, (damagesToOthersTrack.get(player) == null)
+                ? new ConcurrentHashMap<>() : damagesToOthersTrack.get(player));
+        damagesFromOthersTrack.put(player, (damagesFromOthersTrack.get(player) == null)
+                ? new ConcurrentHashMap<>() : damagesFromOthersTrack.get(player));
     }
 
     @EventHandler
@@ -111,27 +110,19 @@ public class DamageTrackModule implements Module {
 
         Player defender = ((Player) damageEvent.getEntity());
 
-        if(!damagesToOthersTrack.contains(ENVIRONMENT)) {
-            damagesToOthersTrack.put(ENVIRONMENT, new ConcurrentHashMap<>());
-        }
-        if(!damagesFromOthersTrack.contains(defender.getUniqueId())) {
-            damagesFromOthersTrack.put(defender.getUniqueId(), new ConcurrentHashMap<>());
-        }
+        this.ensureTracked(ENVIRONMENT);
+        this.ensureTracked(defender.getUniqueId());
+
+        Double damage = Math.abs(damageEvent.getFinalDamage());
 
         ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
 
-        if(!dmgs.contains(defender.getUniqueId())) {
-            dmgs.put(defender.getUniqueId(), damageEvent.getDamage());
-        } else {
-            dmgs.put(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageEvent.getDamage());
-        }
+        dmgs.put(defender.getUniqueId(), ((dmgs.get(defender.getUniqueId()) == null)
+                ? 0D : dmgs.get(defender.getUniqueId())) + damage);
 
-        if(!rcvd.contains(ENVIRONMENT)) {
-            rcvd.put(ENVIRONMENT, damageEvent.getDamage());
-        } else {
-            rcvd.put(ENVIRONMENT, dmgs.get(ENVIRONMENT) + damageEvent.getDamage());
-        }
+        rcvd.put(ENVIRONMENT, (dmgs.get(ENVIRONMENT) == null)
+                ? 0D : dmgs.get(ENVIRONMENT) + damage);
 
         damagesToOthersTrack.put(ENVIRONMENT, dmgs);
         damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
