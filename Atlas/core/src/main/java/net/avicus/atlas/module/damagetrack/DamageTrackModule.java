@@ -1,9 +1,9 @@
 package net.avicus.atlas.module.damagetrack;
 
 import lombok.Getter;
+import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
-import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
@@ -15,7 +15,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 public class DamageTrackModule implements Module {
@@ -25,24 +24,30 @@ public class DamageTrackModule implements Module {
     private final Match match;
 
     /**
-     * Thread safe map of a list of players the player(key) has damaged.
+     * List of players the player(key) has damaged.
      * A non-permanent, but temporary storage of damage done to other players.
      */
     @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, Double>> damagesToOthersTrack;
+    private static Map<UUID, Map<UUID, Double>> damagesToOthersTrack = new HashMap<>();
     /**
-     * Thread safe map of a list of players the player(key) has received damage from.
+     * List of players the player(key) has received damage from.
      * A non-permanent, but temporary storage of damage received from other players.
      */
     @Getter
-    private ConcurrentHashMap<UUID, ConcurrentHashMap<UUID, Double>> damagesFromOthersTrack;
+    private static Map<UUID, Map<UUID, Double>> damagesFromOthersTrack = new HashMap<>();
 
 
     public DamageTrackModule(Match match) {
         this.match = match;
+    }
 
-        this.damagesToOthersTrack = new ConcurrentHashMap<>();
-        this.damagesFromOthersTrack = new ConcurrentHashMap<>();
+    @EventHandler
+    public void onMatchStateChange(MatchStateChangeEvent stateChangeEvent) {
+        if(stateChangeEvent.isChangeToNotPlaying()|| stateChangeEvent.isChangeToPlaying()) {
+            // Reset for every time where it changes
+            damagesToOthersTrack = new HashMap<>();
+            damagesFromOthersTrack = new HashMap<>();
+        }
     }
 
     @EventHandler
@@ -79,17 +84,17 @@ public class DamageTrackModule implements Module {
         this.ensureTracked(attacker.getUniqueId());
         this.ensureTracked(defender.getUniqueId());
 
-        ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
-        ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
+        Map<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
+        Map<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
-        if(dmgs.contains(defender.getUniqueId())) {
+        if(dmgs.containsKey(defender.getUniqueId())) {
             double newDmg = dmgs.get(defender.getUniqueId()) + damageDealt;
             dmgs.replace(defender.getUniqueId(), newDmg);
         } else {
             dmgs.put(defender.getUniqueId(), damageDealt);
         }
 
-        if(rcvd.contains(attacker.getUniqueId())) {
+        if(rcvd.containsKey(attacker.getUniqueId())) {
             double newDmg = rcvd.get(attacker.getUniqueId()) + damageDealt;
             rcvd.replace(attacker.getUniqueId(), newDmg);
         } else {
@@ -102,9 +107,9 @@ public class DamageTrackModule implements Module {
 
     private void ensureTracked(UUID player) {
         damagesToOthersTrack.put(player, (damagesToOthersTrack.get(player) == null)
-                ? new ConcurrentHashMap<>() : damagesToOthersTrack.get(player));
+                ? new HashMap<>() : damagesToOthersTrack.get(player));
         damagesFromOthersTrack.put(player, (damagesFromOthersTrack.get(player) == null)
-                ? new ConcurrentHashMap<>() : damagesFromOthersTrack.get(player));
+                ? new HashMap<>() : damagesFromOthersTrack.get(player));
     }
 
     @EventHandler
@@ -124,17 +129,17 @@ public class DamageTrackModule implements Module {
 
         Double damage = Math.abs(damageEvent.getFinalDamage());
 
-        ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
-        ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
+        Map<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
+        Map<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
 
-        if(dmgs.contains(defender.getUniqueId())) {
+        if(dmgs.containsKey(defender.getUniqueId())) {
             double addedDmg = dmgs.get(defender.getUniqueId()) + damage;
             dmgs.replace(defender.getUniqueId(), addedDmg);
         } else {
             dmgs.put(defender.getUniqueId(), damage);
         }
 
-        if(rcvd.contains(ENVIRONMENT)) {
+        if(rcvd.containsKey(ENVIRONMENT)) {
             double addedDmg = rcvd.get(ENVIRONMENT) + damage;
             rcvd.replace(ENVIRONMENT, rcvd.get(ENVIRONMENT) + damage);
         } else {
@@ -153,8 +158,8 @@ public class DamageTrackModule implements Module {
     public void reset(Player reset) {
         damagesToOthersTrack.remove(reset.getUniqueId());
         damagesFromOthersTrack.remove(reset.getUniqueId());
-        damagesToOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
-        damagesFromOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
+        damagesToOthersTrack.put(reset.getUniqueId(), new HashMap<>());
+        damagesFromOthersTrack.put(reset.getUniqueId(), new HashMap<>());
     }
 
     /**
