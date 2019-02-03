@@ -7,6 +7,7 @@ import com.sk89q.minecraft.util.commands.CommandPermissions;
 import com.sk89q.minecraft.util.commands.NestedCommand;
 
 import java.util.List;
+import java.util.Optional;
 
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.command.exception.CommandMatchException;
@@ -20,9 +21,12 @@ import net.avicus.atlas.util.Events;
 import net.avicus.atlas.util.Messages;
 import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.TextStyle;
+import net.avicus.compendium.commands.exception.MustBePlayerCommandException;
 import net.avicus.compendium.locale.text.LocalizedNumber;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class GroupCommands {
 
@@ -96,13 +100,41 @@ public class GroupCommands {
         }
     }
 
-    @Command(aliases = "set", desc = "Set a player's team", usage = "<player> <team>", min = 2, max = 3)
+    @Command(aliases = "set", desc = "Set a player's team", usage = "<player> <team>", min = 2, max = 2)
     @CommandPermissions("atlas.groups.set")
     public static void set(CommandContext cmd, CommandSender sender) throws CommandException {
+        MustBePlayerCommandException.ensurePlayer(sender);
+
         final Match match = Atlas.getMatch();
         if (match == null) {
             throw new CommandMatchException();
         }
+
+        Player player = Bukkit.getPlayer(cmd.getString(0));
+
+        String searchFor = cmd.getString(1);
+
+        GroupsModule groups = match.getRequiredModule(GroupsModule.class);
+
+        Group to = null;
+
+        for (Group group : groups.getGroups()) {
+            if(group.getName().toText().translate(sender).toPlainText().equalsIgnoreCase(searchFor)
+                    || group.getId().equalsIgnoreCase(searchFor)) {
+                to = group;
+                break;
+            }
+        }
+
+        if(to == null) {
+            sender.sendMessage(Messages.ERROR_TEAM_NOT_FOUND.with(ChatColor.RED));
+            return;
+        }
+
+        groups.changeGroup(((Player) sender), Optional.of(groups.getGroup(((Player) sender))), to,
+                true, true);
+
+
         // TODO: Complete
     }
 
