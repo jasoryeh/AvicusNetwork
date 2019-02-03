@@ -131,7 +131,7 @@ public class GroupCommands {
             return;
         }
 
-        groups.changeGroup(((Player) sender), Optional.of(groups.getGroup(((Player) sender))), to,
+        groups.changeGroup(((Player) player), Optional.of(groups.getGroup(((Player) player))), to,
                 true, true);
 
 
