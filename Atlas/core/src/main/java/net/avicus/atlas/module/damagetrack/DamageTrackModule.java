@@ -82,11 +82,17 @@ public class DamageTrackModule implements Module {
         ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
-        dmgs.put(defender.getUniqueId(), ((dmgs.get(defender.getUniqueId()) == null)
-                ? 0D : dmgs.get(defender.getUniqueId())) + damageDealt);
+        if(dmgs.contains(defender.getUniqueId())) {
+            dmgs.replace(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageDealt);
+        } else {
+            dmgs.put(defender.getUniqueId(), damageDealt);
+        }
 
-        rcvd.put(attacker.getUniqueId(), (dmgs.get(attacker.getUniqueId()) == null)
-                ? 0D : dmgs.get(attacker.getUniqueId()) + damageDealt);
+        if(rcvd.contains(attacker.getUniqueId())) {
+            rcvd.replace(attacker.getUniqueId(), dmgs.get(attacker.getUniqueId()) + damageDealt);
+        } else {
+            rcvd.put(attacker.getUniqueId(), damageDealt);
+        }
 
         damagesToOthersTrack.put(attacker.getUniqueId(), dmgs);
         damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
@@ -119,11 +125,17 @@ public class DamageTrackModule implements Module {
         ConcurrentHashMap<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
 
-        dmgs.put(defender.getUniqueId(), ((dmgs.get(defender.getUniqueId()) == null)
-                ? 0D : dmgs.get(defender.getUniqueId())) + damage);
+        if(dmgs.contains(defender.getUniqueId())) {
+            dmgs.replace(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damage);
+        } else {
+            dmgs.put(defender.getUniqueId(), damage);
+        }
 
-        rcvd.put(ENVIRONMENT, (dmgs.get(ENVIRONMENT) == null)
-                ? 0D : dmgs.get(ENVIRONMENT) + damage);
+        if(rcvd.contains(ENVIRONMENT)) {
+            rcvd.replace(ENVIRONMENT, dmgs.get(ENVIRONMENT) + damage);
+        } else {
+            rcvd.put(ENVIRONMENT, damage);
+        }
 
         damagesToOthersTrack.put(ENVIRONMENT, dmgs);
         damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
