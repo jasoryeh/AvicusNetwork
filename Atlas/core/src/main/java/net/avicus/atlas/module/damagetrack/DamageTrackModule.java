@@ -52,7 +52,7 @@ public class DamageTrackModule implements Module {
             if(!(damageEvent.getDamager() instanceof Projectile)) {
                 return;
             } else if(damageEvent.getDamager() instanceof Projectile) {
-                Projectile projectile = ((Projectile) damageEvent.getEntity());
+                Projectile projectile = ((Projectile) damageEvent.getDamager());
                 if(projectile.getShooter() instanceof Player) {
                     Player attacker = ((Player) projectile.getShooter());
                     Player defender = ((Player) damageEvent.getEntity());
