@@ -90,7 +90,7 @@ public class CreditRewardListener implements Listener {
         for (Map.Entry<UUID, Double> uuidDoubleEntry : dtm.getDamageTo(killed).entrySet()) {
             UUID uuid = uuidDoubleEntry.getKey();
             Double aDouble = uuidDoubleEntry.getValue();
-            if(uuid == exclude) {
+            if(uuid == exclude || uuid == killed.getUniqueId()) {
                 continue;
             }
 
