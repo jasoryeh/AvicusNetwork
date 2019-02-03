@@ -187,41 +187,47 @@ public class DamageTrackModule implements Module {
         //
         result.add(new UnlocalizedText(""));
 
-        result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
-        damagefromviewer.forEach((uuid, dmg) -> {
-            if(uuid == ENVIRONMENT) {
+        if(!damagefromviewer.isEmpty()) {
+            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
+            damagefromviewer.forEach((uuid, dmg) -> {
+                if(uuid == ENVIRONMENT) {
+                    result.add(Translations.STATS_RECAP_DAMAGE_TO
+                            .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
+                                    Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
+                                            .translate(showTo).toLegacyText()));
+                }
+                Player resolvePlayer = Bukkit.getPlayer(uuid);
+                if(resolvePlayer == null) {
+                    // Skip -- unresolvable
+                    return;
+                }
                 result.add(Translations.STATS_RECAP_DAMAGE_TO
-                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
-                                Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
-                                        .translate(showTo).toLegacyText()));
-            }
-            Player resolvePlayer = Bukkit.getPlayer(uuid);
-            if(resolvePlayer == null) {
-                // Skip -- unresolvable
-                return;
-            }
-            result.add(Translations.STATS_RECAP_DAMAGE_TO
-                    .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
-        });
+                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
+            });
+        }
+
+        result.add(new UnlocalizedText(""));
 
         //
-        result.add(new UnlocalizedText(""));
-        result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
-        damagetoviewer.forEach((uuid, dmg) -> {
-            if(uuid == ENVIRONMENT) {
+        if(!damagetoviewer.isEmpty()) {
+            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
+            damagetoviewer.forEach((uuid, dmg) -> {
+                if(uuid == ENVIRONMENT) {
+                    result.add(Translations.STATS_RECAP_DAMAGE_FROM
+                            .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
+                                    Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
+                                            .translate(showTo).toLegacyText()));
+                }
+                Player resolvePlayer = Bukkit.getPlayer(uuid);
+                if(resolvePlayer == null) {
+                    // Skip -- unresolvable
+                    return;
+                }
                 result.add(Translations.STATS_RECAP_DAMAGE_FROM
-                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
-                                Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
-                                        .translate(showTo).toLegacyText()));
-            }
-            Player resolvePlayer = Bukkit.getPlayer(uuid);
-            if(resolvePlayer == null) {
-                // Skip -- unresolvable
-                return;
-            }
-            result.add(Translations.STATS_RECAP_DAMAGE_FROM
-                    .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
-        });
+                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
+            });
+        }
+
         result.add(new UnlocalizedText(""));
 
         return result;
