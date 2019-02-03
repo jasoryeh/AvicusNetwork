@@ -142,8 +142,14 @@ public class DamageTrackModule implements Module {
         damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
     }
 
+    /**
+     * Reset damage tracking for a player, recommended for every death/respawn,
+     * will not do it automatically
+     * @param reset Player to reset damage tracking
+     */
     public void reset(Player reset) {
         damagesToOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
+        damagesFromOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
     }
 
     /**
