@@ -58,7 +58,7 @@ public class DamageTrackModule implements Module {
                     Player defender = ((Player) damageEvent.getEntity());
                     double damage = damageEvent.getDamage();
 
-                    AtlasTask.of(() -> this.trackDamage(attacker, defender, damage)).nowAsync();
+                    this.trackDamage(attacker, defender, damage);
                     return;
                 }
             } else {
@@ -70,7 +70,7 @@ public class DamageTrackModule implements Module {
         Player defender = ((Player) damageEvent.getEntity());
         double damage = damageEvent.getDamage();
 
-        AtlasTask.of(() -> this.trackDamage(attacker, defender, damage)).nowAsync();
+        this.trackDamage(attacker, defender, damage);
     }
 
     public void trackDamage(Player attacker, Player defender, double damageDealt) {
@@ -83,13 +83,15 @@ public class DamageTrackModule implements Module {
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
 
         if(dmgs.contains(defender.getUniqueId())) {
-            dmgs.replace(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damageDealt);
+            double newDmg = dmgs.get(defender.getUniqueId()) + damageDealt;
+            dmgs.replace(defender.getUniqueId(), newDmg);
         } else {
             dmgs.put(defender.getUniqueId(), damageDealt);
         }
 
         if(rcvd.contains(attacker.getUniqueId())) {
-            rcvd.replace(attacker.getUniqueId(), dmgs.get(attacker.getUniqueId()) + damageDealt);
+            double newDmg = rcvd.get(attacker.getUniqueId()) + damageDealt;
+            rcvd.replace(attacker.getUniqueId(), newDmg);
         } else {
             rcvd.put(attacker.getUniqueId(), damageDealt);
         }
@@ -126,13 +128,15 @@ public class DamageTrackModule implements Module {
         ConcurrentHashMap<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
 
         if(dmgs.contains(defender.getUniqueId())) {
-            dmgs.replace(defender.getUniqueId(), dmgs.get(defender.getUniqueId()) + damage);
+            double addedDmg = dmgs.get(defender.getUniqueId()) + damage;
+            dmgs.replace(defender.getUniqueId(), addedDmg);
         } else {
             dmgs.put(defender.getUniqueId(), damage);
         }
 
         if(rcvd.contains(ENVIRONMENT)) {
-            rcvd.replace(ENVIRONMENT, dmgs.get(ENVIRONMENT) + damage);
+            double addedDmg = rcvd.get(ENVIRONMENT) + damage;
+            rcvd.replace(ENVIRONMENT, rcvd.get(ENVIRONMENT) + damage);
         } else {
             rcvd.put(ENVIRONMENT, damage);
         }
@@ -147,6 +151,8 @@ public class DamageTrackModule implements Module {
      * @param reset Player to reset damage tracking
      */
     public void reset(Player reset) {
+        damagesToOthersTrack.remove(reset.getUniqueId());
+        damagesFromOthersTrack.remove(reset.getUniqueId());
         damagesToOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
         damagesFromOthersTrack.put(reset.getUniqueId(), new ConcurrentHashMap<>());
     }
