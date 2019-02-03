@@ -12,6 +12,7 @@ import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchCompleteEvent;
+import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.HookConfig;
 import net.avicus.hook.utils.Events;
@@ -20,6 +21,7 @@ import net.avicus.magma.Magma;
 import net.avicus.magma.event.user.AsyncHookLoginEvent;
 import net.avicus.magma.module.prestige.PrestigeModule;
 import net.avicus.magma.network.user.Users;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -100,6 +102,23 @@ public class ExperienceRewardListener implements Listener {
                         Atlas.getMatch().getMap().getGenre().name());
             }
         }
+
+        // Assists
+        Player killed = event.getPlayer();
+        DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
+        int rewardAssist = HookConfig.Experience.Rewards.getKillPlayerAssist();
+
+        dtm.getDamageTo(killed).forEach((uuid, aDouble) -> {
+            Player assister = Bukkit.getPlayer(uuid);
+            if(assister != null) {
+                if(aDouble > 2) {
+                    this.module
+                            .reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST,
+                                    Atlas.getMatch().getMap().getGenre().name());
+                }
+                // people who do less than 2 damage(1 heart(s)) are not given experience.
+            }
+        });
     }
 
     @EventHandler

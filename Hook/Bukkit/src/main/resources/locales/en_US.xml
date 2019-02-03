@@ -124,6 +124,7 @@
             <scorebox-enter>You entered a scorebox!</scorebox-enter>
             <hill-capture>You helped capture a hill!</hill-capture>
             <kill-player>You killed a player!</kill-player>
+            <kill-player-assist>You assisted in killing a player!</kill-player-assist>
             <win>You won the match!</win>
             <participation>You participated in a match.</participation>
             <rate>You rated a map ({0} {1}).</rate>

@@ -130,6 +130,7 @@ public class Messages {
     public static LocalizedFormat UI_REWARD_SCOREBOX_ENTER = get("ui.reward.scorebox-enter");
     public static LocalizedFormat UI_REWARD_HILL_CAPTURE = get("ui.reward.hill-capture");
     public static LocalizedFormat UI_REWARD_KILL_PLAYER = get("ui.reward.kill-player");
+    public static LocalizedFormat UI_REWARD_KILL_PLAYER_ASSIST = get("ui.reward.kill-player-assist");
     public static LocalizedFormat UI_REWARD_WIN = get("ui.reward.win");
     public static LocalizedFormat UI_REWARD_PARTICIPATION = get("ui.reward.participation");
     public static LocalizedFormat UI_REWARD_RATE = get("ui.reward.rate");

@@ -32,6 +32,7 @@ credits:
       save: 5
     match:
       kill-player: 3
+      kill-player-assist: 2
       win-minimum: 6
       win-per-minute: 2 # x/minute if you win
       lose-minimum: 2
@@ -54,6 +55,7 @@ experience:
       save: 15
     match:
       kill-player: 5
+      kill-player-assist: 3
       win-minimum: 15
       win-per-minute: 4 # x/minute if you win
       lose-minimum: 5

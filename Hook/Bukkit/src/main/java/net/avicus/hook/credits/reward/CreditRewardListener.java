@@ -12,11 +12,13 @@ import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchCompleteEvent;
+import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.HookConfig;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -77,6 +79,21 @@ public class CreditRewardListener implements Listener {
                 Credits.reward((Player) damager, reward, Messages.UI_REWARD_KILL_PLAYER);
             }
         }
+
+        // Assists
+        Player killed = event.getPlayer();
+        DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
+        int rewardAssist = HookConfig.Credits.Rewards.getKillPlayerAssist();
+
+        dtm.getDamageTo(killed).forEach((uuid, aDouble) -> {
+            Player assister = Bukkit.getPlayer(uuid);
+            if(assister != null) {
+                if(aDouble > 5) {
+                    Credits.reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST);
+                }
+                // people who do less than 5 damage(2 1/2 hearts) are given experience only, as we don't want this abused.
+            }
+        });
     }
 
     @EventHandler

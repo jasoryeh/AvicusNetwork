@@ -136,6 +136,7 @@
             <scorebox-enter>You entered a scorebox!</scorebox-enter>
             <hill-capture>You helped capture a hill!</hill-capture>
             <kill-player>¡Asesinaste a un jugador!</kill-player>
+            <kill-player-assist>¡Ayudaste a matar a un jugador!</kill-player-assist>
             <win>¡Has ganado la partida!</win>
             <participation>Has participado en una partida.</participation>
             <rate>Has clasificado un mapa ({0} {1}).</rate>

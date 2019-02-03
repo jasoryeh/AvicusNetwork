@@ -124,6 +124,11 @@ public class HookConfig {
 
             @Getter
             @ConfigPath("match")
+            @ConfigKey(key = "kill-player-assist")
+            private static int killPlayerAssist;
+
+            @Getter
+            @ConfigPath("match")
             @ConfigKey(key = "win-minimum")
             private static int winMinimum;
 
@@ -207,6 +212,11 @@ public class HookConfig {
             @ConfigPath("match")
             @ConfigKey(key = "kill-player")
             private static int killPlayer;
+
+            @Getter
+            @ConfigPath("match")
+            @ConfigKey(key = "kill-player-assist")
+            private static int killPlayerAssist;
 
             @Getter
             @ConfigPath("match")
