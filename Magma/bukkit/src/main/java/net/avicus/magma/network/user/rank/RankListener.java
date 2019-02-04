@@ -34,6 +34,17 @@ public class RankListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         User user = Users.user(event.getPlayer());
         List<BukkitRank> ranks = Ranks.get(user);
+
+        try {
+            Class.forName("me.lucko.luckperms.api.LuckPermsApi");
+            Magma.get().getLogger().info("LuckPerms permissions present, not using Bukkit API to set/unset" +
+                    " additional permissions.");
+            return;
+        } catch(Exception e) {
+            Magma.get().getLogger().info("LuckPerms is not present on this server, proceeding with normal " +
+                    "permission attachment.");
+        }
+
         for (BukkitRank bukkit : ranks) {
             bukkit.attachPermissions(event.getPlayer());
         }

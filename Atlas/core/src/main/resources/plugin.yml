@@ -11,6 +11,7 @@ depend:
 - WorldEdit
 softdepend:
 - Tutorial
+- LuckPerms
 permissions:
   atlas.*:
     description: Access to all Atlas permissible features.

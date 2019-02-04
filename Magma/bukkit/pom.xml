@@ -67,6 +67,12 @@
             <artifactId>viaversion</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- Permissions -->
+        <dependency>
+            <groupId>me.lucko.luckperms</groupId>
+            <artifactId>luckperms-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
