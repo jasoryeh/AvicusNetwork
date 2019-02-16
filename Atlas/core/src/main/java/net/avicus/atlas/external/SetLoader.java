@@ -64,7 +64,7 @@ public class SetLoader {
 
         // This is where it figures out all possible modules
         for (File file : directory.listFiles()) {
-            if (file.getName().startsWith(".")) {
+            if (file.getName().startsWith(".") || !file.getName().endsWith(".jar")) {
                 continue;
             }
             JarFile jar;
