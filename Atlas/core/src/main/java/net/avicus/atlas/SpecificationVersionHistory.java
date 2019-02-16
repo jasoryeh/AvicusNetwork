@@ -8,10 +8,12 @@ import net.avicus.magma.util.Version;
 public class SpecificationVersionHistory {
 
     public static Version INITIAL_RELEASE = new Version(1, 0, 0);
+
     /**
      * Kits require IDs, KitCheck
      **/
     public static final Version KIT_IDS_REQUIRED = new Version(1, 0, 1);
+
     /**
      * Changes the default behaviour of destroyable repair checking to ignore all.
      **/
