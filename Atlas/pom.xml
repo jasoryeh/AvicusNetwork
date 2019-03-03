@@ -15,6 +15,7 @@
     </properties>
     <modules>
         <module>arcade</module>
+        <module>bedwars</module>
         <module>core</module>
         <module>competitive-objectives</module>
         <module>docs-generator</module>

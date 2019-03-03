@@ -40,6 +40,11 @@ public class SpecificationVersionHistory {
     public static Version NEW_RECTANGLES = new Version(1, 0, 6);
 
     /**
+     * Introduction of Bedwars
+     */
+    public static Version INTRO_BEDWARS = new Version(1, 0, 7);
+
+    /**
      * Current specification, all modules should reference this.
      **/
     public static Version CURRENT = NEW_RECTANGLES;

@@ -1,0 +1,3 @@
+main: net.avicus.atlas.sets.bedwars.BedwarsMain
+name: "Bedwars Set"
+depend: []
