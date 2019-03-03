@@ -330,7 +330,7 @@ public class TabListComponent implements ListenerModule {
         String text =
                 ChatColor.WHITE.toString() + group.size() + ChatColor.GRAY.toString() + "/" + group
                         .getMaxPlayers() + " " + name;
-        return new TextTabItem(text, 1000, Skins.getDot(group.getChatColor()));
+        return new TextTabItem(text, (int) (Math.random() * 1000), Skins.getDot(group.getChatColor()));
     }
 
     private PlayerTabItem getTabItem(Player player, Player viewer) {
