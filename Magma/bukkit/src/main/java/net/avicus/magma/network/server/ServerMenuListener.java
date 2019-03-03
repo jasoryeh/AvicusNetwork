@@ -17,14 +17,15 @@ public class ServerMenuListener implements Listener {
         }
 
         // TODO: Fix the server gui, but for now send a message
+
+        if (!Servers.isMenuOpener(event.getItem())) {
+            return;
+        }
+
         if(true) {
             event.getPlayer().sendMessage("");
             event.getPlayer().sendMessage(ChatColor.GREEN + "Please use /server or /servers.");
             event.getPlayer().sendMessage("");
-            return;
-        }
-
-        if (!Servers.isMenuOpener(event.getItem())) {
             return;
         }
 
