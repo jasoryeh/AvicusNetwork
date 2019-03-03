@@ -47,7 +47,7 @@ public class BedwarsFactory implements ModuleFactory<BedwarsModule> {
                                 .name("Bed")
                                 .tagName("bed")
                                 .description("A bed, describing both blocks.")
-                                .attribute("Bed block 1", Attributes.)
+                                .attribute("Bed blocks", Attributes.region(true, "Region describing the bed."))
                                 .build())
                         .build())
                 .build();
