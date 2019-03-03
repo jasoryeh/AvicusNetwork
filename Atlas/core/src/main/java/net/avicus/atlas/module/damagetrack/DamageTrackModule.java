@@ -188,6 +188,8 @@ public class DamageTrackModule implements Module {
         return result;
     }
 
+    private final String SPACER_DOUBLE = "  ";
+
     public List<Localizable> getPlayerPVPRecap(Player showTo) {
         List<Localizable> result = new ArrayList<>();
 
@@ -198,21 +200,17 @@ public class DamageTrackModule implements Module {
 
         if(!damagefromviewer.isEmpty()) {
             result.add(new UnlocalizedText(""));
-            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.DARK_GREEN));
+            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.GREEN));
             damagefromviewer.forEach((uuid, dmg) -> {
-                if(uuid == ENVIRONMENT) {
-                    result.add(Translations.STATS_RECAP_DAMAGE_TO
-                            .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
-                                    Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
-                                            .translate(showTo).toLegacyText()));
-                }
-                Player resolvePlayer = Bukkit.getPlayer(uuid);
-                if(resolvePlayer == null) {
-                    // Skip -- unresolvable
-                    return;
-                }
-                result.add(Translations.STATS_RECAP_DAMAGE_TO
-                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
+                result.add(
+                        Translations.STATS_RECAP_DAMAGE_TO.with(
+                                ChatColor.AQUA,
+                                damageDisplay(dmg),
+                                (uuid == ENVIRONMENT) ?
+                                        Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
+                                        (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
+                        )
+                );
             });
         }
 
@@ -220,21 +218,17 @@ public class DamageTrackModule implements Module {
         //
         if(!damagetoviewer.isEmpty()) {
             result.add(new UnlocalizedText(""));
-            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.DARK_RED));
+            result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.RED));
             damagetoviewer.forEach((uuid, dmg) -> {
-                if(uuid == ENVIRONMENT) {
-                    result.add(Translations.STATS_RECAP_DAMAGE_FROM
-                            .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(),
-                                    Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.AQUA)
-                                            .translate(showTo).toLegacyText()));
-                }
-                Player resolvePlayer = Bukkit.getPlayer(uuid);
-                if(resolvePlayer == null) {
-                    // Skip -- unresolvable
-                    return;
-                }
-                result.add(Translations.STATS_RECAP_DAMAGE_FROM
-                        .with(ChatColor.AQUA, "  " + ChatColor.GOLD + dmg.toString(), resolvePlayer.getDisplayName()));
+                result.add(
+                        Translations.STATS_RECAP_DAMAGE_FROM.with(
+                                ChatColor.AQUA,
+                                damageDisplay(dmg),
+                                (uuid == ENVIRONMENT) ?
+                                        Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
+                                        (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
+                        )
+                );
             });
         }
 
@@ -243,5 +237,17 @@ public class DamageTrackModule implements Module {
         }
 
         return result;
+    }
+
+    public String damageDisplay(final Double dmg) {
+        String display = dmg.toString();
+
+        // cleanup
+        display = display.contains(".0") ? display.replace(".0", "") : "";
+
+        // heart char
+        display = ChatColor.GOLD + display + ChatColor.RED + " ❤" + (dmg != 1.0 ? "s" : "") + ChatColor.RESET;
+
+        return display;
     }
 }
