@@ -1,5 +1,6 @@
 package net.avicus.magma.network.server;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,14 @@ public class ServerMenuListener implements Listener {
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() != Action.RIGHT_CLICK_AIR
                 && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        // TODO: Fix the server gui, but for now send a message
+        if(true) {
+            event.getPlayer().sendMessage("");
+            event.getPlayer().sendMessage(ChatColor.GREEN + "Please use /server or /servers.");
+            event.getPlayer().sendMessage("");
             return;
         }
 
