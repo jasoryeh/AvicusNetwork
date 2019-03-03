@@ -239,14 +239,17 @@ public class DamageTrackModule implements Module {
         return result;
     }
 
-    public String damageDisplay(final Double dmg) {
-        String display = dmg.toString();
+    public String damageDisplay(Double dmg) {
+        // Half this to make it into hearts
+        dmg = dmg / 2;
+
+        String display = (dmg).toString();
 
         // cleanup
         display = display.contains(".0") ? display.replace(".0", "") : "";
 
         // heart char
-        display = ChatColor.GOLD + display + ChatColor.RED + " ❤" + (dmg != 1.0 ? "s" : "") + ChatColor.RESET;
+        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (dmg != 1.0 ? "s" : "") + ChatColor.RESET;
 
         return display;
     }

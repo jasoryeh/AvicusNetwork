@@ -103,7 +103,7 @@ public class SpawnsModule implements Module {
         DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
         trackModule.reset(player);
 
-        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
+        player.playSound(player.getLocation(), group.isSpectator() ? Sound.CHICKEN_EGG_POP : Sound.ENDERMAN_TELEPORT, 1, 1);
     }
 
     public void spawn(Player player) {
