@@ -23,6 +23,7 @@ import net.avicus.atlas.module.loadouts.Loadout;
 import net.avicus.atlas.util.Events;
 import net.avicus.atlas.util.Players;
 import net.avicus.magma.network.server.Servers;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
@@ -101,6 +102,8 @@ public class SpawnsModule implements Module {
         // Reset damage tracker
         DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
         trackModule.reset(player);
+
+        player.playSound(player.getLocation(), Sound.ENDERMAN_TELEPORT, 1, 1);
     }
 
     public void spawn(Player player) {
