@@ -1,4 +1,4 @@
-package net.avicus.atlas.sets.example;
+package net.avicus.atlas.sets.bedwars;
 
 import lombok.Getter;
 import lombok.Setter;

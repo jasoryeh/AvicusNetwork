@@ -1,4 +1,4 @@
-package net.avicus.atlas.sets.example;
+package net.avicus.atlas.sets.bedwars;
 
 import net.avicus.atlas.module.Module;
 
