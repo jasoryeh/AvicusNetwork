@@ -74,6 +74,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Where all the action starts!
+ */
 public class Atlas extends JavaPlugin {
 
     private static Atlas instance;
@@ -104,11 +107,23 @@ public class Atlas extends JavaPlugin {
     @Getter
     private AvicusCommandsRegistration registrar;
 
+    /**
+     * Returns a match if one is available right now.
+     *
+     * @return Current match, null if one doesn't exist
+     * @throws IllegalArgumentException Thrown when a match is not available
+     */
     @Nullable
     public static Match getMatch() {
         return get().getMatchManager().getRotation().getMatch();
     }
 
+    /**
+     * Accepts a consumer, gets a match and passes it to the consumer if one is
+     * available.
+     *
+     * @param consumer Consumer that needs a {@link net.avicus.atlas.match.Match}
+     */
     public static void performOnMatch(Consumer<Match> consumer) {
         Match match = getMatch();
         if (match != null) {
@@ -116,14 +131,20 @@ public class Atlas extends JavaPlugin {
         }
     }
 
+    /**
+     * Returns current instance of Atlas
+     * @return Atlas instance
+     */
     public static Atlas get() {
         return instance;
     }
 
     @Override
     public void onEnable() {
+        // assign instance
         instance = this;
 
+        // load configuration
         this.saveDefaultConfig();
         this.reloadConfig();
 
@@ -135,14 +156,17 @@ public class Atlas extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
+        // inject configuration -> AtlasConfig
         config.injector(AtlasConfig.class).inject();
 
+        // pre-load, and setup translations (runs static block in Translations)
         if (Translations.TYPE_BOOLEAN_FALSE == TranslationProvider.$NULL$) {
             this.getLogger().severe("Failed to pre-load.");
             this.getPluginLoader().disablePlugin(this);
             return;
         }
 
+        // sets up map-error loggers for map related logging
         this.mapErrorLogger = Logger.getLogger("map-error");
         this.mapErrorLogger.setUseParentHandlers(false);
         this.mapErrorLogger.addHandler(new ChatLogHandler("MAPS", "atlas.maperrors"));
@@ -151,16 +175,21 @@ public class Atlas extends JavaPlugin {
         this.mapManager.loadLibraries(AtlasConfig.getLibraries());
         this.matchFactory = new MatchFactory();
 
+        // loads and registers commands for usage
         this.commandManager = new AvicusCommandsManager();
         this.registrar = new AvicusCommandsRegistration(this, this.commandManager);
 
+        // load module-sets in the `module-sets` folder
         this.loader = new SetLoader(new File(this.getDataFolder(), "module-sets"));
         Bukkit.getLogger().info("Beginning external module set loading...");
         this.loader.loadModules();
         this.loader.getLoadedModules().forEach(m -> {
+            // Allow fail loads
+            Bukkit.getLogger().info("Loading Module Set: " + m.getDescriptionFile().getName());
             try {
                 ModuleSet set = m.getModuleInstance();
 
+                // set-up
                 set.setAtlas(this);
                 set.setMatchFactory(this.matchFactory);
                 Logger logger = Logger.getLogger(m.getDescriptionFile().getName());
@@ -168,28 +197,33 @@ public class Atlas extends JavaPlugin {
                 set.setLogger(logger);
                 set.setRegistrar(this.registrar);
 
+                // life!
                 set.onEnable();
+                Bukkit.getLogger().info("Loaded Module Set: " + m.getDescriptionFile().getName());
             } catch (Exception e) {
-                Bukkit.getLogger().info("Failed to load module!");
+                Bukkit.getLogger().info("Failed to load Module Set: " + m.getDescriptionFile().getName());
                 e.printStackTrace();
             }
-            Bukkit.getLogger().info("Loaded Module Set: " + m.getDescriptionFile().getName());
         });
         Bukkit.getLogger().info(
                 "Finished external module set loading! Loaded " + this.loader.getLoadedModules().size()
                         + " modules!");
 
+        // Load rotation
         final RotationProvider rotationProvider = new XmlRotationProvider(
                 new File(AtlasConfig.getRotationFile()), this.mapManager, this.matchFactory);
         this.getLogger().info("Using " + rotationProvider.getClass().getName() + " rotation provider");
         Rotation rotation;
         try {
+            // Defined rotation
             rotation = rotationProvider.provideRotation();
         } catch (IllegalStateException e) {
+            // Not defined, random rotation
             rotation = new RandomRotationProvider(this.mapManager, this.matchFactory).provideRotation();
         }
         this.matchManager = new MatchManager(this.matchFactory, rotation);
 
+        // Register Player Settings.
         PlayerSettings.register(DeathMessage.SETTING);
         PlayerSettings.register(TutorialModule.SHOW_TUTORIAL_SETTING);
 
@@ -216,6 +250,7 @@ public class Atlas extends JavaPlugin {
         Events.register(new AtlasListener());
 
         try {
+            // Start the rotation
             this.matchManager.start();
         } catch (IOException e) {
             this.getLogger().log(Level.SEVERE, "Could not start rotation", e);
@@ -223,11 +258,13 @@ public class Atlas extends JavaPlugin {
             return;
         }
 
+        // Register commands
         this.registerCommands(registrar);
 
         // Fun
         // new Friday13(this);
 
+        // Restart
         RestartMessageHandler.RESTART_HANDLER = () -> get().getMatchManager().getRotation()
                 .queueRestart();
     }
@@ -245,6 +282,11 @@ public class Atlas extends JavaPlugin {
         }
     }
 
+    /**
+     * Registers a list of commands in the provided registrar.
+     *
+     * @param registrar Registrar to register the commands in
+     */
     private void registerCommands(AvicusCommandsRegistration registrar) {
         registrar.register(ChannelCommands.class);
         registrar.register(DevCommands.class);

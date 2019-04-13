@@ -6,6 +6,10 @@ import lombok.Getter;
 import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.locale.text.LocalizedFormat;
 
+/**
+ * Represents each gametype and the translation of the names
+ * of each gametype.
+ */
 public enum GameType {
     CTW(Translations.GAMETYPE_CTW_NAME),
     DTC(Translations.GAMETYPE_DTC_NAME),

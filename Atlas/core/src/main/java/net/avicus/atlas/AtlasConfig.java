@@ -7,6 +7,9 @@ import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
 
+/**
+ * Atlas's config.yml should be mostly mapped to the variables here.
+ */
 public class AtlasConfig {
 
     @Getter

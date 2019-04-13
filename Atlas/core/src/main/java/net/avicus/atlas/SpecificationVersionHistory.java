@@ -4,6 +4,10 @@ import net.avicus.magma.util.Version;
 
 /**
  * A simple class to keep track of all specification updates.
+ *
+ * INITIAL_RELEASE = OLDEST
+ *
+ * CURRENT         = NEWEST
  */
 public class SpecificationVersionHistory {
 

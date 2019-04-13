@@ -9,6 +9,10 @@ import net.avicus.compendium.locale.text.LocalizedText;
 import net.avicus.magma.util.TranslationProvider;
 import org.bukkit.ChatColor;
 
+/**
+ * Provides translations for Atlas. Is automatically mapped when accessing these
+ * translations.
+ */
 public final class Translations {
 
     // ----
@@ -115,24 +119,41 @@ public final class Translations {
     public static final LocalizedFormat STATS_OBJECTIVES_WOOLS_PLACEDPLURAL = $NULL$;
     public static final LocalizedFormat STATS_OBJECTIVES_WOOLS_TOUCHEDPLURAL = $NULL$;
     public static final LocalizedFormat STATS_OBJECTIVES_WOOLS_TOUCHED = $NULL$;
+    // ----
     static final LocaleBundle BUNDLE;
 
+    /**
+     * Automatic mapping via static initialization block
+     */
     static {
-        /**
-         * Add additional languages here
+        /*
+         * TODO: Add more languages
+         * Add additional languages here! (List of languages)
          */
         BUNDLE = TranslationProvider.loadBundle(Atlas.get(), "en_US", "es_ES");
-        // Theoretically sets the translations above?!?!?!
+
+        // Maps the translations from the Translation files to the files above.
         TranslationProvider.map(Translations.class, BUNDLE);
     }
 
-    private Translations() {
-    }
+    private Translations() { }
 
+    /**
+     * Bundle containing all of the currently loaded Locales
+     *
+     * @return Bundle with currently loaded locales
+     */
     public static LocaleBundle getBundle() {
         return BUNDLE;
     }
 
+    /**
+     * Returns a "enabled"(green) or "disabled"(red) when true or false.
+     * GREEN|RED
+     *
+     * @param value Accepts, true for green "enabled", false for red "disabled"
+     * @return Translation of each enabled/disabled message
+     */
     public static LocalizedText bool(final boolean value) {
         return value ? TYPE_BOOLEAN_TRUE.with(ChatColor.GREEN) : TYPE_BOOLEAN_FALSE.with(ChatColor.RED);
     }
