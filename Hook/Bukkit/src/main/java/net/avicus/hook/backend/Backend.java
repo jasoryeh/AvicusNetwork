@@ -64,6 +64,29 @@ public class Backend {
     }
 
     public void start() {
+        // Run backend in the background.
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(HookPlugin.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    boolean allDone = true;
+
+                    for (Thread thread : runBackEnd()) {
+                        if (thread.isAlive()) {
+                            allDone = false;
+                            break;
+                        }
+                    }
+                } catch(Exception e) {
+                    HookPlugin.getInstance().getLogger().info("A backend task failed. Trying again.");
+                    e.printStackTrace();
+                }
+            }
+        }, 40 * 1000, 120 * 1000);
+    }
+
+    public List<Thread> runBackEnd() {
         this.log.info("Backend starting up!");
 
         List<Thread> runningTasks = new ArrayList<>();
@@ -118,24 +141,6 @@ public class Backend {
 
         this.log.info("Backend started up.");
 
-        // Ends when all tasks are DONE!
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                boolean allDone = true;
-
-                for (Thread thread : runningTasks) {
-                    if (thread.isAlive()) {
-                        allDone = false;
-                        break;
-                    }
-                }
-
-                if (allDone) {
-                    Bukkit.shutdown();
-                }
-            }
-        }, 40 * 1000, 120 * 1000);
+        return runningTasks;
     }
 }
