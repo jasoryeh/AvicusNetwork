@@ -21,6 +21,8 @@ import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.Paste;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.magma.Magma;
+import net.avicus.magma.network.user.Users;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -33,6 +35,22 @@ public class DevCommands {
     public static void atlas(CommandContext cmd, final CommandSender sender) {
         String version = Atlas.get().getDescription().getVersion();
         sender.sendMessage(Messages.GENERIC_VERSION.with(ChatColor.GOLD, version));
+    }
+
+    @Command(aliases = "user", desc = "Displays user information")
+    @CommandPermissions("atlas.dev.user")
+    public static void user(CommandContext cmd, final CommandSender sender) {
+        try {
+            StringBuilder builder = new StringBuilder();
+            builder.append("User: ").append(sender.getName()).append(" | ")
+                    .append("ID: ").append(Users.user(sender).getId()).append(" | ")
+                    .append("Joined: ").append(Users.user(sender).getCreatedAt()).append(" | ")
+                    .append("Time Online: ").append(Users.user(sender).getTimeOnline(Magma.get().database())).append(" | ")
+                    .append("Details: ").append(Users.user(sender).details(Magma.get().database()));
+            sender.sendMessage(builder.toString());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Command(aliases = {"reloadlibrary", "refreshlibrary"}, desc = "Reload the map libraries.")
