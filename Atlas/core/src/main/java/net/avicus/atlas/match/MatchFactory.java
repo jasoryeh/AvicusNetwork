@@ -37,6 +37,7 @@ import net.avicus.atlas.module.elimination.EliminationFactory;
 import net.avicus.atlas.module.enderchests.EnderChestsFactory;
 import net.avicus.atlas.module.executors.ExecutorsFactory;
 import net.avicus.atlas.module.fakeguis.FakeGUIsFactory;
+import net.avicus.atlas.module.gadget.map.MapTokenFactory;
 import net.avicus.atlas.module.groups.GroupsFactory;
 import net.avicus.atlas.module.invsee.InvSeeFactory;
 import net.avicus.atlas.module.items.ItemsFactory;
@@ -104,6 +105,7 @@ public class MatchFactory {
         this.register(EnderChestsFactory.class);
         this.register(ExecutorsFactory.class);
         this.register(FakeGUIsFactory.class);
+        this.register(MapTokenFactory.class);
         this.register(GroupsFactory.class);
         this.register(InvSeeFactory.class);
         this.register(ItemsFactory.class);

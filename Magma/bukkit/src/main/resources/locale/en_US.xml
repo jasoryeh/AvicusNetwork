@@ -36,6 +36,7 @@
         </unknown>
         <no>
             <key>You do not have a matching crate and key. Find a matching key at {0}.</key>
+            <key>You do not have a matching token. Find a token at {0}.</key>
             <unread>
                 <alerts>You have no unread alerts. Use "-r" to show read alerts.</alerts>
             </unread>

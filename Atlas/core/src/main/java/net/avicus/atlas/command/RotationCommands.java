@@ -16,6 +16,7 @@ import net.avicus.atlas.Atlas;
 import net.avicus.atlas.command.exception.CommandMatchException;
 import net.avicus.atlas.map.AtlasMap;
 import net.avicus.atlas.match.Match;
+import net.avicus.atlas.module.gadget.map.MapTokenManager;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.Paginator;
@@ -73,6 +74,18 @@ public class RotationCommands {
             }
 
             sender.sendMessage(new MultiPartLocalizable(part1, part2, part3));
+        }
+    }
+
+    @Command(aliases = {"req",
+            "requests"}, desc = "View the current requests.", usage = "<page>", min = 0, max = 1)
+    public static void requests(CommandContext cmd, CommandSender sender) throws CommandException {
+        ArrayList<Match> matches = new ArrayList<>(MapTokenManager.addedMatches);
+
+        sender.sendMessage(ChatColor.AQUA + "Requested maps, total of " + ChatColor.GOLD + matches.size()
+                + ChatColor.AQUA + ":");
+        for (int i = 0; i < matches.size(); i++) {
+            sender.sendMessage(ChatColor.AQUA + ((i + 1) + "") + ". " + ChatColor.GOLD + matches.get(i).getMap().getName());
         }
     }
 
@@ -249,7 +262,7 @@ public class RotationCommands {
         }
     }
 
-    private static Optional<Match> parse(CommandSender sender, AtlasMap map) {
+    public static Optional<Match> parse(CommandSender sender, AtlasMap map) {
         try {
             return Optional.of(Atlas.get().getMatchManager().getFactory().create(map));
         } catch (Exception e) {

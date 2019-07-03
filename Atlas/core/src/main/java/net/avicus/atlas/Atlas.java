@@ -16,17 +16,7 @@ import javax.annotation.Nullable;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.avicus.atlas.command.ChannelCommands;
-import net.avicus.atlas.command.DevCommands;
-import net.avicus.atlas.command.GameCommands;
-import net.avicus.atlas.command.GenericCommands;
-import net.avicus.atlas.command.GroupCommands;
-import net.avicus.atlas.command.JoinCommands;
-import net.avicus.atlas.command.KitCommands;
-import net.avicus.atlas.command.ResourcePackCommand;
-import net.avicus.atlas.command.RotationCommands;
-import net.avicus.atlas.command.StateCommands;
-import net.avicus.atlas.command.WorldEditCommands;
+import net.avicus.atlas.command.*;
 import net.avicus.atlas.command.exception.CommandMatchException;
 import net.avicus.atlas.component.AtlasComponentManager;
 import net.avicus.atlas.component.dev.DebuggingComponent;
@@ -290,6 +280,7 @@ public class Atlas extends JavaPlugin {
     private void registerCommands(AvicusCommandsRegistration registrar) {
         registrar.register(ChannelCommands.class);
         registrar.register(DevCommands.class);
+        registrar.register(GadgetCommands.class);
         registrar.register(JoinCommands.class);
         registrar.register(RotationCommands.class);
         registrar.register(StateCommands.class);

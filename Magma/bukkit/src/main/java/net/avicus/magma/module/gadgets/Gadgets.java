@@ -2,13 +2,7 @@ package net.avicus.magma.module.gadgets;
 
 import com.google.common.collect.ArrayListMultimap;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import net.avicus.compendium.WeightedRandomizer;
 import net.avicus.magma.Magma;
@@ -24,6 +18,7 @@ import net.avicus.magma.module.gadgets.crates.KeyGadget;
 import net.avicus.magma.module.gadgets.crates.TypeManager;
 import net.avicus.magma.module.gadgets.ranks.RankGadget;
 import net.avicus.magma.module.gadgets.ranks.RankManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,8 +27,11 @@ import org.joda.time.Duration;
 
 public class Gadgets implements Module, ListenerModule {
 
+    // All the gadget managers
     private static ArrayList<GadgetManager> managers = new ArrayList<>();
+    // All the users and their associated gadgets
     private static ArrayListMultimap<UUID, GadgetContext> gadgets;
+    // All the gadgets and their associated ids
     private static Map<GadgetContext, Integer> backpackGadgets;
 
     @Override

@@ -90,6 +90,7 @@ public final class MagmaTranslations {
     public static final LocalizedFormat GUI_CLICK_KEY = $NULL$;
     public static final LocalizedFormat GUI_CRATE_REVEAL = $NULL$;
     public static final LocalizedFormat ERROR_NO_KEY = $NULL$;
+    public static final LocalizedFormat ERROR_NO_TOKEN = $NULL$;
     public static final LocalizedFormat GUI_PAGE_NEXT = $NULL$;
     public static final LocalizedFormat GUI_PAGE_PREV = $NULL$;
     public static final LocalizedFormat GUI_RANK_GADGET = $NULL$;
