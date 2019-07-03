@@ -76,6 +76,8 @@ public class CrateRevealMenu extends InventoryMenu {
         this.picked = gadget.defaultContext();
         MagmaTask.of(() -> gadget.getManager().getGadgets()
                 .createBackpackGadget(Users.user(this.player), picked, true, new Date())).nowAsync();
+        this.player.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GREEN + "+" + ChatColor.DARK_GRAY + "] "
+                + ChatColor.RESET + gadget.getName().translate(this.player).toLegacyText());
     }
 
     private void next() {

@@ -7,13 +7,7 @@ import static net.avicus.atlas.util.ObjectiveUtils.getDistanceDisplay;
 
 import com.google.common.collect.Sets;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import lombok.Setter;
 import net.avicus.atlas.event.group.GroupMaxPlayerCountChangeEvent;
@@ -223,7 +217,11 @@ public class SidebarComponent implements ListenerModule {
                 }
             }
 
-            title.style().color(ChatColor.AQUA);
+            List<ChatColor> colors = Arrays.asList(ChatColor.RED, ChatColor.GOLD, ChatColor.YELLOW, ChatColor.GREEN,
+                    ChatColor.BLUE, ChatColor.AQUA, ChatColor.LIGHT_PURPLE);
+            title.style().color(colors.get((int) Math.floor(Math.random() * colors.size())));
+            title.style().bold(true);
+
             sidebar.setTitle(title.translate(player.getLocale()).toLegacyText());
         }
         return sidebar;

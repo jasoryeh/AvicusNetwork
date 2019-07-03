@@ -76,6 +76,9 @@
         </type>
     </generic>
     <gui>
+        <crate>
+            <reveal>Crate</reveal>
+        </crate>
         <generic>
             <back>Back</back>
             <online>

@@ -42,12 +42,16 @@ public class BadgeManager implements GadgetManager<BadgeGadget, BadgeContext>, L
 
     @EventHandler(ignoreCancelled = true)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
+
         BadgeContext badge = getEnabledBadge(event.getPlayer().getUniqueId()).orElse(null);
         String symbol = badge == null ? "" : badge.getDisplay();
 
-        String format = ChatColor.GRAY + "«" + ChatColor.WHITE + "%1$s" + symbol + ChatColor.GRAY + "»"
-                + ChatColor.WHITE + " %2$s";
-        event.setFormat(format);
+        // Set symbol
+        event.getPlayer().setDisplayName(event.getPlayer().getDisplayName() + symbol);
+
+        //String format = ChatColor.GRAY + "«" + ChatColor.WHITE + "%1$s" + symbol + ChatColor.GRAY + "»"
+        //+ ChatColor.WHITE + " %2$s";
+        //event.setFormat(format);
     }
 
     @Override
