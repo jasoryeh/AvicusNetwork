@@ -47,7 +47,7 @@ public class BadgeManager implements GadgetManager<BadgeGadget, BadgeContext>, L
         String symbol = badge == null ? "" : badge.getDisplay();
 
         // Set symbol
-        event.getPlayer().setDisplayName(event.getPlayer().getDisplayName() + symbol);
+        event.getPlayer().setDisplayName(event.getPlayer().getDisplayName() + (event.getPlayer().getDisplayName().contains(symbol) ? "" : symbol));
 
         //String format = ChatColor.GRAY + "«" + ChatColor.WHITE + "%1$s" + symbol + ChatColor.GRAY + "»"
         //+ ChatColor.WHITE + " %2$s";

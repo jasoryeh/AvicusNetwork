@@ -59,9 +59,9 @@ public class Gadgets implements Module, ListenerModule {
                 .item(new RankGadget(Magma.get().database().getRanks().getOrCreate("Gold"), Optional.of(
                         DateTime.now().plus(Duration.standardDays(7)).toDate())), 1)
                 .item(new RankGadget(Magma.get().database().getRanks().getOrCreate("Emerald"), Optional.of(
-                        DateTime.now().plus(Duration.standardDays(5)).toDate())), 0.6)
+                        DateTime.now().plus(Duration.standardDays(7)).toDate())), 0.6)
                 .item(new RankGadget(Magma.get().database().getRanks().getOrCreate("Diamond"), Optional.of(
-                        DateTime.now().plus(Duration.standardDays(1)).toDate())), 0.3)
+                        DateTime.now().plus(Duration.standardDays(7)).toDate())), 0.3)
                 .build());
     }
 
