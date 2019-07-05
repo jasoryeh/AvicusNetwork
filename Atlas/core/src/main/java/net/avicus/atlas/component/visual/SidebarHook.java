@@ -23,6 +23,7 @@ import net.avicus.atlas.util.ObjectiveUtils;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.magma.util.Sidebar;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
@@ -70,8 +71,20 @@ public abstract class SidebarHook implements Listener {
                 List<Player> ordered = new ArrayList<>(points.keySet());
                 ordered.sort((o1, o2) -> points.get(o2).compareTo(points.get(o1)));
 
-                for (Player player : ordered) {
-                    lines.add(points.get(player) + " " + player.getDisplayName());
+                lines.add(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Top 5:");
+                if (module.getObjectives().size() <= 1) {
+                    for (int i = 0; i <= 4; i++) {
+                        if (ordered.size() < (i + 1)) {
+                            lines.add(ChatColor.GRAY + "-1" + ObjectiveUtils.SEPARATOR + "N/A");
+                            continue;
+                        }
+                        Player player = ordered.get(i);
+                        lines.add(points.get(player) + ObjectiveUtils.SEPARATOR + player.getDisplayName());
+                    }
+                } else {
+                    for (Player player : ordered) {
+                        lines.add(points.get(player) + ObjectiveUtils.SEPARATOR + player.getDisplayName());
+                    }
                 }
 
                 break;

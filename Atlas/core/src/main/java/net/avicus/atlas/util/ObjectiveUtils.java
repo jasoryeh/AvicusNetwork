@@ -186,13 +186,10 @@ public class ObjectiveUtils {
             lines.add("");
         }
 
+        // Proper fix, past fix: what if it isn't one space, but two, three+ spaces
         if (lines.size() > 16) {
-            lines = lines.stream().filter((s -> !s.equals(""))).collect(Collectors.toList());
-        }
-
-        // Remove space between shared and competitors
-        if (lines.size() > 16) {
-            lines = lines.stream().filter((s -> !s.equals(" "))).collect(Collectors.toList());
+            lines = lines.stream().filter((s -> !s.replaceAll(" ", "")
+                    .equals(""))).collect(Collectors.toList());
         }
 
         return lines;
