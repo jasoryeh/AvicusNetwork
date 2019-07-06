@@ -5,6 +5,8 @@ import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.magma.module.gadgets.AbstractGadget;
+import net.avicus.magma.module.gadgets.DefaultTransactabilityContext;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -42,12 +44,16 @@ public class MapSetNextToken extends AbstractGadget<MapTokenContext> {
 
     @Override
     public MapTokenContext defaultContext() {
-        return new MapTokenContext(this);
+        MapTokenContext mapTokenContext = new MapTokenContext(this);
+        DefaultTransactabilityContext<MapTokenContext> context = new DefaultTransactabilityContext(mapTokenContext);
+        context.setPurchase(Pair.of(Boolean.TRUE, 1000L));
+        mapTokenContext.setBuyable(context);
+        return mapTokenContext;
     }
 
     @Override
     public MapTokenContext deserializeContext(JsonObject json) {
-        return new MapTokenContext(this);
+        return this.defaultContext();
     }
 
     @Override

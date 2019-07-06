@@ -1,9 +1,7 @@
 package net.avicus.magma.module.gadgets;
 
 import com.google.common.collect.ArrayListMultimap;
-
-import java.util.*;
-
+import lombok.Getter;
 import net.avicus.compendium.WeightedRandomizer;
 import net.avicus.magma.Magma;
 import net.avicus.magma.database.model.impl.BackpackGadget;
@@ -18,21 +16,26 @@ import net.avicus.magma.module.gadgets.crates.KeyGadget;
 import net.avicus.magma.module.gadgets.crates.TypeManager;
 import net.avicus.magma.module.gadgets.ranks.RankGadget;
 import net.avicus.magma.module.gadgets.ranks.RankManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 
+import java.util.*;
+
 public class Gadgets implements Module, ListenerModule {
 
     // All the gadget managers
+    @Getter
     private static ArrayList<GadgetManager> managers = new ArrayList<>();
     // All the users and their associated gadgets
     private static ArrayListMultimap<UUID, GadgetContext> gadgets;
     // All the gadgets and their associated ids
     private static Map<GadgetContext, Integer> backpackGadgets;
+
+    @Getter
+    private static ArrayList<GadgetContext> transactables = new ArrayList<>();
 
     @Override
     public void enable() {
@@ -188,5 +191,27 @@ public class Gadgets implements Module, ListenerModule {
 
         Magma.get().database().getBackpackGadgets()
                 .updateContext(backpackGadgetId, context.serialize());
+    }
+
+    /**
+     * Updates transactables
+     */
+    public void addTransactable(GadgetContext g) {
+        for (GadgetContext transactable : transactables) {
+            if (transactable.getManager().getType().equalsIgnoreCase(g.getManager().getType())) {
+                return;
+            }
+        }
+        transactables.add(g);
+    }
+
+    public void removeTransactable(GadgetContext g) {
+        GadgetContext remove = g;
+        for (GadgetContext transactable : transactables) {
+            if (transactable.getManager().getType().equalsIgnoreCase(g.getManager().getType())) {
+                remove = transactable;
+            }
+        }
+        transactables.remove(remove);
     }
 }

@@ -1,14 +1,12 @@
 package net.avicus.hook.gadgets;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import net.avicus.compendium.WeightedRandomizer;
 import net.avicus.compendium.commands.AvicusCommandsRegistration;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
 import net.avicus.hook.Hook;
-import net.avicus.hook.gadgets.backpack.BackpackCommand;
+import net.avicus.hook.gadgets.backpack.BackpackShopCommand;
+import net.avicus.hook.gadgets.shop.ShopCommand;
 import net.avicus.hook.gadgets.types.arrowtrails.ArrowTrailManager;
 import net.avicus.hook.gadgets.types.badge.BadgeGadget;
 import net.avicus.hook.gadgets.types.badge.BadgeManager;
@@ -38,6 +36,9 @@ import net.avicus.magma.module.gadgets.crates.CrateManager;
 import net.avicus.magma.module.gadgets.crates.KeyManager;
 import net.avicus.magma.module.gadgets.crates.TypeManager;
 import org.bukkit.ChatColor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HookGadgets {
 
@@ -72,7 +73,8 @@ public class HookGadgets {
         managers.forEach(
                 gadgetsModule::registerManager);
 
-        cmds.register(BackpackCommand.class);
+        cmds.register(BackpackShopCommand.class);
+        cmds.register(ShopCommand.class);
 
         loadCrateTypes();
     }

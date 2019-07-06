@@ -90,6 +90,8 @@
         <gadget-store>Gadget Store</gadget-store>
         <backpack-use>Left-click to use this item.</backpack-use>
         <backpack-trash>Left-click to discard this item.</backpack-trash>
+        <shop-buy>Left-click to buy this item. {0}</shop-buy>
+        <shop-sell>Right-click to sell this item. {0}</shop-sell>
         <trash-bin>Trash Bin</trash-bin>
         <trash-info>Click the trash bin, then click a gadget that you wish to permanently remove from
             your backpack.

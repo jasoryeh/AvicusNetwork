@@ -113,6 +113,7 @@ public class Messages {
     public static LocalizedFormat UI_NEXT_PAGE = get("ui.next-page");
     public static LocalizedFormat UI_BACKPACK_USE = get("ui.backpack-use");
     public static LocalizedFormat UI_BACKPACK_TRASH = get("ui.backpack-trash");
+    public static LocalizedFormat UI_SHOP_BUY = get("ui.shop-buy");
     public static LocalizedFormat UI_CONFIRM = get("ui.confirm");
     public static LocalizedFormat UI_CANCEL = get("ui.cancel");
     public static LocalizedFormat UI_CONFIRM_CANCEL = get("ui.confirm-cancel");

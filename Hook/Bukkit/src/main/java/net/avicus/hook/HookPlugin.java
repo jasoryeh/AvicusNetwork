@@ -4,16 +4,6 @@ import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandNumberFormatException;
 import com.sk89q.minecraft.util.commands.CommandPermissionsException;
 import com.sk89q.minecraft.util.commands.CommandUsageException;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import lombok.Getter;
 import net.avicus.compendium.AvicusCommandsManager;
 import net.avicus.compendium.commands.AvicusCommandsRegistration;
@@ -28,18 +18,14 @@ import net.avicus.hook.afk.AFKKickTask;
 import net.avicus.hook.backend.Backend;
 import net.avicus.hook.chat.Chat;
 import net.avicus.hook.chat.MessageCommands;
-import net.avicus.hook.commands.DevCommands;
-import net.avicus.hook.commands.OnlineCommand;
-import net.avicus.hook.commands.StatsCommand;
-import net.avicus.hook.commands.TeleportCommands;
-import net.avicus.hook.commands.UserCommands;
+import net.avicus.hook.commands.*;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.friends.Friends;
 import net.avicus.hook.gadgets.HookGadgets;
 import net.avicus.hook.gadgets.types.crates.CrateRewardListener;
 import net.avicus.hook.gadgets.types.map.GadgetPopulationUtility;
 import net.avicus.hook.listener.AtlasListener;
-import net.avicus.hook.listener.BackpackListener;
+import net.avicus.hook.listener.BackpackShopListener;
 import net.avicus.hook.listener.SettingModule;
 import net.avicus.hook.prestige.ExperienceRewardListener;
 import net.avicus.hook.punishment.Punishments;
@@ -59,6 +45,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class HookPlugin extends JavaPlugin {
 
@@ -142,7 +137,7 @@ public class HookPlugin extends JavaPlugin {
         QuickPlay.init();
 
         Events.register(new AFKKickTask().start());
-        Events.register(new BackpackListener());
+        Events.register(new BackpackShopListener());
 
         this.hmm = new HookModuleManager(this.getServer().getPluginManager(), this, cmds);
         this.hmm.register(SettingModule.class);
