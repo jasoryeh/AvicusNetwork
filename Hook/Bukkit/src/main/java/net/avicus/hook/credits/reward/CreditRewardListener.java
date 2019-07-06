@@ -34,6 +34,7 @@ public class CreditRewardListener implements Listener {
             Class.forName("net.avicus.atlas.Atlas");
         } catch (ClassNotFoundException e) {
             HookPlugin.getInstance().getLogger().info("Atlas not found, not registering competitive reward listener.");
+            return;
         }
         if (Atlas.get().getLoader().hasModule("competitive-objectives")) {
             Events.register(new CompetitveRewardListener());
