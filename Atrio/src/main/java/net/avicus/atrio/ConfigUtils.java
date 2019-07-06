@@ -1,8 +1,5 @@
 package net.avicus.atrio;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.avicus.compendium.config.Config;
 import net.avicus.magma.util.region.BoundedRegion;
 import net.avicus.magma.util.region.modifiers.BoundedJoinRegion;
@@ -12,10 +9,13 @@ import net.avicus.magma.util.region.shapes.CuboidRegion;
 import net.avicus.magma.util.region.shapes.CylinderRegion;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConfigUtils {
 
     public static Vector vecFromString(String vec) {
-        String[] parts = vec.split(",");
+        String[] parts = vec.replaceAll(" ", "").split(",");
         return new Vector(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]),
                 Double.parseDouble(parts[2]));
     }

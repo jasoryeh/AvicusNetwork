@@ -1,12 +1,5 @@
 package net.avicus.hook.credits.reward;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
@@ -15,6 +8,7 @@ import net.avicus.atlas.event.match.MatchCompleteEvent;
 import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.HookConfig;
+import net.avicus.hook.HookPlugin;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.Messages;
@@ -27,12 +21,20 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 public class CreditRewardListener implements Listener {
 
     private final Map<UUID, Instant> teamJoinTimes;
 
     public CreditRewardListener() {
         this.teamJoinTimes = new HashMap<>();
+        try {
+            Class.forName("net.avicus.atlas.Atlas");
+        } catch (ClassNotFoundException e) {
+            HookPlugin.getInstance().getLogger().info("Atlas not found, not registering competitive reward listener.");
+        }
         if (Atlas.get().getLoader().hasModule("competitive-objectives")) {
             Events.register(new CompetitveRewardListener());
         }
