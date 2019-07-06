@@ -1,16 +1,20 @@
 package net.avicus.hook.credits;
 
 import com.google.common.base.Joiner;
-
-import java.util.Arrays;
-import java.util.List;
-
+import me.lucko.luckperms.LuckPerms;
+import me.lucko.luckperms.api.Group;
+import me.lucko.luckperms.api.LuckPermsApi;
+import me.lucko.luckperms.api.User;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.magma.network.user.Users;
 import net.avicus.magma.network.user.rank.BukkitRank;
 import net.avicus.magma.network.user.rank.Ranks;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 public class GadgetRanksRequirement implements GadgetPurchaseRequirement {
 
@@ -38,6 +42,16 @@ public class GadgetRanksRequirement implements GadgetPurchaseRequirement {
                 if (rank.getRank().getName().equalsIgnoreCase(require)) {
                     return true;
                 }
+            }
+        }
+
+        LuckPermsApi api = LuckPerms.getApi();
+
+        User u = api.getUser(player.getUniqueId());
+        for (String rank : this.ranks) {
+            Optional<Group> groupSafe = api.getGroupSafe(rank);
+            if (groupSafe.isPresent() && u.inheritsGroup(groupSafe.get())) {
+                return true;
             }
         }
 

@@ -25,7 +25,7 @@ public class ArrowTrailTask extends HookTask implements Listener {
     }
 
     public void start() {
-        repeat(0, 10);
+        repeat(0, 1);
     }
 
     @Override
