@@ -1,15 +1,5 @@
 package net.avicus.atrio;
 
-import static net.avicus.hook.gadgets.backpack.BackpackMenu.createBackpackOpener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
-
 import lombok.Data;
 import lombok.Getter;
 import net.avicus.compendium.boss.BossBar;
@@ -34,33 +24,21 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.entity.ItemSpawnEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.material.Button;
-import org.bukkit.material.DirectionalContainer;
-import org.bukkit.material.Door;
-import org.bukkit.material.Lever;
-import org.bukkit.material.MaterialData;
-import org.bukkit.material.TrapDoor;
+import org.bukkit.material.*;
 import org.bukkit.util.Vector;
 import org.github.paperspigot.Title;
 import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.*;
+
+import static net.avicus.hook.gadgets.backpack.BackpackMenu.createBackpackOpener;
 
 public class AtrioListener implements Listener {
 
@@ -217,7 +195,7 @@ public class AtrioListener implements Listener {
     }
 
     private void populateHeaderFooter(Player player) {
-        TextComponent network = new TextComponent("The Avicus Network");
+        TextComponent network = new TextComponent(NetworkIdentification.NAME);
         network.setColor(ChatColor.GREEN);
 
         BaseComponent[] headArray = new BaseComponent[]{
