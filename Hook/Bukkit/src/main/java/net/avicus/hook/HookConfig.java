@@ -1,10 +1,10 @@
 package net.avicus.hook;
 
-import java.util.Optional;
-
 import lombok.Getter;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
+
+import java.util.Optional;
 
 public class HookConfig {
 
@@ -66,6 +66,14 @@ public class HookConfig {
         @Getter
         @ConfigKey(key = "strip-color")
         private static boolean stripColor;
+
+        @ConfigKey(key = "enable-format")
+        @Getter
+        private static boolean enableFormat;
+
+        @ConfigKey(key = "format")
+        @Getter
+        private static String format;
     }
 
     @ConfigPath("credits")
@@ -287,5 +295,4 @@ public class HookConfig {
         @Getter
         private static int delay;
     }
-
 }

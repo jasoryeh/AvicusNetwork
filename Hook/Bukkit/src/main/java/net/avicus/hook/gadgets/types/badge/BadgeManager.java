@@ -2,10 +2,6 @@ package net.avicus.hook.gadgets.types.badge;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.gson.JsonObject;
-
-import java.util.Optional;
-import java.util.UUID;
-
 import lombok.ToString;
 import net.avicus.hook.utils.Events;
 import net.avicus.magma.database.model.impl.User;
@@ -16,6 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @ToString
 public class BadgeManager implements GadgetManager<BadgeGadget, BadgeContext>, Listener {
@@ -47,7 +46,7 @@ public class BadgeManager implements GadgetManager<BadgeGadget, BadgeContext>, L
         String symbol = badge == null ? "" : badge.getDisplay();
 
         // Set symbol
-        event.getPlayer().setDisplayName(event.getPlayer().getDisplayName() + (event.getPlayer().getDisplayName().contains(symbol) ? "" : symbol));
+        event.getPlayer().setDisplayName(event.getPlayer().getDisplayName() + (event.getPlayer().getDisplayName().contains(symbol) ? "" : symbol) + ChatColor.RESET);
 
         //String format = ChatColor.GRAY + "«" + ChatColor.WHITE + "%1$s" + symbol + ChatColor.GRAY + "»"
         //+ ChatColor.WHITE + " %2$s";

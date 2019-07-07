@@ -16,11 +16,19 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class AtrioSidebar implements Listener {
 
+    private final static String pad = "        ";
+
     public static final TimedAlternator<String> TITLE = new TimedAlternator<>(
             2000,
-            ChatColor.AQUA.toString() + ChatColor.BOLD + NetworkIdentification.NAME,
-            ChatColor.AQUA.toString() + ChatColor.BOLD + "        " + NetworkIdentification.URL
-                    + "       "
+            pad + ChatColor.AQUA.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.WHITE.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.RED.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.GOLD.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.YELLOW.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.GREEN.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
+            pad + ChatColor.BLUE.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad
     );
 
     private final AtrioPlugin plugin;
@@ -52,12 +60,21 @@ public class AtrioSidebar implements Listener {
 
         @Override
         public void run() {
-            sidebar.setTitle(TITLE.next());
+            String title = TITLE.next();
+            title = (Math.random() > 0.5 ? title.toUpperCase() : title);
+
+            sidebar.setTitle(title);
 
             int credits = Credits.getCredits(player);
             Localizable creditText = new LocalizedNumber(credits,
                     TextStyle.ofColor(ChatColor.YELLOW).bold());
 
+            sidebar.replace(9, "You are playing on the " + ChatColor.YELLOW.toString() + ChatColor.BOLD
+                    + "Lobby" + ChatColor.WHITE + " server");
+            sidebar.replace(8, "");
+            sidebar.replace(7, "Play!");
+            sidebar.replace(6, ChatColor.YELLOW + "/server Atlas");
+            sidebar.replace(5, "");
             sidebar.replace(4, "Credits");
             sidebar.replace(3, creditText.translate(player.getLocale()).toLegacyText());
             sidebar.replace(2, "");

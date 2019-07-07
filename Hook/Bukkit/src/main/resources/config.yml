@@ -88,14 +88,16 @@ freeze:
 
 chat:
   strip-color: true # Remove color codes from chat sent by users
+  enable-format: false
+  format: '<%3$s%1$s%4$s> %2$s'
 
 server-menu: # Supports both individual servers and groups
   rows: 1 # Rows in the menu inventory
   slots: # Slots start from 0.
   - index: 2
-    group: Development
+    group: Atlas
   - index: 7
-    server: Lobby1
+    server: Lobby
 
 shutdown-on-empty: false # If the server should shut down when there are no players online
 

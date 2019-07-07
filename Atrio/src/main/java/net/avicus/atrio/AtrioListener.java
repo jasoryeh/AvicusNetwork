@@ -196,12 +196,13 @@ public class AtrioListener implements Listener {
 
     private void populateHeaderFooter(Player player) {
         TextComponent network = new TextComponent(NetworkIdentification.NAME);
-        network.setColor(ChatColor.GREEN);
+        network.setColor(ChatColor.YELLOW);
+        network.setBold(true);
 
         BaseComponent[] headArray = new BaseComponent[]{
                 network,
                 new TextComponent(TextComponent.fromLegacyText("\n" + net.md_5.bungee.api.ChatColor
-                        .translateAlternateColorCodes('&', "&c" + this.headerOptions
+                        .translateAlternateColorCodes('&', "&e" + this.headerOptions
                                 .get(Math.max(this.random.nextInt(this.headerOptions.size()) - 1, 0)).getBody()
                                 .trim())))
         };
