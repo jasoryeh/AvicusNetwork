@@ -16,7 +16,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class AtrioSidebar implements Listener {
 
-    private final static String pad = "        ";
+    protected final static String pad = "        ";
 
     public static final TimedAlternator<String> TITLE = new TimedAlternator<>(
             1000,

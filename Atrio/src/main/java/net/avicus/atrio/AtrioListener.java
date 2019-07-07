@@ -195,16 +195,19 @@ public class AtrioListener implements Listener {
     }
 
     private void populateHeaderFooter(Player player) {
-        TextComponent network = new TextComponent(pads + NetworkIdentification.NAME + pads);
+        TextComponent network = new TextComponent(AtrioSidebar.pad + NetworkIdentification.NAME + AtrioSidebar.pad);
         network.setColor(ChatColor.YELLOW);
         network.setBold(true);
 
         BaseComponent[] headArray = new BaseComponent[]{
+                new TextComponent(),
                 network,
+                new TextComponent(),
                 new TextComponent(TextComponent.fromLegacyText("\n" + net.md_5.bungee.api.ChatColor
                         .translateAlternateColorCodes('&', "&b" + this.headerOptions
                                 .get(Math.max(this.random.nextInt(this.headerOptions.size()) - 1, 0)).getBody()
-                                .trim())))
+                                .trim()))),
+                new TextComponent()
         };
 
         TextComponent header = new TextComponent(headArray);
