@@ -61,7 +61,6 @@ public class AtrioSidebar implements Listener {
         @Override
         public void run() {
             String title = TITLE.next();
-            title = (Math.random() > 0.5 ? title.toUpperCase() : title);
 
             sidebar.setTitle(title);
 
@@ -69,7 +68,8 @@ public class AtrioSidebar implements Listener {
             Localizable creditText = new LocalizedNumber(credits,
                     TextStyle.ofColor(ChatColor.YELLOW).bold());
 
-            sidebar.replace(9, "You are playing on the " + ChatColor.YELLOW.toString() + ChatColor.BOLD
+            sidebar.replace(10, "You are playing on the ");
+            sidebar.replace(9, ChatColor.YELLOW.toString() + ChatColor.BOLD
                     + "Lobby" + ChatColor.WHITE + " server");
             sidebar.replace(8, "");
             sidebar.replace(7, "Play!");
