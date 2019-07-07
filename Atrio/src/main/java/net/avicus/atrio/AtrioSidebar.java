@@ -19,7 +19,7 @@ public class AtrioSidebar implements Listener {
     protected final static String pad = "        ";
 
     public static final TimedAlternator<String> TITLE = new TimedAlternator<>(
-            1000,
+            2000,
             pad + ChatColor.AQUA.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
             pad + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
             pad + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
