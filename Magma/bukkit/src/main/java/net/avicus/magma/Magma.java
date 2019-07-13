@@ -131,9 +131,34 @@ public final class Magma extends JavaPlugin {
         Config config = new ConfigFile(new File(getDataFolder(), "config.yml"));
         config.injector(MagmaConfig.class).inject();
 
+        /*
+         * Start Config for NetworkIdentification
+         */
+        try {
+            NetworkIdentification.NAME = MagmaConfig.Properties.getName().equals("") ? "Your Cool Site" : MagmaConfig.Properties.getName();
+            NetworkIdentification.URL = MagmaConfig.Properties.getUrl().equals("") ? "some.cool.site" : MagmaConfig.Properties.getUrl();
+            NetworkIdentification.SERVER = MagmaConfig.Properties.getServer().equals("") ? "UNKNOWN" : MagmaConfig.Properties.getServer();
+            NetworkIdentification.LOCATION = MagmaConfig.Properties.getLocation().equals("") ? "The Moon" : MagmaConfig.Properties.getLocation();
+        } catch (Exception e) {
+            NetworkIdentification.NAME = "VectorMC";
+            NetworkIdentification.URL = "vectormc.net";
+            NetworkIdentification.SERVER = "Atlas";
+            NetworkIdentification.LOCATION = "The Moon";
+            e.printStackTrace();
+        }
+        getLogger().info("----------------------------------");
+        getLogger().info(NetworkIdentification.NAME + "'s (" + NetworkIdentification.URL + ") "
+                + NetworkIdentification.SERVER + " Server @ " + NetworkIdentification.LOCATION);
+
+        getLogger().info("----------------------------------");
+        /*
+         * End Config for NetworkIdentification
+         */
+
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger()
                 .registerOutgoingPluginChannel(this, NetworkConstants.CONNECT_CHANNEL);
+
 
         this.channelManager = new ChannelManager();
 
@@ -158,29 +183,6 @@ public final class Magma extends JavaPlugin {
         getRedis().register(new RestartMessageHandler());
         Users.init(registrar);
 
-        /*
-         * Start Config for NetworkIdentification
-         */
-        try {
-            NetworkIdentification.NAME = MagmaConfig.Properties.getName().equals("") ? "Your Cool Site" : MagmaConfig.Properties.getName();
-            NetworkIdentification.URL = MagmaConfig.Properties.getUrl().equals("") ? "some.cool.site" : MagmaConfig.Properties.getUrl();
-            NetworkIdentification.SERVER = MagmaConfig.Properties.getServer().equals("") ? "UNKNOWN" : MagmaConfig.Properties.getServer();
-            NetworkIdentification.LOCATION = MagmaConfig.Properties.getLocation().equals("") ? "The Moon" : MagmaConfig.Properties.getLocation();
-        } catch (Exception e) {
-            NetworkIdentification.NAME = "VectorMC";
-            NetworkIdentification.URL = "vectormc.net";
-            NetworkIdentification.SERVER = "Atlas";
-            NetworkIdentification.LOCATION = "The Moon";
-            e.printStackTrace();
-        }
-        getLogger().info("----------------------------------");
-        getLogger().info(NetworkIdentification.NAME + "'s (" + NetworkIdentification.URL + ") "
-                + NetworkIdentification.SERVER + " Server @ " + NetworkIdentification.LOCATION);
-
-        getLogger().info("----------------------------------");
-        /*
-         * End Config for NetworkIdentification
-         */
     }
 
     private void registerModules() {
