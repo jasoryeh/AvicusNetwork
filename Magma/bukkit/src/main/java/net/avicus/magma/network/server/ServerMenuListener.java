@@ -23,7 +23,7 @@ public class ServerMenuListener implements Listener {
             return;
         }
 
-        if(MagmaConfig.Server.Gui.isEnable()) {
+        if(!MagmaConfig.Server.Gui.isEnable()) {
             event.getPlayer().sendMessage("");
             event.getPlayer().sendMessage(ChatColor.GREEN + "Please use /server or /servers.");
             event.getPlayer().sendMessage("");
