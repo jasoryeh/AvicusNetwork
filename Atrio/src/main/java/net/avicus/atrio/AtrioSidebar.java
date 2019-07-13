@@ -69,11 +69,10 @@ public class AtrioSidebar implements Listener {
                     TextStyle.ofColor(ChatColor.YELLOW).bold());
 
             sidebar.replace(10, "You are playing on the ");
-            sidebar.replace(9, ChatColor.YELLOW.toString() + ChatColor.BOLD
-                    + "Lobby" + ChatColor.WHITE + " server");
+            sidebar.replace(9, ChatColor.YELLOW.toString() + "Lobby" + ChatColor.WHITE + " server");
             sidebar.replace(8, "");
             sidebar.replace(7, "Play!");
-            sidebar.replace(6, ChatColor.YELLOW + "/server Atlas");
+            sidebar.replace(6, ChatColor.YELLOW + ChatColor.BOLD.toString() + "Use the server selector or /sv");
             sidebar.replace(5, "");
             sidebar.replace(4, "Credits");
             sidebar.replace(3, creditText.translate(player.getLocale()).toLegacyText());
