@@ -1,9 +1,6 @@
 package net.avicus.atlas.module.stats;
 
 import com.google.common.collect.Maps;
-
-import java.util.*;
-
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
@@ -13,7 +10,6 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.BridgeableModule;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.ModuleBridge;
-import net.avicus.atlas.module.channels.ChannelsModule;
 import net.avicus.atlas.module.damagetrack.DamageTrackModule;
 import net.avicus.atlas.module.stats.action.ActionStore;
 import net.avicus.atlas.module.stats.action.lifetime.LifetimeDisplayUtils;
@@ -38,6 +34,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.github.paperspigot.Title;
+
+import java.util.*;
 
 @ToString(exclude = "match")
 public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> implements Module {
@@ -184,7 +182,7 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
                     });
 
                     StringBuilder data = new StringBuilder("Match Action Data:\n");
-                    data.append("MVP: " + ChannelsModule.getMeta(Bukkit.getPlayer(mvp)).getLeft() + Bukkit.getPlayer(mvp).getName() + "\n");
+                    data.append("MVP: " + Users.getMeta(Bukkit.getPlayer(mvp)).getLeft() + Bukkit.getPlayer(mvp).getName() + "\n");
                     this.store.getLifetimeStore().getPlayerLifetimes().entries().forEach(e -> {
                         data.append(
                                 Users.user(e.getKey()).map(User::getName).orElse("[User] Not in DB: " + e.getKey())
