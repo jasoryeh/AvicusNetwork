@@ -4,13 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.time.Instant;
+import java.util.*;
 
 import lombok.Data;
 import lombok.Getter;
@@ -21,10 +17,15 @@ import net.avicus.atlas.map.AtlasMap;
 import net.avicus.atlas.map.AtlasMapFactory;
 import net.avicus.atlas.map.library.MapLibrary;
 import net.avicus.atlas.map.library.MapSource;
+import net.avicus.atlas.match.GithubRateLimitedException;
 import net.avicus.atlas.match.MatchBuildException;
 import net.avicus.atlas.util.xml.XmlException;
+import org.bukkit.Bukkit;
 import org.javalite.http.Get;
 import org.javalite.http.Http;
+import org.joda.time.Duration;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  * A library of maps that is stored inside of a github repository.
@@ -78,14 +79,51 @@ public class GitHubMapLibrary implements MapLibrary {
 
     @Override
     public InputStream getFileStream(String path) throws FileNotFoundException {
-        // Todo: Do this.
-        throw new UnsupportedOperationException();
+        // Build url (but this only get us directly to the file
+        String urlPath = this.contentUrl + "/" + (path.startsWith("/") ? path.replaceFirst("/", "") : path);
+        // Retrieve file
+        Get get = Http.get(urlPath);
+        if (AtlasConfig.isGithubAuth()) {
+            get.basic(AtlasConfig.getGithubUsername(), AtlasConfig.getGithubToken());
+        }
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(get.text()).getAsJsonObject();
+
+        String downloadUrl = jsonObject.getAsJsonObject().get("download_url").getAsString();
+        if(downloadUrl != null) {
+            Get getdl = Http.get(downloadUrl);
+            if (AtlasConfig.isGithubAuth()) {
+                getdl.basic(AtlasConfig.getGithubUsername(), AtlasConfig.getGithubToken());
+            }
+            return getdl.getInputStream();
+        }
+        return null;
     }
 
     @Override
     public File getFile(String path) throws FileNotFoundException {
-        // Todo: Do this.
-        throw new UnsupportedOperationException();
+        InputStream fileStream = getFileStream(path);
+
+        File temp = new File("tmp/" + UUID.randomUUID().toString().substring(0, 5));
+        temp.mkdirs();
+
+        FileOutputStream fileOutput = new FileOutputStream(temp + path.substring(path.lastIndexOf("/")));
+        try {
+            copy(fileStream, fileOutput);
+        } catch(IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return temp;
+    }
+
+    private static void copy(InputStream i, OutputStream o) throws IOException {
+        byte[] buffer = new byte[8192];
+        int read;
+        while ((read = i.read(buffer)) != -1) {
+            o.write(buffer, 0, read);
+        }
     }
 
     @Override
@@ -219,12 +257,71 @@ public class GitHubMapLibrary implements MapLibrary {
      * @return an array from the API
      */
     private JsonArray getJsonArray(String url) {
+        try {
+            Get get = Http.get(url);
+            if (AtlasConfig.isGithubAuth()) {
+                get.basic(AtlasConfig.getGithubUsername(), AtlasConfig.getGithubToken());
+            }
+            JsonParser parser = new JsonParser();
+            return parser.parse(get.text()).getAsJsonArray();
+        } catch(Exception e) {
+            // we are potentially rate limited, lets test for that
+            boolean rateLimit = isRateLimit(url, false, 0);
+            if(rateLimit) {
+                throw new GithubRateLimitedException("Github map library rate limit reached. Please try again later.");
+            }
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Test if Github rate limit is reached
+     *
+     * Optionally wait for the limit to expire then continue retrieval
+     * @param url API url to test
+     * @param wait Whether to sleep the thread and wait for rate limit
+     * @param msRetry How long to wait before rate limit checks
+     * @return Whether it is safe to continue and get more api information
+     */
+    private boolean isRateLimit(String url, boolean wait, long msRetry) {
         Get get = Http.get(url);
         if (AtlasConfig.isGithubAuth()) {
             get.basic(AtlasConfig.getGithubUsername(), AtlasConfig.getGithubToken());
         }
-        JsonParser parser = new JsonParser();
-        return parser.parse(get.text()).getAsJsonArray();
+
+        Instant reset = Instant.ofEpochSecond(Integer.parseInt(get.headers().get("X-RateLimit-Reset").get(0)));
+
+        if(Integer.parseInt(get.headers().get("X-RateLimit-Reset").get(0)) <= 0) {
+
+            PeriodFormatter formatter = new PeriodFormatterBuilder()
+                    .appendDays()
+                    .appendSuffix(" days ")
+                    .appendHours()
+                    .appendSuffix(" hours ")
+                    .appendMinutes()
+                    .appendSuffix(" minutes ")
+                    .appendSeconds()
+                    .appendSuffix(" seconds ")
+                    .toFormatter();
+            Atlas.get().getMapErrorLogger().severe("Rate limit reached");
+            System.out.println(formatter.print(new Duration(Math.abs((Instant.now().toEpochMilli() - reset.toEpochMilli()))).toPeriod()) + "remaining.");
+
+            if(!wait) {
+                return false;
+            }
+
+            while(Instant.now().toEpochMilli() < reset.toEpochMilli()) {
+                System.out.println("Waiting for rate limit reset.");
+                System.out.println(formatter.print(new Duration(Math.abs((Instant.now().toEpochMilli() - reset.toEpochMilli()))).toPeriod()) + "remaining.");
+                try {
+                    Thread.sleep(msRetry);
+                } catch(InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return true;
     }
 
     /**

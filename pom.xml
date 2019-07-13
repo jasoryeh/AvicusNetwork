@@ -36,6 +36,10 @@
             <url>https://repo.vectormc.net/artifactory/public</url>
         </repository>
         <repository>
+            <id>vector-private</id>
+            <url>https://repo.vectormc.net/artifactory/private</url>
+        </repository>
+        <repository>
             <id>dmulloy2</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
         </repository>
