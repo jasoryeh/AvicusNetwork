@@ -235,7 +235,7 @@ public class AtrioListener implements Listener {
         playSound(event.getPlayer());
 
         Pair<String, String> meta = Users.getMeta(event.getPlayer());
-        event.getPlayer().setPlayerListName(meta.getLeft() + event.getPlayer().getDisplayName() + meta.getRight());
+        event.getPlayer().setPlayerListName(ChatColor.translateAlternateColorCodes('&', meta.getLeft() + event.getPlayer().getDisplayName() + meta.getRight()));
     }
 
     @EventHandler
