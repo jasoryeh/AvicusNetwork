@@ -36,6 +36,7 @@ freeze:
     tnt: 15
 server:
   gui:
+    enable: true
     rows: 4
     slots:
     - index: 0

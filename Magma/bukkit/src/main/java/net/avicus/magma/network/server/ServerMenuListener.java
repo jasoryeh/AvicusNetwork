@@ -1,5 +1,6 @@
 package net.avicus.magma.network.server;
 
+import net.avicus.magma.MagmaConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +23,7 @@ public class ServerMenuListener implements Listener {
             return;
         }
 
-        if(true) {
+        if(MagmaConfig.Server.Gui.isEnable()) {
             event.getPlayer().sendMessage("");
             event.getPlayer().sendMessage(ChatColor.GREEN + "Please use /server or /servers.");
             event.getPlayer().sendMessage("");

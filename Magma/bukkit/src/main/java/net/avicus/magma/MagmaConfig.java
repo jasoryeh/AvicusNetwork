@@ -119,6 +119,10 @@ public final class MagmaConfig {
 
             @Getter
             @ConfigKey
+            private static boolean enable;
+
+            @Getter
+            @ConfigKey
             private static int rows;
 
             @Getter
