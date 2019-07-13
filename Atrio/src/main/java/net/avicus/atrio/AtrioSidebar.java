@@ -66,19 +66,19 @@ public class AtrioSidebar implements Listener {
 
             int credits = Credits.getCredits(player);
             Localizable creditText = new LocalizedNumber(credits,
-                    TextStyle.ofColor(ChatColor.YELLOW).bold());
+                    TextStyle.ofColor(ChatColor.GREEN));
 
             sidebar.replace(10, "You are playing on the ");
-            sidebar.replace(9, ChatColor.YELLOW.toString() + "Lobby" + ChatColor.WHITE + " server");
+            sidebar.replace(9, ChatColor.YELLOW + "Lobby" + ChatColor.WHITE + " server");
             sidebar.replace(8, "");
             sidebar.replace(7, "Play!");
-            sidebar.replace(6, ChatColor.YELLOW + ChatColor.BOLD.toString() + "Use the server selector or /sv");
-            sidebar.replace(5, "");
+            sidebar.replace(6, "Use the " + ChatColor.YELLOW + "Server Selector");
+            sidebar.replace(5, "or " + ChatColor.YELLOW + "/sv");
             sidebar.replace(4, "Credits");
             sidebar.replace(3, creditText.translate(player.getLocale()).toLegacyText());
             sidebar.replace(2, "");
             sidebar.replace(1, "Website");
-            sidebar.replace(0, ChatColor.YELLOW + ChatColor.BOLD.toString() + NetworkIdentification.URL);
+            sidebar.replace(0, ChatColor.AQUA + NetworkIdentification.URL);
         }
     }
 }
