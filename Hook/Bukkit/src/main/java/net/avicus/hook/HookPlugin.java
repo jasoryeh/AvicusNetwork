@@ -26,6 +26,7 @@ import net.avicus.hook.gadgets.types.crates.CrateRewardListener;
 import net.avicus.hook.gadgets.types.map.GadgetPopulationUtility;
 import net.avicus.hook.listener.AtlasListener;
 import net.avicus.hook.listener.BackpackShopListener;
+import net.avicus.hook.listener.ChatListener;
 import net.avicus.hook.listener.SettingModule;
 import net.avicus.hook.prestige.ExperienceRewardListener;
 import net.avicus.hook.punishment.Punishments;
@@ -138,6 +139,7 @@ public class HookPlugin extends JavaPlugin {
 
         Events.register(new AFKKickTask().start());
         Events.register(new BackpackShopListener());
+        Events.register(new ChatListener());
 
         this.hmm = new HookModuleManager(this.getServer().getPluginManager(), this, cmds);
         this.hmm.register(SettingModule.class);

@@ -1,14 +1,5 @@
 package net.avicus.magma.database.model.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.magma.NetworkIdentification;
@@ -17,6 +8,10 @@ import net.avicus.quest.annotation.Column;
 import net.avicus.quest.annotation.Id;
 import net.avicus.quest.model.Model;
 import org.joda.time.Duration;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @ToString
 public class User extends Model {

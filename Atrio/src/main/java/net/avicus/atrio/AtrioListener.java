@@ -12,10 +12,12 @@ import net.avicus.hook.utils.HookTask;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.database.model.impl.Announcement;
 import net.avicus.magma.network.server.Servers;
+import net.avicus.magma.network.user.Users;
 import net.avicus.magma.util.region.BoundedRegion;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -231,6 +233,9 @@ public class AtrioListener implements Listener {
         populateHeaderFooter(event.getPlayer());
         sendTitle(event.getPlayer());
         playSound(event.getPlayer());
+
+        Pair<String, String> meta = Users.getMeta(event.getPlayer());
+        event.getPlayer().setPlayerListName(meta.getLeft() + event.getPlayer().getDisplayName() + meta.getRight());
     }
 
     @EventHandler
