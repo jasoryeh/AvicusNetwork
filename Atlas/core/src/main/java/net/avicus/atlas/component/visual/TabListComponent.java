@@ -13,13 +13,6 @@ import com.keenant.tabbed.tablist.TableTabList.TableBox;
 import com.keenant.tabbed.tablist.TableTabList.TableCell;
 import com.keenant.tabbed.tablist.TableTabList.TableCorner;
 import com.keenant.tabbed.util.Skins;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.Atlas;
@@ -49,6 +42,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
 import us.myles.ViaVersion.api.Via;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TabListComponent implements ListenerModule {
 
@@ -223,9 +222,7 @@ public class TabListComponent implements ListenerModule {
 
         String location = NetworkIdentification.LOCATION;
 
-        @Nullable String serverName = Atlas.get().getBridge().getServerName() == null ||
-                Atlas.get().getBridge().getServerName().equals("UNKNOWN")
-                ? NetworkIdentification.SERVER : "Unknown";
+        @Nullable String serverName = Atlas.get().getBridge().getServerName();
 
         if (serverName != null) {
             footer = ChatColor.AQUA + location + ChatColor.GRAY + " - " +

@@ -4,16 +4,6 @@ import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandNumberFormatException;
 import com.sk89q.minecraft.util.commands.CommandPermissionsException;
 import com.sk89q.minecraft.util.commands.CommandUsageException;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.command.*;
@@ -23,11 +13,7 @@ import net.avicus.atlas.component.dev.DebuggingComponent;
 import net.avicus.atlas.component.network.AtlasQuickPlayComponent;
 import net.avicus.atlas.component.network.StatusComponent;
 import net.avicus.atlas.component.util.ArrowRemovalComponent;
-import net.avicus.atlas.component.visual.MapNotificationComponent;
-import net.avicus.atlas.component.visual.SidebarComponent;
-import net.avicus.atlas.component.visual.SoundComponent;
-import net.avicus.atlas.component.visual.TabListComponent;
-import net.avicus.atlas.component.visual.VisualEffectComponent;
+import net.avicus.atlas.component.visual.*;
 import net.avicus.atlas.external.ModuleSet;
 import net.avicus.atlas.external.SetLoader;
 import net.avicus.atlas.listener.AtlasListener;
@@ -64,6 +50,15 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.annotation.Nullable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Where all the action starts!
  */
@@ -73,7 +68,7 @@ public class Atlas extends JavaPlugin {
     private AvicusCommandsManager commandManager;
     @Getter
     @Setter
-    private AtlasBridge bridge = new AtlasBridge.SimpleAtlasBridge();
+    private AtlasBridge bridge;
     @Getter
     private MapManager mapManager;
     @Getter
@@ -148,6 +143,9 @@ public class Atlas extends JavaPlugin {
         }
         // inject configuration -> AtlasConfig
         config.injector(AtlasConfig.class).inject();
+
+        // Set server
+        this.bridge = new AtlasBridge.SimpleAtlasBridge();
 
         // pre-load, and setup translations (runs static block in Translations)
         if (Translations.TYPE_BOOLEAN_FALSE == TranslationProvider.$NULL$) {

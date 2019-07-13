@@ -2,24 +2,22 @@ package net.avicus.atlas.util;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.avicus.atlas.match.Match;
-import net.avicus.atlas.module.channels.ChannelsModule;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.Group;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.magma.NetworkIdentification;
+import net.avicus.magma.Magma;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.javalite.http.Get;
 import org.javalite.http.Http;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface AtlasBridge {
 
@@ -43,7 +41,8 @@ public interface AtlasBridge {
         @Nullable
         @Override
         public String getServerName() {
-            return NetworkIdentification.SERVER;
+            //return NetworkIdentification.SERVER;
+            return Magma.get().localServer().getName();
         }
 
         @Nonnull
