@@ -28,33 +28,38 @@ public class ServerSign {
             return;
         }
 
-        Sign sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getX(),
-                vector.getY(),
-                vector.getZ()).getBlock().getState();
-        ServerStatus.State state = status.getState();
+        try {
+            Sign sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getX(),
+                    vector.getY(),
+                    vector.getZ()).getBlock().getState();
+            ServerStatus.State state = status.getState();
 
-        String line1 = "^b^l" + this.server.getName();
-        String line2 = "^a" + status.getPlayers().size() + " ^b/ ^4" + status.getMaxPlayers();
-        String line3 = state.getColor().toString();
-        String line4 = state.getColor().toString();
+            String line1 = "^b^l" + this.server.getName();
+            String line2 = "^a" + status.getPlayers().size() + " ^b/ ^4" + status.getMaxPlayers();
+            String line3 = state.getColor().toString();
+            String line4 = state.getColor().toString();
 
-        if (!status.isOnline()) {
-            line4 += "Offline";
-        } else if (status.getMessage() != null) {
-            String[] lines = WordUtils.wrap(status.getMessage().orElse(""), 14, "\n", false).split("\n");
-            if (lines.length == 1) {
-                line4 += lines[0];
-            } else {
-                line3 += lines[0];
-                line4 += lines[1];
+            if (!status.isOnline()) {
+                line4 += "Offline";
+            } else if (status.getMessage() != null) {
+                String[] lines = WordUtils.wrap(status.getMessage().orElse(""), 14, "\n", false).split("\n");
+                if (lines.length == 1) {
+                    line4 += lines[0];
+                } else {
+                    line3 += lines[0];
+                    line4 += lines[1];
+                }
             }
-        }
 
-        sign.setLine(0, Strings.addColors(line1));
-        sign.setLine(1, Strings.addColors(line2));
-        sign.setLine(2, Strings.addColors(line3));
-        sign.setLine(3, Strings.addColors(line4));
-        sign.update();
+            sign.setLine(0, Strings.addColors(line1));
+            sign.setLine(1, Strings.addColors(line2));
+            sign.setLine(2, Strings.addColors(line3));
+            sign.setLine(3, Strings.addColors(line4));
+            sign.update();
+        } catch (ClassCastException e) {
+            // block either isn't a sign or is some other block
+            AtrioPlugin.getInstance().getLogger().info("Something went wrong trying to update sign. Error: " + e.getMessage());
+        }
     }
 
     public boolean isSign(Block block) {
