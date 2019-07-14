@@ -6,6 +6,7 @@ import net.avicus.magma.network.server.ServerStatus;
 import net.avicus.magma.network.server.Servers;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -29,9 +30,16 @@ public class ServerSign {
         }
 
         try {
-            Sign sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getX(),
+            Sign sign;
+            Block block = AtrioPlugin.getInstance().getWorld().getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+            if (block.getType() != Material.SIGN) {
+                block.setType(Material.SIGN);
+            }
+            sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getX(),
                     vector.getY(),
-                    vector.getZ()).getBlock().getState();
+                    vector.getZ()).getBlock().getState().getBlock().getState();
+
+
             ServerStatus.State state = status.getState();
 
             String line1 = "^b^l" + this.server.getName();
