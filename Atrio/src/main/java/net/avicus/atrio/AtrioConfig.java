@@ -1,14 +1,6 @@
 package net.avicus.atrio;
 
 
-import static net.avicus.atrio.ConfigUtils.parseBounded;
-import static net.avicus.atrio.ConfigUtils.vecFromString;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.inject.ConfigKey;
@@ -22,6 +14,14 @@ import org.bukkit.util.Vector;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static net.avicus.atrio.ConfigUtils.parseBounded;
+import static net.avicus.atrio.ConfigUtils.vecFromString;
 
 public class AtrioConfig {
 
@@ -115,7 +115,7 @@ public class AtrioConfig {
 
         for (Config list : pads) {
             try {
-                BoundedRegion enter = parseBounded(list.getConfig("region"));
+                BoundedRegion enter = parseBounded(list.getConfig("pad"));
                 Vector velocity = vecFromString(list.getAsString("velocity"));
                 parsedPads.add(new Pad(enter, velocity));
             } catch (Exception e) {
