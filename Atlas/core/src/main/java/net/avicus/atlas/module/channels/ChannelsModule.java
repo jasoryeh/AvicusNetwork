@@ -122,7 +122,7 @@ public class ChannelsModule implements Module {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         event.getRecipients().clear();
         event.getRecipients().addAll(recipients(event.getPlayer()));

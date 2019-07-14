@@ -8,24 +8,15 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ChatListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
         if (!HookConfig.Chat.isEnableFormat()) {
             return;
-        }
-
-        try {
-            Class.forName("net.avicus.atlas.Atlas");
-
-            // let atlas's channels module handle this.
-
-            return;
-        } catch (ClassNotFoundException e) {
-            // atlas not found, no check needed
         }
 
         // LP API for prefixes start
