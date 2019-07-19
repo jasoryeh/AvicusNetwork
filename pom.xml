@@ -24,24 +24,24 @@
     </scm>
     <repositories>
         <repository>
-            <id>viaversion-repo</id>
-            <url>https://repo.viaversion.com</url>
-        </repository>
-        <repository>
-            <id>jcenter</id>
-            <url>http://jcenter.bintray.com</url>
+            <id>vector-private</id>
+            <url>https://repo.vectormc.net/artifactory/private</url>
         </repository>
         <repository>
             <id>vector-public</id>
             <url>https://repo.vectormc.net/artifactory/public</url>
         </repository>
         <repository>
-            <id>vector-private</id>
-            <url>https://repo.vectormc.net/artifactory/private</url>
+            <id>jcenter</id>
+            <url>http://jcenter.bintray.com</url>
         </repository>
         <repository>
             <id>dmulloy2</id>
             <url>http://repo.dmulloy2.net/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>viaversion-repo</id>
+            <url>https://repo.viaversion.com</url>
         </repository>
         <!-- Tabbed -->
         <repository>

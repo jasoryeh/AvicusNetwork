@@ -15,39 +15,6 @@
         <module>bukkit</module>
         <module>bungee</module>
     </modules>
-    <repositories>
-        <repository>
-            <id>avicus-public</id>
-            <url>https://repo.avicus.net/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>avicus-private</id>
-            <url>https://repo.avicus.net/content/groups/private/</url>
-        </repository>
-        <repository>
-            <id>jcenter</id>
-            <url>http://jcenter.bintray.com</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-                <checksumPolicy>warn</checksumPolicy>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-                <checksumPolicy>warn</checksumPolicy>
-            </releases>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>avicus-private</id>
-            <url>https://repo.avicus.net/content/repositories/releases-private/</url>
-        </repository>
-        <snapshotRepository>
-            <id>avicus-private</id>
-            <url>https://repo.avicus.net/content/repositories/snapshots-private/</url>
-        </snapshotRepository>
-    </distributionManagement>
     <build>
         <resources>
             <resource>
