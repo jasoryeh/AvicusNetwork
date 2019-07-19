@@ -102,7 +102,7 @@ public class EntityGun extends DeviceGadget {
         if (DeviceGadget.DEVICE_DATA.has(event.getItem()) && DeviceGadget.DEVICE_DATA
                 .get(event.getItem()).equals(this.type.name())) {
 
-            Vector vector = event.getPlayer().getLocation().getDirection().normalize().multiply(4);
+            Vector vector = event.getPlayer().getLocation().getDirection().normalize().multiply(2);
             vector = randomize(vector);
 
             if (this.type == GunType.EGG) {
@@ -111,9 +111,9 @@ public class EntityGun extends DeviceGadget {
                 Entity entity = event.getPlayer().getWorld()
                         .spawnEntity(event.getPlayer().getLocation().clone().add(0, 1, 0), this.type.getType());
 
-                entity.setVelocity(vector);
+                entity.setVelocity(vector.multiply(4));
 
-                HookTask.of(() -> entity::remove).later(5 * 20);
+                HookTask.of(() -> entity::remove).later(10 * 20);
             }
 
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.WITHER_SHOOT, 1F,
