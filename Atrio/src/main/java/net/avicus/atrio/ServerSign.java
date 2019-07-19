@@ -32,12 +32,14 @@ public class ServerSign {
         try {
             Sign sign;
             Block block = AtrioPlugin.getInstance().getWorld().getBlockAt(vector.getBlockX(), vector.getBlockY(), vector.getBlockZ());
+
             if (block.getType() != Material.SIGN) {
                 block.setType(Material.SIGN);
             }
-            sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getX(),
-                    vector.getY(),
-                    vector.getZ()).getBlock().getState().getBlock().getState();
+
+            sign = (Sign) new Location(AtrioPlugin.getInstance().getWorld(), vector.getBlockX(),
+                    vector.getBlockY(),
+                    vector.getBlockZ()).getBlock().getState().getBlock().getState();
 
 
             ServerStatus.State state = status.getState();
