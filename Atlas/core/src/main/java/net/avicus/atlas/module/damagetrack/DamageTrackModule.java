@@ -246,7 +246,7 @@ public class DamageTrackModule implements Module {
         String display = (dmg).toString();
 
         // cleanup
-        display = display.contains(".0") ? display.replace(".0", "") : "";
+        display = display.contains(".0") ? display.replace(".0", "") : display;
 
         // heart char
         display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (dmg != 1.0 ? "s" : "") + ChatColor.RESET;
