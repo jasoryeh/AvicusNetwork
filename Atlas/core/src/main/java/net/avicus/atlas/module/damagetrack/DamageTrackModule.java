@@ -249,7 +249,14 @@ public class DamageTrackModule implements Module {
          */
         @Getter
         @Setter
-        private boolean rewarded = false;
+        private boolean isCreditRewarded = false;
+        @Getter
+        @Setter
+        private boolean isExperienceRewarded = false;
+
+        public boolean isRewarded() {
+            return this.isCreditRewarded && this.isExperienceRewarded;
+        }
 
         @Getter
         private Instant time;
@@ -263,8 +270,17 @@ public class DamageTrackModule implements Module {
             this.time = Instant.now();
         }
 
+        private DamageExchange flip;
+
+        public DamageExchange(UUID me, UUID you, double amount, DamageDirection direction, DamageExchange flippedPair) {
+            this(me, you, amount, direction);
+            this.flip = flippedPair;
+        }
+
         public DamageExchange flip() {
-            return new DamageExchange(you, me, amount, direction.invert());
+            DamageExchange flipped = flip != null ? flip : new DamageExchange(you, me, amount, direction.invert(), this);
+            this.flip = flipped;
+            return flipped;
         }
     }
 

@@ -113,7 +113,7 @@ public class ExperienceRewardListener implements Listener {
 
         for (DamageTrackModule.DamageExchange exc : damageExchanges) {
             if(exc.getDirection() == DamageTrackModule.DamageDirection.GIVE && exc.getYou() == killed.getUniqueId()) {
-                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId()) {
+                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId() || exc.isExperienceRewarded()) {
                     continue;
                 }
 
@@ -122,6 +122,9 @@ public class ExperienceRewardListener implements Listener {
                 } else {
                     assisters.put(exc.getMe(), new AtomicDouble(exc.getAmount()));
                 }
+
+                // set as rewarded :)
+                exc.setExperienceRewarded(true);
             }
         }
 

@@ -96,8 +96,9 @@ public class CreditRewardListener implements Listener {
         Map<UUID, AtomicDouble> assisters = new HashMap<>();
 
         for (DamageTrackModule.DamageExchange exc : damageExchanges) {
+
             if(exc.getDirection() == DamageTrackModule.DamageDirection.GIVE && exc.getYou() == killed.getUniqueId()) {
-                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId()) {
+                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId() || exc.isCreditRewarded()) {
                     continue;
                 }
 
@@ -106,6 +107,9 @@ public class CreditRewardListener implements Listener {
                 } else {
                     assisters.put(exc.getMe(), new AtomicDouble(exc.getAmount()));
                 }
+
+                // set as rewarded :)
+                exc.setCreditRewarded(true);
             }
         }
 
