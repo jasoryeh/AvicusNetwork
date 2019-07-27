@@ -8,6 +8,7 @@ import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class DamageTrackModule implements Module {
     public static final UUID ENVIRONMENT = new UUID(0, 0);
@@ -93,23 +95,27 @@ public class DamageTrackModule implements Module {
 
         List<DamageExchange> exchanges = getUntrackedExchanges(showTo.getUniqueId());
 
-        // Damage from the viewer to others, left is who it is to, right is amount
-        Map<UUID, AtomicDouble> damageFromViewer = new HashMap<>();
-        // Damage taken from others to viewer, left is who it is from, right is amount
-        Map<UUID, AtomicDouble> damageToViewer = new HashMap<>();
+        // Damage from the viewer to others, left is who it is to, right is <amount, hits>
+        Map<UUID, Pair<AtomicDouble, AtomicLong>> damageFromViewer = new HashMap<>();
+        // Damage taken from others to viewer, left is who it is from, right is <amount, hits>
+        Map<UUID, Pair<AtomicDouble, AtomicLong>> damageToViewer = new HashMap<>();
 
         for (DamageExchange exchange : exchanges) {
             if(exchange.getDirection() == DamageDirection.GIVE) {
                 if(damageFromViewer.containsKey(exchange.getYou())) {
-                    damageFromViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
+                    Pair<AtomicDouble, AtomicLong> exEntry = damageFromViewer.get(exchange.getYou());
+                    exEntry.getLeft().addAndGet(exchange.getAmount());
+                    exEntry.getRight().addAndGet(1);
                 } else {
-                    damageFromViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
+                    damageFromViewer.put(exchange.getYou(), Pair.of(new AtomicDouble(exchange.getAmount()), new AtomicLong(1)));
                 }
             } else if(exchange.getDirection() == DamageDirection.RECEIVE) {
                 if(damageToViewer.containsKey(exchange.getYou())) {
-                    damageToViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
+                    Pair<AtomicDouble, AtomicLong> exEntry = damageToViewer.get(exchange.getYou());
+                    exEntry.getLeft().addAndGet(exchange.getAmount());
+                    exEntry.getRight().addAndGet(1);
                 } else {
-                    damageToViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
+                    damageToViewer.put(exchange.getYou(), Pair.of(new AtomicDouble(exchange.getAmount()), new AtomicLong(1)));
                 }
             }
         }
@@ -123,7 +129,7 @@ public class DamageTrackModule implements Module {
                 result.add(
                         Translations.STATS_RECAP_DAMAGE_TO.with(
                                 ChatColor.AQUA,
-                                damageDisplay(dmg.get()),
+                                damageDisplay(dmg.getLeft().get(), dmg.getRight().get()),
                                 (uuid == ENVIRONMENT) ?
                                         Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
                                         (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
@@ -141,7 +147,7 @@ public class DamageTrackModule implements Module {
                 result.add(
                         Translations.STATS_RECAP_DAMAGE_FROM.with(
                                 ChatColor.AQUA,
-                                damageDisplay(dmg.get()),
+                                damageDisplay(dmg.getLeft().get(), dmg.getRight().get()),
                                 (uuid == ENVIRONMENT) ?
                                         Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
                                         (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
@@ -157,7 +163,7 @@ public class DamageTrackModule implements Module {
         return result;
     }
 
-    private static String damageDisplay(Double rawDmg) {
+    private static String damageDisplay(Double rawDmg, long hits) {
         // Half this to make it into hearts
         rawDmg = rawDmg / 2;
 
@@ -167,7 +173,8 @@ public class DamageTrackModule implements Module {
         display = display.contains(".0") ? display.replace(".0", "") : display;
 
         // heart char
-        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (rawDmg != 1.0 ? "s" : "") + ChatColor.RESET;
+        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (rawDmg != 1.0 ? "s" : "")
+                + ChatColor.DARK_GRAY + " x" + hits + ChatColor.RESET;
 
         return display;
     }
