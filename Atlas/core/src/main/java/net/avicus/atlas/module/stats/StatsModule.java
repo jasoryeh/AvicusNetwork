@@ -190,6 +190,9 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
                         e.getValue().getActions()
                                 .forEach(a -> data.append("  " + a.getScore() + "  " + a.getDebugMessage() + "\n"));
                     });
+                    List<DamageTrackModule.DamageExchange> exc = match.getRequiredModule(DamageTrackModule.class).getDamageExchanges();
+                    data.append("Damage Exchanges: [" + exc.size() + " total]");
+                    exc.forEach(data::append);
                     String link = new Paste("Action Data", "Console", data.toString(), true).upload();
                     TextComponent message = new TextComponent("Data Paste: " + link);
                     message.setColor(net.md_5.bungee.api.ChatColor.LIGHT_PURPLE);

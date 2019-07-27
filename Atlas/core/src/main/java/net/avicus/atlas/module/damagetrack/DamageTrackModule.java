@@ -3,6 +3,7 @@ package net.avicus.atlas.module.damagetrack;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.Translations;
@@ -234,6 +235,7 @@ public class DamageTrackModule implements Module {
         }
     }
 
+    @ToString
     public class DamageExchange {
         @Getter
         private final UUID me;
