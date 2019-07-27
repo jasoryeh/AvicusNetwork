@@ -1,12 +1,6 @@
 package net.avicus.hook.prestige;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
+import com.google.common.util.concurrent.AtomicDouble;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
@@ -29,6 +23,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ExperienceRewardListener implements Listener {
 
@@ -110,18 +107,30 @@ public class ExperienceRewardListener implements Listener {
         DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
         int rewardAssist = HookConfig.Experience.Rewards.getKillPlayerAssist();
 
-        for (Map.Entry<UUID, Double> uuidDoubleEntry : dtm.getDamageTo(killed).entrySet()) {
-            UUID uuid = uuidDoubleEntry.getKey();
-            Double aDouble = uuidDoubleEntry.getValue();
-            if(uuid == exclude || uuid == killed.getUniqueId()) {
-                continue;
-            }
+        List<DamageTrackModule.DamageExchange> damageExchanges = dtm.getDamageExchanges();
 
-            Player assister = Bukkit.getPlayer(uuid);
+        Map<UUID, AtomicDouble> assisters = new HashMap<>();
+
+        for (DamageTrackModule.DamageExchange exc : damageExchanges) {
+            if(exc.getDirection() == DamageTrackModule.DamageDirection.GIVE && exc.getYou() == killed.getUniqueId()) {
+                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId()) {
+                    continue;
+                }
+
+                if(assisters.containsKey(exc.getMe())) {
+                    assisters.get(exc.getMe()).addAndGet(exc.getAmount());
+                } else {
+                    assisters.put(exc.getMe(), new AtomicDouble(exc.getAmount()));
+                }
+            }
+        }
+
+        for (Map.Entry<UUID, AtomicDouble> assist : assisters.entrySet()) {
+            Player assister = Bukkit.getPlayer(assist.getKey());
+
             if(assister != null) {
-                if(aDouble > 2) {
-                    this.module
-                            .reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST,
+                if(assist.getValue().get() > 5) {
+                    this.module.reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST,
                                     Atlas.getMatch().getMap().getGenre().name());
                 }
                 // people who do less than 2 damage(1 heart(s)) are not given experience.

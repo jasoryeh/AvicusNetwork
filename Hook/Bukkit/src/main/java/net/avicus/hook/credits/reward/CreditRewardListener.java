@@ -1,5 +1,6 @@
 package net.avicus.hook.credits.reward;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
@@ -90,16 +91,29 @@ public class CreditRewardListener implements Listener {
         DamageTrackModule dtm = Atlas.getMatch().getRequiredModule(DamageTrackModule.class);
         int rewardAssist = HookConfig.Credits.Rewards.getKillPlayerAssist();
 
-        for (Map.Entry<UUID, Double> uuidDoubleEntry : dtm.getDamageTo(killed).entrySet()) {
-            UUID uuid = uuidDoubleEntry.getKey();
-            Double aDouble = uuidDoubleEntry.getValue();
-            if(uuid == exclude || uuid == killed.getUniqueId()) {
-                continue;
-            }
+        List<DamageTrackModule.DamageExchange> damageExchanges = dtm.getDamageExchanges();
 
-            Player assister = Bukkit.getPlayer(uuid);
+        Map<UUID, AtomicDouble> assisters = new HashMap<>();
+
+        for (DamageTrackModule.DamageExchange exc : damageExchanges) {
+            if(exc.getDirection() == DamageTrackModule.DamageDirection.GIVE && exc.getYou() == killed.getUniqueId()) {
+                if(exc.getMe() == exclude || exc.getMe() == killed.getUniqueId()) {
+                    continue;
+                }
+
+                if(assisters.containsKey(exc.getMe())) {
+                    assisters.get(exc.getMe()).addAndGet(exc.getAmount());
+                } else {
+                    assisters.put(exc.getMe(), new AtomicDouble(exc.getAmount()));
+                }
+            }
+        }
+
+        for (Map.Entry<UUID, AtomicDouble> assist : assisters.entrySet()) {
+            Player assister = Bukkit.getPlayer(assist.getKey());
+
             if(assister != null) {
-                if(aDouble > 5) {
+                if(assist.getValue().get() > 5) {
                     Credits.reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST);
                 }
                 // people who do less than 5 damage(2 1/2 hearts) are given experience only, as we don't want this abused.

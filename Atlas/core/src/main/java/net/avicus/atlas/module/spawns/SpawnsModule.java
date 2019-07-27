@@ -1,11 +1,5 @@
 package net.avicus.atlas.module.spawns;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +21,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
+
+import java.util.*;
 
 @ToString(exclude = "match")
 public class SpawnsModule implements Module {
@@ -101,7 +97,7 @@ public class SpawnsModule implements Module {
 
         // Reset damage tracker
         DamageTrackModule trackModule = match.getRequiredModule(DamageTrackModule.class);
-        trackModule.reset(player);
+        trackModule.trackUntracked(player.getUniqueId());
 
         player.playSound(player.getLocation(), group.isSpectator() ? Sound.CHICKEN_EGG_POP : Sound.ENDERMAN_TELEPORT, 1, 1);
     }

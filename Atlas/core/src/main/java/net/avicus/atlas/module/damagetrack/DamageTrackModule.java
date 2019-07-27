@@ -1,7 +1,8 @@
 package net.avicus.atlas.module.damagetrack;
 
+import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
-import net.avicus.atlas.event.match.MatchStateChangeEvent;
+import lombok.Setter;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.Translations;
@@ -9,13 +10,14 @@ import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.time.Instant;
 import java.util.*;
-
 
 public class DamageTrackModule implements Module {
     public static final UUID ENVIRONMENT = new UUID(0, 0);
@@ -23,169 +25,65 @@ public class DamageTrackModule implements Module {
     @Getter
     private final Match match;
 
-    /**
-     * List of players the player(key) has damaged.
-     * A non-permanent, but temporary storage of damage done to other players.
-     */
     @Getter
-    private static Map<UUID, Map<UUID, Double>> damagesToOthersTrack = new HashMap<>();
-    /**
-     * List of players the player(key) has received damage from.
-     * A non-permanent, but temporary storage of damage received from other players.
-     */
-    @Getter
-    private static Map<UUID, Map<UUID, Double>> damagesFromOthersTrack = new HashMap<>();
-
+    private List<DamageExchange> damageExchanges;
 
     public DamageTrackModule(Match match) {
         this.match = match;
+
+        this.damageExchanges = new ArrayList<>();
     }
 
-    @EventHandler
-    public void onMatchStateChange(MatchStateChangeEvent stateChangeEvent) {
-        if(stateChangeEvent.isChangeToNotPlaying()|| stateChangeEvent.isChangeToPlaying()) {
-            // Reset for every time where it changes
-            damagesToOthersTrack = new HashMap<>();
-            damagesFromOthersTrack = new HashMap<>();
-        }
+    public void storeExchange(DamageExchange exchange) {
+        this.damageExchanges.add(exchange);
     }
 
-    @EventHandler
-    public void onAttack(EntityDamageByEntityEvent damageEvent) {
-        if(!(damageEvent.getEntity() instanceof Player) ||
-                !(damageEvent.getDamager() instanceof Player)) {
-            if(!(damageEvent.getDamager() instanceof Projectile)) {
-                return;
-            } else if(damageEvent.getDamager() instanceof Projectile) {
-                Projectile projectile = ((Projectile) damageEvent.getDamager());
-                if(projectile.getShooter() instanceof Player) {
-                    Player attacker = ((Player) projectile.getShooter());
-                    Player defender = ((Player) damageEvent.getEntity());
-                    double damage = damageEvent.getDamage();
+    public List<DamageExchange> getExchanges(UUID forUser) {
+        List<DamageExchange> exchanges = new ArrayList<>();
+        damageExchanges.forEach(e -> {
+            if(e.getMe() == forUser) {
+                exchanges.add(e);
+            }
+        });
 
-                    this.trackDamage(attacker, defender, damage);
-                    return;
-                }
-            } else {
-                return;
+        return exchanges;
+    }
+
+    public List<DamageExchange> getUntrackedExchanges(UUID forUser) {
+        List<DamageExchange> exchanges = this.getExchanges(forUser);
+
+        List<DamageExchange> untracked = new ArrayList<>();
+
+        exchanges.forEach(e -> {
+            if(!e.isTracked()) {
+                untracked.add(e);
+            }
+        });
+
+        return untracked;
+    }
+
+    public void trackUntracked(UUID forUser) {
+        damageExchanges.forEach(e -> {
+            if(e.getMe() == forUser) {
+                e.setTracked(true);
+            }
+        });
+    }
+
+    public double sumOfExchanges(DamageExchange e) {
+        return this.sumOfExchanges(e.getMe(), e.getYou());
+    }
+
+    public double sumOfExchanges(UUID me, UUID you) {
+        double damage = 0.0;
+        for (DamageExchange e : damageExchanges) {
+            if (e.getMe() == me && e.getYou() == you) {
+                damage += e.getAmount();
             }
         }
 
-        Player attacker = ((Player) damageEvent.getDamager());
-        Player defender = ((Player) damageEvent.getEntity());
-        double damage = damageEvent.getDamage();
-
-        this.trackDamage(attacker, defender, damage);
-    }
-
-    public void trackDamage(Player attacker, Player defender, double damageDealt) {
-        damageDealt = Math.abs(damageDealt);
-
-        this.ensureTracked(attacker.getUniqueId());
-        this.ensureTracked(defender.getUniqueId());
-
-        Map<UUID, Double> dmgs = damagesToOthersTrack.get(attacker.getUniqueId());
-        Map<UUID, Double> rcvd = damagesFromOthersTrack.get(attacker.getUniqueId());
-
-        if(dmgs.containsKey(defender.getUniqueId())) {
-            double newDmg = dmgs.get(defender.getUniqueId()) + damageDealt;
-            dmgs.replace(defender.getUniqueId(), newDmg);
-        } else {
-            dmgs.put(defender.getUniqueId(), damageDealt);
-        }
-
-        if(rcvd.containsKey(attacker.getUniqueId())) {
-            double newDmg = rcvd.get(attacker.getUniqueId()) + damageDealt;
-            rcvd.replace(attacker.getUniqueId(), newDmg);
-        } else {
-            rcvd.put(attacker.getUniqueId(), damageDealt);
-        }
-
-        damagesToOthersTrack.put(attacker.getUniqueId(), dmgs);
-        damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
-    }
-
-    private void ensureTracked(UUID player) {
-        damagesToOthersTrack.put(player, (damagesToOthersTrack.get(player) == null)
-                ? new HashMap<>() : damagesToOthersTrack.get(player));
-        damagesFromOthersTrack.put(player, (damagesFromOthersTrack.get(player) == null)
-                ? new HashMap<>() : damagesFromOthersTrack.get(player));
-    }
-
-    @EventHandler
-    public void onEnvironmentDamage(EntityDamageEvent damageEvent) {
-        if(!(damageEvent.getEntity() instanceof Player)) {
-           return;
-        }
-        if(damageEvent.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ||
-                damageEvent.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-            return;
-        }
-
-        Player defender = ((Player) damageEvent.getEntity());
-
-        this.ensureTracked(ENVIRONMENT);
-        this.ensureTracked(defender.getUniqueId());
-
-        Double damage = Math.abs(damageEvent.getFinalDamage());
-
-        Map<UUID, Double> dmgs = damagesToOthersTrack.get(ENVIRONMENT);
-        Map<UUID, Double> rcvd = damagesFromOthersTrack.get(defender.getUniqueId());
-
-        if(dmgs.containsKey(defender.getUniqueId())) {
-            double addedDmg = dmgs.get(defender.getUniqueId()) + damage;
-            dmgs.replace(defender.getUniqueId(), addedDmg);
-        } else {
-            dmgs.put(defender.getUniqueId(), damage);
-        }
-
-        if(rcvd.containsKey(ENVIRONMENT)) {
-            double addedDmg = rcvd.get(ENVIRONMENT) + damage;
-            rcvd.replace(ENVIRONMENT, rcvd.get(ENVIRONMENT) + damage);
-        } else {
-            rcvd.put(ENVIRONMENT, damage);
-        }
-
-        damagesToOthersTrack.put(ENVIRONMENT, dmgs);
-        damagesFromOthersTrack.put(defender.getUniqueId(), rcvd);
-    }
-
-    /**
-     * Reset damage tracking for a player, recommended for every death/respawn,
-     * will not do it automatically
-     * @param reset Player to reset damage tracking
-     */
-    public void reset(Player reset) {
-        damagesToOthersTrack.remove(reset.getUniqueId());
-        damagesFromOthersTrack.remove(reset.getUniqueId());
-        damagesToOthersTrack.put(reset.getUniqueId(), new HashMap<>());
-        damagesFromOthersTrack.put(reset.getUniqueId(), new HashMap<>());
-    }
-
-    /**
-     * Get damages done to a player
-     * @param to player to find damages dealt to them from others
-     * @return map of all players that have attacked the player
-     */
-    public Map<UUID, Double> getDamageTo(Player to) {
-        Map<UUID, Double> result = new HashMap<>();
-        damagesFromOthersTrack.get(to.getUniqueId()).forEach((uuid, damage) -> {
-            result.put(uuid, damage);
-        });
-        return result;
-    }
-
-    /**
-     * Get damages done from a player
-     * @param from player to find damages they dealt to others
-     * @return map of all players that the player has attacked
-     */
-    public Map<UUID, Double> getDamageFrom(Player from) {
-        Map<UUID, Double> result = new HashMap<>();
-        damagesToOthersTrack.get(from.getUniqueId()).forEach((uuid, damage) -> {
-            result.put(uuid, damage);
-        });
-        return result;
+        return damage;
     }
 
     private final String SPACER_DOUBLE = "  ";
@@ -193,19 +91,39 @@ public class DamageTrackModule implements Module {
     public List<Localizable> getPlayerPVPRecap(Player showTo) {
         List<Localizable> result = new ArrayList<>();
 
-        Map<UUID, Double> damagefromviewer = getDamageFrom(showTo);
-        Map<UUID, Double> damagetoviewer = getDamageTo(showTo);
+        List<DamageExchange> exchanges = getUntrackedExchanges(showTo.getUniqueId());
+
+        // Damage from the viewer to others, left is who it is to, right is amount
+        Map<UUID, AtomicDouble> damageFromViewer = new HashMap<>();
+        // Damage taken from others to viewer, left is who it is from, right is amount
+        Map<UUID, AtomicDouble> damageToViewer = new HashMap<>();
+
+        for (DamageExchange exchange : exchanges) {
+            if(exchange.getDirection() == DamageDirection.GIVE) {
+                if(damageFromViewer.containsKey(exchange.getYou())) {
+                    damageFromViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
+                } else {
+                    damageFromViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
+                }
+            } else if(exchange.getDirection() == DamageDirection.RECEIVE) {
+                if(damageFromViewer.containsKey(exchange.getYou())) {
+                    damageFromViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
+                } else {
+                    damageFromViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
+                }
+            }
+        }
 
         //
 
-        if(!damagefromviewer.isEmpty()) {
+        if(!damageFromViewer.isEmpty()) {
             result.add(new UnlocalizedText(""));
             result.add(Translations.STATS_RECAP_DAMAGE_DAMAGEGIVEN.with(ChatColor.GREEN));
-            damagefromviewer.forEach((uuid, dmg) -> {
+            damageFromViewer.forEach((uuid, dmg) -> {
                 result.add(
                         Translations.STATS_RECAP_DAMAGE_TO.with(
                                 ChatColor.AQUA,
-                                damageDisplay(dmg),
+                                damageDisplay(dmg.get()),
                                 (uuid == ENVIRONMENT) ?
                                         Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
                                         (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
@@ -216,14 +134,14 @@ public class DamageTrackModule implements Module {
 
 
         //
-        if(!damagetoviewer.isEmpty()) {
+        if(!damageToViewer.isEmpty()) {
             result.add(new UnlocalizedText(""));
             result.add(Translations.STATS_RECAP_DAMAGE_DAMAGETAKEN.with(ChatColor.RED));
-            damagetoviewer.forEach((uuid, dmg) -> {
+            damageToViewer.forEach((uuid, dmg) -> {
                 result.add(
                         Translations.STATS_RECAP_DAMAGE_FROM.with(
                                 ChatColor.AQUA,
-                                damageDisplay(dmg),
+                                damageDisplay(dmg.get()),
                                 (uuid == ENVIRONMENT) ?
                                         Translations.STATS_RECAP_DAMAGE_ENVIRONMENT.with(ChatColor.DARK_AQUA).translate(showTo).toLegacyText() :
                                         (Bukkit.getPlayer(uuid) != null) ? Bukkit.getPlayer(uuid).getDisplayName() : "unknown"
@@ -239,18 +157,123 @@ public class DamageTrackModule implements Module {
         return result;
     }
 
-    public String damageDisplay(Double dmg) {
+    private static String damageDisplay(Double rawDmg) {
         // Half this to make it into hearts
-        dmg = dmg / 2;
+        rawDmg = rawDmg / 2;
 
-        String display = (dmg).toString();
+        String display = (rawDmg).toString();
 
         // cleanup
         display = display.contains(".0") ? display.replace(".0", "") : display;
 
         // heart char
-        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (dmg != 1.0 ? "s" : "") + ChatColor.RESET;
+        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (rawDmg != 1.0 ? "s" : "") + ChatColor.RESET;
 
         return display;
     }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+
+        if(event instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent damageEvent = ((EntityDamageByEntityEvent) event);
+
+            Player attacker;
+            Player defender;
+            double damage;
+
+            if(!(damageEvent.getEntity() instanceof Player) || !(damageEvent.getDamager() instanceof Player)) {
+
+                if(damageEvent.getDamager() instanceof  Projectile) {
+
+                    Projectile projectile = ((Projectile) damageEvent.getDamager());
+                    if(projectile.getShooter() instanceof Player) {
+                        attacker = ((Player) projectile.getShooter());
+                        defender = ((Player) damageEvent.getEntity());
+                        damage = damageEvent.getFinalDamage();
+                    }
+
+                } else {
+                    Bukkit.getLogger().info("Untracked e<->e damage: " + damageEvent.getCause());
+                    return;
+                }
+            }
+
+            attacker = ((Player) damageEvent.getDamager());
+            defender = ((Player) damageEvent.getEntity());
+            damage = damageEvent.getDamage();
+
+            DamageExchange de = new DamageExchange(attacker.getUniqueId(), defender.getUniqueId(), damage, DamageDirection.GIVE);
+
+            // Store both directions of damage given
+            this.storeExchange(de);
+            this.storeExchange(de.flip());
+        } else {
+
+            if(!(event.getEntity() instanceof Player)) {
+                // Entity taking damage is not player
+                return;
+            }
+
+            Player player = ((Player) event.getEntity());
+            double damage = event.getFinalDamage();
+
+            DamageExchange de = new DamageExchange(player.getUniqueId(), ENVIRONMENT, damage, DamageDirection.RECEIVE);
+
+            this.storeExchange(de);
+            this.storeExchange(de.flip());
+
+        }
+    }
+
+    public class DamageExchange {
+        @Getter
+        private final UUID me;
+        @Getter
+        private final UUID you;
+        @Getter
+        private final double amount;
+        @Getter
+        private final DamageDirection direction;
+
+        /**
+         * Tracked means it's been seen already//recapped already
+         */
+        @Getter
+        @Setter
+        private boolean tracked = false;
+
+        /**
+         * Helper variable to stop being rewarded multiple times for assists
+         */
+        @Getter
+        @Setter
+        private boolean rewarded = false;
+
+        @Getter
+        private Instant time;
+
+        public DamageExchange(UUID me, UUID you, double amount, DamageDirection direction) {
+            this.me = me;
+            this.you = you;
+            this.amount = amount;
+            this.direction = direction;
+
+            this.time = Instant.now();
+        }
+
+        public DamageExchange flip() {
+            return new DamageExchange(you, me, amount, direction.invert());
+        }
+    }
+
+    public enum DamageDirection {
+        RECEIVE,
+        GIVE;
+
+        public DamageDirection invert() {
+            return this == RECEIVE ? GIVE : RECEIVE;
+        }
+    }
+
 }
