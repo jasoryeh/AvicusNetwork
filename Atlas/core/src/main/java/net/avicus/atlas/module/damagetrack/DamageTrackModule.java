@@ -106,10 +106,10 @@ public class DamageTrackModule implements Module {
                     damageFromViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
                 }
             } else if(exchange.getDirection() == DamageDirection.RECEIVE) {
-                if(damageFromViewer.containsKey(exchange.getYou())) {
-                    damageFromViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
+                if(damageToViewer.containsKey(exchange.getYou())) {
+                    damageToViewer.get(exchange.getYou()).addAndGet(exchange.getAmount());
                 } else {
-                    damageFromViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
+                    damageToViewer.put(exchange.getYou(), new AtomicDouble(exchange.getAmount()));
                 }
             }
         }
@@ -192,11 +192,12 @@ public class DamageTrackModule implements Module {
                         defender = ((Player) damageEvent.getEntity());
                         damage = damageEvent.getFinalDamage();
                     }
-
                 } else {
                     Bukkit.getLogger().info("Untracked e<->e damage: " + damageEvent.getCause());
-                    return;
                 }
+
+                return;
+
             }
 
             attacker = ((Player) damageEvent.getDamager());
