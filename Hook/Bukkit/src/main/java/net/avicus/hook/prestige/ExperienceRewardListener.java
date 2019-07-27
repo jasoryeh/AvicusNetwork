@@ -132,7 +132,7 @@ public class ExperienceRewardListener implements Listener {
             Player assister = Bukkit.getPlayer(assist.getKey());
 
             if(assister != null) {
-                if(assist.getValue().get() > 5) {
+                if(assist.getValue().get() > 2) {
                     this.module.reward(assister, rewardAssist, Messages.UI_REWARD_KILL_PLAYER_ASSIST,
                                     Atlas.getMatch().getMap().getGenre().name());
                 }
