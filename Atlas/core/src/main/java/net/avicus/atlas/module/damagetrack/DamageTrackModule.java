@@ -165,16 +165,13 @@ public class DamageTrackModule implements Module {
     }
 
     private static String damageDisplay(Double rawDmg, long hits) {
-        // Half this to make it into hearts
-        rawDmg = rawDmg / 2;
-
-        String display = (rawDmg).toString();
+        String display = (rawDmg / 2) + "";
 
         // cleanup
         display = display.contains(".0") ? display.replace(".0", "") : display;
 
         // heart char
-        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + (rawDmg != 1.0 ? "s" : "")
+        display = ChatColor.GOLD + display + ChatColor.RED + "❤" + ((rawDmg / 2) != 1.0 ? "s" : "")
                 + ChatColor.DARK_GRAY + " x" + hits + ChatColor.RESET;
 
         return display;
