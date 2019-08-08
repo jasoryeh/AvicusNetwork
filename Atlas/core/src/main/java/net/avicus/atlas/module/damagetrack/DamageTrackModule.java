@@ -3,7 +3,6 @@ package net.avicus.atlas.module.damagetrack;
 import com.google.common.util.concurrent.AtomicDouble;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.Translations;
@@ -18,6 +17,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.lang.reflect.Field;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -232,7 +232,6 @@ public class DamageTrackModule implements Module {
         }
     }
 
-    @ToString
     public class DamageExchange {
         @Getter
         private final UUID me;
@@ -287,6 +286,30 @@ public class DamageTrackModule implements Module {
             DamageExchange flipped = flip != null ? flip : new DamageExchange(you, me, amount, direction.invert(), this);
             this.flip = flipped;
             return flipped;
+        }
+
+        @Override
+        public String toString() {
+            StringJoiner toString = new StringJoiner("");
+            toString.add("DamageExchange")
+                    .add("[");
+
+            for (Field declaredField : this.getClass().getDeclaredFields()) {
+                String name;
+                Object value;
+                try {
+                    declaredField.setAccessible(true);
+                    name = declaredField.getName();
+                    value = declaredField.get(this);
+                } catch(IllegalAccessException e) {
+                    name = "unknown";
+                    value = "unknown";
+                }
+                toString.add(name).add("=").add(value.toString()).add(",");
+            }
+            toString.add("]");
+
+            return toString.toString();
         }
     }
 
