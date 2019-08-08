@@ -202,14 +202,11 @@ public class AtrioListener implements Listener {
         network.setBold(true);
 
         BaseComponent[] headArray = new BaseComponent[]{
-                new TextComponent(),
                 network,
-                new TextComponent(),
                 new TextComponent(TextComponent.fromLegacyText("\n" + net.md_5.bungee.api.ChatColor
                         .translateAlternateColorCodes('&', "&b" + this.headerOptions
                                 .get(Math.max(this.random.nextInt(this.headerOptions.size()) - 1, 0)).getBody()
-                                .trim()))),
-                new TextComponent()
+                                .trim())))
         };
 
         TextComponent header = new TextComponent(headArray);
@@ -228,6 +225,7 @@ public class AtrioListener implements Listener {
         AtrioSidebar sidebar = new AtrioSidebar(this.plugin, event.getPlayer());
         sidebar.start();
         this.sidebars.put(event.getPlayer(), sidebar);
+        sidebar.getSidebar().reset();
 
         setupBar(event.getPlayer());
         populateHeaderFooter(event.getPlayer());
@@ -261,6 +259,7 @@ public class AtrioListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         AtrioSidebar sidebar = this.sidebars.remove(event.getPlayer());
         if (sidebar != null) {
+            sidebar.getSidebar().reset();
             sidebar.stop();
         }
 
