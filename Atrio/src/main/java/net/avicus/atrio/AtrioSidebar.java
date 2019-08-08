@@ -20,7 +20,7 @@ public class AtrioSidebar implements Listener {
     protected final static String pad = "        ";
 
     public static final TimedAlternator<String> TITLE = new TimedAlternator<>(
-            2000,
+            5000,
             pad + ChatColor.AQUA.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
             pad + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
             pad + ChatColor.DARK_GRAY.toString() + ChatColor.BOLD + NetworkIdentification.NAME + pad,
@@ -50,7 +50,7 @@ public class AtrioSidebar implements Listener {
         this.player.setScoreboard(this.sidebar.getScoreboard());
         Bukkit.getServer().getPluginManager().registerEvents(this, this.plugin);
         this.task = Bukkit.getServer().getScheduler()
-                .runTaskTimer(this.plugin, new AtrioSidebarTask(), 0, 2);
+                .runTaskTimer(this.plugin, new AtrioSidebarTask(), 0, 20);
     }
 
     public void stop() {
