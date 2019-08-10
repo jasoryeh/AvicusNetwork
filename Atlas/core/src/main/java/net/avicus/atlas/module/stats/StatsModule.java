@@ -184,15 +184,15 @@ public class StatsModule extends BridgeableModule<ModuleBridge<StatsModule>> imp
                     StringBuilder data = new StringBuilder("Match Action Data:\n");
                     data.append("MVP: " + Users.getMeta(Bukkit.getPlayer(mvp)).getLeft() + Bukkit.getPlayer(mvp).getName() + "\n");
                     this.store.getLifetimeStore().getPlayerLifetimes().entries().forEach(e -> {
-                        data.append(
-                                Users.user(e.getKey()).map(User::getName).orElse("[User] Not in DB: " + e.getKey())
-                                        + ": \n");
+                        data.append(Users.user(e.getKey()).map(User::getName).orElse("[User] Not in DB: " + e.getKey())).append(": \n");
                         e.getValue().getActions()
                                 .forEach(a -> data.append("  " + a.getScore() + "  " + a.getDebugMessage() + "\n"));
                     });
                     List<DamageTrackModule.DamageExchange> exc = match.getRequiredModule(DamageTrackModule.class).getDamageExchanges();
-                    data.append("Damage Exchanges: [" + exc.size() + " total]");
-                    exc.forEach(data::append);
+                    data.append("\nDamage Exchanges: [").append(exc.size()).append(" total]\n");
+                    for (DamageTrackModule.DamageExchange exchange : exc) {
+                        data.append(exchange.toString()).append("\n");
+                    }
                     String link = new Paste("Action Data", "Console", data.toString(), true).upload();
                     TextComponent message = new TextComponent("Data Paste: " + link);
                     message.setColor(net.md_5.bungee.api.ChatColor.LIGHT_PURPLE);

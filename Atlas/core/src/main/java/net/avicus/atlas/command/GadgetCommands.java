@@ -2,9 +2,7 @@ package net.avicus.atlas.command;
 
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
-import net.avicus.atlas.Atlas;
 import net.avicus.atlas.module.gadget.map.MapSetNextToken;
-import net.avicus.atlas.module.gadget.map.MapTokenContext;
 import net.avicus.magma.Magma;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.module.gadgets.Gadget;
@@ -22,6 +20,10 @@ import java.util.UUID;
 public class GadgetCommands {
     @Command(aliases = {"gadget", "gadgets"}, desc = "Manage Atlas gadgets.", min = 0, max = -1)
     public static void gadget(CommandContext cmd, final CommandSender sender) {
+        if(!sender.hasPermission("atlas.dev.gadget")) {
+            sender.sendMessage(ChatColor.RED + "You don't have permission to this command!");
+            return;
+        }
 
         User user = null;
         if (cmd.argsLength() >= 3) {
