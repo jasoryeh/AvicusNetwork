@@ -4,10 +4,6 @@ import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.NestedCommand;
-
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.commands.exception.MustBePlayerCommandException;
 import net.avicus.compendium.commands.exception.TranslatableCommandErrorException;
@@ -26,13 +22,7 @@ import net.avicus.magma.util.region.shapes.CuboidRegion;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
@@ -41,6 +31,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.Vector;
 import org.joda.time.Seconds;
+
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PrestigeCommands {
 
@@ -232,7 +225,7 @@ public class PrestigeCommands {
                 Bukkit.getOnlinePlayers().forEach(p -> {
                     if (region.contains(p) && p != player) {
                         int reward = (max.get() ? 50 : 20);
-                        module.give(p, reward, "other");
+                        module.give(p, reward, "other", new UnlocalizedText("You were near someone who prestiged!"));
                         p.sendMessage(MagmaTranslations.PRESTIGE_LEVELUP_NEARBY.with(ChatColor.GREEN,
                                 new LocalizedNumber(reward, TextStyle.create().color(ChatColor.GOLD))));
                         MagmaTask.of(() -> {

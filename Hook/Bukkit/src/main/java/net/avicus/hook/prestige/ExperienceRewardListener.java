@@ -7,6 +7,7 @@ import net.avicus.atlas.event.competitor.PlayerChangeCompetitorEvent;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchCompleteEvent;
 import net.avicus.atlas.module.damagetrack.DamageTrackModule;
+import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.HookConfig;
 import net.avicus.hook.utils.Events;
@@ -67,7 +68,7 @@ public class ExperienceRewardListener implements Listener {
                 .sumXP(event.getUser().getId(), Magma.get().getCurrentSeason()) <= 0
                 && HookConfig.Experience.getInitialBalance() > 0) {
             this.module.give(player, HookConfig.Experience.getInitialBalance(),
-                    Atlas.getMatch().getMap().getGenre().name());
+                    Atlas.getMatch().getMap().getGenre().name(), new UnlocalizedText("Starters balance."));
         }
     }
 

@@ -1,13 +1,6 @@
 package net.avicus.hook.afk;
 
 import com.google.common.collect.Maps;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizableFormat;
 import net.avicus.compendium.locale.text.UnlocalizedFormat;
@@ -24,6 +17,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.joda.time.Instant;
 import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.*;
 
 public class AFKKickTask extends HookTask implements Listener {
 
@@ -46,7 +41,9 @@ public class AFKKickTask extends HookTask implements Listener {
             }
 
             if (Instant.now().getMillis() - entry.getValue().getMillis() > (600 * 1000)) {
-                toKick.add(entry.getKey());
+                if (!entry.getKey().hasPermission("hook.afk.ignore")) {
+                    toKick.add(entry.getKey());
+                }
             }
         }
         if (!toKick.isEmpty()) {
@@ -81,8 +78,6 @@ public class AFKKickTask extends HookTask implements Listener {
     }
 
     private void update(Player player) {
-        if (!player.hasPermission("hook.afk.ignore")) {
-            actions.put(player, Instant.now());
-        }
+        actions.put(player, Instant.now());
     }
 }

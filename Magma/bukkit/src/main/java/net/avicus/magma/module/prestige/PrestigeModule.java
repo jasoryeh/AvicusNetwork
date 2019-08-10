@@ -2,12 +2,6 @@ package net.avicus.magma.module.prestige;
 
 import com.google.common.base.Preconditions;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizableFormat;
@@ -27,6 +21,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+
+import java.util.*;
 
 public class PrestigeModule implements ListenerModule, CommandModule {
 
@@ -171,12 +168,58 @@ public class PrestigeModule implements ListenerModule, CommandModule {
         return getXP(player) >= XP;
     }
 
-    public void give(Player player, int amount, String genre) {
+    private static final LocalizableFormat REWARD_DISPLAY_MULTIPLIER = new UnlocalizedFormat(
+            "+{0} XP ({1}x) » {2}");
+    private static final String MULTIPLIER_PERMISSION = "hook.experience.multiplier";
+    private static final String MULTIPLIER_PREFIX = MULTIPLIER_PERMISSION + ".";
+    private static Optional<Double> multiplier(Player player) {
+        if (!player.hasPermission(MULTIPLIER_PERMISSION)) {
+            return Optional.empty();
+        }
+
+        double greatest = -1;
+
+        for (PermissionAttachmentInfo perm : player.getEffectivePermissions()) {
+            if (!perm.getValue()) {
+                continue;
+            }
+            if (!perm.getPermission().startsWith(MULTIPLIER_PREFIX)) {
+                continue;
+            }
+
+            try {
+                double value = Double.parseDouble(perm.getPermission().replace(MULTIPLIER_PREFIX, ""));
+                if (value > greatest) {
+                    greatest = value;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (greatest < 0) {
+            return Optional.empty();
+        }
+        return Optional.of(greatest);
+    }
+
+    public void give(Player player, int amount, String genre, Localizable reason) {
+        give(player, amount, genre, reason, true);
+    }
+
+    public void give(Player player, int amount, String genre, Localizable reason, boolean multiply) {
         User user = Users.user(player);
         amount = Math.abs(amount);
 
+        double multiplier = multiplier(player).orElse(1.0);
+        int multipliedAmount = amount;
+        if(multiply) {
+            multipliedAmount = (int) Math.floor(multiplier * amount);
+        }
+
+        player.sendMessage(rewardDisplay(player, multipliedAmount, reason, multiply));
         ExperienceTransaction transaction = new ExperienceTransaction(currentSeason.getId(),
-                user.getId(), amount, genre, new Date());
+                user.getId(), multipliedAmount, genre, new Date());
         MagmaTask.of(() -> Magma.get().database().getXpTransations().insert(transaction).execute())
                 .nowAsync();
         modifyLocalBalance(user.getUniqueId(), amount);
@@ -186,17 +229,23 @@ public class PrestigeModule implements ListenerModule, CommandModule {
 
     public void reward(Player player, int amount, Localizable reason, String genre) {
         Preconditions.checkArgument(amount > 0);
-        player.sendMessage(rewardDisplay(amount, reason));
-        give(player, amount, genre);
+        give(player, amount, genre, reason);
     }
 
     public void reward(Player player, int amount, LocalizableFormat reason, String genre) {
         reward(player, amount, reason.with(), genre);
     }
 
-    private Localizable rewardDisplay(int amount, Localizable reason) {
+    private Localizable rewardDisplay(Player player, int amount, Localizable reason, boolean showMultiply) {
+        Double multiplier = multiplier(player).orElse(1.0);
+
         Localizable textAmount = new LocalizedNumber(amount, TextStyle.ofColor(ChatColor.GOLD).bold());
-        return REWARD_DISPLAY.with(ChatColor.GRAY, textAmount, reason);
+        if(multiplier == 1.0 || !showMultiply) {
+            return REWARD_DISPLAY.with(ChatColor.GRAY, textAmount, reason);
+        } else {
+            Localizable textMultiplier = new LocalizedNumber(multiplier, 1, 2, TextStyle.ofColor(ChatColor.GOLD).bold());
+            return REWARD_DISPLAY_MULTIPLIER.with(ChatColor.GRAY, textAmount, textMultiplier, reason);
+        }
     }
 
     public void levelUp(User user) {
