@@ -243,27 +243,23 @@ public class AtlasMapFactory {
         // Here we detect map xml type by checking for spec(atlas) and proto(ares)
         Version spec;
         String name;
-        MapSourcePluginType type;
+        MapSourcePluginType type = MapSourcePluginType.detect(document);
 
-        if(root.hasAttribute("spec") || root.hasAttribute("name")) {
+        if(type == MapSourcePluginType.ATLAS) {
             // ^^^ Check for main required attributes that are associated with Atlas maps
             spec = root.getAttribute("spec").asRequiredVersion();
             name = root.getAttribute("name").asRequiredString();
 
-            type = MapSourcePluginType.ATLAS;
-
             Atlas.get().getLogger().info("Parsing " + name + " as Atlas map.");
             return parseAtlas(source, document);
-        } else if(root.hasAttribute("proto") || root.hasChild("name")) {
+        } else if(type == MapSourcePluginType.ARES) {
             // ^^ Check for main required attributes of Project Ares maps
             spec = root.getAttribute("proto").asRequiredVersion();
             name = root.getChild("name").get().getText().asRequiredString();
 
-            type = MapSourcePluginType.ARES;
-
             Atlas.get().getLogger().info("Parsing " + name + " as Ares map.");
             return parseAres(source, document);
-        } else {
+        } else { // UNKNOWN, we try regular Atlas type anyways
             Atlas.get().getLogger().info("Unknown map type " + document.getBaseURI() + " will be parsed as Atlas map.");
             return parseAtlas(source, document);
         }
