@@ -1,12 +1,5 @@
 package net.avicus.atlas.map;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Set;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,6 +27,9 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jdom2.Document;
+
+import javax.annotation.Nullable;
+import java.util.*;
 
 @ToString
 public class AtlasMap implements Module, MinecraftMap {
@@ -70,9 +66,12 @@ public class AtlasMap implements Module, MinecraftMap {
     @Nullable
     private MapGenre genre;
 
+    @Getter
+    private MapSourcePluginType sourceType;
+
     public AtlasMap(Set<TypeDetector> detectors, String slug, String name, Version specification,
                     Version version, @Nullable MapGenre genre, List<Author> authors, List<Author> contributors,
-                    EnumSet<GameType> gameTypes, CountdownConfig countdownConfig, MapSource source) {
+                    EnumSet<GameType> gameTypes, CountdownConfig countdownConfig, MapSource source, MapSourcePluginType sourceType) {
         this.detectors = detectors;
         this.slug = slug;
         this.name = name;
@@ -89,6 +88,8 @@ public class AtlasMap implements Module, MinecraftMap {
         this.clickableNameVersion = NAME_VERSION_FORMAT.with(new UnlocalizedText(this.name),
                 new UnlocalizedText(" (" + this.version.toString() + ')',
                         TextStyle.ofColor(ChatColor.GRAY).italic()));
+
+        this.sourceType = sourceType;
     }
 
     static String slugify(String name) {

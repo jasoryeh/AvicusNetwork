@@ -2,16 +2,6 @@ package net.avicus.atlas.map;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import javax.annotation.Nullable;
-
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.GameType;
 import net.avicus.atlas.SpecificationVersionHistory;
@@ -35,6 +25,10 @@ import net.avicus.magma.game.author.Author;
 import net.avicus.magma.util.MapGenre;
 import net.avicus.magma.util.Version;
 import org.jdom2.Document;
+
+import javax.annotation.Nullable;
+import java.net.URL;
+import java.util.*;
 
 public class AtlasMapFactory {
 
@@ -120,7 +114,7 @@ public class AtlasMapFactory {
         CountdownConfig config = parseCountdownConfig(root.getChild("countdowns").orElse(null));
 
         return new AtlasMap(TYPE_DETECTORS, slug, name, specification, version, genre, authors,
-                contributors, gameTypes, config, source);
+                contributors, gameTypes, config, source, MapSourcePluginType.ARES);
     }
 
     public static AtlasMap parseAres(MapSource source, Document document) {
@@ -142,43 +136,100 @@ public class AtlasMapFactory {
 
         final MapGenre genre = root.getAttribute("genre").asEnum(MapGenre.class, true).orElse(null);
 
-        List<Author> authors;
-        List<Author> contributors;
+        List<Author> authors = new ArrayList<>();
+        List<Author> contributors = new ArrayList<>();
 
         if (root.getChild("authors").isPresent()) {
-            authors = parsePAAuthors(root.getChild("authors").get());
+            //authors = parsePAAuthors(root.getChild("authors").get());
+            XmlElement authorsChildren = root.getChild("authors").get();
+            for (XmlElement descendant : authorsChildren.getDescendants()) {
+                if(descendant.getName().equalsIgnoreCase("author")) {
+                    if(descendant.hasAttribute("uuid")) {
+                        authors.add(new Minecrafter(descendant.getAttribute("uuid").asRequiredString(),
+                                descendant.hasAttribute("contribution")
+                                        ? Optional.of(descendant.getAttribute("contribution").asRequiredString()) : Optional.empty(),
+                                descendant.hasAttribute("promo") // Promo URL is not part of official Project Ares spec but we add it anyways.
+                                        ? Optional.of(descendant.getAttribute("promo").asRequiredURL()) : Optional.empty()));
+                    } else {
+                        // Project ares does not have a "organization" author type and instead just puts name inside the author/contributor element
+                        authors.add(new Organization(descendant.getText().asRequiredString(),
+                                descendant.hasAttribute("contribution")
+                                        ? Optional.of(descendant.getAttribute("contribution").asRequiredString()) : Optional.empty(),
+                                descendant.hasAttribute("promo") // Promo URL is not part of official Project Ares spec but we add it anyways.
+                                        ? Optional.of(descendant.getAttribute("promo").asRequiredURL()) : Optional.empty()));
+                    }
+                }
+            }
         } else {
             throw new XmlException(root, "No authors present!");
         }
 
         if (root.getChild("contributors").isPresent()) {
-            contributors = parsePAContributors(root.getChild("contributors").get());
-        } else {
-            contributors = new ArrayList<>();
-        }
-
-        final String objective = root.getChild("objective").get().getText().asRequiredString();
+            //contributors = parsePAContributors(root.getChild("contributors").get());
+            XmlElement authorsChildren = root.getChild("contributors").get();
+            for (XmlElement descendant : authorsChildren.getDescendants()) {
+                if(descendant.getName().equalsIgnoreCase("contributor")) {
+                    if(descendant.hasAttribute("uuid")) {
+                        contributors.add(new Minecrafter(descendant.getAttribute("uuid").asRequiredString(),
+                                descendant.hasAttribute("contribution")
+                                        ? Optional.of(descendant.getAttribute("contribution").asRequiredString()) : Optional.empty(),
+                                descendant.hasAttribute("promo") // Promo URL is not part of official Project Ares spec but we add it anyways.
+                                        ? Optional.of(descendant.getAttribute("promo").asRequiredURL()) : Optional.empty()));
+                    } else {
+                        // Project ares does not have a "organization" author type and instead just puts name inside the author/contributor element
+                        contributors.add(new Organization(descendant.getText().asRequiredString(),
+                                descendant.hasAttribute("contribution")
+                                        ? Optional.of(descendant.getAttribute("contribution").asRequiredString()) : Optional.empty(),
+                                descendant.hasAttribute("promo") // Promo URL is not part of official Project Ares spec but we add it anyways.
+                                        ? Optional.of(descendant.getAttribute("promo").asRequiredURL()) : Optional.empty()));
+                    }
+                }
+            }
+        } // ignore no contributors
 
         final EnumSet<GameType> gameTypes = EnumSet.noneOf(GameType.class);
-        if (!root.getChild("gametype").isPresent()) {
-            if (objective.contains("monument") || objective.contains("obsidian")) gameTypes.add(GameType.DTM);
-            if (objective.contains("leak") || objective.contains("core")) gameTypes.add(GameType.DTC);
-            if (objective.contains("wool")) gameTypes.add(GameType.CTW);
-            if (objective.contains("eliminat")) gameTypes.add(GameType.ELIMINATION);
-            if (objective.contains("walls")) gameTypes.add(GameType.WALLS);
-        }
-
-        for (XmlElement element : root.getChildren("gametype")) {
-            @Nullable final GameType type = GameType.of(element.getText().asRequiredString());
-            if (type != null) {
-                gameTypes.add(type);
+        List<XmlElement> gamemodes = root.getDescendants("gamemode");
+        for (XmlElement gamemode : gamemodes) {
+            String gm = gamemode.getText().asRequiredString().toLowerCase();
+            switch(gm) {
+                case "tdm":
+                    gameTypes.add(GameType.ELIMINATION);
+                case "ctf":
+                    //gameTypes.add(GameType.)
+                    break;
+                case "dtm":
+                    gameTypes.add(GameType.DTM);
+                case "koth":
+                    gameTypes.add(GameType.HILL);
+                case "rage":
+                    break;
+                case "arcade":
+                    break;
+                case "ffa":
+                    gameTypes.add(GameType.SCORE);
+                case "ctw":
+                    gameTypes.add(GameType.CTW);
+                case "dtc":
+                    gameTypes.add(GameType.DTC);
+                case "ad":
+                    break;
+                case "blitz":
+                    break;
+                case "scorebox":
+                    gameTypes.add(GameType.SCORE);
+                case "gs":
+                    break;
+                case "mixed":
+                    break;
             }
+
         }
 
+        // not part of official ares spec, but we add this just in case.
         CountdownConfig config = parseCountdownConfig(root.getChild("countdowns").orElse(null));
 
         AtlasMap atlasMap = new AtlasMap(TYPE_DETECTORS, slug, name, spec, version, genre, authors,
-                contributors, gameTypes, config, source);
+                contributors, gameTypes, config, source, MapSourcePluginType.ATLAS);
         atlasMap.setAtlas(false);
         return atlasMap;
     }
@@ -186,98 +237,40 @@ public class AtlasMapFactory {
     public static AtlasMap parse(MapSource source, Document document) {
         final XmlElement root = new XmlElement(document.getRootElement());
         /*
-         * Pagoda ProjectAres Map compatibility parser start
+         * VectorMC ProjectAres Map compatibility parser start
          */
 
         // Here we detect map xml type by checking for spec(atlas) and proto(ares)
+        Version spec;
+        String name;
+        MapSourcePluginType type;
 
-        try { // Atlas Detection
+        if(root.hasAttribute("spec") || root.hasAttribute("name")) {
+            // ^^^ Check for main required attributes that are associated with Atlas maps
+            spec = root.getAttribute("spec").asRequiredVersion();
+            name = root.getAttribute("name").asRequiredString();
 
-            Version testSpec = root.getAttribute("spec").asRequiredVersion();
-            String testName = root.getAttribute("name").asRequiredString();
+            type = MapSourcePluginType.ATLAS;
 
-            Atlas.get().getLogger().info("Parsing " + testName + " as Atlas map.");
+            Atlas.get().getLogger().info("Parsing " + name + " as Atlas map.");
             return parseAtlas(source, document);
+        } else if(root.hasAttribute("proto") || root.hasChild("name")) {
+            // ^^ Check for main required attributes of Project Ares maps
+            spec = root.getAttribute("proto").asRequiredVersion();
+            name = root.getChild("name").get().getText().asRequiredString();
 
-        } catch (Exception e) {
+            type = MapSourcePluginType.ARES;
 
-            try { // Ares detection
-
-                Version tSpec = root.getAttribute("proto").asRequiredVersion();
-                String tName = root.getChild("name").get().getText().asRequiredString();
-
-                Atlas.get().getLogger().info("Parsing " + tName + " as Ares map.");
-                return parseAres(source, document);
-
-            } catch (Exception e2) { // Can't identify, yolo
-
-                Atlas.get().getLogger().info("Unknown map " + document.getBaseURI() + " will be parsed as Atlas map.");
-                return parseAtlas(source, document);
-
-            }
-
+            Atlas.get().getLogger().info("Parsing " + name + " as Ares map.");
+            return parseAres(source, document);
+        } else {
+            Atlas.get().getLogger().info("Unknown map type " + document.getBaseURI() + " will be parsed as Atlas map.");
+            return parseAtlas(source, document);
         }
+
         /*
          * Pagoda ProjectAres Map compatibility parser end
          */
-    }
-
-    private static List<Author> parsePAContributors(XmlElement element) {
-        List<Author> result = new ArrayList<>();
-        for (XmlElement child : element.getDescendants()) {
-            if (child.getName().equals("contributor")) {
-                String uuid = child.getAttribute("uuid").asRequiredString().replace("-", "");
-                Optional<String> role = Optional.empty();
-                if (child.hasAttribute("contribution")) {
-                    role = Optional.of(child.getAttribute("contribution").asRequiredString());
-                }
-                Optional<URL> promo = child.getAttribute("promo").asURL();
-
-                result.add(new Minecrafter(uuid, role, promo));
-            } else if (child.getName().equals("organization")) {
-                String name = child.getAttribute("name").asRequiredString();
-                Optional<String> role = Optional.empty();
-                if (child.hasAttribute("contribution")) {
-                    role = Optional.of(child.getAttribute("contribution").asRequiredString());
-                }
-                Optional<URL> promo = child.getAttribute("promo").asURL();
-
-                result.add(new Organization(name, role, promo));
-            } else {
-                throw new IllegalArgumentException("Unknown author type.");
-            }
-        }
-
-        return result;
-    }
-
-    private static List<Author> parsePAAuthors(XmlElement element) {
-        List<Author> result = new ArrayList<>();
-        for (XmlElement child : element.getDescendants()) {
-            if (child.getName().equals("author")) {
-                String uuid = child.getAttribute("uuid").asRequiredString().replace("-", "");
-                Optional<String> role = Optional.empty();
-                if (child.hasAttribute("contribution")) {
-                    role = Optional.of(child.getAttribute("contribution").asRequiredString());
-                }
-                Optional<URL> promo = child.getAttribute("promo").asURL();
-
-                result.add(new Minecrafter(uuid, role, promo));
-            } else if (child.getName().equals("organization")) {
-                String name = child.getAttribute("name").asRequiredString();
-                Optional<String> role = Optional.empty();
-                if (child.hasAttribute("contribution")) {
-                    role = Optional.of(child.getAttribute("contribution").asRequiredString());
-                }
-                Optional<URL> promo = child.getAttribute("promo").asURL();
-
-                result.add(new Organization(name, role, promo));
-            } else {
-                throw new IllegalArgumentException("Unknown author type.");
-            }
-        }
-
-        return result;
     }
 
     private static List<Author> parseAuthors(XmlElement element, boolean contributors) {

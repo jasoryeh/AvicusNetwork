@@ -8,7 +8,13 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 public class MapConverter {
-    public static Document convertPAXMLTOA(Document document, AtlasMap map) {
+    /**
+     * Project Ares XML -> Atlas
+     * @param document
+     * @param map
+     * @return
+     */
+    public static Document convertMethodOne(Document document, AtlasMap map) {
         final XmlElement ogXml = new XmlElement(document.getRootElement());
 
         // Root
