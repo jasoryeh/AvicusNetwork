@@ -3,17 +3,6 @@ package net.avicus.atlas.match;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import net.avicus.atlas.documentation.ModuleDocumentation;
 import net.avicus.atlas.map.AtlasMap;
@@ -47,6 +36,7 @@ import net.avicus.atlas.module.loadouts.LoadoutsFactory;
 import net.avicus.atlas.module.locales.LocalesFactory;
 import net.avicus.atlas.module.modifydamage.ModifyDamageFactory;
 import net.avicus.atlas.module.objectives.ObjectivesFactory;
+import net.avicus.atlas.module.observer.ObserverFactory;
 import net.avicus.atlas.module.projectiles.ProjectilesFactory;
 import net.avicus.atlas.module.regions.RegionsFactory;
 import net.avicus.atlas.module.resourcepacks.ResourcePacksFactory;
@@ -74,6 +64,10 @@ import org.jdom2.Parent;
 import org.jdom2.filter.ElementFilter;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.located.LocatedJDOMFactory;
+
+import javax.annotation.Nullable;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * A match factory controls the construction of {@link Match}s from a collection of
@@ -113,6 +107,7 @@ public class MatchFactory {
         this.register(LoadoutsFactory.class);
         this.register(LocalesFactory.class);
         this.register(ModifyDamageFactory.class);
+        this.register(ObserverFactory.class);
         this.register(ObjectivesFactory.class);
         this.register(ProjectilesFactory.class);
         this.register(RegionsFactory.class);
