@@ -175,6 +175,12 @@ public class DamageTrackModule implements Module {
         return result;
     }
 
+    /**
+     * Renders damage amount
+     * @param rawDmg Amount of total damage dealt
+     * @param hits Amount of hits dealt
+     * @return String with formatted damage and hits
+     */
     private static String damageDisplay(Double rawDmg, long hits) {
         String display = (rawDmg / 2) + "";
 
@@ -343,6 +349,9 @@ public class DamageTrackModule implements Module {
         }
     }
 
+    /**
+     * Represents direction of Damage.
+     */
     public enum DamageDirection {
         RECEIVE,
         GIVE;

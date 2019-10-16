@@ -1,13 +1,13 @@
 package net.avicus.atlas.util.color;
 
-import java.util.Optional;
-
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.compendium.color.ColorProvider;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
 
 /**
  * Converts {@link TeamColor}s to colors that can be used for dying items and setting color damage
@@ -39,6 +39,12 @@ public class TeamColorProvider implements ColorProvider {
         return this.match.getRequiredModule(GroupsModule.class).getGroup(player).getTeamColor();
     }
 
+    /**
+     * See getTeamColor({@link Player})
+     *
+     * @param player player to run getTeamColor on
+     * @return Color of group, Black if optional is not present
+     */
     public DyeColor getDyeColor(Optional<Player> player) {
         if (player.isPresent()) {
             return getTeamColor(player.get()).getDyeColor();

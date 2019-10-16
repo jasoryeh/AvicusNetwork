@@ -29,6 +29,11 @@ public enum TeamColor {
     @Getter
     DyeColor dyeColor;
 
+    /**
+     * Links the ChatColor to the color of dye it represents in-game
+     * @param chatColor Chat color
+     * @param dyeColor Dye color
+     */
     TeamColor(ChatColor chatColor, DyeColor dyeColor) {
         this.chatColor = chatColor;
         this.dyeColor = dyeColor;

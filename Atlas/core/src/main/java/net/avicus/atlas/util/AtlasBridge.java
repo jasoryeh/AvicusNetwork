@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ *
+ */
 public interface AtlasBridge {
 
     @Nullable
