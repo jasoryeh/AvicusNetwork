@@ -1,14 +1,16 @@
 package net.avicus.atlas;
 
-import java.util.List;
-
 import lombok.Getter;
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
 
+import java.util.List;
+
 /**
  * Atlas's config.yml should be mostly mapped to the variables here.
+ *
+ * Add additional variables if new configuration is added into config.yml
  */
 public class AtlasConfig {
 
