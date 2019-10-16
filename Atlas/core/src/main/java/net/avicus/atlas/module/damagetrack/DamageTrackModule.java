@@ -91,6 +91,12 @@ public class DamageTrackModule implements Module {
 
     private final String SPACER_DOUBLE = "  ";
 
+    /**
+     * Builds chat message lines to send to player when they die
+     * Recaps them on who hit who and how much
+     * @param showTo Player that is getting the message
+     * @return
+     */
     public List<Localizable> getPlayerPVPRecap(Player showTo) {
         List<Localizable> result = new ArrayList<>();
 
@@ -158,6 +164,11 @@ public class DamageTrackModule implements Module {
         }
 
         if(!result.isEmpty()) {
+            // TODO: Translation
+            UnlocalizedText nothing = new UnlocalizedText("No damage dealt or received was tracked.");
+            nothing.style().bold(true).underlined(true);
+            result.add(new UnlocalizedText(""));
+            result.add(nothing);
             result.add(new UnlocalizedText(""));
         }
 
@@ -181,51 +192,62 @@ public class DamageTrackModule implements Module {
     public void onDamage(EntityDamageEvent event) {
 
         if(event instanceof EntityDamageByEntityEvent) {
+            // Non-player damage entity
             EntityDamageByEntityEvent damageEvent = ((EntityDamageByEntityEvent) event);
 
             Player attacker;
             Player defender;
             double damage;
 
+            // If either the entity getting damaged or damage dealer is not a player
             if(!(damageEvent.getEntity() instanceof Player) || !(damageEvent.getDamager() instanceof Player)) {
 
+                // but it is a projectile (snowball, arrow, etc.) replace attacker with the shooter of the projectile
                 if(damageEvent.getDamager() instanceof  Projectile) {
-
                     Projectile projectile = ((Projectile) damageEvent.getDamager());
                     if(projectile.getShooter() instanceof Player) {
+                        // if the person who fired the projectile is a player, record it.
                         attacker = ((Player) projectile.getShooter());
                         defender = ((Player) damageEvent.getEntity());
                         damage = damageEvent.getFinalDamage();
+                    } else {
+                        // don't care, probably a skeleton or other projectile shooter
+                        //Bukkit.getLogger().info("Untracked e<->e damage (non-human projectile shooter): " + damageEvent.getCause());
+                        return;
                     }
                 } else {
-                    Bukkit.getLogger().info("Untracked e<->e damage: " + damageEvent.getCause());
+                    // not a projectile, don't track random non-player entity to entity damage
+                    //Bukkit.getLogger().info("Untracked e<->e damage: " + damageEvent.getCause());
+                    return;
                 }
-
-                return;
-
+            } else {
+                // If either is player
+                attacker = ((Player) damageEvent.getDamager());
+                defender = ((Player) damageEvent.getEntity());
+                damage = damageEvent.getDamage();
             }
 
-            attacker = ((Player) damageEvent.getDamager());
-            defender = ((Player) damageEvent.getEntity());
-            damage = damageEvent.getDamage();
-
+            // Save the information
             DamageExchange de = new DamageExchange(attacker.getUniqueId(), defender.getUniqueId(), damage, DamageDirection.GIVE);
 
             // Store both directions of damage given
             this.storeExchange(de);
             this.storeExchange(de.flip());
         } else {
-
+            // Non entity to entity damage event (natural? ex. falling?)
             if(!(event.getEntity() instanceof Player)) {
-                // Entity taking damage is not player
+                // Entity taking damage is not player we don't care.
                 return;
             }
 
+            // Get the information of the damage and player getting damage
             Player player = ((Player) event.getEntity());
             double damage = event.getFinalDamage();
 
+            // Store the information
             DamageExchange de = new DamageExchange(player.getUniqueId(), ENVIRONMENT, damage, DamageDirection.RECEIVE);
 
+            // Store both directions of the information
             this.storeExchange(de);
             this.storeExchange(de.flip());
 
@@ -259,6 +281,10 @@ public class DamageTrackModule implements Module {
         @Setter
         private boolean isExperienceRewarded = false;
 
+        /**
+         * Determines if both credit and experience is rewarded.
+         * @return if both credit and experience is rewarded already
+         */
         public boolean isRewarded() {
             return this.isCreditRewarded && this.isExperienceRewarded;
         }
@@ -282,8 +308,12 @@ public class DamageTrackModule implements Module {
             this.flip = flippedPair;
         }
 
+        /**
+         * Get the other damage direction (used for internal purposes)
+         * @return other direction
+         */
         public DamageExchange flip() {
-            DamageExchange flipped = flip != null ? flip : new DamageExchange(you, me, amount, direction.invert(), this);
+            DamageExchange flipped = this.flip != null ? this.flip : new DamageExchange(this.you, this.me, this.amount, this.direction.invert(), this);
             this.flip = flipped;
             return flipped;
         }
