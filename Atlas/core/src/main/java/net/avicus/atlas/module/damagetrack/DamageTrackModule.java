@@ -337,6 +337,12 @@ public class DamageTrackModule implements Module {
                     declaredField.setAccessible(true);
                     name = declaredField.getName();
                     value = declaredField.get(this);
+
+                    if(value instanceof DamageTrackModule) {
+                        // flipped
+                        continue;
+                    }
+
                 } catch(IllegalAccessException e) {
                     name = "unknown";
                     value = "unknown";
