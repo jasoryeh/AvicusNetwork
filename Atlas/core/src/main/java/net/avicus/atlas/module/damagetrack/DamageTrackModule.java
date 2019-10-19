@@ -163,7 +163,7 @@ public class DamageTrackModule implements Module {
             });
         }
 
-        if(!result.isEmpty()) {
+        if(result.isEmpty()) {
             // TODO: Translation
             UnlocalizedText nothing = new UnlocalizedText("No damage dealt or received was tracked.");
             nothing.style().bold(true).underlined(true);
