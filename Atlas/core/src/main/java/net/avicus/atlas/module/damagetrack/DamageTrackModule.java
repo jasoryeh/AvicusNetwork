@@ -338,16 +338,17 @@ public class DamageTrackModule implements Module {
                     name = declaredField.getName();
                     value = declaredField.get(this);
 
-                    if(value instanceof DamageTrackModule) {
-                        // flipped
-                        continue;
-                    }
 
                 } catch(IllegalAccessException e) {
                     name = "unknown";
                     value = "unknown";
                 }
-                toString.add(name).add("=").add(value.toString()).add(",");
+                if(value instanceof DamageTrackModule || name.equalsIgnoreCase("flip")) {
+                    // ignore "flip" value otherwise it will come right back to us.
+                    continue;
+                } else {
+                    toString.add(name).add("=").add(value.toString()).add(",");
+                }
             }
             toString.add("]");
 
