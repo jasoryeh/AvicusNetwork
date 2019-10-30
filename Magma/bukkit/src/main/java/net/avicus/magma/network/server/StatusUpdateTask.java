@@ -1,37 +1,39 @@
 package net.avicus.magma.network.server;
 
 import com.google.common.collect.ArrayListMultimap;
+import net.avicus.magma.Magma;
+import net.avicus.magma.database.model.impl.Server;
+import net.avicus.magma.database.model.impl.ServerGroup;
+import net.avicus.magma.redis.Redis;
+import net.avicus.magma.util.safe.RetryingRunnable;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import net.avicus.magma.Magma;
-import net.avicus.magma.database.model.impl.Server;
-import net.avicus.magma.database.model.impl.ServerGroup;
-import net.avicus.magma.redis.Redis;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
-
 /**
  * Retrieves statuses from Redis, and updates this server's
  * status to Redis.
  */
-public class StatusUpdateTask extends BukkitRunnable {
+public class StatusUpdateTask extends RetryingRunnable {
 
     private final Random RANDOM = new Random();
 
     public void start() {
+        // default retry amounts
+
+        //                                           immediately, every 3 seconds
         this.runTaskTimerAsynchronously(Magma.get(), 0, 20 * 3);
     }
 
     @Override
-    public void run() {
+    public void perform() {
         {
             Redis redis = Magma.get().getRedis();
 

@@ -6,15 +6,6 @@ import com.google.common.io.ByteStreams;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import net.avicus.magma.Magma;
 import net.avicus.magma.database.Database;
 import net.avicus.magma.database.model.impl.Server;
@@ -33,6 +24,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.joda.time.Seconds;
+
+import java.util.*;
 
 public class Servers {
 
@@ -53,10 +46,10 @@ public class Servers {
         cmd.register(ServerCommands.class);
     }
 
-    public static void updateServerCache(List<Server> updated,
+    public static void updateServerCache(List<Server> updateServers,
                                          ArrayListMultimap<ServerGroup, Integer> groups, Map<Integer, ItemStack> icons) {
         serverCache.clear();
-        serverCache.addAll(updated);
+        serverCache.addAll(updateServers);
         serverGroupCache.clear();
         serverGroupCache.putAll(groups);
         iconCache.clear();
