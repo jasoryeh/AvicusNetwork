@@ -14,6 +14,7 @@ public class AlertsListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         MagmaTask.of(() -> {
+            // Reload alerts for user, and notify them of alerts available on join.
             User user = Users.user(event.getPlayer());
             Alerts.reload(user);
             if (Alerts.get(user, true).size() > 0) {

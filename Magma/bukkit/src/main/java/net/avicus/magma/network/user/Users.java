@@ -81,6 +81,11 @@ public class Users {
         return Optional.empty();
     }
 
+    /**
+     * Get's Player given a User
+     * @param user User to look for Player for
+     * @return Optional, ifPresent and isPresent will fail if user is offline or user just doesn't exist.
+     */
     public static Optional<Player> player(User user) {
         return Optional.ofNullable(Bukkit.getPlayer(user.getUniqueId()));
     }
