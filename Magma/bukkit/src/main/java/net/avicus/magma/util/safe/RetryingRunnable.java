@@ -26,10 +26,12 @@ public abstract class RetryingRunnable extends BukkitRunnable {
     protected int retries = 3;
     @Getter
     @Setter
-    protected boolean blockThread = true;
+    protected boolean blockThreadOnRun = true;
     @Getter
     @Setter
     protected long retryDelay = 1000 * 5; // 5 seconds
+
+    private static String LOGPREFIX = "[Retry] ";
 
     @Override
     public void run() {
@@ -37,29 +39,32 @@ public abstract class RetryingRunnable extends BukkitRunnable {
             @Override
             public void run() {
                 Logger logger = Magma.get().getLogger();
-                for (int i = 0; i < retries; i++) {
+                for (int tri = 0; tri < retries; tri++) {
                     try {
-                        if (i != 0) {
-                            logger.info("Retrying [Try " + (i + 1) + "]");
+                        if (tri != 0) {
+                            // notify of retry if this isn't the first run. (won't say anything if done once)
+                            logger.info(LOGPREFIX + "Retrying [Try " + tri + "]");
                         }
 
                         // run original runnable
                         RetryingRunnable.this.perform();
 
                         // end of task.
-                        if (i != 0) {
-                            logger.info("Finished retried task in " + (i + 1) + " tries.");
+                        if (tri != 0) {
+                            logger.info(LOGPREFIX + "Finished retried task in " + tri + " tries.");
                         }
+
                         break;
                     } catch (Exception e) {
                         try {
-                            logger.warning("[Try " + (i + 1) + "] StatusUpdateTask failed, retrying in " + (retryDelay / 1000)
-                                    + " seconds, max " + (retries) + " retries: "
-                                    + e.getClass().getName() + " said " + e.getMessage());
+                            logger.warning(LOGPREFIX + "[Try " + tri + "] " +
+                                    "StatusUpdateTask failed, retrying in " + (retryDelay / 1000)
+                                    + " seconds, max. " + (retries) + " retries.");
+                            logger.warning(LOGPREFIX + e.getClass().getName() + " said " + e.getMessage());
+
                             if (showStackTrace) {
                                 e.printStackTrace();
                             }
-
                             Thread.sleep(retryDelay);
                         } catch (InterruptedException interrupt) {
                             logger.warning("Unable to retry, sleep was interrupted.");
@@ -70,7 +75,7 @@ public abstract class RetryingRunnable extends BukkitRunnable {
             }
         };
 
-        if(blockThread) {
+        if(blockThreadOnRun) {
             runnable.run();
         } else {
             Thread thread = new Thread(runnable);

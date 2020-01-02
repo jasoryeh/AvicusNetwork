@@ -28,7 +28,7 @@ public class StatusUpdateTask extends RetryingRunnable {
     public void start() {
         // default retry amounts
 
-        //                                           immediately, every 3 seconds
+        //                                       immediately, every 3 seconds
         this.runTaskTimerAsynchronously(Magma.get(), 0, 20 * 3);
     }
 

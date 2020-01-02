@@ -1,14 +1,5 @@
 package net.avicus.hook.backend;
 
-import java.io.File;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.logging.Logger;
-
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.ConfigFile;
 import net.avicus.hook.DbConfig;
@@ -25,6 +16,14 @@ import net.avicus.quest.database.DatabaseConfig;
 import net.buycraft.plugin.platform.standalone.runner.StandaloneBuycraftRunnerBuilder;
 import net.buycraft.plugin.platform.standalone.runner.StandaloneUtilities;
 import org.bukkit.Bukkit;
+
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 
 public class Backend {
 
@@ -65,6 +64,7 @@ public class Backend {
 
     public void start() {
         // Run backend in the background.
+        this.log.info("This server is a backend server.");
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(HookPlugin.getInstance(), new Runnable() {
             @Override
@@ -79,11 +79,11 @@ public class Backend {
                         }
                     }
                 } catch(Exception e) {
-                    HookPlugin.getInstance().getLogger().info("A backend task failed. Trying again.");
+                    Backend.this.log.info("A backend task failed. Trying again.");
                     e.printStackTrace();
                 }
             }
-        }, 40 * 1000, 120 * 1000);
+        }, 0, 120 * 60); // immediately, then after every 2 minutes
     }
 
     public List<Thread> runBackEnd() {
