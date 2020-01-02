@@ -66,7 +66,7 @@ public class Backend {
         // Run backend in the background.
         this.log.info("This server is a backend server.");
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(HookPlugin.getInstance(), new Runnable() {
+        Runnable backendTask = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -78,12 +78,14 @@ public class Backend {
                             break;
                         }
                     }
-                } catch(Exception e) {
+                } catch (Exception e) {
                     Backend.this.log.info("A backend task failed. Trying again.");
                     e.printStackTrace();
                 }
             }
-        }, 0, 120 * 60); // immediately, then after every 2 minutes
+        };
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(HookPlugin.getInstance(), backendTask, 0, 120 * 60); // immediately, then after every 2 minutes
     }
 
     public List<Thread> runBackEnd() {

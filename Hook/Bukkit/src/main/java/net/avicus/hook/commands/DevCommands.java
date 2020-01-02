@@ -4,11 +4,19 @@ import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import com.sk89q.minecraft.util.commands.NestedCommand;
+import net.avicus.compendium.config.Config;
+import net.avicus.compendium.config.ConfigFile;
+import net.avicus.hook.HookPlugin;
+import net.avicus.hook.backend.Backend;
+import net.avicus.hook.backend.BackendConfig;
 import net.avicus.hook.utils.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class DevCommands {
 
@@ -53,6 +61,41 @@ public class DevCommands {
 
         sender.sendMessage(
                 search.hasPermission(cmd.getString(1)) ? ChatColor.GREEN + "YES" : ChatColor.RED + "NO");
+    }
+
+    @Command(aliases = {"update-backend"}, desc = "Force updates a backend task.")
+    public static void updateBackend(CommandContext cmd, CommandSender sender) {
+        HookPlugin plugin = HookPlugin.getInstance();
+
+        File remote = new File(plugin.getDataFolder(), "backend.yml");
+        InputStream local = plugin.getResource("backend.yml");
+
+        Config config = new Config(local);
+
+        if (!remote.exists()) {
+            config.save(remote);
+        }
+        config = new ConfigFile(remote);
+
+        config.injector(BackendConfig.class).inject();
+
+        Backend backend = new Backend(plugin);
+
+        // Backend start equiv
+        try {
+            boolean allDone = true;
+
+            for (Thread thread : backend.runBackEnd()) {
+                if (thread.isAlive()) {
+                    allDone = false;
+                    break;
+                }
+            }
+            sender.sendMessage("Backend task finished.");
+        } catch (Exception e) {
+            sender.sendMessage("Backend task failed.");
+            e.printStackTrace();
+        }
     }
 
     public static class Parent {
