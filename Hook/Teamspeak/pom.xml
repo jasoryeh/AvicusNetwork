@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.avicus</groupId>
+        <groupId>net.vectormc</groupId>
         <artifactId>hook</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>hook-teamspeak</artifactId>
     <repositories>
@@ -22,13 +22,14 @@
     <dependencies>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>hook-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -36,7 +37,7 @@
         </dependency>
         <!-- Database -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>magma-core</artifactId>
             <version>${project.version}</version>
         </dependency>

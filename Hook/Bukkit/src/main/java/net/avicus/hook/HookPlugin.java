@@ -45,6 +45,7 @@ import net.avicus.magma.network.user.rank.Ranks;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -117,7 +118,12 @@ public class HookPlugin extends JavaPlugin {
         }
 
         // Commands
-        this.commands = new AvicusCommandsManager();
+        this.commands = new AvicusCommandsManager<CommandSender>() {
+            @Override
+            public boolean hasPermission(CommandSender sender, String perm) {
+                return sender instanceof ConsoleCommandSender || sender.hasPermission(perm);
+            }
+        };
 
         AvicusCommandsRegistration cmds = new AvicusCommandsRegistration(this, this.commands);
         cmds.register(OnlineCommand.class);

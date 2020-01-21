@@ -4,30 +4,32 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.avicus</groupId>
+        <groupId>net.vectormc</groupId>
         <artifactId>magma</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>magma-core</artifactId>
     <dependencies>
         <!-- APIs -->
-        <dependency>
-            <groupId>net.avicus</groupId>
+        <!--<dependency>
+            <groupId>net.vectormc</groupId>
             <artifactId>minecraft-api</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>biz.paluch.redis</groupId>
             <artifactId>lettuce</artifactId>
             <classifier>shaded</classifier>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>quest</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -37,7 +39,7 @@
         <dependency>
             <groupId>org.javalite</groupId>
             <artifactId>javalite-common</artifactId>
-            <version>1.4.11</version>
+            <version>2.3.1-j8</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

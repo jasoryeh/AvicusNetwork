@@ -48,6 +48,7 @@ import net.avicus.magma.util.TranslationProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
@@ -164,7 +165,12 @@ public class Atlas extends JavaPlugin {
         this.matchFactory = new MatchFactory();
 
         // loads and registers commands for usage
-        this.commandManager = new AvicusCommandsManager();
+        this.commandManager = new AvicusCommandsManager<CommandSender>() {
+            @Override
+            public boolean hasPermission(CommandSender sender, String perm) {
+                return sender instanceof ConsoleCommandSender || sender.hasPermission(perm);
+            }
+        };
         this.registrar = new AvicusCommandsRegistration(this, this.commandManager);
 
         // load module-sets in the `module-sets` folder

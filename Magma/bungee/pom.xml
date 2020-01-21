@@ -4,34 +4,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.avicus</groupId>
+        <groupId>net.vectormc</groupId>
         <artifactId>magma</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>magma-bungee</artifactId>
-    <repositories>
-        <repository>
-            <id>sonatype-repo</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.11-SNAPSHOT</version>
+            <groupId>io.github.waterfallmc</groupId>
+            <artifactId>travertine-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>magma-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -57,10 +53,10 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>net.avicus:magma-core</include>
-                            <include>net.avicus:quest</include>
-                            <include>com.sk89q:command-framework-bungee</include>
-                            <include>com.sk89q:command-framework-core</include>
+                            <include>net.vectormc:magma-core</include>
+                            <include>net.vectormc:quest</include>
+                            <include>net.vectormc:command-framework-bungee</include>
+                            <include>net.vectormc:command-framework-core</include>
                             <include>mysql.mysql-connector-java</include>
                             <include>biz.paluch.redis:lettuce</include>
                             <include>org.apache.commons:commons-lang3</include>

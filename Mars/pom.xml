@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.avicus</groupId>
+        <groupId>net.vectormc</groupId>
         <artifactId>avicus-network</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>mars</artifactId>
     <properties>
@@ -18,15 +18,15 @@
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>magma-bukkit</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -34,15 +34,16 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>compendium-bukkit</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Games -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -86,8 +87,8 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>com.sk89q:command-framework-bukkit</include>
-                            <include>com.sk89q:command-framework-core</include>
+                            <include>net.vectormc:command-framework-bukkit</include>
+                            <include>net.vectormc:command-framework-core</include>
                         </includes>
                     </artifactSet>
                 </configuration>

@@ -47,6 +47,7 @@ import net.avicus.quest.database.DatabaseException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.joda.time.Instant;
@@ -166,7 +167,12 @@ public final class Magma extends JavaPlugin {
 
         this.loadLocalServer();
 
-        this.commands = new AvicusCommandsManager();
+        this.commands = new AvicusCommandsManager<CommandSender>() {
+            @Override
+            public boolean hasPermission(CommandSender sender, String perm) {
+                return sender instanceof ConsoleCommandSender || sender.hasPermission(perm);
+            }
+        };
         final AvicusCommandsRegistration registrar = new AvicusCommandsRegistration(this,
                 this.commands);
         this.mm = new ModuleManager(this.getServer().getPluginManager(), this, registrar);

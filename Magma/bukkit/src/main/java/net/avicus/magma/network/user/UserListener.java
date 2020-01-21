@@ -1,13 +1,11 @@
 package net.avicus.magma.network.user;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import net.avicus.magma.Magma;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.event.user.AsyncHookLoginEvent;
 import net.avicus.magma.event.user.AsyncHookLogoutEvent;
 import net.avicus.magma.util.MagmaTranslations;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,10 +18,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import us.myles.ViaVersion.api.Via;
 
+import java.util.Optional;
+import java.util.UUID;
+
 public class UserListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerLogin(AsyncPlayerPreLoginEvent event) {
+        Bukkit.getServer().setSuspended(false);
         UUID uuid = event.getUniqueId();
         Optional<User> query = Magma.get().database().getUsers().findByUuid(uuid);
         boolean newUser = !query.isPresent();

@@ -3,11 +3,6 @@ package net.avicus.atlas.map.library.github;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.io.*;
-import java.time.Instant;
-import java.util.*;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
@@ -20,12 +15,15 @@ import net.avicus.atlas.map.library.MapSource;
 import net.avicus.atlas.match.GithubRateLimitedException;
 import net.avicus.atlas.match.MatchBuildException;
 import net.avicus.atlas.util.xml.XmlException;
-import org.bukkit.Bukkit;
 import org.javalite.http.Get;
 import org.javalite.http.Http;
 import org.joda.time.Duration;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.io.*;
+import java.time.Instant;
+import java.util.*;
 
 /**
  * A library of maps that is stored inside of a github repository.
@@ -92,10 +90,28 @@ public class GitHubMapLibrary implements MapLibrary {
         String downloadUrl = jsonObject.getAsJsonObject().get("download_url").getAsString();
         if(downloadUrl != null) {
             Get getdl = Http.get(downloadUrl);
-            if (AtlasConfig.isGithubAuth()) {
+            boolean githubAuth = AtlasConfig.isGithubAuth();
+            if (githubAuth) {
                 getdl.basic(AtlasConfig.getGithubUsername(), AtlasConfig.getGithubToken());
             }
-            return getdl.getInputStream();
+            int r1 = getdl.responseCode();
+            if (Integer.toString(r1).startsWith("2")) {
+                return getdl.getInputStream();
+            } else {
+                getdl = Http.get(downloadUrl);
+                if (githubAuth) {
+                    getdl.header("Authorization", "token " + AtlasConfig.getGithubToken());
+                }
+                int r2 = getdl.responseCode();
+                if (Integer.toString(r2).startsWith("2")) {
+                    InputStream inputStream = getdl.getInputStream();
+                    Atlas.get().getMapErrorLogger().warning("Retry with authorization token only was successful.");
+                    return inputStream;
+                } else {
+                    throw new UnknownError("Request to: " + downloadUrl + " failed, code: "
+                            + getdl.responseCode() + "/" + (r1 == r2) + " reason: " + getdl.text());
+                }
+            }
         }
         return null;
     }

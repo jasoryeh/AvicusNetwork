@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.vectormc</groupId>
+        <artifactId>compendium</artifactId>
+        <version>1.8.8-SNAPSHOT</version>
+    </parent>
+    <artifactId>compendium-core</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.25</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.javalite</groupId>
+            <artifactId>javalite-common</artifactId>
+            <version>2.3.1-j8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ocpsoft.prettytime</groupId>
+            <artifactId>prettytime</artifactId>
+            <version>3.2.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>net.vectormc</groupId>
+            <artifactId>command-framework-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.avicus</groupId>
+        <groupId>net.vectormc</groupId>
         <artifactId>hook</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>hook-bukkit</artifactId>
     <repositories>
@@ -30,19 +30,20 @@
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet-api</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>compendium-bukkit</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -63,36 +64,38 @@
         </dependency>
         <!-- Tracking -->
         <dependency>
-            <groupId>tc.oc</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>tracker</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>grave</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- Database -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>magma-bukkit</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>hook-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- Games -->
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>atlas-competitive-objectives</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Packets -->
@@ -129,8 +132,8 @@
                             <include>com.squareup.okhttp3:okhttp</include>
                             <include>com.squareup.okio:okio</include>
                             <include>net.buycraft:*</include>
-                            <include>net.avicus:hook-core</include>
-                            <include>net.avicus:quest</include>
+                            <include>net.vectormc:hook-core</include>
+                            <include>net.vectormc:quest</include>
                             <include>biz.paluch.redis:lettuce</include>
                         </includes>
                     </artifactSet>

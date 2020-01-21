@@ -24,6 +24,7 @@ import net.avicus.compendium.countdown.Countdown;
 import net.avicus.magma.game.author.Author;
 import net.avicus.magma.util.MapGenre;
 import net.avicus.magma.util.Version;
+import org.bukkit.Bukkit;
 import org.jdom2.Document;
 
 import javax.annotation.Nullable;
@@ -235,6 +236,10 @@ public class AtlasMapFactory {
     }
 
     public static AtlasMap parse(MapSource source, Document document) {
+        // Avoid sportpaper suspension while parsing maps
+        Bukkit.getServer().setSuspended(false);
+
+        // Get to work
         final XmlElement root = new XmlElement(document.getRootElement());
         /*
          * VectorMC ProjectAres Map compatibility parser start

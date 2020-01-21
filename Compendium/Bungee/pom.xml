@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.vectormc</groupId>
+        <artifactId>compendium</artifactId>
+        <version>1.8.8-SNAPSHOT</version>
+    </parent>
+    <artifactId>compendium-bungee</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>net.vectormc</groupId>
+            <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.waterfallmc</groupId>
+            <artifactId>travertine-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.vectormc</groupId>
+            <artifactId>command-framework-bungee</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

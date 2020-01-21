@@ -1,8 +1,5 @@
 package net.avicus.atlas.listener;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -12,6 +9,9 @@ import org.bukkit.block.BlockState;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -34,7 +34,27 @@ public class FakeBlockState implements BlockState {
 
     @Override
     public Block getBlock() {
-        return parent.getBlock();
+        return this.parent.getBlock();
+    }
+
+    @Override
+    public Material getMaterial() {
+        return this.parent.getMaterial();
+    }
+
+    @Override
+    public MaterialData getMaterialData() {
+        return this.parent.getMaterialData();
+    }
+
+    @Override
+    public void setMaterial(Material material) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setMaterialData(MaterialData materialData) {
+        throw new UnsupportedOperationException();
     }
 
     @Override
