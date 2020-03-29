@@ -77,6 +77,10 @@ public final class MagmaConfig {
         @Getter
         @ConfigKey
         private static String key;
+
+        @Getter
+        @ConfigKey
+        private static boolean fake;
     }
 
     @ConfigPath("alerts")
