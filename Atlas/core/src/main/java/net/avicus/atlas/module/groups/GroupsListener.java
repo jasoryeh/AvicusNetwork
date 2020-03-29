@@ -33,7 +33,7 @@ public class GroupsListener implements Listener {
     public void onMatchOpen(MatchOpenEvent event) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             this.module
-                    .changeGroup(player, Optional.empty(), this.module.getSpectators(), true, true, false);
+                    .changeGroup(player, Optional.empty(), this.module.getSpectators(), true, true, false, false);
         }
     }
 
