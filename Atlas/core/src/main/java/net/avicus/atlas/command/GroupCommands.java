@@ -23,10 +23,14 @@ import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.commands.exception.MustBePlayerCommandException;
 import net.avicus.compendium.locale.text.LocalizedNumber;
+import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.magma.util.MagmaTranslations;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import javax.annotation.Nullable;
 
 public class GroupCommands {
 
@@ -136,6 +140,38 @@ public class GroupCommands {
 
 
         // TODO: Complete
+    }
+
+    @Command(aliases = "force", desc = "Force a player onto a team", usage = "<player> <id>", min = 2, max = 2)
+    @CommandPermissions("atlas.groups.force")
+    public static void force(CommandContext cmd, CommandSender sender) throws CommandException {
+        final Match match = Atlas.getMatch();
+        if (match == null) {
+            throw new CommandMatchException();
+        }
+
+        @Nullable Player target = Bukkit.getPlayer(cmd.getString(0));
+        if (target == null) {
+            sender.sendMessage(MagmaTranslations.ERROR_UNKNOWN_PLAYER
+                    .with(ChatColor.RED, new UnlocalizedText(cmd.getString(0))));
+            return;
+        }
+
+        final GroupsModule groups = match.getRequiredModule(GroupsModule.class);
+        final List<Group> search = groups.search(sender, cmd.getString(1));
+        if (search.isEmpty()) {
+            sender.sendMessage(Messages.ERROR_TEAM_NOT_FOUND.with(org.bukkit.ChatColor.RED));
+            return;
+        }
+
+        groups.changeGroup(target,
+                Optional.of(groups.getGroup(target)),
+                search.get(0),
+                true,
+                true,
+                true,
+                true
+        );
     }
 
     public static class GroupParentCommand {

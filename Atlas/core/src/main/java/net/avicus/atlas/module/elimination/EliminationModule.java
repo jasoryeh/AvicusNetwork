@@ -77,7 +77,9 @@ public class EliminationModule implements Module {
         if (!this.enabled) {
             return;
         }
-
+        if (event.isForce()) {
+            return;
+        }
         if (event.getGroup() instanceof Spectators) {
             return;
         }
