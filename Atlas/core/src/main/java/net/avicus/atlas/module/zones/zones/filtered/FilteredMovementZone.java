@@ -1,11 +1,6 @@
 package net.avicus.atlas.module.zones.zones.filtered;
 
 import com.google.common.collect.ArrayListMultimap;
-
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.UUID;
-
 import lombok.ToString;
 import net.avicus.atlas.event.match.MatchCloseEvent;
 import net.avicus.atlas.event.match.MatchOpenEvent;
@@ -16,6 +11,7 @@ import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
 import net.avicus.atlas.util.AtlasTask;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import net.avicus.magma.util.region.RepelableRegion;
 import org.bukkit.Location;
@@ -27,7 +23,10 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.util.Vector;
 import org.joda.time.Instant;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.UUID;
 
 @ToString(callSuper = true)
 public class FilteredMovementZone extends Zone {

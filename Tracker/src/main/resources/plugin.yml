@@ -1,4 +1,0 @@
-name: Tracker
-main: tc.oc.tracker.plugin.TrackerPlugin
-version: ${project.version}
-author: Project Ares Development Team

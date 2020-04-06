@@ -1,12 +1,12 @@
 package net.avicus.hook;
 
-import java.util.Date;
-import java.util.Optional;
-
+import net.avicus.libraries.quest.query.Operator;
 import net.avicus.magma.database.model.impl.User;
-import net.avicus.quest.query.Operator;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+
+import java.util.Date;
+import java.util.Optional;
 
 public class BanListener extends ListenerAdapter {
 

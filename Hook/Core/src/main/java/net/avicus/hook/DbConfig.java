@@ -1,13 +1,13 @@
 package net.avicus.hook;
 
-import java.util.Optional;
-
 import lombok.Getter;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
+import net.avicus.libraries.quest.database.DatabaseConfig;
+import net.avicus.libraries.quest.database.DatabaseConfig.Builder;
 import net.avicus.magma.redis.Redis;
-import net.avicus.quest.database.DatabaseConfig;
-import net.avicus.quest.database.DatabaseConfig.Builder;
+
+import java.util.Optional;
 
 public class DbConfig {
 

@@ -1,14 +1,13 @@
 package net.avicus.atlas.module.zones.zones;
 
-import java.util.Optional;
-import java.util.Random;
-
 import lombok.ToString;
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
+import net.avicus.libraries.tracker.Trackers;
+import net.avicus.libraries.tracker.trackers.ExplosiveTracker;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -24,8 +23,9 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.joda.time.Duration;
-import tc.oc.tracker.Trackers;
-import tc.oc.tracker.trackers.ExplosiveTracker;
+
+import java.util.Optional;
+import java.util.Random;
 
 @ToString(callSuper = true)
 public class TNTCustomizationZone extends Zone {

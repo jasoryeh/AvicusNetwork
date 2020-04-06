@@ -36,10 +36,9 @@
                             <include>joda-time:joda-time</include>
                             <include>net.avicus:compendium-bukkit</include>
                             <include>net.avicus:compendium-core</include>
-                            <include>net.avicus:bossy</include>
-                            <include>net.avicus:tabbed</include>
+                            <include>net.avicus:library</include>
                             <include>org.simpleframework:simple-xml</include>
-                            <include>com.sk89q:command-framework-bukkit</include>
+                            <include>net.avicus:command-framework-bukkit</include>
                             <include>org.javalite:javalite-common</include>
                         </includes>
                     </artifactSet>

@@ -1,7 +1,5 @@
 package net.avicus.atlas.module.decay;
 
-import java.util.List;
-
 import lombok.Getter;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.match.Match;
@@ -10,10 +8,12 @@ import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.states.StatesModule;
 import net.avicus.atlas.util.AtlasTask;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.List;
 
 public class DecayModule implements Module {
 

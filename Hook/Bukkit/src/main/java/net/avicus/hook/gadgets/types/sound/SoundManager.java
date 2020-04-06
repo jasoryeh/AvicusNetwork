@@ -3,22 +3,21 @@ package net.avicus.hook.gadgets.types.sound;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.google.gson.JsonObject;
-
-import java.util.Optional;
-import java.util.UUID;
-
 import net.avicus.compendium.sound.SoundEvent;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
-import net.avicus.grave.event.PlayerDeathByPlayerEvent;
 import net.avicus.hook.credits.PlayerModifyCreditEvent;
 import net.avicus.hook.utils.Events;
+import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.module.gadgets.GadgetManager;
 import net.avicus.magma.module.gadgets.Gadgets;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class SoundManager implements GadgetManager<SoundGadget, SoundContext>, Listener {
 

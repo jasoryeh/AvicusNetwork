@@ -40,7 +40,7 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>com.sk89q:command-framework-core</include>
+                            <include>net.avicus:command-framework-core</include>
                         </includes>
                     </artifactSet>
                 </configuration>

@@ -55,7 +55,7 @@
         <!-- Tracking -->
         <dependency>
             <groupId>net.avicus</groupId>
-            <artifactId>tracker</artifactId>
+            <artifactId>library</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>

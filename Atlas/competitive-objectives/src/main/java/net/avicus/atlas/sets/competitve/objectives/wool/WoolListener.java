@@ -1,9 +1,5 @@
 package net.avicus.atlas.sets.competitve.objectives.wool;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
@@ -22,8 +18,9 @@ import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
-import net.avicus.grave.event.PlayerDeathByPlayerEvent;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.distance.DistanceCalculationMetric;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -41,7 +38,10 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class WoolListener implements Listener {
 

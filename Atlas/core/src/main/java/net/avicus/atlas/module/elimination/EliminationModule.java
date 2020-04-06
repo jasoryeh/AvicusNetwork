@@ -1,10 +1,5 @@
 package net.avicus.atlas.module.elimination;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,12 +22,17 @@ import net.avicus.atlas.util.Messages;
 import net.avicus.compendium.TextStyle;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizedNumber;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @ToString(exclude = "match")
 public class EliminationModule implements Module {

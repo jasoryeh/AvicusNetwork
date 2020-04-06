@@ -1,15 +1,15 @@
 package net.avicus.magma.database.model.impl;
 
-import java.util.Date;
-import java.util.Optional;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.avicus.libraries.quest.annotation.Column;
+import net.avicus.libraries.quest.annotation.Id;
+import net.avicus.libraries.quest.model.Model;
 import net.avicus.magma.database.table.impl.ServerCategoryTable;
-import net.avicus.quest.annotation.Column;
-import net.avicus.quest.annotation.Id;
-import net.avicus.quest.model.Model;
+
+import java.util.Date;
+import java.util.Optional;
 
 @ToString
 public class Server extends Model {

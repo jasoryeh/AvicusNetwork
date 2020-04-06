@@ -1,13 +1,13 @@
 package net.avicus.magma.database.table.impl;
 
-import java.util.Date;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.libraries.quest.query.RowList;
 import net.avicus.magma.database.model.impl.Death;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Filter;
-import net.avicus.quest.query.Operator;
-import net.avicus.quest.query.RowList;
+
+import java.util.Date;
 
 public class DeathTable extends Table<Death> {
 

@@ -16,6 +16,7 @@ import net.avicus.atlas.module.vote.VoteModule;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Events;
 import net.avicus.compendium.countdown.RestartingCountdown;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
@@ -30,7 +31,6 @@ import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.Vector;
 import org.joda.time.Duration;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
 
 public class AtlasListener implements Listener {
 
@@ -140,7 +140,7 @@ public class AtlasListener implements Listener {
     @EventHandler
     public void onPing(ServerListPingEvent event) {
         if (Atlas.getMatch() != null) {
-            event.setMotd(Atlas.getMatch().getMap().getName());
+            event.setMotd(ChatColor.WHITE + Atlas.getMatch().getMap().getName());
         }
     }
 

@@ -1,11 +1,11 @@
 package net.avicus.magma.database.table.impl;
 
-import java.util.Optional;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.Server;
 import net.avicus.magma.database.model.impl.ServerCategory;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
+
+import java.util.Optional;
 
 public class ServerCategoryTable extends Table<ServerCategory> {
 

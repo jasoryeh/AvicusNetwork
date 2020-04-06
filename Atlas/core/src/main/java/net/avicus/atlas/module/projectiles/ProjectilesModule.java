@@ -1,9 +1,5 @@
 package net.avicus.atlas.module.projectiles;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.ToString;
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
@@ -11,6 +7,8 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Messages;
+import net.avicus.libraries.tracker.Trackers;
+import net.avicus.libraries.tracker.trackers.ExplosiveTracker;
 import net.avicus.magma.item.ItemTag;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,8 +28,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 import org.joda.time.Instant;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import tc.oc.tracker.Trackers;
-import tc.oc.tracker.trackers.ExplosiveTracker;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @ToString(exclude = "match")
 public class ProjectilesModule implements Module {

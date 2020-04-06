@@ -1,12 +1,12 @@
 package net.avicus.magma.database.table.impl;
 
-import java.math.BigDecimal;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.RowList;
 import net.avicus.magma.database.model.impl.ExperienceTransaction;
 import net.avicus.magma.database.model.impl.PrestigeSeason;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.RowList;
+
+import java.math.BigDecimal;
 
 public class ExperienceTransactionTable extends Table<ExperienceTransaction> {
 

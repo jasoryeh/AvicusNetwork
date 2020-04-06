@@ -54,21 +54,8 @@
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
-            <artifactId>tabbed-core</artifactId>
+            <artifactId>library</artifactId>
             <version>${project.parent.version}</version>
-        </dependency>
-        <!-- Tracking -->
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>tracker</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>grave</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!-- WE -->
         <dependency>
@@ -90,13 +77,6 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Tutorial -->
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>tutorial</artifactId>
-            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- XML -->

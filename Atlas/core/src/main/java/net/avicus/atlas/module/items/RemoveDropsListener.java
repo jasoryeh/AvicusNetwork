@@ -1,9 +1,5 @@
 package net.avicus.atlas.module.items;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
 import net.avicus.atlas.event.world.EntityChangeEvent;
@@ -11,13 +7,9 @@ import net.avicus.atlas.event.world.EntityChangeEvent.Action;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
-import net.avicus.atlas.module.checks.variable.EntityVariable;
-import net.avicus.atlas.module.checks.variable.ItemVariable;
-import net.avicus.atlas.module.checks.variable.LocationVariable;
-import net.avicus.atlas.module.checks.variable.MaterialVariable;
-import net.avicus.atlas.module.checks.variable.PlayerVariable;
+import net.avicus.atlas.module.checks.variable.*;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.grave.event.EntityDeathEvent;
+import net.avicus.libraries.grave.event.EntityDeathEvent;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Boat;
@@ -30,6 +22,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class RemoveDropsListener implements Listener {
 

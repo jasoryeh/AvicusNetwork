@@ -59,7 +59,7 @@ Not all projects here are licensed the same, therefore the following are the lic
   * Modules not originally included in this project, but were also licensed by the same author (The Avicus Network, 2018)
     * Compendium
     * RequirePlugins
-  * Modules not originally included in this project, but were licensed by another party
+  * Modules/Projects not originally included in this project, but were licensed by another party
     * Author: Keenan Thompson, 2018
       * Tabbed
     * Author: Tracker Developers, 2012-2013

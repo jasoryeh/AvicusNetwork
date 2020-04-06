@@ -1,18 +1,17 @@
 package net.avicus.magma.database.model.impl;
 
 import com.lambdaworks.com.google.common.collect.Lists;
+import lombok.Getter;
+import lombok.ToString;
+import net.avicus.libraries.quest.annotation.Column;
+import net.avicus.libraries.quest.annotation.Id;
+import net.avicus.libraries.quest.model.Model;
+import net.avicus.magma.database.table.impl.AchievementTable;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import lombok.Getter;
-import lombok.ToString;
-import net.avicus.magma.database.table.impl.AchievementTable;
-import net.avicus.quest.annotation.Column;
-import net.avicus.quest.annotation.Id;
-import net.avicus.quest.model.Model;
 
 @ToString
 @Getter

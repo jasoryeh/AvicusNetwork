@@ -12,6 +12,8 @@ import net.avicus.compendium.commands.exception.AbstractTranslatableCommandExcep
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.ConfigFile;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.libraries.quest.database.DatabaseConfig;
+import net.avicus.libraries.quest.database.DatabaseException;
 import net.avicus.magma.alerts.Alerts;
 import net.avicus.magma.announce.Announce;
 import net.avicus.magma.api.API;
@@ -42,8 +44,6 @@ import net.avicus.magma.network.user.Users;
 import net.avicus.magma.redis.Redis;
 import net.avicus.magma.restart.RestartMessageHandler;
 import net.avicus.magma.util.properties.BlockPropStore;
-import net.avicus.quest.database.DatabaseConfig;
-import net.avicus.quest.database.DatabaseException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

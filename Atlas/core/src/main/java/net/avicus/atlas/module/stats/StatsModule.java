@@ -22,7 +22,7 @@ import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.Paste;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.utils.Strings;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import net.avicus.magma.channel.staff.StaffChannels;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.network.user.Users;

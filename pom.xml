@@ -12,14 +12,9 @@
     </properties>
     <modules>
         <module>sk89q-command-framework</module>
-        <module>Tabbed</module>
-        <module>Bossy</module>
-        <module>Compendium</module>
-        <module>Quest</module>
-        <module>Tracker</module>
-        <module>Grave</module>
-        <module>Tutorial</module>
         <module>RequirePlugins</module>
+        <module>Library</module>
+        <module>Compendium</module>
         <module>Magma</module>
         <module>Atlas</module>
         <module>Atrio</module>

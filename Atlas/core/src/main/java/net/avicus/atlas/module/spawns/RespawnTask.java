@@ -1,8 +1,5 @@
 package net.avicus.atlas.module.spawns;
 
-import java.util.Locale;
-import java.util.Optional;
-
 import lombok.Getter;
 import lombok.Setter;
 import net.avicus.atlas.Atlas;
@@ -18,6 +15,7 @@ import net.avicus.compendium.locale.text.LocalizedText;
 import net.avicus.compendium.sound.SoundEvent;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
+import net.avicus.libraries.tracker.event.PlayerDamageEvent;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -34,7 +32,9 @@ import org.bukkit.util.Vector;
 import org.github.paperspigot.Title;
 import org.joda.time.Instant;
 import org.spigotmc.event.entity.EntityDismountEvent;
-import tc.oc.tracker.event.PlayerDamageEvent;
+
+import java.util.Locale;
+import java.util.Optional;
 
 public class RespawnTask extends AtlasTask implements Listener {
 

@@ -9,6 +9,7 @@ import net.avicus.hook.Hook;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.gadgets.types.device.DeviceGadget;
 import net.avicus.hook.utils.HookTask;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.database.model.impl.Announcement;
 import net.avicus.magma.network.server.Servers;
@@ -36,7 +37,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.material.*;
 import org.bukkit.util.Vector;
 import org.github.paperspigot.Title;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
 
 import java.util.*;
 

@@ -1,16 +1,16 @@
 package net.avicus.hook.commands;
 
-import java.awt.Color;
+import net.avicus.hook.utils.UserUtils;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.magma.database.model.impl.Punishment;
+import net.avicus.magma.database.model.impl.Session;
+import net.avicus.magma.database.model.impl.User;
+
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import net.avicus.hook.utils.UserUtils;
-import net.avicus.magma.database.model.impl.Punishment;
-import net.avicus.magma.database.model.impl.Session;
-import net.avicus.magma.database.model.impl.User;
-import net.avicus.quest.query.Operator;
 
 public class AltCheckCommand implements DiscordCommand {
 

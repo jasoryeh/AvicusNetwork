@@ -1,9 +1,5 @@
 package net.avicus.atlas.sets.competitve.objectives.destroyable.leakable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
 import net.avicus.atlas.module.groups.Competitor;
@@ -25,7 +21,7 @@ import net.avicus.compendium.inventory.SingleMaterialMatcher;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizedText;
 import net.avicus.compendium.locale.text.UnlocalizedText;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -40,6 +36,10 @@ import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.material.MaterialData;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class LeakableListener implements Listener {
 

@@ -1,14 +1,6 @@
 package net.avicus.atlas.component.visual;
 
-import static net.avicus.atlas.util.ObjectiveUtils.CHECK_MARK;
-import static net.avicus.atlas.util.ObjectiveUtils.SEPARATOR;
-import static net.avicus.atlas.util.ObjectiveUtils.X_MARK;
-import static net.avicus.atlas.util.ObjectiveUtils.getDistanceDisplay;
-
 import com.google.common.collect.Sets;
-
-import java.util.*;
-
 import lombok.Setter;
 import net.avicus.atlas.event.group.GroupMaxPlayerCountChangeEvent;
 import net.avicus.atlas.event.group.GroupRenameEvent;
@@ -39,7 +31,7 @@ import net.avicus.compendium.locale.text.LocalizableFormat;
 import net.avicus.compendium.locale.text.LocalizedNumber;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.compendium.utils.Strings;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.module.ListenerModule;
 import net.avicus.magma.util.Sidebar;
@@ -50,6 +42,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.*;
+
+import static net.avicus.atlas.util.ObjectiveUtils.*;
 
 public class SidebarComponent implements ListenerModule {
 

@@ -1,9 +1,5 @@
 package net.avicus.atlas.module.stats.action;
 
-import java.time.Instant;
-import java.util.Iterator;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
@@ -17,34 +13,30 @@ import net.avicus.atlas.module.states.State;
 import net.avicus.atlas.module.states.StatesModule;
 import net.avicus.atlas.module.stats.action.base.CompetitorAction;
 import net.avicus.atlas.module.stats.action.base.PlayerAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerAssistKillAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathByNaturalAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathByPlayerAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathBySelfAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerKillAction;
+import net.avicus.atlas.module.stats.action.damage.*;
 import net.avicus.atlas.module.stats.action.lifetime.LifetimeStore;
 import net.avicus.atlas.module.stats.action.lifetime.type.CompetitorLifetime;
 import net.avicus.atlas.module.stats.action.lifetime.type.ObjectiveLifetime;
 import net.avicus.atlas.module.stats.action.lifetime.type.PlayerLifetime;
-import net.avicus.atlas.module.stats.action.match.PlayerChangeGroupAction;
-import net.avicus.atlas.module.stats.action.match.PlayerEliminateAction;
-import net.avicus.atlas.module.stats.action.match.PlayerJoinMatchAction;
-import net.avicus.atlas.module.stats.action.match.PlayerLeaveMatchAction;
-import net.avicus.atlas.module.stats.action.match.PlayerMatchAction;
+import net.avicus.atlas.module.stats.action.match.*;
 import net.avicus.atlas.module.stats.action.objective.ObjectiveAction;
 import net.avicus.atlas.module.stats.action.objective.score.PlayerEarnPointAction;
-import net.avicus.grave.event.PlayerDeathByEntityEvent;
-import net.avicus.grave.event.PlayerDeathByPlayerEvent;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathByEntityEvent;
+import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.Damage;
+import net.avicus.libraries.tracker.DamageInfo;
+import net.avicus.libraries.tracker.damage.OwnedMobDamageInfo;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import tc.oc.tracker.Damage;
-import tc.oc.tracker.DamageInfo;
-import tc.oc.tracker.damage.OwnedMobDamageInfo;
+
+import javax.annotation.Nullable;
+import java.time.Instant;
+import java.util.Iterator;
 
 @ToString(exclude = "match")
 public class ActionStore implements Listener {

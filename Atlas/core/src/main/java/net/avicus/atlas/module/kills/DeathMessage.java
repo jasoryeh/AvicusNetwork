@@ -1,45 +1,32 @@
 package net.avicus.atlas.module.kills;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.util.Messages;
 import net.avicus.atlas.util.ScopableItemStack;
 import net.avicus.atlas.util.Translations;
-import net.avicus.compendium.locale.text.Localizable;
-import net.avicus.compendium.locale.text.LocalizableFormat;
-import net.avicus.compendium.locale.text.LocalizedNumber;
-import net.avicus.compendium.locale.text.UnlocalizedFormat;
-import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.compendium.locale.text.*;
 import net.avicus.compendium.settings.PlayerSettings;
 import net.avicus.compendium.settings.Setting;
 import net.avicus.compendium.settings.types.SettingTypes;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.Damage;
+import net.avicus.libraries.tracker.DamageInfo;
+import net.avicus.libraries.tracker.Lifetime;
+import net.avicus.libraries.tracker.damage.*;
+import net.avicus.libraries.tracker.trackers.base.gravity.Fall.Cause;
+import net.avicus.libraries.tracker.trackers.base.gravity.Fall.From;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import tc.oc.tracker.Damage;
-import tc.oc.tracker.DamageInfo;
-import tc.oc.tracker.Lifetime;
-import tc.oc.tracker.damage.AnvilDamageInfo;
-import tc.oc.tracker.damage.BlockDamageInfo;
-import tc.oc.tracker.damage.ExplosiveDamageInfo;
-import tc.oc.tracker.damage.FallDamageInfo;
-import tc.oc.tracker.damage.GravityDamageInfo;
-import tc.oc.tracker.damage.LavaDamageInfo;
-import tc.oc.tracker.damage.MeleeDamageInfo;
-import tc.oc.tracker.damage.OwnedMobDamageInfo;
-import tc.oc.tracker.damage.ProjectileDamageInfo;
-import tc.oc.tracker.damage.VoidDamageInfo;
-import tc.oc.tracker.trackers.base.gravity.Fall.Cause;
-import tc.oc.tracker.trackers.base.gravity.Fall.From;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class DeathMessage {
 

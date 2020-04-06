@@ -1,18 +1,18 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.libraries.quest.query.RowList;
+import net.avicus.magma.database.model.impl.Session;
+import org.joda.time.Duration;
+import org.joda.time.Seconds;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import net.avicus.magma.database.model.impl.Session;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Filter;
-import net.avicus.quest.query.Operator;
-import net.avicus.quest.query.RowList;
-import org.joda.time.Duration;
-import org.joda.time.Seconds;
 
 public class SessionTable extends Table<Session> {
 

@@ -1,8 +1,5 @@
 package net.avicus.atlas.sets.competitve.objectives.flag;
 
-import java.util.List;
-import java.util.Optional;
-
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchCloseEvent;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
@@ -16,7 +13,8 @@ import net.avicus.atlas.module.zones.ZonesModule;
 import net.avicus.atlas.sets.competitve.objectives.zones.flag.NetZone;
 import net.avicus.atlas.sets.competitve.objectives.zones.flag.PostZone;
 import net.avicus.atlas.util.Messages;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Banner;
@@ -33,7 +31,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 import org.bukkit.util.Vector;
 import org.joda.time.DateTime;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.List;
+import java.util.Optional;
 
 public class FlagListener implements Listener {
 

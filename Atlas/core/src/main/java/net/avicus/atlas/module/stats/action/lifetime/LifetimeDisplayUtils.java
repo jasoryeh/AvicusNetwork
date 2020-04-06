@@ -2,40 +2,26 @@ package net.avicus.atlas.module.stats.action.lifetime;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multiset;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import net.avicus.atlas.module.objectives.Objective;
 import net.avicus.atlas.module.stats.action.base.PlayerAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerAssistKillAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathByNaturalAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathByPlayerAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerDeathBySelfAction;
-import net.avicus.atlas.module.stats.action.damage.PlayerKillAction;
+import net.avicus.atlas.module.stats.action.damage.*;
 import net.avicus.atlas.module.stats.action.lifetime.type.PlayerLifetime;
 import net.avicus.atlas.module.stats.action.objective.ObjectiveAction;
 import net.avicus.atlas.util.Translations;
 import net.avicus.compendium.TextStyle;
-import net.avicus.compendium.locale.text.Localizable;
-import net.avicus.compendium.locale.text.LocalizedFormat;
-import net.avicus.compendium.locale.text.LocalizedNumber;
-import net.avicus.compendium.locale.text.UnlocalizedFormat;
-import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.compendium.locale.text.*;
+import net.avicus.libraries.tracker.damage.FallDamageInfo;
+import net.avicus.libraries.tracker.damage.MeleeDamageInfo;
+import net.avicus.libraries.tracker.damage.ProjectileDamageInfo;
 import net.avicus.magma.util.CollectionUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tc.oc.tracker.damage.FallDamageInfo;
-import tc.oc.tracker.damage.MeleeDamageInfo;
-import tc.oc.tracker.damage.ProjectileDamageInfo;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class LifetimeDisplayUtils {
 

@@ -1,19 +1,19 @@
 package net.avicus.atlas.module.zones.zones;
 
-import java.util.Optional;
-
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.loadouts.Loadout;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.Optional;
 
 @ToString(callSuper = true)
 public class LoadoutApplicationZone extends Zone {

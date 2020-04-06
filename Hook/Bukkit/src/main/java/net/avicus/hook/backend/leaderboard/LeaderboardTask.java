@@ -1,15 +1,11 @@
 package net.avicus.hook.backend.leaderboard;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import net.avicus.hook.Hook;
+import net.avicus.libraries.quest.model.ModelIterator;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.libraries.quest.query.Row;
+import net.avicus.libraries.quest.query.RowIterator;
 import net.avicus.magma.database.Database;
 import net.avicus.magma.database.model.impl.LeaderboardEntry;
 import net.avicus.magma.database.model.impl.LeaderboardEntry.Period;
@@ -21,15 +17,14 @@ import net.avicus.magma.database.table.impl.LeaderboardTable;
 import net.avicus.magma.database.table.impl.ObjectiveTable;
 import net.avicus.magma.database.table.impl.ObjectiveTypeTable;
 import net.avicus.magma.database.table.impl.UserTable;
-import net.avicus.quest.model.ModelIterator;
-import net.avicus.quest.query.Filter;
-import net.avicus.quest.query.Operator;
-import net.avicus.quest.query.Row;
-import net.avicus.quest.query.RowIterator;
 import org.joda.time.Duration;
 import org.joda.time.Instant;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Handles accumulating kills, deaths, objectives and more and

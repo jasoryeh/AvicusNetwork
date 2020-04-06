@@ -11,7 +11,7 @@
     <artifactId>compendium-bukkit</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
             <version>${project.parent.version}</version>
             <exclusions>
@@ -48,7 +48,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>command-framework-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <exclusions>
@@ -59,7 +59,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>command-framework-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

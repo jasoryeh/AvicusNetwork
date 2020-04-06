@@ -6,11 +6,9 @@ authors:
 depend:
 - Compendium
 - Magma
-- Grave
-- Tracker
 - WorldEdit
+- Library
 softdepend:
-- Tutorial
 - LuckPerms
 permissions:
   atlas.*:

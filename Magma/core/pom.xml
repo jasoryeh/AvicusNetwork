@@ -11,10 +11,6 @@
     <artifactId>magma-core</artifactId>
     <dependencies>
         <!-- APIs -->
-        <!--<dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>minecraft-api</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>biz.paluch.redis</groupId>
             <artifactId>lettuce</artifactId>
@@ -22,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
-            <artifactId>quest</artifactId>
+            <artifactId>library</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <!-- Utilities -->

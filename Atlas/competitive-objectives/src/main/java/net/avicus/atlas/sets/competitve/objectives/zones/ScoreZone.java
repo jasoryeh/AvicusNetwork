@@ -1,12 +1,5 @@
 package net.avicus.atlas.sets.competitve.objectives.zones;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.checks.Check;
@@ -25,6 +18,7 @@ import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizedNumber;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.compendium.number.NumberAction;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -33,7 +27,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.*;
 
 @ToString
 public class ScoreZone extends Zone {

@@ -1,13 +1,13 @@
 package net.avicus.hook.polling;
 
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-
 import net.avicus.hook.Main;
+import net.avicus.libraries.quest.model.Model;
 import net.avicus.magma.database.Database;
-import net.avicus.quest.model.Model;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
+
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public abstract class PollingService<T extends Model> {
 

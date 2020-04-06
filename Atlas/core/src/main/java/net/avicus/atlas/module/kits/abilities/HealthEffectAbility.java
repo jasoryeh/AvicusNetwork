@@ -3,9 +3,9 @@ package net.avicus.atlas.module.kits.abilities;
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.kits.KitAbility;
+import net.avicus.libraries.tracker.event.PlayerDamageEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.potion.PotionEffect;
-import tc.oc.tracker.event.PlayerDamageEvent;
 
 @ToString
 public class HealthEffectAbility extends KitAbility {

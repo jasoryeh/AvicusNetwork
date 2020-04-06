@@ -1,15 +1,6 @@
 package net.avicus.atlas.module.results;
 
 import com.google.common.collect.Sets;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.countdown.MatchEndCountdown;
@@ -35,17 +26,13 @@ import net.avicus.atlas.module.states.StatesModule;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Events;
 import net.avicus.atlas.util.Messages;
-import net.avicus.compendium.locale.text.Localizable;
-import net.avicus.compendium.locale.text.LocalizableFormat;
-import net.avicus.compendium.locale.text.LocalizedNumber;
-import net.avicus.compendium.locale.text.UnlocalizedFormat;
-import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.compendium.locale.text.*;
 import net.avicus.compendium.plugin.CompendiumPlugin;
 import net.avicus.compendium.sound.SoundEvent;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
 import net.avicus.compendium.utils.Strings;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,6 +40,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.github.paperspigot.Title;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ToString(exclude = "match")
 public class ResultsModule extends BridgeableModule<ModuleBridge<ResultsModule>> implements Module {

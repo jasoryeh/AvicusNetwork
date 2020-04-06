@@ -1,9 +1,5 @@
 package net.avicus.atlas.module.objectives.entity;
 
-import java.util.List;
-import java.util.Optional;
-import javax.annotation.Nullable;
-
 import net.avicus.atlas.event.world.EntityChangeEvent;
 import net.avicus.atlas.module.checks.CheckContext;
 import net.avicus.atlas.module.checks.variable.EntityVariable;
@@ -14,7 +10,8 @@ import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.objectives.ObjectivesModule;
 import net.avicus.atlas.module.shop.PlayerEarnPointEvent;
 import net.avicus.atlas.util.Events;
-import net.avicus.grave.event.EntityDeathEvent;
+import net.avicus.libraries.grave.event.EntityDeathEvent;
+import net.avicus.libraries.tracker.event.EntityDamageEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,7 +19,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDespawnInVoidEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
-import tc.oc.tracker.event.EntityDamageEvent;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
 
 public class EntityListener implements Listener {
 

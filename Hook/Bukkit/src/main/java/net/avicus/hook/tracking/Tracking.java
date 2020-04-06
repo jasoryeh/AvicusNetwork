@@ -1,19 +1,19 @@
 package net.avicus.hook.tracking;
 
-import java.util.Date;
-
 import net.avicus.atlas.Atlas;
-import net.avicus.grave.event.PlayerDeathEvent;
 import net.avicus.hook.Hook;
 import net.avicus.hook.HookConfig;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.HookTask;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import net.avicus.magma.database.model.impl.Death;
 import net.avicus.magma.network.user.Users;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.Date;
 
 public class Tracking implements Listener {
 

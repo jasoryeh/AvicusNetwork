@@ -1,14 +1,14 @@
 package net.avicus.magma.database.model.impl;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.ToString;
+import net.avicus.libraries.quest.annotation.Column;
+import net.avicus.libraries.quest.annotation.Id;
+import net.avicus.libraries.quest.model.Model;
+import net.avicus.libraries.quest.model.ModelUpdate;
 import net.avicus.magma.database.Database;
-import net.avicus.quest.annotation.Column;
-import net.avicus.quest.annotation.Id;
-import net.avicus.quest.model.Model;
-import net.avicus.quest.model.ModelUpdate;
+
+import java.util.Date;
 
 /**
  * Represents a session on a single MC server.

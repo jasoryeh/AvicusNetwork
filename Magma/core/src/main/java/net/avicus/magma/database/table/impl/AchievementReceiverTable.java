@@ -1,13 +1,13 @@
 package net.avicus.magma.database.table.impl;
 
-import java.util.List;
-import java.util.function.BiConsumer;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.Achievement;
 import net.avicus.magma.database.model.impl.AchievementReceiver;
 import net.avicus.magma.database.model.impl.User;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
+
+import java.util.List;
+import java.util.function.BiConsumer;
 
 public class AchievementReceiverTable extends Table<AchievementReceiver> {
 

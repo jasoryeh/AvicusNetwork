@@ -11,7 +11,7 @@
     <artifactId>atlas-example-set</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>atlas-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
