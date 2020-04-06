@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
-        <artifactId>avicus-network</artifactId>
+        <groupId>net.avicus</groupId>
+        <artifactId>avicus-network-full</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>mars</artifactId>
@@ -24,7 +24,7 @@
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>magma-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
@@ -34,14 +34,14 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>compendium-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Games -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>atlas-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
@@ -87,8 +87,8 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>net.vectormc:command-framework-bukkit</include>
-                            <include>net.vectormc:command-framework-core</include>
+                            <include>net.avicus:command-framework-bukkit</include>
+                            <include>net.avicus:command-framework-core</include>
                         </includes>
                     </artifactSet>
                 </configuration>

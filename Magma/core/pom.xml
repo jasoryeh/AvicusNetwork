@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <artifactId>magma</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
@@ -12,7 +12,7 @@
     <dependencies>
         <!-- APIs -->
         <!--<dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>minecraft-api</artifactId>
         </dependency>-->
         <dependency>
@@ -21,13 +21,13 @@
             <classifier>shaded</classifier>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>quest</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>

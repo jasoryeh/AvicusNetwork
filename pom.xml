@@ -3,8 +3,8 @@
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.vectormc</groupId>
-    <artifactId>avicus-network</artifactId>
+    <groupId>net.avicus</groupId>
+    <artifactId>avicus-network-full</artifactId>
     <version>1.8.8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
@@ -80,10 +80,10 @@
             <id>vexsoftware-repo</id>
             <url>https://dl.bintray.com/nuvotifier/maven/</url>
         </repository>
-        <repository>
+        <!-- Disable to use our sportpaper additions <repository>
             <id>ashcon-app</id>
             <url>https://repo.ashcon.app/content/repositories/snapshots</url>
-        </repository>
+        </repository>-->
     </repositories>
 
     <distributionManagement>
@@ -149,9 +149,9 @@
                 <version>3.5</version>
             </dependency>
             <dependency>
-                <groupId>com.sk89q</groupId>
+                <groupId>net.avicus</groupId>
                 <artifactId>command-framework-bungee</artifactId>
-                <version>1.9-SNAPSHOT</version>
+                <version>1.8.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.github.waterfallmc</groupId>

@@ -1,7 +1,6 @@
 package net.avicus.compendium.locale.text;
 
 import net.avicus.compendium.TextStyle;
-import net.avicus.compendium.plugin.CompendiumPlugin;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -81,10 +80,6 @@ public class UnlocalizedText extends Localizable {
         } else {
             result = new TextComponent("");
         }
-        CompendiumPlugin.getInstance().getLogger().info("[Data] Unlocalized: " +
-                result.toString() + ":" + result.toString().length()
-                + ":" + result.toLegacyText() + ":" + result.toLegacyText().length()
-                + ":" + result.toPlainText() + ":" + result.toPlainText().length());
         return result;
     }
 
@@ -100,13 +95,5 @@ public class UnlocalizedText extends Localizable {
                 .collect(Collectors.toList());
 
         return new UnlocalizedText(this.text, this.style.duplicate(), arguments);
-    }
-
-    @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        List<Localizable> arguments = this.arguments.stream()
-                .map(Localizable::duplicate)
-                .collect(Collectors.toList());
-        return new UnlocalizedText(this.text, TextStyle.create(), arguments);
     }
 }

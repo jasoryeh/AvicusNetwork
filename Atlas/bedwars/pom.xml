@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <artifactId>atlas</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>atlas-bedwars</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>atlas-core</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>

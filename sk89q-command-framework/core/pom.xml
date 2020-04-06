@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <artifactId>command-framework-parent</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>

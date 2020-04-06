@@ -67,9 +67,4 @@ public class LocalizedText extends Localizable {
 
         return new LocalizedText(this.bundle, this.key, this.style.duplicate(), arguments);
     }
-
-    @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        return new LocalizedText(this.bundle, this.key, this.arguments);
-    }
 }

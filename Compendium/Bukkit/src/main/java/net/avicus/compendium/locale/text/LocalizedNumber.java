@@ -63,9 +63,4 @@ public class LocalizedNumber extends Localizable {
         return new LocalizedNumber(this.number, this.minDecimals, this.maxDecimals,
                 this.style.duplicate());
     }
-
-    @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        return new LocalizedNumber(this.number, this.minDecimals, this.maxDecimals);
-    }
 }

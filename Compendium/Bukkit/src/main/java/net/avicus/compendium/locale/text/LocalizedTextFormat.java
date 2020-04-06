@@ -62,12 +62,4 @@ public class LocalizedTextFormat extends Localizable {
 
         return new LocalizedTextFormat(this.bundle, this.format, this.style.duplicate(), arguments);
     }
-
-    @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        List<Localizable> arguments = this.arguments.stream()
-                .map(Localizable::duplicate)
-                .collect(Collectors.toList());
-        return new LocalizedTextFormat(this.bundle, this.format, arguments);
-    }
 }

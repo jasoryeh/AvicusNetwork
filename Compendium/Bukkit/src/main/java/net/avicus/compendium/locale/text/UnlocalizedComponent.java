@@ -40,11 +40,6 @@ public class UnlocalizedComponent extends Localizable {
     }
 
     @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        return new UnlocalizedComponent(this.component);
-    }
-
-    @Override
     public BaseComponent translate(Locale locale) {
         if (this.style != null) {
             this.style.apply(this.component);

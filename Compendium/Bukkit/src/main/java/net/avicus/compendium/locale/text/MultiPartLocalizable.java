@@ -28,11 +28,6 @@ public class MultiPartLocalizable extends Localizable {
     }
 
     @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        return new MultiPartLocalizable(this.args);
-    }
-
-    @Override
     public BaseComponent translate(Locale locale) {
         TextComponent message = new TextComponent(this.args[0].translate(locale));
 

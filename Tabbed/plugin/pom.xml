@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>tabbed</artifactId>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>tabbed-core</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -36,7 +36,7 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>net.vectormc:tabbed-core</include>
+                            <include>net.avicus:tabbed-core</include>
                         </includes>
                     </artifactSet>
                 </configuration>

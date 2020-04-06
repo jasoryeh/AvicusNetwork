@@ -6,14 +6,14 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>atlas</artifactId>
-        <version>1.8.8-SNAPSHOT</version>
+        <version>1.8-SNAPSHOT</version>
     </parent>
-    <artifactId>atlas-arcade</artifactId>
+    <artifactId>atlas-example-set</artifactId>
     <dependencies>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>${project.parent.version}</version>
+            <version>1.8-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

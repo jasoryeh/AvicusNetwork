@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <artifactId>compendium</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>compendium-bungee</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
@@ -22,7 +22,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>command-framework-bungee</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

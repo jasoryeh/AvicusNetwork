@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
+        <groupId>net.avicus</groupId>
         <artifactId>atlas</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
@@ -34,10 +34,10 @@
                         <includes>
                             <include>org.jdom:jdom2</include>
                             <include>joda-time:joda-time</include>
-                            <include>net.vectormc:compendium-bukkit</include>
-                            <include>net.vectormc:compendium-core</include>
-                            <include>net.vectormc:bossy</include>
-                            <include>net.vectormc:tabbed</include>
+                            <include>net.avicus:compendium-bukkit</include>
+                            <include>net.avicus:compendium-core</include>
+                            <include>net.avicus:bossy</include>
+                            <include>net.avicus:tabbed</include>
                             <include>org.simpleframework:simple-xml</include>
                             <include>com.sk89q:command-framework-bukkit</include>
                             <include>org.javalite:javalite-common</include>

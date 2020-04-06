@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.vectormc</groupId>
-        <artifactId>avicus-network</artifactId>
+        <groupId>net.avicus</groupId>
+        <artifactId>avicus-network-full</artifactId>
         <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>atlas</artifactId>
@@ -18,6 +18,7 @@
         <module>bedwars</module>
         <module>core</module>
         <module>competitive-objectives</module>
+        <module>the-bridge</module>
         <module>docs-generator</module>
         <module>walls</module>
     </modules>
@@ -35,14 +36,14 @@
         </dependency>
         <!-- Database -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>magma-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>compendium-bukkit</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
@@ -52,19 +53,19 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>tabbed-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <!-- Tracking -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>tracker</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>grave</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>
@@ -93,7 +94,7 @@
         </dependency>
         <!-- Tutorial -->
         <dependency>
-            <groupId>net.vectormc</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>tutorial</artifactId>
             <version>${project.parent.version}</version>
             <scope>provided</scope>

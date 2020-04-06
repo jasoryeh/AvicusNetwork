@@ -39,9 +39,4 @@ public class LocalizedDate extends Localizable {
     public LocalizedDate duplicate() {
         return new LocalizedDate(this.date, this.style.duplicate());
     }
-
-    @Override
-    public BaseComponent duplicateWithoutFormatting() {
-        return new LocalizedDate(this.date);
-    }
 }
