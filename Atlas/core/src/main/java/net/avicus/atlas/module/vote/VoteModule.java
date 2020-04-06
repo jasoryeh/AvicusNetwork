@@ -144,6 +144,11 @@ public final class VoteModule implements Module {
     }
 
     void cast(final Player player, final Match vote) {
+        if (this.votes.containsKey(player.getUniqueId()) &&
+                this.votes.get(player.getUniqueId()).getId().equals(vote.getId())) {
+            return;
+        }
+
         Events.call(new PlayerCastVoteEvent(player));
         this.votes.put(player.getUniqueId(), vote);
     }
