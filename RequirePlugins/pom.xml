@@ -10,7 +10,6 @@
     </parent>
     <artifactId>requireplugins</artifactId>
 
-
     <properties>
         <plugin.name>RequirePlugins</plugin.name>
         <plugin.mainClass>net.avicus.requireplugins.RequirePlugins</plugin.mainClass>
@@ -18,17 +17,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <scm>
-        <connection>scm:git://github.com/Avicus/RequirePlugins.git</connection>
-        <developerConnection>scm:git:ssh://github.com/Avicus/RequirePlugins.git</developerConnection>
-        <url>https://github.com/Avicus/RequirePlugins</url>
-    </scm>
-
     <dependencies>
         <dependency>
             <groupId>app.ashcon</groupId>
             <artifactId>sportpaper-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

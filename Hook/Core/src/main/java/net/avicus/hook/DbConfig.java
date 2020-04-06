@@ -26,10 +26,11 @@ public class DbConfig {
         @ConfigKey
         private static String database;
 
+        @ConfigKey
+        private static boolean embedded;
+
         public static DatabaseConfig create() {
-            Builder builder = DatabaseConfig.builder(host, database, username, password);
-            builder.reconnect(true);
-            return builder.build();
+            return DatabaseConfig.builder(host, database, username, password).embedded(embedded).reconnect(true).build();
         }
     }
 

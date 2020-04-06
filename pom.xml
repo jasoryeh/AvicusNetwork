@@ -13,18 +13,18 @@
     <modules>
         <module>sk89q-command-framework</module>
         <module>RequirePlugins</module>
-        <module>Library</module>
-        <module>Compendium</module>
         <module>Magma</module>
+        <module>Compendium</module>
+        <module>Library</module>
         <module>Atlas</module>
         <module>Atrio</module>
         <module>Hook</module>
         <module>Mars</module>
     </modules>
     <scm>
-        <connection>scm:git://github.com/VectorMC/AvicusNetwork.git</connection>
-        <developerConnection>scm:git:ssh://github.com/VectorMC/AvicusNetwork.git</developerConnection>
-        <url>https://github.com/VectorMC/AvicusNetwork</url>
+        <connection>scm:git://github.com/jasoryeh/AvicusNetwork.git</connection>
+        <developerConnection>scm:git:ssh://github.com/jasoryeh/AvicusNetwork.git</developerConnection>
+        <url>https://github.com/jasoryeh/AvicusNetwork</url>
     </scm>
     <repositories>
         <repository>
@@ -38,6 +38,10 @@
         <repository>
             <id>sonatype-repo</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>spigotmc-public</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>jcenter</id>

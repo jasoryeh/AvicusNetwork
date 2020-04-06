@@ -17,6 +17,7 @@ import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Events;
 import net.avicus.compendium.countdown.RestartingCountdown;
 import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;

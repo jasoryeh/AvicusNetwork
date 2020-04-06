@@ -14,13 +14,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
+        <module>core</module>
         <module>arcade</module>
         <module>bedwars</module>
-        <module>core</module>
         <module>competitive-objectives</module>
         <module>the-bridge</module>
-        <module>docs-generator</module>
         <module>walls</module>
+        <module>docs-generator</module>
+        <module>example-set</module>
     </modules>
     <dependencies>
         <!-- Server -->
@@ -32,6 +33,12 @@
         <dependency>
             <groupId>app.ashcon</groupId>
             <artifactId>sportpaper-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Database -->
@@ -51,11 +58,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>library</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <!-- WE -->
         <dependency>

@@ -89,7 +89,7 @@ public final class Magma extends Plugin implements Listener {
                 this.configuration.getString("database.database"),
                 this.configuration.getString("database.auth.username"),
                 this.configuration.getString("database.auth.password")
-        ).reconnect(true).build());
+        ).embedded(this.configuration.getBoolean("database.embedded", false)).reconnect(true).build());
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.database.enable();

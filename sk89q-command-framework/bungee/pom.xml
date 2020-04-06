@@ -11,13 +11,6 @@
     <name>Sk89q Command Framework for BungeeCord</name>
     <description>Supporting classes for using the command framework on BungeeCord.</description>
 
-    <repositories>
-        <repository>
-            <id>sonatype-public</id>
-            <url>https://oss.sonatype.org/content/groups/public</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>net.avicus</groupId>
@@ -28,6 +21,7 @@
             <groupId>io.github.waterfallmc</groupId>
             <artifactId>travertine-api</artifactId>
             <version>1.15-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

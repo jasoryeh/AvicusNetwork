@@ -23,8 +23,14 @@ public class DatabaseConnection {
             String url = this.database.getConfig().getUrl();
             String username = this.database.getConfig().getUsername();
             String password = this.database.getConfig().getPassword();
-            this.connection = Optional.of(DriverManager.getConnection(url, username, password));
-        } catch (SQLException e) {
+            if(!this.database.getConfig().isEmbedded()) {
+                Class.forName("com.mysql.jdbc.Driver");
+                this.connection = Optional.of(DriverManager.getConnection(url, username, password));
+            } else {
+                Class.forName("org.sqlite.JDBC");
+                this.connection = Optional.of(DriverManager.getConnection(url));
+            }
+        } catch (ClassNotFoundException|SQLException e) {
             throw new DatabaseException("Connection failed.", e);
         }
     }

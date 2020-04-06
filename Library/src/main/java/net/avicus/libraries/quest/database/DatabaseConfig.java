@@ -16,15 +16,18 @@ public class DatabaseConfig {
     private final boolean reconnectEnabled;
     @Getter
     private final boolean unicode;
+    @Getter
+    private final boolean embedded;
 
     private DatabaseConfig(String host, String database, String username, String password,
-                           boolean reconnectEnabled, boolean unicode) {
+                           boolean reconnectEnabled, boolean unicode, boolean embedded) {
         this.host = host;
         this.database = database;
         this.username = username;
         this.password = password;
         this.reconnectEnabled = reconnectEnabled;
         this.unicode = unicode;
+        this.embedded = embedded;
     }
 
     public static Builder builder(String host, String database, String username, String password) {
@@ -33,17 +36,22 @@ public class DatabaseConfig {
 
     public String getUrl() {
         StringBuilder url = new StringBuilder();
-        url.append(String.format("jdbc:mysql://%s/%s", this.host, this.database));
-        url.append("?");
+        if(!isEmbedded()) {
+            // Remote database
+            url.append(String.format("jdbc:mysql://%s/%s", this.host, this.database));
+            url.append("?");
 
-        if (this.reconnectEnabled) {
-            url.append("autoReconnect=true&");
+            if (this.reconnectEnabled) {
+                url.append("autoReconnect=true&");
+            }
+
+            if (this.unicode) {
+                url.append("useUnicode=yes&characterEncoding=UTF-8&");
+            }
+        } else {
+            // local db
+            url.append(String.format("jdbc:sqlite:%s.db", this.database));
         }
-
-        if (this.unicode) {
-            url.append("useUnicode=yes&characterEncoding=UTF-8&");
-        }
-
         return url.toString();
     }
 
@@ -55,6 +63,7 @@ public class DatabaseConfig {
         private String password;
         private boolean reconnectEnabled;
         private boolean unicode;
+        private boolean embedded;
 
         Builder(String host, String database, String username, String password) {
             this.host = host;
@@ -63,11 +72,12 @@ public class DatabaseConfig {
             this.password = password;
             this.reconnectEnabled = false;
             this.unicode = true;
+            this.embedded = false;
         }
 
         public DatabaseConfig build() {
             return new DatabaseConfig(this.host, this.database, this.username, this.password,
-                    this.reconnectEnabled, this.unicode);
+                    this.reconnectEnabled, this.unicode, this.embedded);
         }
 
         public Builder host(String host) {
@@ -97,6 +107,11 @@ public class DatabaseConfig {
 
         public Builder unicode(boolean unicode) {
             this.unicode = unicode;
+            return this;
+        }
+
+        public Builder embedded(boolean embedded) {
+            this.embedded = embedded;
             return this;
         }
     }

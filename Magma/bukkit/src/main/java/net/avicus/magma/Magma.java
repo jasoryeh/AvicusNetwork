@@ -254,7 +254,7 @@ public final class Magma extends JavaPlugin {
                 config.getString("database.database"),
                 config.getString("database.auth.username"),
                 config.getString("database.auth.password")
-        ).reconnect(true).build());
+        ).embedded(config.getBoolean("database.embedded", false)).reconnect(true).build());
         try {
             this.database.enable();
             getLogger().info("Connected to database!");

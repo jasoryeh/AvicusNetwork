@@ -11,13 +11,6 @@
     <name>Sk89q Command Framework for Bukkit</name>
     <description>Supporting classes for running the command framework on Bukkit servers.</description>
 
-    <repositories>
-        <repository>
-            <id>spigotmc-public</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>net.avicus</groupId>
@@ -28,6 +21,7 @@
             <groupId>app.ashcon</groupId>
             <artifactId>sportpaper</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

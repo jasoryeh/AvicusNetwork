@@ -27,6 +27,7 @@ public class Events {
     }
 
     public static <T extends Event> T call(T event) {
+        // Bukkit.getLogger().info("Calling event " + event.getEventName() + ": " + event.toString()); new Exception().printStackTrace();
         Bukkit.getPluginManager().callEvent(event);
         return event;
     }

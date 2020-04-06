@@ -1,6 +1,7 @@
 database:
   hostname: 'localhost'
   database: 'magma'
+  embedded: false
   auth:
     username: 'cats'
     password: 'kittens'
