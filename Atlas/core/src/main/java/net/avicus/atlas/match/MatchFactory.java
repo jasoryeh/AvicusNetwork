@@ -68,6 +68,7 @@ import org.jdom2.located.LocatedJDOMFactory;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * A match factory controls the construction of {@link Match}s from a collection of
@@ -172,6 +173,7 @@ public class MatchFactory {
      */
     public <F extends ModuleFactory<M>, M extends Module> void register(Class<F> clazz) {
         try {
+            Bukkit.getLogger().info("Registered module: " + clazz.getName());
             this.factories.put(clazz, clazz.newInstance());
         } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -250,8 +252,16 @@ public class MatchFactory {
         for (final ModuleFactory<?> factory : this.factoryView) {
             try {
                 Optional<? extends Module> module = factory.build(match, this, root);
-                module.ifPresent(match::addModule);
+                module.ifPresent(new Consumer<Module>() {
+                    @Override
+                    public void accept(Module module) {
+                        match.addModule(module);
+                        Bukkit.getLogger().info("Module loaded (factory built): " + factory.getClass().getName());
+                    }
+                });
+                Bukkit.getLogger().info("Processed module (factory): " + factory.getClass().getName());
             } catch (Exception e) {
+                Bukkit.getLogger().info("Failed to load module (factory): " + factory.getClass().getName());
                 throw new ModuleBuildException(factory, e);
             }
         }

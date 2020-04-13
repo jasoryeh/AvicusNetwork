@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class SpawnListener implements Listener {
@@ -101,5 +102,12 @@ public class SpawnListener implements Listener {
         }
         this.module.startRespawnTask(event.getPlayer());
         this.module.setDead(event.getPlayer(), true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(final PlayerRespawnEvent event) {
+        Players.reset(event.getPlayer());
+        // In event of all fail, we fall back to respawning manually.
+        this.module.spawn(event.getPlayer());
     }
 }

@@ -47,6 +47,12 @@
             <artifactId>teamspeak3-api</artifactId>
             <version>1.0.14-SNAPSHOT</version>
         </dependency>
+        <!-- Teamspeak really only depends on quest for database, so we'll just shade this in -->
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -4,10 +4,12 @@ import net.avicus.libraries.grave.GravePlugin;
 import net.avicus.libraries.grave.event.*;
 import net.avicus.libraries.tracker.Lifetime;
 import net.avicus.libraries.tracker.Lifetimes;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.joda.time.Instant;
@@ -23,8 +25,9 @@ public class PlayerListener implements Listener {
         this.grave = grave;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDeath(org.bukkit.event.entity.EntityDeathEvent event) {
+        Bukkit.getLogger().info("Grave is handling entity death: " + event.getEntity().getName());
         LivingEntity entity = event.getEntity();
         Lifetime lifetime = Lifetimes.getLifetime(entity);
         Location location = entity.getLocation();
@@ -33,8 +36,7 @@ public class PlayerListener implements Listener {
         EntityDeathEvent call;
 
         int droppedExp = event.getDroppedExp();
-        List<ItemStack> drops = new ArrayList<>();
-        drops.addAll(event.getDrops());
+        List<ItemStack> drops = new ArrayList<>(event.getDrops());
 
         // EntityDeathEvent or EntityDeathBy____Event??
         if (lifetime.getLastDamage() == null
@@ -75,6 +77,7 @@ public class PlayerListener implements Listener {
         for (ItemStack itemStack : call.getDrops()) {
             location.getWorld().dropItemNaturally(location, itemStack);
         }
+        Bukkit.getLogger().info("Grave has handled death event: " + event.getEntity().getName());
 
     }
 }

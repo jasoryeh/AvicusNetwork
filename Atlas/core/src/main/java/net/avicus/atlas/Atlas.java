@@ -6,6 +6,8 @@ import com.sk89q.minecraft.util.commands.CommandPermissionsException;
 import com.sk89q.minecraft.util.commands.CommandUsageException;
 import lombok.Getter;
 import lombok.Setter;
+import net.avicus.Library;
+import net.avicus.LibraryPlugin;
 import net.avicus.atlas.command.*;
 import net.avicus.atlas.command.exception.CommandMatchException;
 import net.avicus.atlas.component.AtlasComponentManager;
@@ -130,6 +132,19 @@ public class Atlas extends JavaPlugin {
         // assign instance
         instance = this;
 
+        try {
+            Class.forName("net.avicus.LibraryPlugin");
+            getLogger().info("Library plugin status: i:" + Library.isInitialized() + " di:" + Library.isDeinitialized());
+
+            if(!Library.isInitialized()) {
+                getLogger().warning("Something went wrong in library. It was not initialized before Atlas.");
+                getLogger().warning("We will initialize it for us.");
+                Library.loadLibraries(this);
+            }
+        } catch (ClassNotFoundException ignored) {
+            getLogger().info("Library was not found!");
+        }
+
         // load configuration
         this.saveDefaultConfig();
         this.reloadConfig();
@@ -142,7 +157,8 @@ public class Atlas extends JavaPlugin {
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        // inject configuration -> AtlasConfig
+
+        // inject configuration -> AtlasConfig; use this instead of config above.
         config.injector(AtlasConfig.class).inject();
 
         // Set server

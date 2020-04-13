@@ -12,6 +12,7 @@ import net.avicus.libraries.tracker.trackers.*;
 import net.avicus.libraries.tracker.trackers.base.*;
 import net.avicus.libraries.tracker.trackers.base.gravity.SimpleGravityKillTracker;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.annotation.Nullable;
 
@@ -21,7 +22,7 @@ public class TrackerPlugin extends Library {
     @Nullable
     TickTimer tickTimer;
 
-    public TrackerPlugin(LibraryPlugin parent) {
+    public TrackerPlugin(JavaPlugin parent) {
         super(parent);
     }
 
@@ -101,7 +102,7 @@ public class TrackerPlugin extends Library {
         drm.register(new AnvilDamageResolver(anvilTracker));
 
         // debug
-        // this.registerEvents(new DebugListener());
+        this.registerEvents(new DebugListener());
     }
 
     private void registerEvents(Listener listener) {

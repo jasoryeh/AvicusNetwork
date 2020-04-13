@@ -3,12 +3,13 @@ package net.avicus.libraries.tutorial.plugin;
 import net.avicus.Library;
 import net.avicus.LibraryPlugin;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class TutorialPlugin extends Library implements Listener {
 
     private static TutorialPlugin instance;
 
-    public TutorialPlugin(LibraryPlugin parent) {
+    public TutorialPlugin(JavaPlugin parent) {
         super(parent);
     }
 

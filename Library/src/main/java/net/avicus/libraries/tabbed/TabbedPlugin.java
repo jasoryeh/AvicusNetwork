@@ -3,9 +3,10 @@ package net.avicus.libraries.tabbed;
 import net.avicus.Library;
 import net.avicus.LibraryPlugin;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class TabbedPlugin extends Library {
-    public TabbedPlugin(LibraryPlugin parent) {
+    public TabbedPlugin(JavaPlugin parent) {
         super(parent);
     }
 

@@ -35,6 +35,12 @@
             <artifactId>command-framework-bungee</artifactId>
             <version>1.8.8-SNAPSHOT</version>
         </dependency>
+        <!-- Bungee really only depends on quest for database, so we'll just shade this in -->
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -54,7 +60,7 @@
                     <artifactSet>
                         <includes>
                             <include>net.avicus:magma-core</include>
-                            <include>net.avicus:quest</include>
+                            <include>net.avicus:library</include>
                             <include>net.avicus:command-framework-bungee</include>
                             <include>net.avicus:command-framework-core</include>
                             <include>mysql.mysql-connector-java</include>

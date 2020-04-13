@@ -10,24 +10,26 @@ import net.avicus.atlas.event.match.MatchOpenEvent;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.event.player.PlayerJoinDelayedEvent;
 import net.avicus.atlas.map.rotation.Rotation;
+import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.loadouts.type.VehicleLoadout;
+import net.avicus.atlas.module.spawns.SpawnsModule;
 import net.avicus.atlas.module.states.StatesModule;
 import net.avicus.atlas.module.vote.VoteModule;
 import net.avicus.atlas.util.AtlasTask;
 import net.avicus.atlas.util.Events;
 import net.avicus.compendium.countdown.RestartingCountdown;
 import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.util.Vector;
 import org.joda.time.Duration;
@@ -159,4 +161,28 @@ public class AtlasListener implements Listener {
             event.getDismounted().remove();
         }
     }
+
+    /*@EventHandler
+    public void onAnyEvent(Event event) {
+        Bukkit.getLogger().info("Event fired: " + event.getClass().getName() + " -> " + event.toString());
+    }*/
+
+    // Fallback respawn listener (so players don't get into abandoned regular world)
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        Bukkit.getLogger().info("Spawning " + event.getPlayer().getName());
+        Match match = Atlas.getMatch();
+        if(match == null) {
+            Bukkit.getLogger().warning("Atlas match is unavailable!");
+            return;
+        }
+        SpawnsModule requiredModule = match.getRequiredModule(SpawnsModule.class);
+        if(requiredModule == null) {
+            Bukkit.getLogger().warning("No spawns module! Players may fail and spawn in the normal survival world!");
+            return;
+        }
+        requiredModule.spawn(event.getPlayer());
+    }
+
+
 }

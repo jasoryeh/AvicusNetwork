@@ -71,6 +71,7 @@ public class CountdownManager implements Listener {
         CountdownTask task = new CountdownTask(this, countdown);
         this.countdowns.put(countdown, task);
         countdown.onStart();
+        // todo: is this causing freezes?
         task.runTaskTimer(CompendiumPlugin.getInstance(), 0, 20);
 
         CompendiumPlugin.getInstance().getServer().getPluginManager()

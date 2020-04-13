@@ -67,6 +67,7 @@
             <groupId>net.avicus</groupId>
             <artifactId>library</artifactId>
             <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Database -->
         <dependency>
@@ -128,7 +129,6 @@
                             <include>com.squareup.okio:okio</include>
                             <include>net.buycraft:*</include>
                             <include>net.avicus:hook-core</include>
-                            <include>net.avicus:library</include>
                             <include>biz.paluch.redis:lettuce</include>
                         </includes>
                     </artifactSet>

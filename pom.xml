@@ -79,10 +79,12 @@
             <id>vexsoftware-repo</id>
             <url>https://dl.bintray.com/nuvotifier/maven/</url>
         </repository>
-        <!-- Disable to use our sportpaper additions <repository>
+        <!-- Disable to use our sportpaper additions https://github.com/jasoryeh/SportPaper
+        <repository>
             <id>ashcon-app</id>
             <url>https://repo.ashcon.app/content/repositories/snapshots</url>
-        </repository>-->
+        </repository>
+        -->
     </repositories>
 
     <distributionManagement>

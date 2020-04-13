@@ -8,11 +8,15 @@ import org.bukkit.event.Listener;
 
 public class DebugListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamage(final EntityDamageEvent event) {
-        Bukkit.broadcastMessage(
-                event.getEntity().toString() + " damaged for " + event.getDamage() + " raw half hearts at "
-                        + event.getLocation() + " info: " + event.getInfo() + " cancelled?" + (
-                        event.isCancelled() ? "yes" : "no"));
+        String dbm = event.getEntity().toString() + " damaged for " + event.getDamage() + " raw half hearts at "
+                + event.getLocation() + " info: " + event.getInfo() + " cancelled?" + (
+                event.isCancelled() ? "yes" : "no");
+        if(false) {
+            Bukkit.broadcastMessage(dbm);
+        } else {
+            Bukkit.getLogger().info(dbm);
+        }
     }
 }
