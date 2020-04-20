@@ -92,7 +92,7 @@ public class UserListener implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         if (Users.getUsers().isEmpty()) {
             // Not localized, locale can't be loaded for the player anyway
-            String error = ChatColor.RED + "The server has not loaded, please rejoin in a moment.";
+            String error = ChatColor.RED + "The server is getting ready, please rejoin in a moment.";
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, error);
         }
     }

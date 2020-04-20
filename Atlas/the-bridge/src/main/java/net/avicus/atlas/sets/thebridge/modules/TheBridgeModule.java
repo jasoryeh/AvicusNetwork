@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public class TheBridgeModule implements Module {
 
-    public TheBridgeModule(int teams, Collection<Coordinate> spawns, Collection<Region> capturePoints) {
+    public TheBridgeModule() {
 
     }
 

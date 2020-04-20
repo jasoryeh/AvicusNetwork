@@ -33,10 +33,10 @@ public class TheBridgeFactory implements ModuleFactory<TheBridgeModule> {
 
     @Override
     public Optional<TheBridgeModule> build(Match match, MatchFactory factory, XmlElement root) throws ModuleBuildException {
-        //if(root.hasChild("the-bridge")) {
-        //return Optional.of(new TheBridgeModule());
-        //}
-        //TODO: WIP
+        // TODO: WIP
+        if(root.hasChild("the-bridge")) {
+            return Optional.of(new TheBridgeModule());
+        }
         return Optional.empty();
     }
 }

@@ -1,9 +1,14 @@
 package net.avicus.atlas.util;
 
+import org.bukkit.Chunk;
 import org.bukkit.Color;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Provides helper methods for World related operations such as particle spawning and conversion
@@ -75,5 +80,31 @@ public class Worlds {
         float b = (float) blue / 255.0F;
         location.getWorld().spigot()
                 .playEffect(location, Effect.COLOURED_DUST, 0, 0, r, g, b, 1, 0, viewRadius);
+    }
+
+    public static Set<Block> getBlocks(Chunk chunk) {
+        Set<org.bukkit.block.Block> blocks = new HashSet<org.bukkit.block.Block>();
+
+        org.bukkit.craftbukkit.v1_8_R3.CraftChunk craftChunk = (org.bukkit.craftbukkit.v1_8_R3.CraftChunk) chunk;
+        net.minecraft.server.v1_8_R3.Chunk handle = ((org.bukkit.craftbukkit.v1_8_R3.CraftChunk) chunk).getHandle();
+        // Partial from getBlocks in chunk
+        for (net.minecraft.server.v1_8_R3.ChunkSection section : handle.getSections()) {
+            if(section == null || section.a()) continue;
+
+            char[] blockIds = section.getIdArray();
+            for (int i = 0; i < blockIds.length; i++) {
+                // lookup in block registry
+                net.minecraft.server.v1_8_R3.IBlockData blockData = net.minecraft.server.v1_8_R3.Block.d.a(blockIds[i]);
+                if (blockData != null) { // normally there's a block check for materials here, but not today.
+                    blocks.add(craftChunk.getBlock(
+                            i & 0xf,
+                            section.getYPosition() | (i >> 8),
+                            (i >> 4) & 0xf)
+                    );
+                }
+            }
+        }
+
+        return blocks;
     }
 }
