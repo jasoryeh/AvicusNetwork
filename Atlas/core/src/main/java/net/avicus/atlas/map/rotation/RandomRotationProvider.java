@@ -1,15 +1,14 @@
 package net.avicus.atlas.map.rotation;
 
 import com.google.common.collect.Lists;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
 import net.avicus.atlas.map.AtlasMap;
 import net.avicus.atlas.map.MapManager;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.match.MatchFactory;
+
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class RandomRotationProvider extends AbstractRotationProvider {
 
@@ -28,7 +27,9 @@ public class RandomRotationProvider extends AbstractRotationProvider {
         LinkedList<? extends AtlasMap> maps = new LinkedList<>(this.manager.getMaps());
 
         Collections.shuffle(maps);
-        maps.subList(0, 10).forEach(m -> matches.add(this.createMatch(m)));
+        int end = maps.size();
+        end = end >= 10 ? 10 : end;
+        maps.subList(0, end).forEach(m -> matches.add(this.createMatch(m)));
 
         return new Rotation(matches);
     }

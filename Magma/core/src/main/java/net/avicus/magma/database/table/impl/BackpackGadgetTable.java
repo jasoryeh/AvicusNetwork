@@ -1,12 +1,11 @@
 package net.avicus.magma.database.table.impl;
 
 import com.google.gson.JsonObject;
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.magma.database.model.impl.BackpackGadget;
 
 import java.util.List;
-
-import net.avicus.magma.database.model.impl.BackpackGadget;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
 
 public class BackpackGadgetTable extends Table<BackpackGadget> {
 

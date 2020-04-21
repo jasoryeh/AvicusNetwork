@@ -1,11 +1,11 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.libraries.quest.query.RowList;
 import net.avicus.magma.database.model.impl.ObjectiveCompletion;
 import net.avicus.magma.database.model.impl.ObjectiveType;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Filter;
-import net.avicus.quest.query.RowList;
 
 public class ObjectiveTable extends Table<ObjectiveCompletion> {
 

@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>atlas</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>atlas-core</artifactId>
     <build>
@@ -36,10 +36,8 @@
                             <include>joda-time:joda-time</include>
                             <include>net.avicus:compendium-bukkit</include>
                             <include>net.avicus:compendium-core</include>
-                            <include>com.keenant:bossy</include>
-                            <include>com.keenant:tabbed</include>
                             <include>org.simpleframework:simple-xml</include>
-                            <include>com.sk89q:command-framework-bukkit</include>
+                            <include>net.avicus:command-framework-bukkit</include>
                             <include>org.javalite:javalite-common</include>
                         </includes>
                     </artifactSet>

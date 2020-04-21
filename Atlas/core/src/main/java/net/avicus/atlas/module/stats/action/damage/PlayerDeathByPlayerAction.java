@@ -1,11 +1,11 @@
 package net.avicus.atlas.module.stats.action.damage;
 
-import java.time.Instant;
-
 import lombok.Getter;
 import lombok.ToString;
+import net.avicus.libraries.tracker.DamageInfo;
 import org.bukkit.entity.Player;
-import tc.oc.tracker.DamageInfo;
+
+import java.time.Instant;
 
 @ToString
 public class PlayerDeathByPlayerAction extends PlayerDamageAction {

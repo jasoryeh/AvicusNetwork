@@ -5,8 +5,14 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.states.StatesModule;
+import net.minecraft.server.v1_8_R3.BlockAnvil;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.EntityHuman;
+import net.minecraft.server.v1_8_R3.ITileEntityContainer;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftHumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -59,7 +65,20 @@ public class FakeGUIsModule implements Module {
 
         if (material == Material.ANVIL && this.fakeAnvils) {
             event.setCancelled(true);
-            player.openVirtualAnvil(null, true);
+
+            //player.openVirtualAnvil(null, true);
+            {
+                Location anvilAt = player.getLocation();
+                EntityHuman handle = ((CraftHumanEntity) player).getHandle();
+                final BlockPosition pos = new BlockPosition(anvilAt.getBlockX(), anvilAt.getBlockY(), anvilAt.getBlockZ());
+                final ITileEntityContainer container = new BlockAnvil.TileEntityContainerAnvil(handle.world, pos);
+                handle.openTileEntity(container);
+
+                handle.activeContainer.checkReachable = false;
+
+                handle.activeContainer.getBukkitView(); // ? return <-
+            }
+
             return;
         }
 

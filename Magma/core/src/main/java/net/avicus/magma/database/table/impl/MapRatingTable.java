@@ -1,13 +1,13 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.ModelList;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.magma.database.model.impl.MapRating;
+
 import java.util.Date;
 import java.util.Optional;
-
-import net.avicus.magma.database.model.impl.MapRating;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.ModelList;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Filter;
 
 public class MapRatingTable extends Table<MapRating> {
 

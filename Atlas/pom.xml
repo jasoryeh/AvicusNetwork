@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.avicus</groupId>
-        <artifactId>avicus-network</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <artifactId>avicus-network-full</artifactId>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>atlas</artifactId>
     <packaging>pom</packaging>
@@ -14,56 +14,50 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
+        <module>core</module>
         <module>arcade</module>
         <module>bedwars</module>
-        <module>core</module>
         <module>competitive-objectives</module>
-        <module>docs-generator</module>
+        <module>the-bridge</module>
         <module>walls</module>
+        <module>docs-generator</module>
+        <module>example-set</module>
     </modules>
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
-            <artifactId>magnet-api</artifactId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Database -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>magma-bukkit</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>compendium-bukkit</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.keenant.tabbed</groupId>
-            <artifactId>tabbed-core</artifactId>
-        </dependency>
-        <!-- Tracking -->
-        <dependency>
-            <groupId>tc.oc</groupId>
-            <artifactId>tracker</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>grave</artifactId>
-            <scope>provided</scope>
         </dependency>
         <!-- WE -->
         <dependency>
@@ -85,12 +79,6 @@
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <!-- Tutorial -->
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>tutorial</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- XML -->

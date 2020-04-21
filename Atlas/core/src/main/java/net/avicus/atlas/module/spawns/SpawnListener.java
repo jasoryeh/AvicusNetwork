@@ -5,7 +5,7 @@ import net.avicus.atlas.event.match.MatchOpenEvent;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.groups.Spectators;
 import net.avicus.atlas.util.Players;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import net.avicus.magma.util.NMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class SpawnListener implements Listener {
@@ -101,5 +102,12 @@ public class SpawnListener implements Listener {
         }
         this.module.startRespawnTask(event.getPlayer());
         this.module.setDead(event.getPlayer(), true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerRespawn(final PlayerRespawnEvent event) {
+        Players.reset(event.getPlayer());
+        // In event of all fail, we fall back to respawning manually.
+        this.module.spawn(event.getPlayer());
     }
 }

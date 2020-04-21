@@ -1,16 +1,16 @@
 package net.avicus.atlas.module.doublekill;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import lombok.ToString;
 import net.avicus.atlas.event.player.PlayerSpawnBeginEvent;
 import net.avicus.atlas.module.Module;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @ToString
 public class DoubleKillModule implements Module {

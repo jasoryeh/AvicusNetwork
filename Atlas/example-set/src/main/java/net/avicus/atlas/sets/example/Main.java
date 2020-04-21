@@ -1,4 +1,4 @@
-package net.avicus.atlas.sets.bedwars;
+package net.avicus.atlas.sets.example;
 
 import net.avicus.atlas.external.ModuleSet;
 import org.bukkit.Bukkit;

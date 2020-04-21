@@ -1,0 +1,5 @@
+name: Tutorial
+description: Force plugins to be present on a server.
+main: net.avicus.tutorial.plugin.TutorialPlugin
+version: 1.8-SNAPSHOT
+authors: [The Avicus Network]

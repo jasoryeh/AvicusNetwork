@@ -5,14 +5,10 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
-import net.avicus.atlas.module.checks.variable.AttackerVariable;
-import net.avicus.atlas.module.checks.variable.DamageVariable;
-import net.avicus.atlas.module.checks.variable.LocationVariable;
-import net.avicus.atlas.module.checks.variable.PlayerVariable;
-import net.avicus.atlas.module.checks.variable.VictimVariable;
+import net.avicus.atlas.module.checks.variable.*;
+import net.avicus.libraries.tracker.event.PlayerDamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import tc.oc.tracker.event.PlayerDamageEvent;
 
 @ToString(exclude = "match")
 public class DamageModule implements Module {

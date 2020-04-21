@@ -1,8 +1,8 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.ExperienceLeaderboardEntry;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
 
 /**
  * Experience Leaderboards!!!

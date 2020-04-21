@@ -1,11 +1,11 @@
 package net.avicus.magma.database.table.impl;
 
-import java.util.List;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.database.model.impl.Username;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
+
+import java.util.List;
 
 public class UsernameTable extends Table<Username> {
 

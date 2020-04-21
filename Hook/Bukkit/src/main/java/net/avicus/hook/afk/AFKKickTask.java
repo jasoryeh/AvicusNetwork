@@ -7,6 +7,7 @@ import net.avicus.compendium.locale.text.UnlocalizedFormat;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.hook.utils.HookTask;
 import net.avicus.hook.utils.Messages;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.NetworkIdentification;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.joda.time.Instant;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
 
 import java.util.*;
 

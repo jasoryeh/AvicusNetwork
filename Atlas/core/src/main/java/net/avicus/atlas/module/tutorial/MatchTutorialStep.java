@@ -1,20 +1,20 @@
 package net.avicus.atlas.module.tutorial;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.ToString;
 import net.avicus.atlas.module.locales.LocalizedXmlString;
 import net.avicus.atlas.util.LocalizedXmlTitle;
-import net.avicus.tutorial.api.AbstractTutorialStep;
+import net.avicus.libraries.tutorial.api.AbstractTutorialStep;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.github.paperspigot.Title;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ToString
 public class MatchTutorialStep extends AbstractTutorialStep {

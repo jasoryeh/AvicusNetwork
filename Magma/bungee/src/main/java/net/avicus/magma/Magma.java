@@ -2,23 +2,13 @@ package net.avicus.magma;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import lombok.Getter;
+import net.avicus.libraries.quest.database.DatabaseConfig;
 import net.avicus.magma.api.APIClient;
 import net.avicus.magma.command.AbortCmd;
 import net.avicus.magma.database.Database;
 import net.avicus.magma.network.NetworkConstants;
 import net.avicus.magma.redis.Redis;
-import net.avicus.quest.database.DatabaseConfig;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -30,6 +20,10 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.md_5.bungee.event.EventHandler;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 public final class Magma extends Plugin implements Listener {
 
@@ -95,7 +89,7 @@ public final class Magma extends Plugin implements Listener {
                 this.configuration.getString("database.database"),
                 this.configuration.getString("database.auth.username"),
                 this.configuration.getString("database.auth.password")
-        ).reconnect(true).build());
+        ).embedded(this.configuration.getBoolean("database.embedded", false)).reconnect(true).build());
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.database.enable();

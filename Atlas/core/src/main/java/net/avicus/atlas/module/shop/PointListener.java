@@ -1,21 +1,20 @@
 package net.avicus.atlas.module.shop;
 
 import com.google.common.collect.Maps;
-
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import lombok.Setter;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.match.Match;
 import net.avicus.compendium.number.NumberAction;
-import net.avicus.grave.event.PlayerDeathByPlayerEvent;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+
+import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PointListener implements Listener {
 

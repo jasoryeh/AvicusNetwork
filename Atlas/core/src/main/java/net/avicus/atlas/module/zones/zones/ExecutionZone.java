@@ -1,7 +1,5 @@
 package net.avicus.atlas.module.zones.zones;
 
-import java.util.Optional;
-
 import lombok.ToString;
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.BlockChangeEvent;
@@ -14,6 +12,7 @@ import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.executors.Executor;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -24,13 +23,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+import org.bukkit.event.player.*;
+
+import java.util.Optional;
 
 @ToString(callSuper = true)
 public class ExecutionZone extends Zone {

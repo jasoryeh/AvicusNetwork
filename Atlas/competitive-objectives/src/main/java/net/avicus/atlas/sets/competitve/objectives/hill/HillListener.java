@@ -1,17 +1,17 @@
 package net.avicus.atlas.sets.competitve.objectives.hill;
 
-import java.util.List;
-
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.objectives.ObjectivesModule;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.List;
 
 public class HillListener implements Listener {
 

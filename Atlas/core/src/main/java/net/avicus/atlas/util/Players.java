@@ -120,6 +120,7 @@ public class Players {
 
         // Spigot
         player.spigot().setCollidesWithEntities(true);
+        player.spigot().respawn();
         // Todo?
         if (!VersionUtil.isCombatUpdate()) {
             player.spigot().setAffectsSpawning(true);

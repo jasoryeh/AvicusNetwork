@@ -1,0 +1,13 @@
+name: Compendium
+main: net.avicus.compendium.plugin.CompendiumPlugin
+version: ${project.version}-${git.commit.id.abbrev}
+authors:
+  - Avicus Network
+depend:
+  - ProtocolLib
+  - ViaVersion
+commands:
+  set:
+  setting:
+  settings:
+  toggle:

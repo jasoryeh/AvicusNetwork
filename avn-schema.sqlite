@@ -1,0 +1,629 @@
+CREATE TABLE `achievements` (
+  `id` int(11),
+  `slug` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `achievement_pursuits` (
+  `id` int(11),
+  `slug` varchar(255) DEFAULT NULL,
+  `progress` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `achievement_receivers` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `achievement_id` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `actions` (
+  `id` int(11),
+  `action` varchar(255) DEFAULT NULL,
+  `text` longtext DEFAULT NULL,
+  `appeal_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `alerts` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `seen` int(11) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `announcements` (
+  `id` int(11),
+  `body` varchar(255) DEFAULT NULL,
+  `motd` tinyint(1) DEFAULT NULL,
+  `lobby` tinyint(1) DEFAULT NULL,
+  `tips` tinyint(1) DEFAULT NULL,
+  `web` tinyint(1) DEFAULT NULL,
+  `popup` tinyint(1) DEFAULT NULL,
+  `permission` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `motd_format` tinyint(1) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL
+);
+
+CREATE TABLE `appeals` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `punishment_id` int(11) DEFAULT NULL,
+  `open` tinyint(1) DEFAULT NULL,
+  `locked` tinyint(1) DEFAULT NULL,
+  `appealed` tinyint(1) DEFAULT NULL,
+  `escalated` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `ar_internal_metadata` (
+  `key` varchar(255),
+  `value` varchar(255) DEFAULT NULL,
+  `created_at` datetime,
+  `updated_at` datetime
+);
+
+CREATE TABLE `backpack_gadgets` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `gadget_type` varchar(255) DEFAULT NULL,
+  `gadget` text DEFAULT NULL,
+  `context` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `old_id` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `blazer_audits` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `query_id` int(11) DEFAULT NULL,
+  `statement` text DEFAULT NULL,
+  `data_source` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `blazer_checks` (
+  `id` int(11),
+  `creator_id` int(11) DEFAULT NULL,
+  `query_id` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `schedule` varchar(255) DEFAULT NULL,
+  `emails` text DEFAULT NULL,
+  `check_type` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `last_run_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `blazer_dashboards` (
+  `id` int(11),
+  `creator_id` int(11) DEFAULT NULL,
+  `name` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `blazer_dashboard_queries` (
+  `id` int(11),
+  `dashboard_id` int(11) DEFAULT NULL,
+  `query_id` int(11) DEFAULT NULL,
+  `position` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `blazer_queries` (
+  `id` int(11),
+  `creator_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `statement` text DEFAULT NULL,
+  `data_source` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `categories` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `forum_id` int(11) DEFAULT NULL,
+  `desc` varchar(255) DEFAULT NULL,
+  `tags` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `exclude_from_recent` tinyint(1) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `credits` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `game_id` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `weight` varchar(3) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `deaths` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `cause` int(11) DEFAULT NULL,
+  `game_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `user_hidden` tinyint(1) DEFAULT 0,
+  `cause_hidden` tinyint(1) DEFAULT 0
+);
+
+CREATE TABLE `discussions` (
+  `id` int(11),
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT 0,
+  `stickied` int(11) DEFAULT 0,
+  `category_id` int(11) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `views` int(11) DEFAULT 0
+);
+
+CREATE TABLE `experience_leaderboard_entries` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `prestige_level` int(11) DEFAULT NULL,
+  `xp_total` int(11) DEFAULT NULL,
+  `xp_nebula` int(11) DEFAULT NULL,
+  `xp_koth` int(11) DEFAULT NULL,
+  `xp_ctf` int(11) DEFAULT NULL,
+  `xp_tdm` int(11) DEFAULT NULL,
+  `xp_elimination` int(11) DEFAULT NULL,
+  `xp_sw` int(11) DEFAULT NULL,
+  `xp_walls` int(11) DEFAULT NULL,
+  `xp_arcade` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `experience_transactions` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `season_id` int(11) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `weight` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `genre` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `forums` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `priority` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `friends` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `friend_id` int(11) DEFAULT NULL,
+  `accepted` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `impressions` (
+  `id` int(11),
+  `impressionable_type` varchar(255) DEFAULT NULL,
+  `impressionable_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `controller_name` varchar(255) DEFAULT NULL,
+  `action_name` varchar(255) DEFAULT NULL,
+  `view_name` varchar(255) DEFAULT NULL,
+  `request_hash` varchar(255) DEFAULT NULL,
+  `ip_address` varchar(255) DEFAULT NULL,
+  `session_hash` varchar(255) DEFAULT NULL,
+  `message` text DEFAULT NULL,
+  `referrer` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `params` text DEFAULT NULL
+);
+
+CREATE TABLE `ip_bans` (
+  `id` int(11),
+  `staff_id` int(11) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `excluded_users` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `leaderboard_entries` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `kills` int(11) DEFAULT NULL,
+  `deaths` int(11) DEFAULT NULL,
+  `kd_ratio` float DEFAULT NULL,
+  `monuments` int(11) DEFAULT NULL,
+  `wools` int(11) DEFAULT NULL,
+  `flags` int(11) DEFAULT NULL,
+  `hills` int(11) DEFAULT NULL,
+  `score` int(11) DEFAULT NULL,
+  `time_online` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `livestreams` (
+  `id` int(11),
+  `channel` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `map_ratings` (
+  `id` int(11),
+  `map_slug` varchar(255) DEFAULT NULL,
+  `map_version` varchar(255) DEFAULT NULL,
+  `player` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `feedback` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `memberships` (
+  `id` int(11),
+  `rank_id` int(11) DEFAULT NULL,
+  `member_id` int(11) DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `is_purchased` tinyint(1) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `messages` (
+  `id` bigint(20),
+  `sender_id` int(11) DEFAULT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `created_at` datetime,
+  `updated_at` datetime
+);
+
+CREATE TABLE `objectives` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `objective_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `hidden` tinyint(1) DEFAULT 0
+);
+
+CREATE TABLE `objective_types` (
+  `id` int(11),
+  `game_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `presents` (
+  `id` bigint(20),
+  `slug` varchar(255) DEFAULT NULL,
+  `family` varchar(255) DEFAULT NULL,
+  `human_name` varchar(255) DEFAULT NULL,
+  `human_location` varchar(255) DEFAULT NULL,
+  `found_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `present_finders` (
+  `id` bigint(20),
+  `user_id` bigint(20) DEFAULT NULL,
+  `present_id` bigint(20) DEFAULT NULL
+);
+
+CREATE TABLE `prestige_levels` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `season_id` int(11) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `prestige_seasons` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `multiplier` varchar(255) DEFAULT NULL,
+  `start_at` datetime DEFAULT NULL,
+  `end_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `punishments` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `staff_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `expires` datetime DEFAULT NULL,
+  `appealed` int(11) DEFAULT 0,
+  `server_id` int(11) DEFAULT NULL,
+  `silent` tinyint(1) DEFAULT NULL
+);
+
+CREATE TABLE `purchases` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `p_id` int(11) DEFAULT 0,
+  `duration` int(11) DEFAULT NULL,
+  `expired` int(11) DEFAULT 0,
+  `spent` int(11) DEFAULT 0,
+  `created_at` datetime DEFAULT NULL,
+  `product_id` varchar(255) DEFAULT NULL,
+  `data` text DEFAULT NULL
+);
+
+CREATE TABLE `ranks` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `mc_perms` text DEFAULT NULL,
+  `web_perms` longtext DEFAULT NULL,
+  `is_staff` tinyint(1) DEFAULT 0,
+  `html_color` varchar(255) DEFAULT 'none',
+  `badge_color` varchar(255) DEFAULT 'none',
+  `badge_text_color` varchar(255) DEFAULT 'white',
+  `mc_prefix` varchar(255) DEFAULT '',
+  `mc_suffix` varchar(255) DEFAULT '',
+  `priority` int(11) DEFAULT 0,
+  `special_perms` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `inheritance_id` int(11) DEFAULT NULL,
+  `ts_perms` text DEFAULT NULL
+);
+
+CREATE TABLE `read_marks` (
+  `id` int(11),
+  `readable_id` int(11) DEFAULT NULL,
+  `user_id` int(11),
+  `readable_type` varchar(20),
+  `timestamp` datetime DEFAULT NULL
+);
+
+CREATE TABLE `registrations` (
+  `id` int(11),
+  `tournament_id` int(11) DEFAULT NULL,
+  `team_id` int(11) DEFAULT NULL,
+  `user_data` text DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `replies` (
+  `id` int(11),
+  `discussion_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `reply_id` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `reports` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `creator_id` int(11) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `server` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `reserved_slots` (
+  `id` int(11),
+  `team_id` int(11) DEFAULT NULL,
+  `server` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `start_at` datetime DEFAULT NULL,
+  `end_at` datetime DEFAULT NULL,
+  `reservee` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `revisions` (
+  `id` int(11),
+  `reply_id` int(11) DEFAULT NULL,
+  `discussion_id` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `body` mediumtext DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `archived` int(11) DEFAULT 0,
+  `deleted` int(11) DEFAULT 0,
+  `stickied` int(11) DEFAULT 0,
+  `locked` int(11) DEFAULT 0,
+  `active` int(11) DEFAULT 0,
+  `original` int(11) DEFAULT 0,
+  `tag` varchar(255) DEFAULT NULL,
+  `sanctioned` tinyint(1) DEFAULT 0
+);
+
+CREATE TABLE `schema_migrations` (
+  `version` varchar(255)
+);
+
+CREATE TABLE `servers` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `host` varchar(255) DEFAULT NULL,
+  `port` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `permissible` tinyint(1) DEFAULT NULL,
+  `auto_deploy` tinyint(1) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `screen_session` varchar(255) DEFAULT NULL,
+  `server_group_id` int(11) DEFAULT NULL,
+  `server_category_id` int(11) DEFAULT NULL
+);
+
+CREATE TABLE `server_boosters` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `server_id` int(11) DEFAULT NULL,
+  `multiplier` decimal(10,0) DEFAULT NULL,
+  `starts_at` datetime DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `server_categories` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `communication_options` text DEFAULT NULL,
+  `tracking_options` text DEFAULT NULL,
+  `infraction_options` text DEFAULT NULL
+);
+
+CREATE TABLE `server_groups` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `data` text DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `sessions` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `duration` int(11) DEFAULT 0,
+  `ip` varchar(36) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `server_id` int(11) DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `is_active` tinyint(1) DEFAULT NULL,
+  `graceful` tinyint(1) DEFAULT NULL
+);
+
+CREATE TABLE `settings` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `subscriptions` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `discussion_id` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `teams` (
+  `id` int(11),
+  `title` varchar(255) DEFAULT NULL,
+  `tag` varchar(255) DEFAULT NULL,
+  `tagline` varchar(255) DEFAULT NULL,
+  `about` text DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `teamspeak_users` (
+  `id` int(11),
+  `user_id` int(11),
+  `client_id` int(11)
+);
+
+CREATE TABLE `team_members` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `team_id` int(11) DEFAULT NULL,
+  `accepted` int(11) DEFAULT 0,
+  `accepted_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `tournaments` (
+  `id` int(11),
+  `name` varchar(255) DEFAULT NULL,
+  `slug` varchar(64) DEFAULT NULL,
+  `about` text DEFAULT NULL,
+  `open_at` datetime DEFAULT NULL,
+  `close_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `header` int(11) DEFAULT NULL,
+  `min` int(11) DEFAULT NULL,
+  `max` int(11) DEFAULT NULL,
+  `allow_loners` tinyint(1) DEFAULT NULL
+);
+
+CREATE TABLE `usernames` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `username` varchar(16) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL
+);
+
+CREATE TABLE `users` (
+  `id` int(11),
+  `username` varchar(16) DEFAULT NULL,
+  `uuid` varchar(36) DEFAULT NULL,
+  `locale` varchar(8) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `tracker` varchar(255) DEFAULT NULL,
+  `mc_version` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `password_secure` varchar(255) DEFAULT NULL,
+  `verify_key` varchar(255) DEFAULT NULL,
+  `verify_key_success` tinyint(1) DEFAULT NULL,
+  `discord_id` bigint(20) DEFAULT NULL,
+  `api_key` varchar(255) DEFAULT NULL
+);
+
+CREATE TABLE `user_details` (
+  `id` int(11),
+  `user_id` int(11) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `email_status` int(11) DEFAULT 0,
+  `avatar` varchar(16) DEFAULT NULL,
+  `about` mediumtext DEFAULT NULL,
+  `cover_art` varchar(64) DEFAULT NULL,
+  `interests` varchar(255) DEFAULT NULL,
+  `gender` varchar(8) DEFAULT NULL,
+  `skype` varchar(32) DEFAULT NULL,
+  `twitter` varchar(16) DEFAULT NULL,
+  `facebook` varchar(50) DEFAULT NULL,
+  `twitch` varchar(26) DEFAULT NULL,
+  `steam` varchar(32) DEFAULT NULL,
+  `github` varchar(40) DEFAULT NULL,
+  `discord` varchar(255) DEFAULT NULL,
+  `custom_badge_icon` varchar(255) DEFAULT NULL,
+  `custom_badge_color` varchar(255) DEFAULT NULL,
+  `instagram` varchar(32) DEFAULT NULL
+);
+
+CREATE TABLE `votes` (
+  `id` bigint(20),
+  `user_id` bigint(20) DEFAULT NULL,
+  `service` varchar(255) DEFAULT NULL,
+  `cast_at` datetime DEFAULT NULL
+);

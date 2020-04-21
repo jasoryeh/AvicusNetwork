@@ -1,15 +1,15 @@
 package net.avicus.atlas.module.objectives.score;
 
-import java.util.List;
-
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+
+import java.util.List;
 
 public class ScoreListener implements Listener {
 

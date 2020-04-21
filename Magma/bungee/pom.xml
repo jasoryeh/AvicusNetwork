@@ -6,38 +6,40 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>magma</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>magma-bungee</artifactId>
-    <repositories>
-        <repository>
-            <id>sonatype-repo</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.11-SNAPSHOT</version>
+            <groupId>io.github.waterfallmc</groupId>
+            <artifactId>travertine-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>magma-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>command-framework-bungee</artifactId>
-            <version>1.9-SNAPSHOT</version>
+            <version>1.8.8-SNAPSHOT</version>
+        </dependency>
+        <!-- Bungee really only depends on quest for database, so we'll just shade this in -->
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -58,9 +60,9 @@
                     <artifactSet>
                         <includes>
                             <include>net.avicus:magma-core</include>
-                            <include>net.avicus:quest</include>
-                            <include>com.sk89q:command-framework-bungee</include>
-                            <include>com.sk89q:command-framework-core</include>
+                            <include>net.avicus:library</include>
+                            <include>net.avicus:command-framework-bungee</include>
+                            <include>net.avicus:command-framework-core</include>
                             <include>mysql.mysql-connector-java</include>
                             <include>biz.paluch.redis:lettuce</include>
                             <include>org.apache.commons:commons-lang3</include>

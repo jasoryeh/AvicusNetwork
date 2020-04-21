@@ -1,14 +1,14 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.magma.database.model.impl.Achievement;
+import net.avicus.magma.database.model.impl.User;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import net.avicus.magma.database.model.impl.Achievement;
-import net.avicus.magma.database.model.impl.User;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Operator;
 
 public class AchievementTable extends Table<Achievement> {
 

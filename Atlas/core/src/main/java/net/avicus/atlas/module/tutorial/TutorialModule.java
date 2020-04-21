@@ -1,11 +1,6 @@
 package net.avicus.atlas.module.tutorial;
 
 import com.google.common.collect.Maps;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
-
 import lombok.ToString;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.event.player.PlayerJoinDelayedEvent;
@@ -20,11 +15,11 @@ import net.avicus.atlas.util.Players;
 import net.avicus.compendium.settings.PlayerSettings;
 import net.avicus.compendium.settings.Setting;
 import net.avicus.compendium.settings.types.SettingTypes;
+import net.avicus.libraries.tutorial.api.ActionResult;
+import net.avicus.libraries.tutorial.api.ActiveTutorial;
+import net.avicus.libraries.tutorial.api.Tutorial;
 import net.avicus.magma.Magma;
 import net.avicus.magma.network.user.Users;
-import net.avicus.tutorial.api.ActionResult;
-import net.avicus.tutorial.api.ActiveTutorial;
-import net.avicus.tutorial.api.Tutorial;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,6 +30,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.joda.time.Duration;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.UUID;
 
 @ToString
 public class TutorialModule implements Module {

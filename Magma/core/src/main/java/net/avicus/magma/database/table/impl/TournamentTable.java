@@ -2,13 +2,12 @@ package net.avicus.magma.database.table.impl;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.Team;
 import net.avicus.magma.database.model.impl.Tournament;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TournamentTable extends Table<Tournament> {
 

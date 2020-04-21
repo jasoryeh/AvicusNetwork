@@ -1,12 +1,12 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.ModelList;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.magma.database.model.impl.TeamSpeakUser;
+
 import java.util.List;
 import java.util.Optional;
-
-import net.avicus.magma.database.model.impl.TeamSpeakUser;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.ModelList;
-import net.avicus.quest.model.Table;
 
 public class TeamSpeakUserTable extends Table<TeamSpeakUser> {
 

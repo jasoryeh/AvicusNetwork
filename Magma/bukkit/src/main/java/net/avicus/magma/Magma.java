@@ -12,6 +12,8 @@ import net.avicus.compendium.commands.exception.AbstractTranslatableCommandExcep
 import net.avicus.compendium.config.Config;
 import net.avicus.compendium.config.ConfigFile;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.libraries.quest.database.DatabaseConfig;
+import net.avicus.libraries.quest.database.DatabaseException;
 import net.avicus.magma.alerts.Alerts;
 import net.avicus.magma.announce.Announce;
 import net.avicus.magma.api.API;
@@ -42,11 +44,10 @@ import net.avicus.magma.network.user.Users;
 import net.avicus.magma.redis.Redis;
 import net.avicus.magma.restart.RestartMessageHandler;
 import net.avicus.magma.util.properties.BlockPropStore;
-import net.avicus.quest.database.DatabaseConfig;
-import net.avicus.quest.database.DatabaseException;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.joda.time.Instant;
@@ -166,7 +167,12 @@ public final class Magma extends JavaPlugin {
 
         this.loadLocalServer();
 
-        this.commands = new AvicusCommandsManager();
+        this.commands = new AvicusCommandsManager<CommandSender>() {
+            @Override
+            public boolean hasPermission(CommandSender sender, String perm) {
+                return sender instanceof ConsoleCommandSender || sender.hasPermission(perm);
+            }
+        };
         final AvicusCommandsRegistration registrar = new AvicusCommandsRegistration(this,
                 this.commands);
         this.mm = new ModuleManager(this.getServer().getPluginManager(), this, registrar);
@@ -232,8 +238,9 @@ public final class Magma extends JavaPlugin {
         // API
         getLogger().info("Connecting to API...");
         try {
-            this.apiClient = new API(new APIClient(MagmaConfig.API.getUrl(), MagmaConfig.API.getKey()));
-            getLogger().info("Connected to API!");
+            boolean fake = MagmaConfig.API.isFake();
+            this.apiClient = new API(MagmaConfig.API.getUrl(), MagmaConfig.API.getKey(), fake);
+            getLogger().info("Connected to " + (fake ? " fake " : "") + "API!");
         } catch (IOException ioe) {
             getLogger().severe("Failed to connect to API!");
             ioe.printStackTrace();
@@ -247,7 +254,7 @@ public final class Magma extends JavaPlugin {
                 config.getString("database.database"),
                 config.getString("database.auth.username"),
                 config.getString("database.auth.password")
-        ).reconnect(true).build());
+        ).embedded(config.getBoolean("database.embedded", false)).reconnect(true).build());
         try {
             this.database.enable();
             getLogger().info("Connected to database!");

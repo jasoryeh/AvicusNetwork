@@ -1,13 +1,13 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Operator;
+import net.avicus.magma.database.model.impl.Vote;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import net.avicus.magma.database.model.impl.Vote;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Operator;
 
 public class VoteTable extends Table<Vote> {
 

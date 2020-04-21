@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>hook</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>hook-server-manager</artifactId>
     <dependencies>
@@ -14,20 +14,27 @@
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>hook-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>magma-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- ServerManager really only depends on quest for database, so we'll just shade this in -->
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>

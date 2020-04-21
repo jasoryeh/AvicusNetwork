@@ -9,14 +9,6 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3EventAdapter;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.exception.TS3Exception;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import lombok.Getter;
 import net.avicus.compendium.config.ConfigFile;
 import net.avicus.hook.client.Clients;
@@ -25,11 +17,18 @@ import net.avicus.hook.temp.TemporaryChannels;
 import net.avicus.hook.wrapper.ConfirmableTeamSpeakCommand;
 import net.avicus.hook.wrapper.HookClient;
 import net.avicus.hook.wrapper.TeamSpeakCommand;
+import net.avicus.libraries.quest.database.DatabaseConfig;
 import net.avicus.magma.database.Database;
 import net.avicus.magma.redis.Redis;
-import net.avicus.quest.database.DatabaseConfig;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Hook {
 

@@ -1,13 +1,13 @@
 package net.avicus.atlas.module.stats.action.damage;
 
-import java.time.Instant;
-import javax.annotation.Nullable;
-
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.module.stats.action.base.PlayerAction;
+import net.avicus.libraries.tracker.DamageInfo;
 import org.bukkit.entity.Player;
-import tc.oc.tracker.DamageInfo;
+
+import javax.annotation.Nullable;
+import java.time.Instant;
 
 @ToString
 public abstract class PlayerDamageAction implements PlayerAction {

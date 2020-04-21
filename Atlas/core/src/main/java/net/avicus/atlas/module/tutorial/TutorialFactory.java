@@ -1,13 +1,5 @@
 package net.avicus.atlas.module.tutorial;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
 import net.avicus.atlas.documentation.FeatureDocumentation;
 import net.avicus.atlas.documentation.ModuleDocumentation;
 import net.avicus.atlas.documentation.attributes.Attributes;
@@ -22,11 +14,14 @@ import net.avicus.atlas.module.locales.LocalesModule;
 import net.avicus.atlas.module.locales.LocalizedXmlString;
 import net.avicus.atlas.util.LocalizedXmlTitle;
 import net.avicus.atlas.util.xml.XmlElement;
-import net.avicus.tutorial.api.Tutorial;
-import net.avicus.tutorial.api.TutorialStep;
+import net.avicus.libraries.tutorial.api.Tutorial;
+import net.avicus.libraries.tutorial.api.TutorialStep;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.joda.time.Duration;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class TutorialFactory implements ModuleFactory<TutorialModule> {
 

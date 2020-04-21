@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>hook</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>hook-bukkit</artifactId>
     <repositories>
@@ -30,19 +30,20 @@
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet-api</artifactId>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>compendium-bukkit</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -63,36 +64,34 @@
         </dependency>
         <!-- Tracking -->
         <dependency>
-            <groupId>tc.oc</groupId>
-            <artifactId>tracker</artifactId>
-        </dependency>
-        <dependency>
             <groupId>net.avicus</groupId>
-            <artifactId>grave</artifactId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
         </dependency>
         <!-- Database -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>magma-bukkit</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>hook-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <!-- Games -->
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>atlas-core</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>atlas-competitive-objectives</artifactId>
-            <version>${project.version}</version>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
         <!-- Packets -->
@@ -130,7 +129,6 @@
                             <include>com.squareup.okio:okio</include>
                             <include>net.buycraft:*</include>
                             <include>net.avicus:hook-core</include>
-                            <include>net.avicus:quest</include>
                             <include>biz.paluch.redis:lettuce</include>
                         </includes>
                     </artifactSet>

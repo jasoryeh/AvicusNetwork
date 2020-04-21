@@ -5,17 +5,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.lambdaworks.com.google.common.base.Splitter;
 import com.lambdaworks.com.google.common.collect.Maps;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.ModelList;
+import net.avicus.libraries.quest.model.Table;
 import net.avicus.magma.database.model.impl.Rank;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.ModelList;
-import net.avicus.quest.model.Table;
+
+import java.util.*;
 
 public class RankTable extends Table<Rank> {
 

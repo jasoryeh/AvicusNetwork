@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.avicus</groupId>
-        <artifactId>avicus-network</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <artifactId>avicus-network-full</artifactId>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>magma</artifactId>
     <packaging>pom</packaging>

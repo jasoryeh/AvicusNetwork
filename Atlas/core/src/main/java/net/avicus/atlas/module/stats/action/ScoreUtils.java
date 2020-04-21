@@ -1,38 +1,28 @@
 package net.avicus.atlas.module.stats.action;
 
-import static net.avicus.compendium.MathUtil.isInRange;
-
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.AtomicDouble;
-
-import java.util.Arrays;
-import java.util.HashMap;
-
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
+import net.avicus.libraries.tracker.Damage;
+import net.avicus.libraries.tracker.DamageInfo;
+import net.avicus.libraries.tracker.Lifetime;
+import net.avicus.libraries.tracker.damage.*;
+import net.avicus.libraries.tracker.trackers.base.gravity.Fall;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import tc.oc.tracker.Damage;
-import tc.oc.tracker.DamageInfo;
-import tc.oc.tracker.Lifetime;
-import tc.oc.tracker.damage.AnvilDamageInfo;
-import tc.oc.tracker.damage.DispensedProjectileDamageInfo;
-import tc.oc.tracker.damage.ExplosiveDamageInfo;
-import tc.oc.tracker.damage.GravityDamageInfo;
-import tc.oc.tracker.damage.MeleeDamageInfo;
-import tc.oc.tracker.damage.ProjectileDamageInfo;
-import tc.oc.tracker.trackers.base.gravity.Fall;
+
+import java.util.Arrays;
+import java.util.HashMap;
+
+import static net.avicus.compendium.MathUtil.isInRange;
 
 /**
  * Various utility methods to get the score a player should receive based on actions and variables.

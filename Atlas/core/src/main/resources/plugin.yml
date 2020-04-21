@@ -2,16 +2,14 @@ name: Atlas
 main: net.avicus.atlas.Atlas
 version: ${project.version}-${git.commit.id.abbrev}
 authors:
-- Avicus Network
+  - Avicus Network
 depend:
-- Compendium
-- Magma
-- Grave
-- Tracker
-- WorldEdit
+  - Library
+  - Compendium
+  - Magma
+  - WorldEdit
 softdepend:
-- Tutorial
-- LuckPerms
+  - LuckPerms
 permissions:
   atlas.*:
     description: Access to all Atlas permissible features.

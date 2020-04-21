@@ -1,30 +1,15 @@
 package net.avicus.hook;
 
 import com.google.common.collect.Lists;
-
-import java.awt.Color;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import lombok.Getter;
 import net.avicus.compendium.StringUtil;
 import net.avicus.compendium.config.ConfigFile;
-import net.avicus.hook.commands.AltCheckCommand;
-import net.avicus.hook.commands.Commands;
-import net.avicus.hook.commands.CountCommand;
-import net.avicus.hook.commands.PollCommand;
-import net.avicus.hook.commands.PunishmentCommads;
-import net.avicus.hook.commands.RegisterCommand;
-import net.avicus.hook.commands.ReportCommand;
-import net.avicus.hook.commands.UnRegisterCommand;
+import net.avicus.hook.commands.*;
 import net.avicus.hook.polling.DiscussionPollingService;
 import net.avicus.hook.polling.PrestigeLevelPollingService;
+import net.avicus.libraries.quest.database.DatabaseConfig;
 import net.avicus.magma.database.Database;
 import net.avicus.magma.redis.Redis;
-import net.avicus.quest.database.DatabaseConfig;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -37,6 +22,13 @@ import net.dv8tion.jda.core.entities.impl.MessageEmbedImpl;
 import okhttp3.OkHttpClient;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class Hook {
 

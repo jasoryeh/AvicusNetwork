@@ -1,9 +1,5 @@
 package net.avicus.atlas.module.items;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.player.PlayerSpawnBeginEvent;
 import net.avicus.atlas.match.Match;
@@ -13,7 +9,7 @@ import net.avicus.atlas.module.checks.modifiers.AnyCheck;
 import net.avicus.atlas.module.checks.variable.LocationVariable;
 import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.util.AtlasTask;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,6 +17,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class KeepListener implements Listener {
 

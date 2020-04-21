@@ -2,9 +2,9 @@ package net.avicus.magma.database.model.impl;
 
 import lombok.Getter;
 import lombok.ToString;
-import net.avicus.quest.annotation.Column;
-import net.avicus.quest.annotation.Id;
-import net.avicus.quest.model.Model;
+import net.avicus.libraries.quest.annotation.Column;
+import net.avicus.libraries.quest.annotation.Id;
+import net.avicus.libraries.quest.model.Model;
 
 @ToString
 @Getter

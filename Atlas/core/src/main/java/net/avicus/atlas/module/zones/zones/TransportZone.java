@@ -1,8 +1,5 @@
 package net.avicus.atlas.module.zones.zones;
 
-import java.util.Optional;
-import java.util.Random;
-
 import lombok.ToString;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.checks.Check;
@@ -12,6 +9,7 @@ import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
 import net.avicus.compendium.points.AngleProvider;
+import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.BoundedRegion;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
@@ -21,7 +19,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.util.Vector;
-import tc.oc.tracker.event.PlayerCoarseMoveEvent;
+
+import java.util.Optional;
+import java.util.Random;
 
 @ToString(callSuper = true)
 public class TransportZone extends Zone {

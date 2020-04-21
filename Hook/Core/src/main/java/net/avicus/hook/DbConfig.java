@@ -1,13 +1,13 @@
 package net.avicus.hook;
 
-import java.util.Optional;
-
 import lombok.Getter;
 import net.avicus.compendium.config.inject.ConfigKey;
 import net.avicus.compendium.config.inject.ConfigPath;
+import net.avicus.libraries.quest.database.DatabaseConfig;
+import net.avicus.libraries.quest.database.DatabaseConfig.Builder;
 import net.avicus.magma.redis.Redis;
-import net.avicus.quest.database.DatabaseConfig;
-import net.avicus.quest.database.DatabaseConfig.Builder;
+
+import java.util.Optional;
 
 public class DbConfig {
 
@@ -26,10 +26,11 @@ public class DbConfig {
         @ConfigKey
         private static String database;
 
+        @ConfigKey
+        private static boolean embedded;
+
         public static DatabaseConfig create() {
-            Builder builder = DatabaseConfig.builder(host, database, username, password);
-            builder.reconnect(true);
-            return builder.build();
+            return DatabaseConfig.builder(host, database, username, password).embedded(embedded).reconnect(true).build();
         }
     }
 

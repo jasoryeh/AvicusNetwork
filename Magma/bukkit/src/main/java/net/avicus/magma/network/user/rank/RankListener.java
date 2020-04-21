@@ -20,7 +20,9 @@ public class RankListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onAsyncLogin(AsyncHookLoginEvent event) {
-        Ranks.add(event.getUser(), Ranks.getPermOnly("default").get());
+        Magma.get().database().getRanks().getOrCreate("default");
+        Optional<BukkitRank> optionalDefaultRank = Ranks.getPermOnly("default");
+        Ranks.add(event.getUser(), optionalDefaultRank.get());
         List<RankMember> memberships = event.getUser().memberships(Magma.get().database());
         for (RankMember membership : memberships) {
             Optional<BukkitRank> rank = Ranks.getCached(membership.getRankId());

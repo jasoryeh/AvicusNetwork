@@ -2,14 +2,13 @@ package net.avicus.magma.database.model.impl;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
-import net.avicus.quest.annotation.Column;
-import net.avicus.quest.annotation.Id;
-import net.avicus.quest.model.Model;
+import net.avicus.libraries.quest.annotation.Column;
+import net.avicus.libraries.quest.annotation.Id;
+import net.avicus.libraries.quest.model.Model;
+
+import java.util.Date;
 
 public class BackpackGadget extends Model {
 

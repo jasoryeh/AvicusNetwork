@@ -1,12 +1,12 @@
 package net.avicus.magma.database.table.impl;
 
+import net.avicus.libraries.quest.database.Database;
+import net.avicus.libraries.quest.model.Table;
+import net.avicus.libraries.quest.query.Filter;
+import net.avicus.magma.database.model.impl.TeamMember;
+
 import java.util.List;
 import java.util.Optional;
-
-import net.avicus.magma.database.model.impl.TeamMember;
-import net.avicus.quest.database.Database;
-import net.avicus.quest.model.Table;
-import net.avicus.quest.query.Filter;
 
 public class TeamMemberTable extends Table<TeamMember> {
 

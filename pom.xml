@@ -4,23 +4,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.avicus</groupId>
-    <artifactId>avicus-network</artifactId>
-    <version>1.8-SNAPSHOT</version>
+    <artifactId>avicus-network-full</artifactId>
+    <version>1.8.8-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <modules>
+        <module>sk89q-command-framework</module>
+        <module>RequirePlugins</module>
         <module>Magma</module>
+        <module>Compendium</module>
+        <module>Library</module>
         <module>Atlas</module>
         <module>Atrio</module>
         <module>Hook</module>
         <module>Mars</module>
     </modules>
     <scm>
-        <connection>scm:git://github.com/VectorMC/AvicusNetwork.git</connection>
-        <developerConnection>scm:git:ssh://github.com/VectorMC/AvicusNetwork.git</developerConnection>
-        <url>https://github.com/VectorMC/AvicusNetwork</url>
+        <connection>scm:git://github.com/jasoryeh/AvicusNetwork.git</connection>
+        <developerConnection>scm:git:ssh://github.com/jasoryeh/AvicusNetwork.git</developerConnection>
+        <url>https://github.com/jasoryeh/AvicusNetwork</url>
     </scm>
     <repositories>
         <repository>
@@ -32,8 +36,20 @@
             <url>https://repo.vectormc.net/artifactory/public</url>
         </repository>
         <repository>
+            <id>sonatype-repo</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>spigotmc-public</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
             <id>jcenter</id>
-            <url>http://jcenter.bintray.com</url>
+            <url>https://jcenter.bintray.com</url>
+        </repository>
+        <repository>
+            <id>destroystokyo-repo</id>
+            <url>https://repo.destroystokyo.com/repository/maven-public/</url>
         </repository>
         <repository>
             <id>dmulloy2</id>
@@ -63,6 +79,12 @@
             <id>vexsoftware-repo</id>
             <url>https://dl.bintray.com/nuvotifier/maven/</url>
         </repository>
+        <!-- Disable to use our sportpaper additions https://github.com/jasoryeh/SportPaper
+        <repository>
+            <id>ashcon-app</id>
+            <url>https://repo.ashcon.app/content/repositories/snapshots</url>
+        </repository>
+        -->
     </repositories>
 
     <distributionManagement>
@@ -79,29 +101,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>compendium-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>compendium-bukkit</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>compendium-bungee</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.16.6</version>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>quest</artifactId>
-                <version>1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>joda-time</groupId>
@@ -133,13 +135,13 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>magnet-api</artifactId>
+                <groupId>app.ashcon</groupId>
+                <artifactId>sportpaper</artifactId>
                 <version>1.8.8-R0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>magnet</artifactId>
+                <groupId>app.ashcon</groupId>
+                <artifactId>sportpaper-api</artifactId>
                 <version>1.8.8-R0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -148,34 +150,19 @@
                 <version>3.5</version>
             </dependency>
             <dependency>
-                <groupId>com.sk89q</groupId>
+                <groupId>net.avicus</groupId>
                 <artifactId>command-framework-bungee</artifactId>
-                <version>1.9-SNAPSHOT</version>
+                <version>1.8.8-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>net.md-5</groupId>
-                <artifactId>bungeecord-api</artifactId>
-                <version>1.11-SNAPSHOT</version>
+                <groupId>io.github.waterfallmc</groupId>
+                <artifactId>travertine-api</artifactId>
+                <version>1.15-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>2.4</version>
-            </dependency>
-            <dependency>
-                <groupId>tc.oc</groupId>
-                <artifactId>tracker</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>grave</artifactId>
-                <version>1.8-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>tutorial</artifactId>
-                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.comphenix.protocol</groupId>
@@ -187,11 +174,6 @@
                         <artifactId>BukkitExecutors</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>com.keenant.tabbed</groupId>
-                <artifactId>tabbed-core</artifactId>
-                <version>1.8-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.findbugs</groupId>
@@ -219,16 +201,7 @@
                 <artifactId>viaversion</artifactId>
                 <version>1.3.0</version>
             </dependency>
-            <dependency>
-                <groupId>com.sk89q</groupId>
-                <artifactId>command-framework-bukkit</artifactId>
-                <version>1.9-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sk89q</groupId>
-                <artifactId>command-framework-core</artifactId>
-                <version>1.9-SNAPSHOT</version>
-            </dependency>
+
             <dependency>
                 <groupId>LibsDisguises</groupId>
                 <artifactId>LibsDisguises</artifactId>
@@ -247,11 +220,6 @@
                         <artifactId>ProtocolLib</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>net.avicus</groupId>
-                <artifactId>minecraft-api</artifactId>
-                <version>1.12-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>me.lucko.luckperms</groupId>

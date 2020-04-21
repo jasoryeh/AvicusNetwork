@@ -1,11 +1,5 @@
 package net.avicus.atlas.module.kills;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import lombok.ToString;
 import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.match.Match;
@@ -16,14 +10,20 @@ import net.avicus.atlas.module.checks.variable.LocationVariable;
 import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.libraries.tracker.Damage;
+import net.avicus.libraries.tracker.DamageInfo;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
-import tc.oc.tracker.Damage;
-import tc.oc.tracker.DamageInfo;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ToString(exclude = "match")
 public class KillsModule implements Module {

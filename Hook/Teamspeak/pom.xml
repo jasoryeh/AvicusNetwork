@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>hook</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>hook-teamspeak</artifactId>
     <repositories>
@@ -29,6 +29,7 @@
         <dependency>
             <groupId>net.avicus</groupId>
             <artifactId>compendium-core</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -45,6 +46,12 @@
             <groupId>com.github.theholywaffle</groupId>
             <artifactId>teamspeak3-api</artifactId>
             <version>1.0.14-SNAPSHOT</version>
+        </dependency>
+        <!-- Teamspeak really only depends on quest for database, so we'll just shade this in -->
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>

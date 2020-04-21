@@ -1,0 +1,7 @@
+name: Grave
+description: Track entity and player deaths.
+main: net.avicus.grave.GravePlugin
+version: 1.8-SNAPSHOT
+authors: [The Avicus Network]
+depend: [Tracker]
+website: https://github.com/Avicus/Grave

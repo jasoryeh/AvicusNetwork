@@ -1,7 +1,5 @@
 package net.avicus.atlas.module.world;
 
-import java.util.Optional;
-
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
@@ -10,20 +8,17 @@ import net.avicus.atlas.module.checks.variable.SpawnReasonVariable;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.states.StatesModule;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import net.avicus.libraries.tracker.Trackers;
+import net.avicus.libraries.tracker.trackers.OwnedMobTracker;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import tc.oc.tracker.Trackers;
-import tc.oc.tracker.trackers.OwnedMobTracker;
+
+import java.util.Optional;
 
 public class MobsListener implements Listener {
 

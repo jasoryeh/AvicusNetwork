@@ -6,6 +6,7 @@ properties:
 database:
   hostname: 'localhost'
   database: 'magma'
+  enabled: false
   auth:
     username: 'cats'
     password: 'kittens'

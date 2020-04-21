@@ -6,31 +6,19 @@
     <parent>
         <groupId>net.avicus</groupId>
         <artifactId>magma</artifactId>
-        <version>1.8-SNAPSHOT</version>
+        <version>1.8.8-SNAPSHOT</version>
     </parent>
     <artifactId>magma-bukkit</artifactId>
-    <repositories>
-        <repository>
-            <id>avicus-public</id>
-            <url>https://repo.avicus.net/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>avicus-private</id>
-            <url>https://repo.avicus.net/content/groups/private/</url>
-        </repository>
-    </repositories>
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>magnet</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <groupId>app.ashcon</groupId>
+            <artifactId>sportpaper-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <!-- Utilities -->
@@ -51,8 +39,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
+            <groupId>net.avicus</groupId>
             <artifactId>command-framework-bukkit</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -71,6 +60,12 @@
         <dependency>
             <groupId>me.lucko.luckperms</groupId>
             <artifactId>luckperms-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.avicus</groupId>
+            <artifactId>library</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
