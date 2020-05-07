@@ -1,7 +1,7 @@
 # AvicusNetwork
 A **massive** maven project of all of the Avicus Network's required plugin suite in one convenient maven project.
 
-Required server software: [SportPaper](https://github.com/VectorMC/SportPaper), and [Travertine](https://github.com/VectorMC/Travertine)
+Required server software: [SportPaper (w/ Custom modifications, please use this link)](https://github.com/VectorMC/SportPaper), and [Travertine](https://github.com/VectorMC/Travertine)
 
 Required plugins: The Via Plugins, ProtocolLib, LibsDisguises, WorldEdit, LuckPerms, and NuVotifier
 
