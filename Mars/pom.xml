@@ -18,7 +18,7 @@
     <dependencies>
         <!-- Server -->
         <dependency>
-            <groupId>app.ashcon</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>sportpaper</artifactId>
             <scope>provided</scope>
         </dependency>
