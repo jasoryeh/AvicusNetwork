@@ -69,10 +69,14 @@ public class SpawnsModule implements Module {
     }
 
     public void spawn(Group group, Player player, boolean giveLoadout, boolean teleportPlayer) {
+        spawn(group, player, giveLoadout, teleportPlayer, true);
+    }
+
+    public void spawn(Group group, Player player, boolean giveLoadout, boolean teleportPlayer, boolean resetInventoryAndPots) {
         this.spawningPlayers.add(player);
         Spawn spawn = getSpawn(group, player);
 
-        Players.reset(player);
+        Players.reset(player, resetInventoryAndPots, resetInventoryAndPots);
 
         PlayerSpawnBeginEvent call = new PlayerSpawnBeginEvent(player, group, spawn, giveLoadout,
                 teleportPlayer);

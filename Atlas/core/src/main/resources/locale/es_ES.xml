@@ -193,6 +193,7 @@
         <hills>Colinas</hills>
         <monuments>Monumentos</monuments>
         <leakables>Cores</leakables>
+        <the-bridge>El puente</the-bridge>
         <points>Puntos</points>
         <wool>Lana</wool>
         <colored-wool>Lana {0}</colored-wool>
@@ -414,6 +415,9 @@
         <score>
             <name>Puntuación más alta</name>
         </score>
+        <thebridge>
+            <name>Puntuación más alta de las capturas</name>
+        </thebridge>
         <walls>
             <name>Muros</name>
         </walls>

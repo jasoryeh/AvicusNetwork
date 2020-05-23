@@ -29,6 +29,7 @@ public final class Translations {
     public static final LocalizedFormat GAMETYPE_LCS_NAME = $NULL$;
     public static final LocalizedFormat GAMETYPE_LTS_NAME = $NULL$;
     public static final LocalizedFormat GAMETYPE_SCORE_NAME = $NULL$;
+    public static final LocalizedFormat GAMETYPE_THEBRIDGE_NAME = $NULL$;
     public static final LocalizedFormat GAMETYPE_WALLS_NAME = $NULL$;
     public static final LocalizedFormat ERROR_UNKNOWN_PLAYER = $NULL$;
     public static final LocalizedFormat ERROR_PERMISSION_MODTIME = $NULL$;

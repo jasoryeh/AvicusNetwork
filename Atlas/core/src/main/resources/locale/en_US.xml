@@ -185,6 +185,7 @@
         <hills>Hills</hills>
         <monuments>Monuments</monuments>
         <leakables>Cores</leakables>
+        <the-bridge>The Bridge</the-bridge>
         <points>Points</points>
         <wool>Wool</wool>
         <colored-wool>{0} Wool</colored-wool>
@@ -423,6 +424,9 @@
         <score>
             <name>Highest Score</name>
         </score>
+        <thebridge>
+            <name>Highest Score from Captures</name>
+        </thebridge>
         <walls>
             <name>Walls</name>
         </walls>

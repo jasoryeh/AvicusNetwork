@@ -190,6 +190,7 @@ public class Messages {
     public static final LocalizedFormat UI_HILLS = get("ui", "hills");
     public static final LocalizedFormat UI_MONUMENTS = get("ui", "monuments");
     public static final LocalizedFormat UI_LEAKABLES = get("ui", "leakables");
+    public static final LocalizedFormat UI_THE_BRIDGE = get("ui", "the-bridge");
     public static final LocalizedFormat UI_POINTS = get("ui", "points");
     public static final LocalizedFormat UI_COLORED_WOOL = get("ui", "colored-wool");
     public static final LocalizedFormat UI_WOOL = get("ui", "wool");
