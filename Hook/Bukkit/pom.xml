@@ -88,12 +88,6 @@
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>net.avicus</groupId>
-            <artifactId>atlas-competitive-objectives</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>provided</scope>
-        </dependency>
         <!-- Packets -->
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
