@@ -12,7 +12,8 @@ public enum MapGenre {
     SKY_WARS,
     WALLS,
     ARCADE,
-    BEDWARS;
+    BEDWARS,
+    THE_BRIDGE;
 
     MapGenre() {
     }

@@ -1,10 +1,6 @@
 package net.avicus.hook.achievements;
 
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Table;
-import com.google.common.collect.TreeBasedTable;
-import net.avicus.atlas.Atlas;
+import com.google.common.collect.*;
 import net.avicus.atlas.event.competitor.CompetitorWinEvent;
 import net.avicus.atlas.event.player.PlayerReceiveMVPEvent;
 import net.avicus.atlas.module.vote.PlayerCastVoteEvent;
@@ -13,6 +9,7 @@ import net.avicus.compendium.settings.Setting;
 import net.avicus.compendium.settings.types.SettingTypes;
 import net.avicus.compendium.utils.Strings;
 import net.avicus.hook.Hook;
+import net.avicus.hook.HookPlugin;
 import net.avicus.hook.rate.MapRatedEvent;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.HookTask;
@@ -41,10 +38,14 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static net.avicus.hook.achievements.AchievementsListener.ACHIEVEMENTS_LISTENERS;
 
 public class Achievements implements Module, ListenerModule {
 
@@ -172,9 +173,16 @@ public class Achievements implements Module, ListenerModule {
 
         HookTask.of(() -> this::loadAchievables).nowAsync();
 
-        if (Atlas.get().getLoader().hasModule("competitive-objectives")) {
-            Events.register(new CompetitveAchievements(this));
-        }
+        ACHIEVEMENTS_LISTENERS.forEach(listener -> {
+            try {
+                AchievementsListener achievementsListener = listener.getDeclaredConstructor(Achievements.class).newInstance(Achievements.this);
+
+                Events.register(achievementsListener);
+            } catch (InstantiationException|NoSuchMethodException|IllegalAccessException| InvocationTargetException exception) {
+                HookPlugin.getInstance().getLogger().warning("Unable to instantiate a achievement listener:");
+                exception.printStackTrace();
+            }
+        });
 
         PlayerSettings.register(ACHIEVEMENT_SETTING);
     }

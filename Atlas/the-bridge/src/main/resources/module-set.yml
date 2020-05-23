@@ -1,3 +1,3 @@
-main: net.avicus.atlas.sets.example.TheBridgeMain
-name: "Example Set"
+main: net.avicus.atlas.sets.thebridge.TheBridgeMain
+name: "The Bridge"
 depend: []

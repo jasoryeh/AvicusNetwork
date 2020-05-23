@@ -19,6 +19,7 @@ public enum GameType {
     LCS(Translations.GAMETYPE_LCS_NAME),
     LTS(Translations.GAMETYPE_LTS_NAME),
     SCORE(Translations.GAMETYPE_SCORE_NAME),
+    THE_BRIDGE(Translations.GAMETYPE_THEBRIDGE_NAME),
     WALLS(Translations.GAMETYPE_WALLS_NAME);
 
     @Getter

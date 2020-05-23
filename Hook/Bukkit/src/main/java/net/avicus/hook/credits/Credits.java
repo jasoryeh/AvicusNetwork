@@ -17,7 +17,7 @@ import net.avicus.compendium.locale.text.LocalizedNumber;
 import net.avicus.compendium.locale.text.UnlocalizedFormat;
 import net.avicus.hook.Hook;
 import net.avicus.hook.HookConfig;
-import net.avicus.hook.credits.reward.CreditRewardListener;
+import net.avicus.hook.credits.reward.CreditRewarder;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.HookTask;
 import net.avicus.hook.utils.Messages;
@@ -47,7 +47,7 @@ public class Credits {
         creditBalances = new HashMap<>();
 
         if (HookConfig.Credits.Rewards.isEnabled()) {
-            Events.register(new CreditRewardListener());
+            Events.register(new CreditRewarder());
         }
 
         Events.register(new CreditsListener());

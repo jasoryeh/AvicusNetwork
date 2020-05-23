@@ -79,12 +79,6 @@
             <id>vexsoftware-repo</id>
             <url>https://dl.bintray.com/nuvotifier/maven/</url>
         </repository>
-        <!-- Disable to use our sportpaper additions https://github.com/jasoryeh/SportPaper
-        <repository>
-            <id>ashcon-app</id>
-            <url>https://repo.ashcon.app/content/repositories/snapshots</url>
-        </repository>
-        -->
     </repositories>
 
     <distributionManagement>
@@ -135,12 +129,12 @@
                 </exclusions>
             </dependency>
             <dependency>
-                <groupId>app.ashcon</groupId>
+                <groupId>net.vectormc</groupId>
                 <artifactId>sportpaper</artifactId>
                 <version>1.8.8-R0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>app.ashcon</groupId>
+                <groupId>net.vectormc</groupId>
                 <artifactId>sportpaper-api</artifactId>
                 <version>1.8.8-R0.1-SNAPSHOT</version>
             </dependency>

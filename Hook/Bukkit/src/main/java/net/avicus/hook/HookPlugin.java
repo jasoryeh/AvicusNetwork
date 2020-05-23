@@ -28,7 +28,7 @@ import net.avicus.hook.listener.AtlasListener;
 import net.avicus.hook.listener.BackpackShopListener;
 import net.avicus.hook.listener.ChatListener;
 import net.avicus.hook.listener.SettingModule;
-import net.avicus.hook.prestige.ExperienceRewardListener;
+import net.avicus.hook.prestige.ExperienceReward;
 import net.avicus.hook.punishment.Punishments;
 import net.avicus.hook.rate.MapRatings;
 import net.avicus.hook.sessions.Sessions;
@@ -172,7 +172,7 @@ public class HookPlugin extends JavaPlugin {
 
             if (Magma.get().getMm().hasModule(PrestigeModule.class) && HookConfig.Experience.Rewards
                     .isEnabled()) {
-                Events.register(new ExperienceRewardListener());
+                Events.register(new ExperienceReward());
             }
 
             if (HookConfig.getShutdownOnEmpty().orElse(true)) {

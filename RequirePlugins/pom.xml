@@ -19,7 +19,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>app.ashcon</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>sportpaper-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>

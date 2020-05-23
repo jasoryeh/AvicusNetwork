@@ -18,7 +18,7 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <groupId>app.ashcon</groupId>
+            <groupId>net.vectormc</groupId>
             <artifactId>sportpaper</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>

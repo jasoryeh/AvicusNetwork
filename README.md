@@ -70,7 +70,6 @@ Not all projects here are licensed the same, therefore the following are the lic
 * No license specified/found
   * Grave
   * Quest
-  * Tracker
   * Tutorial
   * Bossy
 
