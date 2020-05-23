@@ -181,7 +181,9 @@ public class AtlasQuickPlayComponent implements ListenerModule {
         // Each batch is 5 players.
         // The formula we use for this is s/(p/5) where s is the # of seconds (20) and p is the number of players online.
 
-        int sleep = (int) Math.ceil(20 / Math.min(1, Bukkit.getOnlinePlayers().size() / 5));
+        // fix arithmetic exception
+        int batches = Bukkit.getOnlinePlayers().size() / 5;
+        int sleep = (batches != 0) ? (int) Math.ceil(20 / batches) : 1;
 
         AtlasTask.of(() -> {
             int count = 0;
