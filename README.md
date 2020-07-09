@@ -67,6 +67,9 @@ Not all projects here are licensed the same, therefore the following are the lic
 * Multiple Licenses
   * Modules not originally included in this project, but were licensed by another party, though the license for the source code they developed is the GNU General Public License v3
     * sk89q-command-framework
+      * WorldEdit = GNU Lesser General Public License v3
+      * JNBT = JNBT License
+      * JChronic = MIT License
 * No license specified/found
   * Grave
   * Quest

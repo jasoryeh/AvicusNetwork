@@ -1,8 +1,8 @@
 The following are copies of the licenses found in the original projects included in this project, each license is separated by one line of fifty (50) hyphens(-) followed by a line explaining what follows.
-This file includes a copy of the following licenses: MIT, GNU LESSER GENERAL PUBLIC
+This file includes a copy of the following licenses: MIT, GNU LESSER GENERAL PUBLIC V3, JNBT LICENSE
 
 --------------------------------------------------
-The following license applies to the following project folder(s) and were applied to the software in the folder(s) by the original author(s) (Avicus Network): Atlas, Atrio, Hook, Magma, Mars, Grave, RequirePlugins
+The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Avicus Network): Atlas, Atrio, Hook, Magma, Mars, Grave(Library/src/main/java/net/avicus/libraries/grave), RequirePlugins
 
 MIT License
 
@@ -27,7 +27,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------
-The following license applies to the following project folder(s) and were applied to the software in the folder(s) by the original author(s) (Keenan Thompson): Tabbed
+The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Keenan Thompson): Tabbed(Library/src/main/java/net/avicus/libraries/tabbed)
 
 MIT License
 
@@ -52,7 +52,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------
-The following license applies to the following project folder(s) and were applied to the software in the folder(s) by the original author(s) (Tracker Developers): Tracker
+The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Tracker Developers): Tracker(Library/src/main/java/net/avicus/libraries/tracker)
 
 Copyright (c) 2012-2013 Tracker Developers
 
@@ -75,7 +75,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------
-The following licenses applies to the following project folder(s) and were applied to the software in the folder(s) by the original author(s) (Overcast Network): sk89q-command-framework
+The following licenses applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Overcast Network): sk89q-command-framework
 
 WorldEdit License
 -----------------
@@ -304,3 +304,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+--------------------------------------------------
+The following projects(folder directories in parenthesis if not in project root) have no license or no license was found on their original projects: Grave(Library/src/main/java/net/avicus/libraries/grave), Quest(Library/src/main/java/net/avicus/libraries/quest), Tutorial(Library/src/main/java/net/avicus/libraries/tutorial), Bossy(Library/src/main/java/net/avicus/libraries/bossy)
