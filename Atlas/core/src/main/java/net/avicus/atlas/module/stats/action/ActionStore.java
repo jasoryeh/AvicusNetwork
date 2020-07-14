@@ -24,9 +24,9 @@ import net.avicus.atlas.module.stats.action.objective.score.PlayerEarnPointActio
 import net.avicus.atlas.event.player.PlayerDeathByEntityEvent;
 import net.avicus.atlas.event.player.PlayerDeathByPlayerEvent;
 import net.avicus.atlas.event.player.PlayerDeathEvent;
-import net.avicus.libraries.tracker.Damage;
-import net.avicus.libraries.tracker.DamageInfo;
-import net.avicus.libraries.tracker.damage.OwnedMobDamageInfo;
+import net.avicus.atlas.util.external.tracker.Damage;
+import net.avicus.atlas.util.external.tracker.DamageInfo;
+import net.avicus.atlas.util.external.tracker.damage.OwnedMobDamageInfo;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

@@ -11,7 +11,7 @@ import net.avicus.atlas.module.objectives.ObjectivesModule;
 import net.avicus.atlas.module.shop.PlayerEarnPointEvent;
 import net.avicus.atlas.util.Events;
 import net.avicus.atlas.event.world.EntityDeathEvent;
-import net.avicus.libraries.tracker.event.EntityDamageEvent;
+import net.avicus.atlas.util.external.tracker.event.EntityDamageEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

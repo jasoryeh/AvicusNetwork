@@ -2,7 +2,7 @@ package net.avicus.atlas.module.stats.action.damage;
 
 import lombok.Getter;
 import lombok.ToString;
-import net.avicus.libraries.tracker.DamageInfo;
+import net.avicus.atlas.util.external.tracker.DamageInfo;
 import org.bukkit.entity.Player;
 
 import java.time.Instant;

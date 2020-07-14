@@ -5,7 +5,7 @@ import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.loadouts.Loadout;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

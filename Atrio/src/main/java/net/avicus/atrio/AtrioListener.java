@@ -2,6 +2,7 @@ package net.avicus.atrio;
 
 import lombok.Data;
 import lombok.Getter;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.compendium.boss.BossBar;
 import net.avicus.compendium.boss.BossBarOverlay;
 import net.avicus.compendium.plugin.CompendiumPlugin;
@@ -9,7 +10,6 @@ import net.avicus.hook.Hook;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.gadgets.types.device.DeviceGadget;
 import net.avicus.hook.utils.HookTask;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.database.model.impl.Announcement;
 import net.avicus.magma.network.server.Servers;

@@ -14,7 +14,7 @@ import net.avicus.atlas.sets.competitive.objectives.zones.flag.NetZone;
 import net.avicus.atlas.sets.competitive.objectives.zones.flag.PostZone;
 import net.avicus.atlas.util.Messages;
 import net.avicus.atlas.event.player.PlayerDeathEvent;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Banner;

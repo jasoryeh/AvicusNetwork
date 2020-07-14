@@ -20,7 +20,7 @@ import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.atlas.event.player.PlayerDeathByPlayerEvent;
 import net.avicus.atlas.event.player.PlayerDeathEvent;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.distance.DistanceCalculationMetric;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;

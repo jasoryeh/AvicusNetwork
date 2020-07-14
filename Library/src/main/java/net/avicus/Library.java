@@ -1,8 +1,6 @@
 package net.avicus;
 
 import lombok.Getter;
-import net.avicus.libraries.tabbed.TabbedPlugin;
-import net.avicus.libraries.tracker.plugin.TrackerPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class Library {
@@ -39,31 +37,16 @@ public abstract class Library {
         }
     }
 
-    private static TrackerPlugin trackerPlugin;
-    private static TabbedPlugin tabbedPlugin;
-
     @Getter
     private static boolean initialized = false;
     @Getter
     private static boolean deinitialized = false;
 
     public static void loadLibraries(JavaPlugin plugin) {
-        trackerPlugin = new TrackerPlugin(plugin);
-        trackerPlugin.onSafeEnable();
-
-        tabbedPlugin = new TabbedPlugin(plugin);
-        tabbedPlugin.onSafeEnable();
-
-        // quest
-
         initialized = true;
     }
 
     public static void unloadLibraries(JavaPlugin plugin) {
-        // quest
-        tabbedPlugin.onSafeDisable();
-        trackerPlugin.onSafeDisable();
-
         initialized = false;
         deinitialized = true;
     }

@@ -12,7 +12,7 @@ import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.executors.Executor;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

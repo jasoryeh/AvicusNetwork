@@ -9,7 +9,7 @@ import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.zones.Zone;
 import net.avicus.atlas.module.zones.ZoneMessage;
 import net.avicus.compendium.points.AngleProvider;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.BoundedRegion;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;

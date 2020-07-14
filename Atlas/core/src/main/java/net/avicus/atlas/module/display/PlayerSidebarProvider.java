@@ -2,7 +2,7 @@ package net.avicus.atlas.module.display;
 
 import net.avicus.atlas.Atlas;
 import net.avicus.atlas.match.Match;
-import net.avicus.libraries.tabbed.item.PlayerTabItem.PlayerProvider;
+import net.avicus.atlas.util.tablist.item.PlayerTabItem.PlayerProvider;
 import net.avicus.magma.network.user.Users;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;

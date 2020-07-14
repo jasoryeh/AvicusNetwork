@@ -6,7 +6,7 @@ import net.avicus.atlas.module.Module;
 import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
 import net.avicus.atlas.module.checks.variable.*;
-import net.avicus.libraries.tracker.event.PlayerDamageEvent;
+import net.avicus.atlas.util.external.tracker.event.PlayerDamageEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 

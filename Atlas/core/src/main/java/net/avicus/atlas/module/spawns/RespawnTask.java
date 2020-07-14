@@ -15,7 +15,7 @@ import net.avicus.compendium.locale.text.LocalizedText;
 import net.avicus.compendium.sound.SoundEvent;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
-import net.avicus.libraries.tracker.event.PlayerDamageEvent;
+import net.avicus.atlas.util.external.tracker.event.PlayerDamageEvent;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

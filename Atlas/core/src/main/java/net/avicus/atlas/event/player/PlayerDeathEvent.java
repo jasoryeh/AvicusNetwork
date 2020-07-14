@@ -3,7 +3,7 @@ package net.avicus.atlas.event.player;
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.event.world.EntityDeathEvent;
-import net.avicus.libraries.tracker.Lifetime;
+import net.avicus.atlas.util.external.tracker.Lifetime;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;

@@ -3,8 +3,8 @@ package net.avicus.atlas.module.stats.action.damage;
 import lombok.Getter;
 import lombok.ToString;
 import net.avicus.atlas.module.stats.action.ScoreUtils;
-import net.avicus.libraries.tracker.DamageInfo;
-import net.avicus.libraries.tracker.Lifetimes;
+import net.avicus.atlas.util.external.tracker.DamageInfo;
+import net.avicus.atlas.util.external.tracker.Lifetimes;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.entity.Player;
 

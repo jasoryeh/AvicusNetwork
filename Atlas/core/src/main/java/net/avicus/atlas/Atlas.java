@@ -37,6 +37,7 @@ import net.avicus.atlas.util.AtlasBridge;
 import net.avicus.atlas.util.Events;
 import net.avicus.atlas.util.Messages;
 import net.avicus.atlas.util.Translations;
+import net.avicus.atlas.util.external.tracker.listeners.TrackerListeners;
 import net.avicus.compendium.AvicusCommandsManager;
 import net.avicus.compendium.commands.AvicusCommandsRegistration;
 import net.avicus.compendium.commands.exception.AbstractTranslatableCommandException;
@@ -94,6 +95,9 @@ public class Atlas extends JavaPlugin {
 
     @Getter
     private AvicusCommandsRegistration registrar;
+
+    @Getter
+    private TrackerListeners trackerListeners;
 
     /**
      * Returns a match if one is available right now.
@@ -255,6 +259,8 @@ public class Atlas extends JavaPlugin {
         this.componentManager.enable();
 
         // Listeners
+        this.trackerListeners = new TrackerListeners(this);
+        this.trackerListeners.enable();
         Events.register(new BlockChangeListener());
         Events.register(new EntityChangeListener());
         Events.register(new AtlasListener());
@@ -281,6 +287,9 @@ public class Atlas extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if(this.trackerListeners != null) {
+            this.trackerListeners.disable();
+        }
         if (this.matchManager != null) {
             this.matchManager.shutdown();
         }

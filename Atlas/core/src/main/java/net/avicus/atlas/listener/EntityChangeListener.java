@@ -1,5 +1,6 @@
 package net.avicus.atlas.listener;
 
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.atlas.event.player.PlayerDeathByEntityEvent;
 import net.avicus.atlas.event.player.PlayerDeathByPlayerEvent;
 import net.avicus.atlas.event.player.PlayerDeathEvent;
@@ -9,8 +10,9 @@ import net.avicus.atlas.event.world.EntityDeathByEntityEvent;
 import net.avicus.atlas.event.world.EntityDeathByPlayerEvent;
 import net.avicus.atlas.event.world.EntityDeathEvent;
 import net.avicus.atlas.util.Events;
-import net.avicus.libraries.tracker.Lifetime;
-import net.avicus.libraries.tracker.Lifetimes;
+import net.avicus.atlas.util.external.tracker.Lifetime;
+import net.avicus.atlas.util.external.tracker.Lifetimes;
+import net.avicus.atlas.util.external.tracker.util.EventUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
@@ -22,6 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.inventory.ItemStack;
 import org.joda.time.Instant;
@@ -129,5 +132,30 @@ public class EntityChangeListener implements Listener {
         }
         Bukkit.getLogger().info("Grave has handled death event: " + event.getEntity().getName());
 
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerCoarseMoveCall(PlayerMoveEvent event) {
+        Location from = event.getFrom();
+        Location to = event.getTo();
+
+        if (from.getBlockX() == to.getBlockX()) {
+            if (from.getBlockY() == to.getBlockY()) {
+                if (from.getBlockZ() == to.getBlockZ()) {
+                    return;
+                }
+            }
+        }
+
+        PlayerCoarseMoveEvent call = new PlayerCoarseMoveEvent(event.getPlayer(), from, to);
+        call.setCancelled(event.isCancelled());
+
+        for (EventPriority priority : EventPriority.values()) {
+            EventUtil.callEvent(call, PlayerCoarseMoveEvent.getHandlerList(), priority);
+        }
+
+        event.setCancelled(call.isCancelled());
+        event.setFrom(call.getFrom());
+        event.setTo(call.getTo());
     }
 }

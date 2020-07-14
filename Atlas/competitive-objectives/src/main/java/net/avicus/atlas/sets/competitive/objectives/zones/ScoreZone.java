@@ -18,7 +18,7 @@ import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizedNumber;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.compendium.number.NumberAction;
-import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
+import net.avicus.atlas.event.player.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.region.Region;
 import org.bukkit.Location;
 import org.bukkit.Material;

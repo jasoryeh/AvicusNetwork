@@ -30,6 +30,12 @@
         <!-- Database -->
         <dependency>
             <groupId>net.avicus</groupId>
+            <artifactId>atlas-core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.avicus</groupId>
             <artifactId>hook-bukkit</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
