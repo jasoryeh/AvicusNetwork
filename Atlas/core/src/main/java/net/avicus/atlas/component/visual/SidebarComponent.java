@@ -228,7 +228,20 @@ public class SidebarComponent implements ListenerModule {
 
         List<String> rows = new ArrayList<>();
 
-        HOOKS.forEach(h -> rows.addAll(h.getRows(player, groups, sidebar, module)));
+        for (SidebarHook hook : HOOKS) {
+            rows.addAll(hook.getRows(player, groups, sidebar, module));
+        }
+
+        // if we are tight on space, we will delete the empty lines.
+        if(rows.size() > Sidebar.Constants.MAX_ROWS) {
+            ArrayList<String> adjustedRows = new ArrayList<>();
+            for (String row : rows) {
+                if(!row.trim().equalsIgnoreCase("")) {
+                    adjustedRows.add(row);
+                }
+            }
+            rows = adjustedRows;
+        }
 
         for (int i = 1; i <= Sidebar.Constants.MAX_ROWS; i++) {
             if (i <= rows.size()) {
