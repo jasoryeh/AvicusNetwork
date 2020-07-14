@@ -1,10 +1,8 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
-
-import net.avicus.libraries.tutorial.plugin.TutorialPlugin;
+import net.avicus.atlas.Atlas;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
 
 public class ActiveTutorialTask extends BukkitRunnable {
 
@@ -24,7 +22,7 @@ public class ActiveTutorialTask extends BukkitRunnable {
 
         TutorialStep step = this.tutorial.getCurrentStep();
 
-//        // Action bar
+//        // TODO: Action bar
 //        {
 //            String actionBar = "";
 //            if (step.getCountdown().isPresent()) {
@@ -64,6 +62,6 @@ public class ActiveTutorialTask extends BukkitRunnable {
     }
 
     public void start() {
-        runTaskTimer(TutorialPlugin.getInstance().getParent(), 0, 3);
+        runTaskTimer(Atlas.get(), 0, 3);
     }
 }

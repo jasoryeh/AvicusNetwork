@@ -14,8 +14,6 @@ import net.avicus.atlas.module.locales.LocalesModule;
 import net.avicus.atlas.module.locales.LocalizedXmlString;
 import net.avicus.atlas.util.LocalizedXmlTitle;
 import net.avicus.atlas.util.xml.XmlElement;
-import net.avicus.libraries.tutorial.api.Tutorial;
-import net.avicus.libraries.tutorial.api.TutorialStep;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import org.joda.time.Duration;

@@ -1,6 +1,6 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
-import net.avicus.libraries.tutorial.plugin.TutorialPlugin;
+import net.avicus.atlas.Atlas;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
@@ -35,7 +35,7 @@ public class ActiveTutorialListener implements Listener {
                 return true;
             case EXIT:
                 Bukkit.getServer().getScheduler()
-                        .runTask(TutorialPlugin.getInstance().getParent(), this.tutorial::stop);
+                        .runTask(Atlas.get(), this.tutorial::stop);
                 return false;
             default:
                 return false;

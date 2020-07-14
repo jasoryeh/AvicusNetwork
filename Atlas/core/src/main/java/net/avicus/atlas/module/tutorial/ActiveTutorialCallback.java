@@ -1,4 +1,4 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
 public interface ActiveTutorialCallback {
 

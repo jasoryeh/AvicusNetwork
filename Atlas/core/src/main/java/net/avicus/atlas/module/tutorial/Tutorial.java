@@ -1,7 +1,6 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
 import org.bukkit.entity.Player;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

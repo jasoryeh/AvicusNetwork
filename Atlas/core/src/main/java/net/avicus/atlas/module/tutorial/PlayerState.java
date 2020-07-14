@@ -1,4 +1,4 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

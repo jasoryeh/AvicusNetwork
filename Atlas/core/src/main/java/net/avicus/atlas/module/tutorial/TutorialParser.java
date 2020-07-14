@@ -1,7 +1,5 @@
-package net.avicus.libraries.tutorial;
+package net.avicus.atlas.module.tutorial;
 
-import net.avicus.libraries.tutorial.api.SimpleTutorialStep;
-import net.avicus.libraries.tutorial.api.Tutorial;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

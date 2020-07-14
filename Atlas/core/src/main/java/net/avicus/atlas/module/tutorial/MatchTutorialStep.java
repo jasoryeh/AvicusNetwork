@@ -3,7 +3,6 @@ package net.avicus.atlas.module.tutorial;
 import lombok.ToString;
 import net.avicus.atlas.module.locales.LocalizedXmlString;
 import net.avicus.atlas.util.LocalizedXmlTitle;
-import net.avicus.libraries.tutorial.api.AbstractTutorialStep;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;

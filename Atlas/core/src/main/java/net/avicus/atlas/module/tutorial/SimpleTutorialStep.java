@@ -1,4 +1,4 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.GameMode;

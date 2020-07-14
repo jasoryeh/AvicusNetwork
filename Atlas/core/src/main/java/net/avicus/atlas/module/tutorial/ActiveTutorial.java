@@ -1,7 +1,7 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
 import com.google.common.base.Preconditions;
-import net.avicus.libraries.tutorial.plugin.TutorialPlugin;
+import net.avicus.atlas.Atlas;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -50,7 +50,7 @@ public class ActiveTutorial {
         // Save current state
         this.savedState = PlayerState.of(this.player);
         Bukkit.getServer().getPluginManager()
-                .registerEvents(this.listener, TutorialPlugin.getInstance().getParent());
+                .registerEvents(this.listener, Atlas.get());
         this.task.start();
         setStep(0);
 

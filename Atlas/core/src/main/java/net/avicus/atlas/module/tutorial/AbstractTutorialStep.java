@@ -1,6 +1,6 @@
-package net.avicus.libraries.tutorial.api;
+package net.avicus.atlas.module.tutorial;
 
-import net.avicus.libraries.tutorial.plugin.TutorialPlugin;
+import net.avicus.atlas.Atlas;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -101,7 +101,7 @@ public abstract class AbstractTutorialStep implements TutorialStep {
             stand.setGravity(false);
             stand.setPassenger(player);
             stand
-                    .setMetadata(FROZEN_METADATA, new FixedMetadataValue(TutorialPlugin.getInstance().getParent(), true));
+                    .setMetadata(FROZEN_METADATA, new FixedMetadataValue(Atlas.get(), true));
         }
     }
 
@@ -115,7 +115,7 @@ public abstract class AbstractTutorialStep implements TutorialStep {
         if (player.getVehicle() != null) {
             Entity vehicle = player.getVehicle();
             if (vehicle.hasMetadata(FROZEN_METADATA)) {
-                vehicle.removeMetadata(FROZEN_METADATA, TutorialPlugin.getInstance().getParent());
+                vehicle.removeMetadata(FROZEN_METADATA, Atlas.get());
                 player.getVehicle().remove();
             }
         }
