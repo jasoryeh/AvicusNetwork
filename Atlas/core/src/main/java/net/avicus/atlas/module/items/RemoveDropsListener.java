@@ -9,7 +9,7 @@ import net.avicus.atlas.module.checks.Check;
 import net.avicus.atlas.module.checks.CheckContext;
 import net.avicus.atlas.module.checks.variable.*;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.libraries.grave.event.EntityDeathEvent;
+import net.avicus.atlas.event.world.EntityDeathEvent;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Boat;

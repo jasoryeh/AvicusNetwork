@@ -31,7 +31,7 @@ import net.avicus.compendium.locale.text.LocalizableFormat;
 import net.avicus.compendium.locale.text.LocalizedNumber;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.compendium.utils.Strings;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.module.ListenerModule;
 import net.avicus.magma.util.Sidebar;

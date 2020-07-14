@@ -3,7 +3,7 @@ package net.avicus.atlas.module.objectives.score;
 import net.avicus.atlas.match.Match;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

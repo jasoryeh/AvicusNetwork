@@ -1,4 +1,4 @@
-package net.avicus.libraries.grave.event;
+package net.avicus.atlas.event.world;
 
 import lombok.Getter;
 import lombok.Setter;

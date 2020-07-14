@@ -14,7 +14,7 @@ import net.avicus.hook.rate.MapRatedEvent;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.HookTask;
 import net.avicus.hook.utils.Messages;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.libraries.tracker.DamageInfo;
 import net.avicus.libraries.tracker.damage.GravityDamageInfo;
 import net.avicus.libraries.tracker.damage.MeleeDamageInfo;

@@ -21,7 +21,7 @@ import net.avicus.compendium.inventory.SingleMaterialMatcher;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.LocalizedText;
 import net.avicus.compendium.locale.text.UnlocalizedText;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;

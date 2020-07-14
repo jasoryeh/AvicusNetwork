@@ -12,7 +12,7 @@ import net.avicus.hook.HookConfig;
 import net.avicus.hook.HookPlugin;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.Messages;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.magma.Magma;
 import net.avicus.magma.event.user.AsyncHookLoginEvent;
 import net.avicus.magma.module.prestige.PrestigeModule;

@@ -10,7 +10,7 @@ import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.objectives.ObjectivesModule;
 import net.avicus.atlas.module.shop.PlayerEarnPointEvent;
 import net.avicus.atlas.util.Events;
-import net.avicus.libraries.grave.event.EntityDeathEvent;
+import net.avicus.atlas.event.world.EntityDeathEvent;
 import net.avicus.libraries.tracker.event.EntityDamageEvent;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

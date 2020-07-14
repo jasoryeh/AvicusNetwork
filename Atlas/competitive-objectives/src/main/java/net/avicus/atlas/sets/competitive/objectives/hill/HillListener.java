@@ -4,7 +4,7 @@ import net.avicus.atlas.event.group.PlayerChangedGroupEvent;
 import net.avicus.atlas.event.match.MatchStateChangeEvent;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.objectives.ObjectivesModule;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

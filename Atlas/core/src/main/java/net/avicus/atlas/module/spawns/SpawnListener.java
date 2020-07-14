@@ -5,7 +5,7 @@ import net.avicus.atlas.event.match.MatchOpenEvent;
 import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.groups.Spectators;
 import net.avicus.atlas.util.Players;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.magma.util.NMSUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

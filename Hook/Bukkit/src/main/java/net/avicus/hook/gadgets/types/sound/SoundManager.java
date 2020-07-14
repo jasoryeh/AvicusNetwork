@@ -8,7 +8,7 @@ import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
 import net.avicus.hook.credits.PlayerModifyCreditEvent;
 import net.avicus.hook.utils.Events;
-import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
+import net.avicus.atlas.event.player.PlayerDeathByPlayerEvent;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.module.gadgets.GadgetManager;
 import net.avicus.magma.module.gadgets.Gadgets;

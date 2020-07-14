@@ -10,7 +10,7 @@ import net.avicus.atlas.module.checks.variable.ItemVariable;
 import net.avicus.atlas.module.checks.variable.MaterialVariable;
 import net.avicus.atlas.module.elimination.event.PlayerEliminateEvent;
 import net.avicus.atlas.module.objectives.score.event.PointEarnEvent;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;

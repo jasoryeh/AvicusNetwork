@@ -9,7 +9,7 @@ import net.avicus.atlas.module.checks.modifiers.AnyCheck;
 import net.avicus.atlas.module.checks.variable.LocationVariable;
 import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.util.AtlasTask;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

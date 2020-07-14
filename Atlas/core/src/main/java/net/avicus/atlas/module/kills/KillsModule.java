@@ -10,7 +10,7 @@ import net.avicus.atlas.module.checks.variable.LocationVariable;
 import net.avicus.atlas.module.checks.variable.PlayerVariable;
 import net.avicus.atlas.module.groups.Competitor;
 import net.avicus.atlas.module.groups.GroupsModule;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.libraries.tracker.Damage;
 import net.avicus.libraries.tracker.DamageInfo;
 import org.bukkit.entity.LivingEntity;

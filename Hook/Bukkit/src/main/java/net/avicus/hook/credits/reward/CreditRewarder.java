@@ -12,7 +12,7 @@ import net.avicus.hook.HookPlugin;
 import net.avicus.hook.credits.Credits;
 import net.avicus.hook.utils.Events;
 import net.avicus.hook.utils.Messages;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

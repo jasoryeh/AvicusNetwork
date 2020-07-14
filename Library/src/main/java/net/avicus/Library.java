@@ -1,7 +1,6 @@
 package net.avicus;
 
 import lombok.Getter;
-import net.avicus.libraries.grave.GravePlugin;
 import net.avicus.libraries.tabbed.TabbedPlugin;
 import net.avicus.libraries.tracker.plugin.TrackerPlugin;
 import net.avicus.libraries.tutorial.plugin.TutorialPlugin;
@@ -44,7 +43,6 @@ public abstract class Library {
     private static TutorialPlugin tutorialPlugin;
     private static TrackerPlugin trackerPlugin;
     private static TabbedPlugin tabbedPlugin;
-    private static GravePlugin gravePlugin;
 
     @Getter
     private static boolean initialized = false;
@@ -63,9 +61,6 @@ public abstract class Library {
 
         // quest
 
-        gravePlugin = new GravePlugin(plugin);
-        gravePlugin.onSafeEnable();
-
         // bossy
 
         initialized = true;
@@ -73,7 +68,6 @@ public abstract class Library {
 
     public static void unloadLibraries(JavaPlugin plugin) {
         // bossy
-        gravePlugin.onSafeDisable();
         // quest
         tabbedPlugin.onSafeDisable();
         trackerPlugin.onSafeDisable();

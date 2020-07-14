@@ -107,6 +107,7 @@ public class ObjectivesBridge extends ObjectivesModuleBridge implements Listener
             }
         }
 
+        // should just use important broadcast?
         this.match.broadcast(Messages.UI_IMPORTANT.with(TextStyle.ofBold(), broadcast));
 
         return true;

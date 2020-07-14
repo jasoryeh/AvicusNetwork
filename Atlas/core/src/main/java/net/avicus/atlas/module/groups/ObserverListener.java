@@ -7,7 +7,7 @@ import net.avicus.atlas.event.player.PlayerSpawnBeginEvent;
 import net.avicus.atlas.event.world.BlockChangeByPlayerEvent;
 import net.avicus.atlas.event.world.EntityChangeEvent;
 import net.avicus.atlas.util.VersionUtil;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;

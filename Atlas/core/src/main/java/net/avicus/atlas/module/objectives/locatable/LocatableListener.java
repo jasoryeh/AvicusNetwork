@@ -2,7 +2,7 @@ package net.avicus.atlas.module.objectives.locatable;
 
 import net.avicus.atlas.module.objectives.Objective;
 import net.avicus.atlas.util.Events;
-import net.avicus.libraries.grave.event.PlayerDeathByPlayerEvent;
+import net.avicus.atlas.event.player.PlayerDeathByPlayerEvent;
 import net.avicus.libraries.tracker.event.PlayerCoarseMoveEvent;
 import net.avicus.magma.util.distance.DistanceCalculationMetric;
 import org.bukkit.event.EventHandler;

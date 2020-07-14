@@ -32,7 +32,7 @@ import net.avicus.compendium.sound.SoundEvent;
 import net.avicus.compendium.sound.SoundLocation;
 import net.avicus.compendium.sound.SoundType;
 import net.avicus.compendium.utils.Strings;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

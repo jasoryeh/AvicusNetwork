@@ -1,9 +1,13 @@
 package net.avicus.atlas.sets.competitive.objectives.bridges;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.lambdaworks.com.google.common.collect.Lists;
 import net.avicus.atlas.command.GameCommands;
 import net.avicus.atlas.component.visual.SidebarHook;
+import net.avicus.atlas.module.bridge.ObjectivesModuleBridge;
+import net.avicus.atlas.module.groups.GroupsModule;
 import net.avicus.atlas.module.objectives.ObjectivesModule;
 import net.avicus.atlas.sets.competitive.objectives.destroyable.leakable.event.LeakableLeakEvent;
 import net.avicus.atlas.sets.competitive.objectives.CompetitveRenderer;
@@ -24,6 +28,8 @@ import net.avicus.atlas.sets.competitive.objectives.wool.event.WoolPlaceEvent;
 import net.avicus.atlas.util.Messages;
 import net.avicus.atlas.util.ObjectiveRenderer;
 import net.avicus.compendium.locale.text.Localizable;
+import net.avicus.magma.util.Sidebar;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 
@@ -33,6 +39,13 @@ public class SBHook extends SidebarHook {
 
     static {
         GameCommands.RENDERER = RENDERER;
+    }
+
+    @Override
+    public List<String> getRows(Player player, GroupsModule groups, Sidebar sidebar, ObjectivesModule module) {
+        ObjectivesBridge bridge = getMatch().getRequiredModule(ObjectivesModule.class).getBridge(ObjectivesBridge.class);
+        // don't render if we don't have objectives in this match.
+        return bridge.objectives.size() > 0 ? super.getRows(player, groups, sidebar, module) : Lists.newArrayList();
     }
 
     @Override

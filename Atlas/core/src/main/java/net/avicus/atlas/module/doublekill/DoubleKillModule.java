@@ -3,7 +3,7 @@ package net.avicus.atlas.module.doublekill;
 import lombok.ToString;
 import net.avicus.atlas.event.player.PlayerSpawnBeginEvent;
 import net.avicus.atlas.module.Module;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerQuitEvent;

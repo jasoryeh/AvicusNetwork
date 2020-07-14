@@ -10,7 +10,7 @@ import net.avicus.compendium.locale.text.*;
 import net.avicus.compendium.settings.PlayerSettings;
 import net.avicus.compendium.settings.Setting;
 import net.avicus.compendium.settings.types.SettingTypes;
-import net.avicus.libraries.grave.event.PlayerDeathEvent;
+import net.avicus.atlas.event.player.PlayerDeathEvent;
 import net.avicus.libraries.tracker.Damage;
 import net.avicus.libraries.tracker.DamageInfo;
 import net.avicus.libraries.tracker.Lifetime;
