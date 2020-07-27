@@ -43,10 +43,13 @@ public abstract class Library {
     private static boolean deinitialized = false;
 
     public static void loadLibraries(JavaPlugin plugin) {
+        // quest does not require initialization
         initialized = true;
+        deinitialized = false;
     }
 
     public static void unloadLibraries(JavaPlugin plugin) {
+        // quest does not require de-initialization
         initialized = false;
         deinitialized = true;
     }
