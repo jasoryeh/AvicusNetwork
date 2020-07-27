@@ -1,2 +1,3 @@
 # List plugins that should be present and enabled on the server
+enabled: true
 required: []

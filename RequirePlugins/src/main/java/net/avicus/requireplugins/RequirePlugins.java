@@ -20,6 +20,11 @@ public class RequirePlugins extends JavaPlugin {
 
         List<String> required = getConfig().getStringList("required");
 
+        if(!getConfig().getBoolean("enabled", true)) {
+            log(ChatColor.YELLOW + "Require plugins was configured to be disabled, we will skip checks.");
+            return;
+        }
+
         if (required.isEmpty()) {
             log(ChatColor.YELLOW + "No plugin requirements defined.");
             return;
