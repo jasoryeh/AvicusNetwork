@@ -1,8 +1,7 @@
-The following are copies of the licenses found in the original projects included in this project, each license is separated by one line of fifty (50) hyphens(-) followed by a line explaining what follows.
+The following are copies of the licenses found in the original projects included in this project, each license is separated by one line of fifty (50) hyphens(-) followed by an explanation of what follows.
 This file includes a copy of the following licenses: MIT, GNU LESSER GENERAL PUBLIC V3, JNBT LICENSE
 
---------------------------------------------------
-The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Avicus Network): Atlas, Atrio, Hook, Magma, Mars, Grave(Library/src/main/java/net/avicus/libraries/grave), RequirePlugins
+-------------------------------------------------- License from Avicus Network for: Atlas, Atrio, Hook, Magma, Mars, Grave([MERGED -> ATLAS]), RequirePlugins
 
 MIT License
 
@@ -26,8 +25,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
---------------------------------------------------
-The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Keenan Thompson): Tabbed(Library/src/main/java/net/avicus/libraries/tabbed)
+-------------------------------------------------- License from Keenan Thompson for: Tabbed([MERGED -> ATLAS])
 
 MIT License
 
@@ -51,8 +49,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
---------------------------------------------------
-The following license applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Tracker Developers): Tracker(Library/src/main/java/net/avicus/libraries/tracker)
+-------------------------------------------------- License from Tracker Developers for: Tracker([MERGED -> ATLAS])
 
 Copyright (c) 2012-2013 Tracker Developers
 
@@ -74,8 +71,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
---------------------------------------------------
-The following licenses applies to the following projects(folder directories in parenthesis if not in project root) and were applied to the software by the original author(s) (Overcast Network): sk89q-command-framework
+-------------------------------------------------- License from Overcast Network for: sk89q-command-framework
 
 WorldEdit License
 -----------------
@@ -306,4 +302,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 --------------------------------------------------
-The following projects(folder directories in parenthesis if not in project root) have no license or no license was found on their original projects: Grave(Library/src/main/java/net/avicus/libraries/grave), Quest(Library/src/main/java/net/avicus/libraries/quest), Tutorial(Library/src/main/java/net/avicus/libraries/tutorial), Bossy(Library/src/main/java/net/avicus/libraries/bossy)
+Projects with no licenses found on their original projects or a license was never applied:
+- Grave([MERGED -> ATLAS])
+- Quest(Library/src/main/java/net/avicus/libraries/quest)
+- Tutorial([MERGED -> ATLAS])
+- Bossy([MERGED -> ATLAS])

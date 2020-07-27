@@ -1,9 +1,9 @@
 # AvicusNetwork
-A **massive** maven project of all of the Avicus Network's required plugin suite in one convenient maven project.
+A **massive** maven project of all of Avicus Network's required plugin suite in one convenient maven project.
 
 Required server software: [SportPaper (w/ Custom modifications, please use this link)](https://github.com/VectorMC/SportPaper), and [Travertine](https://github.com/VectorMC/Travertine)
 
-Required plugins: The Via Plugins, ProtocolLib, LibsDisguises, WorldEdit, LuckPerms, and NuVotifier
+Required plugins: The Via Plugin Suite (ViaVersion, ViaRewind, ViaBackwards), ProtocolLib, LibsDisguises, WorldEdit, and NuVotifier
 
 # Plugins:
 
@@ -20,6 +20,12 @@ Runs matches, parses XML, and generates docs.
   * Holds modules for the arcade gamemodes.
 * Walls
   * Holds the walls module and special kits.
+* The Bridge [WIP] [INTERNAL]
+  * Currently work-in-progress "The Bridge" gamemode.
+* Bedwars [WIP] [INTERNAL]
+  * Currently work-in-progress gamemode
+
+[INTERNAL] = Project that may come to life soon @ vectormc.net
 
 ## Atrio
 This is the lobby plugin. It handles basic lobby things such as portals and jump pads.
