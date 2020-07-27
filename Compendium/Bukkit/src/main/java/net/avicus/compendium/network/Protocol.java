@@ -4,6 +4,8 @@ import com.google.common.collect.Range;
 import org.bukkit.entity.Player;
 import us.myles.ViaVersion.api.Via;
 
+import java.util.UUID;
+
 public final class Protocol {
 
     public static final Range<Integer> V1_11 = Range.closed(315, 316);
@@ -18,7 +20,20 @@ public final class Protocol {
     private Protocol() {
     }
 
+    public static boolean hasVia() {
+        try {
+            Class.forName("us.myles.ViaVersion.api.Via");
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
+    }
+
+    public static int versionOf(final UUID uuid) {
+        return hasVia() ? Via.getAPI().getPlayerVersion(uuid) : -1;
+    }
+
     public static int versionOf(final Player player) {
-        return Via.getAPI().getPlayerVersion(player.getUniqueId());
+        return hasVia() ? Via.getAPI().getPlayerVersion(player.getUniqueId()) : player.getProtocolVersion();
     }
 }

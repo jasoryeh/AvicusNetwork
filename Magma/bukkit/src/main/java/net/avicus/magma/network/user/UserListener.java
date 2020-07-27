@@ -1,5 +1,6 @@
 package net.avicus.magma.network.user;
 
+import net.avicus.compendium.network.Protocol;
 import net.avicus.magma.Magma;
 import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.event.user.AsyncHookLoginEvent;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import us.myles.ViaVersion.api.Via;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -82,7 +82,7 @@ public class UserListener implements Listener {
                 }
 
                 User user = Users.user(player);
-                user.updateClientPayload(Magma.get().database(), Via.getAPI().getPlayerVersion(player),
+                user.updateClientPayload(Magma.get().database(), Protocol.versionOf(player),
                         player.spigot().getLocale());
             }
         }.runTaskAsynchronously(Magma.get());

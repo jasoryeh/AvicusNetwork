@@ -33,6 +33,7 @@ import net.avicus.atlas.util.tablist.tablist.TableTabList.TableBox;
 import net.avicus.atlas.util.tablist.tablist.TableTabList.TableCell;
 import net.avicus.atlas.util.tablist.tablist.TableTabList.TableCorner;
 import net.avicus.atlas.util.tablist.util.Skins;
+import net.avicus.compendium.network.Protocol;
 import net.avicus.magma.NetworkIdentification;
 import net.avicus.magma.module.ListenerModule;
 import org.bukkit.Bukkit;
@@ -41,7 +42,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerQuitEvent;
-import us.myles.ViaVersion.api.Via;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class TabListComponent implements ListenerModule {
         new AtlasTask() {
             @Override
             public void run() {
-                int version = Via.getAPI().getPlayerVersion(event.getPlayer());
+                int version = Protocol.versionOf(event.getPlayer());
                 if (event.getPlayer().isOnline() && version >= 47) {
                     TabListComponent.this.tabbed.newTableTabList(event.getPlayer(), COLUMNS, 16);
                     update(event.getPlayer(), false);

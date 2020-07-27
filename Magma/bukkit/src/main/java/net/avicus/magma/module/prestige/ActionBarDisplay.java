@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.avicus.compendium.locale.text.LocalizedNumber;
+import net.avicus.compendium.network.Protocol;
 import net.avicus.compendium.settings.PlayerSettings;
 import net.avicus.compendium.settings.Setting;
 import net.avicus.compendium.settings.SettingModifyEvent;
@@ -28,7 +29,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import us.myles.ViaVersion.api.Via;
 
 public class ActionBarDisplay implements Listener {
 
@@ -59,7 +59,7 @@ public class ActionBarDisplay implements Listener {
             return;
         }
 
-        if (Via.getAPI().getPlayerVersion(uuid) >= 47) {
+        if (Protocol.HIGHER_THAN_1_8.contains(Protocol.versionOf(uuid))) {
             BaseComponent newBar = generateBar(Bukkit.getPlayer(uuid));
             this.activeBars.remove(uuid);
             this.activeBars.put(uuid, newBar);
