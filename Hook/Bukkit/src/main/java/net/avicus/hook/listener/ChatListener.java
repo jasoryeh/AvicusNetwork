@@ -22,7 +22,7 @@ public class ChatListener implements Listener {
         // LP API for prefixes start
         String fmat = HookConfig.Chat.getFormat();
 
-        Pair<String, String> meta = Users.getMeta(event.getPlayer());
+        Pair<String, String> meta = Users.getPrefixSuffix(event.getPlayer());
 
         fmat = StringUtils.replace(fmat, "%3$s",
                 ChatColor.translateAlternateColorCodes('&', meta.getLeft()) +

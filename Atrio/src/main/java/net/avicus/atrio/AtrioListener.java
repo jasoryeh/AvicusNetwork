@@ -232,7 +232,7 @@ public class AtrioListener implements Listener {
         sendTitle(event.getPlayer());
         playSound(event.getPlayer());
 
-        Pair<String, String> meta = Users.getMeta(event.getPlayer());
+        Pair<String, String> meta = Users.getPrefixSuffix(event.getPlayer());
         event.getPlayer().setPlayerListName(ChatColor.translateAlternateColorCodes('&', meta.getLeft() + event.getPlayer().getDisplayName() + meta.getRight()));
     }
 

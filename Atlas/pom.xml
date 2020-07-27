@@ -94,8 +94,9 @@
         </dependency>
 
         <dependency>
-            <groupId>me.lucko.luckperms</groupId>
-            <artifactId>luckperms-api</artifactId>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

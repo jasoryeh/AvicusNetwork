@@ -43,6 +43,7 @@ import net.avicus.magma.network.server.Servers;
 import net.avicus.magma.network.user.Users;
 import net.avicus.magma.redis.Redis;
 import net.avicus.magma.restart.RestartMessageHandler;
+import net.avicus.magma.util.VaultHook;
 import net.avicus.magma.util.properties.BlockPropStore;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -102,6 +103,9 @@ public final class Magma extends JavaPlugin {
     private ModuleManager mm;
     @Getter
     private PrestigeSeason currentSeason;
+
+    @Getter
+    private VaultHook vaultHook;
 
     public Magma() {
         magma = this;
@@ -185,6 +189,8 @@ public final class Magma extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new LockingSharingListener(), this);
         BlockPropStore.initBlocks();
         BlockPropStore.initTools();
+
+        this.vaultHook = new VaultHook(this);
 
         getRedis().register(new RestartMessageHandler());
         Users.init(registrar);

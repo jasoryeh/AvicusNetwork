@@ -3,10 +3,6 @@ package net.avicus.magma.network.user;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.ChatColor;
 import lombok.Getter;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.caching.UserData;
 import net.avicus.compendium.locale.text.UnlocalizedFormat;
 import net.avicus.compendium.locale.text.UnlocalizedText;
 import net.avicus.magma.Magma;
@@ -15,6 +11,7 @@ import net.avicus.magma.database.model.impl.User;
 import net.avicus.magma.module.prestige.PrestigeModule;
 import net.avicus.magma.network.user.rank.BukkitRank;
 import net.avicus.magma.network.user.rank.Ranks;
+import net.milkbowl.vault.chat.Chat;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -229,20 +226,20 @@ public class Users {
     /**
      * Return a pair of suffix and prefix
      *
+     * May be empty strings if Vault is not present, or there is no prefix / suffix system
+     *
      * @param p player
      * @return Pair, left - prefix, right - suffix
      */
-    public static Pair<String, String> getMeta(Player p) {
-        try {
-            LuckPermsApi api = LuckPerms.getApi();
-            UserData cache = Objects.requireNonNull(api.getUser(p.getUniqueId())).getCachedData();
-            String prefix = cache.getMetaData(Contexts.global()).getPrefix();
-            String suffix = cache.getMetaData(Contexts.global()).getSuffix();
-            prefix = prefix != null ? prefix : "";
-            suffix = suffix != null ? suffix : "";
+    public static Pair<String, String> getPrefixSuffix(Player p) {
+        Magma magma = Magma.get();
+        Optional<Chat> chatHook = magma.getVaultHook().getChat();
+        if(chatHook.isPresent()) {
+            Chat chat = chatHook.get();
+            String prefix = chat.getPlayerPrefix(p);
+            String suffix = chat.getPlayerSuffix(p);
             return Pair.of(prefix, suffix);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
             return Pair.of("", "");
         }
     }

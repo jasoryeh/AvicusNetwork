@@ -22,7 +22,7 @@ public class PlayerSidebarProvider implements PlayerProvider<String> {
         if (!player.isOnline()) {
             return ChatColor.STRIKETHROUGH + player.getName();
         }
-        final String prefix = org.bukkit.ChatColor.translateAlternateColorCodes('&', Users.getMeta(player).getLeft());
+        final String prefix = org.bukkit.ChatColor.translateAlternateColorCodes('&', Users.getPrefixSuffix(player).getLeft());
         return prefix + org.bukkit.ChatColor.RESET + Atlas.get().getBridge().displayName(this.match, this.viewer, player);
     }
 }

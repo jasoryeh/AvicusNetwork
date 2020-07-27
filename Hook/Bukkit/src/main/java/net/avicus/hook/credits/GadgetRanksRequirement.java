@@ -1,15 +1,13 @@
 package net.avicus.hook.credits;
 
 import com.google.common.base.Joiner;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Group;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.User;
 import net.avicus.compendium.locale.text.Localizable;
 import net.avicus.compendium.locale.text.UnlocalizedText;
+import net.avicus.magma.Magma;
 import net.avicus.magma.network.user.Users;
 import net.avicus.magma.network.user.rank.BukkitRank;
 import net.avicus.magma.network.user.rank.Ranks;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -45,12 +43,23 @@ public class GadgetRanksRequirement implements GadgetPurchaseRequirement {
             }
         }
 
-        LuckPermsApi api = LuckPerms.getApi();
+        Optional<Permission> permHook = Magma.get().getVaultHook().getPermissions();
+        if(permHook.isPresent()) {
+            Permission perm = permHook.get();
+            String[] playerGroups = perm.getPlayerGroups(player);
+            for(String require : this.ranks) {
+                for(String group : playerGroups) {
+                    if(group.equalsIgnoreCase(require)) {
+                        return true;
+                    }
+                }
+            }
+        }
 
-        User u = api.getUser(player.getUniqueId());
-        for (String rank : this.ranks) {
-            Optional<Group> groupSafe = api.getGroupSafe(rank);
-            if (groupSafe.isPresent() && u.inheritsGroup(groupSafe.get())) {
+        // fallback permission based groups
+        for(String require : this.ranks) {
+            // all fallback stuff uses the permission 'atlas.fallback' prefix to avoid any potential clashing/duplicates.
+            if(player.hasPermission("atlas.fallback.group." + require)) {
                 return true;
             }
         }
